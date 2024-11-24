@@ -1,28 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+  <!-- Main HTML document for Django REST API server landing page -->
   <head>
+    <!-- Required meta tags -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Django server</title>
+    <title>Django REST API server</title>
+
+    <!-- Load Django static template tag -->
     {% load static %}
+
+    <!-- Favicon -->
     <link
       rel="icon"
       href="{% static 'media/images/django-favicon.png' %}"
       type="image/x-icon"
     />
+
+    <!-- Main stylesheet -->
     <link rel="stylesheet" href="{% static 'styles/index.css' %}" />
   </head>
   <body>
+    <!-- Main content area -->
     <main>
+      <!-- Django logo -->
       <figure class="logo-container">
-        <img src="{% static 'media/images/django-favicon.png' %}" />
+        <img src="{% static 'media/images/django-favicon.png' %}" alt="Django logo" />
       </figure>
-      <h1>Welcome to building REST APIs</h1>
+
+      <!-- Page heading -->
+      <h1>Django REST API Server</h1>
+
+      <!-- Description text -->
       <p>
-        This boilerplate includes all the necessary setup for building REST APIs
-        using Django and Django Rest Framework.
+        This is a Django REST Framework boilerplate project that provides a complete setup for building RESTful APIs.
       </p>
-      <a class="admin-link" href="admin/">admin</a>
+      <p>
+        To get started, visit the admin panel to manage your API resources:
+      </p>
+
+      <!-- Admin panel link -->
+      <a class="admin-link" href="admin/">Django Admin Panel</a>
     </main>
   </body>
 </html>

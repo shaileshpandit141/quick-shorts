@@ -1,9 +1,0 @@
-{% load account %}
-
-Hello {{ user.username }},
-
-Please activate your account by clicking the link below:
-
-{{ activate_url }}
-
-Thank you for using our service!
