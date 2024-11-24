@@ -1,12 +1,12 @@
-# Django and React Boilerplate with JWT Authentication
+# Django, React and TypeScript Boilerplate with JWT Authentication
 
-This project is a boilerplate for setting up a web application using Django for the backend with JWT (JSON Web Token) authentication, and React for the frontend.
+This project is a boilerplate for setting up a web application using Django for the backend with JWT (JSON Web Token) authentication, and React with TypeScript for the frontend.
 
 ## Features
 
-- Django backend with custom user model (using username, email)
-- JWT Authentication for all actions
-- React frontend setup with Create React App
+- Django backend with custom user model (using email authentication)
+- JWT Authentication for all actions 
+- React with TypeScript frontend setup with Create React App
 - Integration between Django and React
 
 ## Requirements
@@ -90,7 +90,7 @@ This project is a boilerplate for setting up a web application using Django for 
   python manage.py runserver
   ```
 
-### Frontend Setup (React)
+### Frontend Setup (React with TypeScript)
 
 1. **Navigate to the frontend directory:**
 
@@ -98,13 +98,19 @@ This project is a boilerplate for setting up a web application using Django for 
   cd frontend
   ```
 
-2. **Install dependencies:**
+2. **Create new TypeScript React app:**
+
+  ```bash
+  npx create-react-app . --template typescript
+  ```
+
+3. **Install dependencies:**
 
   ```bash
   npm install
   ```
 
-3. **Set up environment variables:**
+4. **Set up environment variables:**
 
   Create a `.env` file in the root directory and add the following:
 
@@ -115,7 +121,7 @@ This project is a boilerplate for setting up a web application using Django for 
   ```
   Note: `HOST` name is same as backend `HOST` name.
 
-4. **Run the React development server:**
+5. **Run the React development server:**
 
   ```bash
   npm start
@@ -127,76 +133,113 @@ This project is a boilerplate for setting up a web application using Django for 
 ### Performing Authentication Actions API's
 
 - **Registration**:
-Send a POST request to `http://localhost:8000/api/auth/signup/` with user details (username, email, password1, password2).
+Send a POST request to `http://localhost:8000/api/v1/auth/signup/` with user details (email, password1, password2).
 
 - **Login**:
-Send a POST request to `http://localhost:8000/api/auth/token/` with email and password to get access and refresh tokens.
+Send a POST request to `http://localhost:8000/api/v1/auth/token/` with email and password to get access and refresh tokens.
 
 - **Logout**:
-Send a POST request to `http://localhost:8000/api/auth/logout/` to log out the user and blacklist the refresh token.
+Send a POST request to `http://localhost:8000/api/v1/auth/signout/` to log out the user and blacklist the refresh token.
 
 - **Password Reset**:
-Send a POST request to `http://localhost:8000/api/auth/password/reset/` with the user’s email.
+Send a POST request to `http://localhost:8000/api/v1/auth/password/reset/` with the user's email.
 
 - **Password Reset Verification**:
-Send a POST request to `http://localhost:8000/api/auth/password/reset/confirm/` with the new password and token received from the email.
+Send a POST request to `http://localhost:8000/api/v1/auth/password/reset/confirm/` with the new password and token received from the email.
 
 - **Email Verification**:
-Send a POST request to `http://localhost:8000/api/auth/signup/verify-email/` with the verification key received in the email.
+Send a POST request to `http://localhost:8000/api/v1/auth/signup/verify-email/` with the verification key received in the email.
 
 - **Re Email Verification**:
-Send a POST request to `http://localhost:8000/api/auth/resend-verification/` with username to get key received in the email.
+Send a POST request to `http://localhost:8000/api/v1/auth/signup/resend-email-verification/` with email to get key received in the email.
 
 - **Token Refresh**:
-Send a POST request to `http://localhost:8000/api/auth/token/refresh/` with the refresh token to get a new access token.
+Send a POST request to `http://localhost:8000/api/v1/auth/token/refresh/` with the refresh token to get a new access token.
 
 - **Access the user**:
-Send a POST request to `http://localhost:8000/api/auth/user/` with the access token to get a userInfo.
+Send a POST request to `http://localhost:8000/api/v1/auth/user/` with the access token to get a userInfo.
 
 - **Access a protected endpoint for test**:
-Send a POST request to `http://localhost:8000/api/auth/protected/` with the access token to get a protected route data.
+Send a POST request to `http://localhost:8000/api/v1/auth/protected/` with the access token to get a protected route data.
 
 
 ### API's Usages using .rest file
 
 **Register a new user:**
 ```
-POST http://localhost:8000/api/auth/signup/
+POST http://localhost:8000/api/v1/auth/signup/
 Content-Type: application/json
 
 {
-  "username": "username",
   "email": "email@example.com",
   "password1": "Email#12345@",
   "password2": "Email#12345@"
 }
-  ```
+```
+
+Success response:
+```
+{
+  "status": "success",
+  "message": "The request was successful",
+  "data": {
+    "detail": "Verification e-mail sent."
+  },
+  "meta": null
+}
+```
+
+Error response:
+```
+{
+  "status": "error", 
+  "message": "The request was not successful",
+  "error": {
+    "email": "Invalid email address",
+    "password1": "Invalid password1",
+    "password2": "Invalid password2"
+  }
+}
+```
 
 **Login to get JWT tokens:**
 ```
-POST http://localhost:8000/api/auth/token/
+POST http://localhost:8000/api/v1/auth/token/
 Content-Type: application/json
 
 {
-  "username": "username",
   "email": "email@example.com",
   "password": "Email#12345@"
 }
 ```
-Note:
-- email is optional
 
-Expected response:
+Success response:
 ```
 {
-  "access": "jwt_access_token",
-  "refresh": "jwt_refresh_token"
+  "status": "success",
+  "message": "The request was successful",
+  "data": {
+    "access_token": "jwt_access_token",
+    "refresh_token": "jwt_refresh_token"
+  },
+  "meta": null
 }
-  ```
+```
+
+Error response:
+```
+{
+  "status": "error",
+  "message": "The request was not successful", 
+  "error": {
+    "detail": "No active account found with the given credentials"
+  }
+}
+```
 
 **Logout (Blacklist the refresh token):**
 ```
-POST http://localhost:8000/api/auth/logout/
+POST http://localhost:8000/api/v1/auth/logout/
 Content-Type: application/json
 Authorization: Bearer jwt_access_token
 
@@ -205,25 +248,43 @@ Authorization: Bearer jwt_access_token
 }
 ```
 
+Success response:
+```
+{
+  "status": "success",
+  "message": "The request was successful",
+  "data": {
+    "detail": "You have signed out successfully."
+  },
+  "meta": null
+}
+```
+
 **Request password reset:**
 ```
-POST http://localhost:8000/api/auth/password/reset/
+POST http://localhost:8000/api/v1/auth/password/reset/
 Content-Type: application/json
 
 {
   "email": "user@example.com"
 }
 ```
-Expected response:
+
+Success response:
 ```
 {
-  "detail": "Password reset e-mail has been sent."
+  "status": "success",
+  "message": "The request was successful",
+  "data": {
+    "detail": "Password reset e-mail has been sent."
+  },
+  "meta": null
 }
 ```
 
 **Confirm password reset:**
 ```
-POST http://localhost:8000/api/auth/password/reset/confirm/
+POST http://localhost:8000/api/v1/auth/password/reset/confirm/
 Content-Type: application/json
 
 {
@@ -233,88 +294,123 @@ Content-Type: application/json
   "new_password2": "new_strong_password123"
 }
 ```
-Expected response:
+
+Success response:
 ```
 {
-  "detail": "Password has been reset with the new password."
+  "status": "success",
+  "message": "The request was successful",
+  "data": {
+    "detail": "Password has been reset with the new password."
+  },
+  "meta": null
 }
 ```
 
 **Verify email:**
 ```
-POST http://localhost:8000/api/auth/signup/verify-email/
+POST http://localhost:8000/api/v1/auth/signup/verify-email/
 Content-Type: application/json
 
 {
   "key": "verification_key_from_email"
 }
 ```
-Expected response:
+
+Success response:
 ```
 {
-  "detail": "ok"
+  "status": "success", 
+  "message": "The request was successful",
+  "data": {
+    "detail": "ok"
+  },
+  "meta": null
 }
 ```
 
 **Resend Verification Email:**
 ```
-POST http://localhost:8000/api/auth/resend-verification/
+POST http://localhost:8000/api/v1/auth/signup/resend-email-verification/
 Authorization: Bearer <your_jwt_token>
 ```
-Expected response:
+
+Success response:
 ```
 {
-  "detail": "Verification e-mail sent"
+  "status": "success",
+  "message": "The request was successful",
+  "data": {
+    "detail": "Verification e-mail sent"
+  },
+  "meta": null
 }
 ```
 
 **Refresh JWT tokens:**
 ```
-POST http://localhost:8000/api/auth/token/refresh/
+POST http://localhost:8000/api/v1/auth/token/refresh/
 Content-Type: application/json
 
 {
   "refresh": "jwt_refresh_token"
 }
 ```
-Expected response:
+
+Success response:
 ```
 {
-  "access": "new_jwt_access_token"
+  "status": "success",
+  "message": "The request was successful",
+  "data": {
+    "access_token": "new_jwt_access_token"
+  },
+  "meta": null
 }
 ```
 
 **Access the current user:**
 ```
-GET http://localhost:8000/api/auth/user/
+GET http://localhost:8000/api/v1/auth/user/
 Authorization: Bearer jwt_access_token
 ```
-Expected response:
+
+Success response:
 ```
 {
-  "id": 1,
-  "username": "username",
-  "email": "email@example.com",
-  "first_name": "first_name",
-  "last_name": "last_name"
+  "status": "success",
+  "message": "The request was successful",
+  "data": {
+    "id": 1,
+    "email": "email@example.com",
+    "first_name": "first_name",
+    "last_name": "last_name"
+  },
+  "meta": null
 }
 ```
 
 **Access a protected endpoint:**
 ```
-GET http://localhost:8000/api/auth/protected/
+GET http://localhost:8000/api/v1/auth/protected/
 Authorization: Bearer jwt_access_token
 ```
-Expected response:
+
+Success response:
 ```
 {
-  "message": "This is a protected view"
+  "status": "success",
+  "message": "The request was successful",
+  "data": {
+    "detail": "This is a protected view"
+  },
+  "meta": null
 }
 ```
 
 **Frontend:**
 
-The React frontend should handle authentication by storing the JWT tokens in localStorage or a similar mechanism and including the access token in the Authorization header for protected requests.
+The React frontend should handle authentication by storing the JWT tokens in localStorage or a similar mechanism and including the access token in the Authorization header for protected requests. TypeScript interfaces should be used for type checking of API responses and request payloads.
 
 ### Contributing
 
