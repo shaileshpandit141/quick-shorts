@@ -1,0 +1,39 @@
+/*
+ * CSS Import Structure Documentation
+ * ================================
+ *
+ * Variables
+ * ---------
+ * theme          - Theme-specific variables for consistent styling
+ * variables      - General purpose variables used throughout the app
+ *
+ * Base Styles
+ * -----------
+ * reset          - CSS reset/normalize to ensure cross-browser consistency
+ * default_font_size  - Base font size configuration
+ * layout         - Core layout structure and grid system
+ * body          - Styles applied to the body element
+ * root          - Global :root CSS variable declarations
+ *
+ * Components & Utilities
+ * ---------------------
+ * button_and_link    - Styles for buttons, links and interactive elements
+ * skeleton       - Loading state placeholder animations
+ * success_and_error  - Messaging and alert styling components
+ */
+
+/* Variables */
+@import './variables/theme.css';
+@import './variables/variables.css';
+
+/* Base Styles */
+@import './base/reset.css';
+@import './base/typography.css';
+@import './layouts/layout.css';
+@import './base/body.css';
+@import './base/root.css';
+
+/* Components & Utilities */
+@import './custom_classes/button_and_link.css';
+@import './custom_classes/skeleton.css';
+@import './custom_classes/success_and_error_message.css';

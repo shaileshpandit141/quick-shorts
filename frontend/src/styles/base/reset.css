@@ -1,0 +1,126 @@
+/* Reset.css
+ * 
+ * A comprehensive CSS reset that normalizes default browser styles,
+ * ensuring consistent rendering across different browsers.
+ */
+
+/* Universal Reset
+ * Applies to all elements including pseudo-elements
+ */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    vertical-align: baseline;
+}
+
+/* HTML Root Element
+ * Base font configuration and scroll behavior
+ */
+html {
+    font-size: 100%;
+    line-height: 1.5;
+    scroll-behavior: smooth;
+    overflow: hidden;
+}
+
+/* List Elements
+ * Removes native list styling
+ */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Fieldset Element
+ * Removes native fieldset styles
+ */
+fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+/* Table Element
+ * Removes table borders and spacing
+ */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Form Controls
+ * Normalizes form elements and removes browser-specific styling
+ */
+input,
+button,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    user-select: none;
+}
+
+/* Anchor Element
+ * Removes default link decoration
+ */
+a {
+    text-decoration: none;
+    cursor: default;
+    user-select: none;
+}
+
+/* Media Elements
+ * Makes media elements responsive
+ */
+img,
+video,
+audio {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    user-select: none;
+}
+
+/* Blockquote Element
+ * Removes default quote spacing
+ */
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+
+/* Clearfix
+ * Utility class for float clearing
+ */
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Text Formatting
+ * Resets bold text weight
+ */
+strong,
+b {
+    font-weight: normal;
+}
+
+/* Form Element
+ * Prevents text selection
+ */
+form {
+    user-select: none;
+}

@@ -1,0 +1,18 @@
+/**
+ * Base styles for the entire webpage applied to the body element.
+ * Sets up fundamental typography, layout, and visual rendering settings.
+ * Uses system fonts, responsive sizing, and optimized text rendering.
+ * Colors are defined through CSS variables for theme flexibility.
+ * Controls overflow behavior for proper layout containment.
+ */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    width: 100%;
+    background-color: var(--background-light);
+    color: var(--text-primary);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+}

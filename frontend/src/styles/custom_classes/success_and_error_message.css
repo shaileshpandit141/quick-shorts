@@ -1,0 +1,67 @@
+/*
+ * .succeeded-img
+ * Container for success images with square aspect ratio
+ * Applies width constraints and handles overflow
+ */
+.succeeded-img {
+    aspect-ratio: 1/1;
+    width: 100%;
+    max-width: 350px;
+    overflow: hidden;
+
+    img {
+        width: inherit;
+        height: inherit;
+        background-size: contain;
+        background-position: center;
+    }
+}
+
+/*
+ * .succeeded-info
+ * Container for success message information
+ * Handles width constraints and text formatting
+ */
+.succeeded-info {
+    width: 100%;
+    max-width: calc(400/16 * 1em);
+    overflow: hidden;
+
+    /* Title text styling */
+    .title {
+        text-align: center;
+        margin-block: calc(8/16 * 1em);
+        text-transform: lowercase;
+
+        &::first-letter {
+            text-transform: capitalize
+        }
+    }
+
+    /* Message text styling */
+    .message {
+        text-align: center;
+        margin-bottom: calc(8/16 * 1em);
+
+        &:last-child {
+            margin-bottom: calc(16/16 * 1em);
+        }
+    }
+}
+
+/*
+ * .error-text
+ * Styling for error message text
+ * Handles text color, alignment and capitalization
+ */
+.error-text {
+    width: 100%;
+    padding: 0 calc(20/16 * 1em);
+    text-align: start;
+    color: var(--error-text-primary);
+    text-transform: lowercase;
+
+    &::first-letter {
+        text-transform: capitalize
+    }
+}

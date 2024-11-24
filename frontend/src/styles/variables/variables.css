@@ -1,0 +1,16 @@
+/**
+ * Global CSS Variables Documentation
+ *
+ * @variable $opacity - Default opacity value (1 = fully opaque)
+ * @variable $box-shadow - Standard box shadow with slight transparency
+ * @variable $border - Default border style with light color
+ * @variable $header-height - Fixed header height in em units
+ * @variable $screen-height - Calculates viewport height minus header height
+ */
+:root {
+    --opacity: 1;
+    --box-shadow: 0 0 1.5px #0000004d;
+    --border: 1px solid var(border-color-light);
+    --header-height: calc(64/16 * 1em);
+    --screen-height: calc(100dvh - var(--header-height));
+}
