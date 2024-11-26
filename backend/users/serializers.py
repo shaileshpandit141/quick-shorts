@@ -72,20 +72,20 @@ class UserSerializer(serializers.ModelSerializer):
             'email': {
                 'required': True,
                 'error_messages': {
-                    'required': _('email field is required'),
-                    'invalid': _('Invalid email address')
+                    'required': _('Please provide a valid email address to continue'),
+                    'invalid': _('The email address format is not valid, please check and try again')
                 }
             },
             'first_name': {
                 'required': False,
                 'error_messages': {
-                    'invalid': _('Invalid first_name.')
+                    'invalid': _('The first name contains invalid characters. Please use letters only.')
                 }
             },
             'last_name': {
                 'required': False,
                 'error_messages': {
-                    'invalid': _('Invalid last_name.')
+                    'invalid': _('The last name contains invalid characters. Please use letters only.')
                 }
             }
         }
