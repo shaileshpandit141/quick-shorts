@@ -72,9 +72,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30, unique=False, blank=True, null=True)  # Optional last name
     date_joined = models.DateTimeField(auto_now_add=True, blank=False, null=False)  # Automatically set when account is created
     last_login = models.DateTimeField(auto_now=True, blank=False, null=False)  # Automatically updated on each login
-    is_active = models.BooleanField(default=False)  # Whether this user should be treated as active
-    is_staff = models.BooleanField(default=False)  # Whether this user can access the admin site
-    is_superuser = models.BooleanField(default=False)  # Whether this user has all permissions without explicitly assigning them
+    is_active = models.BooleanField(default=True) # type: ignore  # Whether this user should be treated as active
+    is_staff = models.BooleanField(default=False) # type: ignore  # Whether this user can access the admin site
+    is_superuser = models.BooleanField(default=False) # type: ignore  # Whether this user has all permissions without explicitly assigning them
 
     objects = UserManager()
 
