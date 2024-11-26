@@ -3,6 +3,7 @@ backend/venv
 backend/.env
 backend/backend/__pycache__
 backend/users/__pycache__
+backend/users/migrations
 backend/db.sqlite3
 
 # Ignore the frontend dependency
