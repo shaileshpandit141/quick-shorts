@@ -22,9 +22,9 @@ class Migration(migrations.Migration):
                 ('last_name', models.CharField(blank=True, max_length=30, null=True)),
                 ('date_joined', models.DateTimeField(auto_now_add=True)),
                 ('last_login', models.DateTimeField(auto_now=True)),
-                ('is_active', models.BooleanField(default=False)),
-                ('is_staff', models.BooleanField(default=False)),
-                ('is_superuser', models.BooleanField(default=False)),
+                ('is_active', models.BooleanField(default=False)), # type: ignore
+                ('is_staff', models.BooleanField(default=False)), # type: ignore
+                ('is_superuser', models.BooleanField(default=False)), # type: ignore
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')),
             ],
