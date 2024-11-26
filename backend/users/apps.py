@@ -12,5 +12,5 @@ class UsersConfig(AppConfig):
                                  in this app. Set to Django's BigAutoField.
         name (str): The name of this Django app, set to 'users'.
     """
-    default_auto_field = 'django.db.models.BigAutoField'
+    default_auto_field = 'django.db.models.BigAutoField' # type: ignore
     name = 'users'
