@@ -198,7 +198,11 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                 error_context = {
                     'status': 'error',
                     'message': _('Sign in failed - email not verified'),
-                    'error': _('Please verify your email address before logging in')
+                    'error': {
+                        'non_field_errors': [
+                            _('Please verify your email address before logging in')
+                        ]
+                    }
                 }
                 return Response(error_context, status=status.HTTP_401_UNAUTHORIZED)
 
