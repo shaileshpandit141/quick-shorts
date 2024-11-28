@@ -1,3 +1,6 @@
+# Python imports
+from typing import NoReturn
+
 # Django imports
 from django.contrib.auth import get_user_model
 from django.utils import timezone
@@ -43,7 +46,7 @@ class CustomRegisterView(RegisterView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs) -> Response:
         """
         Handle user registration requests.
 
@@ -98,7 +101,7 @@ class CustomLogoutView(LogoutView):
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs) -> Response:
         """
         Handle logout request and invalidate refresh token.
 
@@ -168,7 +171,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     throttle_classes = [AnonRateThrottle]
     serializer_class = CustomTokenObtainPairSerializer
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs) -> Response:
         """
         Handle login request and generate JWT tokens.
 
@@ -237,7 +240,7 @@ class CustomTokenRefreshView(TokenRefreshView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
-    def get_serializer(self, *args, **kwargs):
+    def get_serializer(self, *args, **kwargs) -> NoReturn:
         """
         Customize serializer to handle refresh token field name.
 
@@ -253,7 +256,7 @@ class CustomTokenRefreshView(TokenRefreshView):
             pass
         return super().get_serializer(data=data, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs) -> Response:
         """
         Handle token refresh requests.
 
@@ -300,7 +303,7 @@ class CustomVerifyEmailView(VerifyEmailView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs) -> Response:
         """
         Process email verification request.
 
@@ -350,7 +353,7 @@ class CustomResendVerificationEmailView(APIView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs) -> Response:
         """
         Process request to resend verification email.
 
@@ -427,7 +430,7 @@ class CustomPasswordResetView(PasswordResetView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs) -> Response:
         """
         Process password reset request.
 
@@ -477,7 +480,7 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs) -> Response:
         """
         Process password reset confirmation request.
 
@@ -527,7 +530,7 @@ class UserInfoView(APIView):
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs) -> Response:
         """
         Retrieve current user's information.
 
