@@ -66,7 +66,7 @@ class CustomRegisterView(RegisterView):
             refresh = self.get_token(user)  # type: ignore
 
             success_context = {
-                'status': 'success',
+                'status': 'succeeded',
                 'message': _('Registration successful! Welcome aboard!'),
                 'data': {
                     'access_token': str(refresh.access_token),
@@ -77,7 +77,7 @@ class CustomRegisterView(RegisterView):
             return Response(success_context, status=status.HTTP_201_CREATED)
 
         error_context = {
-            'status': 'error',
+            'status': 'failed',
             'message': _('Registration failed. Please check your information.'),
             'error': serializer.errors
         }
@@ -118,7 +118,7 @@ class CustomLogoutView(LogoutView):
 
         if refresh_token is None:
             error_context = {
-                'status': 'error',
+                'status': 'failed',
                 'message': _('Sign out failed - refresh token required'),
                 'error': {
                     'refresh_token': _('Please provide your refresh token')
@@ -131,7 +131,7 @@ class CustomLogoutView(LogoutView):
             token.blacklist()
         except Exception:
             error_context = {
-                'status': 'error',
+                'status': 'failed',
                 'message': _('Sign out failed - invalid token'),
                 'error': {
                     'refresh_token': _('The provided refresh token is not valid')
@@ -142,7 +142,7 @@ class CustomLogoutView(LogoutView):
         super().post(request, *args, **kwargs)
 
         success_context = {
-            'status': 'success',
+            'status': 'succeeded',
             'message': _('Goodbye! You have been successfully logged out'),
             'data': {
                 'detail': _('Sign out completed successfully')
@@ -188,7 +188,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
         if not serializer.is_valid():
             error_context = {
-                'status': 'error',
+                'status': 'failed',
                 'message': _('Sign in failed - invalid credentials'),
                 'error': serializer.errors
             }
@@ -199,7 +199,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         if not user.is_superuser:
             if not user.emailaddress_set.filter(verified=True).exists():
                 error_context = {
-                    'status': 'error',
+                    'status': 'failed',
                     'message': _('Sign in failed - email not verified'),
                     'error': {
                         'non_field_errors': [
@@ -215,7 +215,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         refresh = RefreshToken.for_user(user)
 
         success_context = {
-            'status': 'success',
+            'status': 'succeeded',
             'message': _('Welcome back! Sign in successful'),
             'data': {
                 'access_token': str(refresh.access_token),
@@ -272,7 +272,7 @@ class CustomTokenRefreshView(TokenRefreshView):
 
         if response.status_code == status.HTTP_200_OK:
             success_context = {
-                'status': 'success',
+                'status': 'succeeded',
                 'message': _('Access token successfully renewed'),
                 'data': {
                     'access_token': response.data.get('access')  # type: ignore
@@ -319,7 +319,7 @@ class CustomVerifyEmailView(VerifyEmailView):
 
         if response.status_code == status.HTTP_200_OK:
             success_context = {
-                'status': 'success',
+                'status': 'succeeded',
                 'message': _('Great! Your email has been verified'),
                 'data': {
                     'detail': _('Email verification completed successfully')
@@ -329,7 +329,7 @@ class CustomVerifyEmailView(VerifyEmailView):
             return Response(success_context, status=status.HTTP_200_OK)
 
         error_context = {
-            'status': 'error',
+            'status': 'failed',
             'message': _('Unable to verify email address'),
             'error': response.data
         }
@@ -370,7 +370,7 @@ class CustomResendVerificationEmailView(APIView):
 
         if not email:
             error_context = {
-                'status': 'error',
+                'status': 'failed',
                 'message': _('Missing email address'),
                 'error': {
                     'email': _('Please provide your email address')
@@ -382,7 +382,7 @@ class CustomResendVerificationEmailView(APIView):
             user = User.objects.get(email=email)
         except User.DoesNotExist:
             error_context = {
-                'status': 'error',
+                'status': 'failed',
                 'message': _('Account not found'),
                 'error': {
                     'email': _('No account exists with this email address')
@@ -393,7 +393,7 @@ class CustomResendVerificationEmailView(APIView):
         if user.emailaddress_set.filter(email=user.email, verified=False).exists():
             send_email_confirmation(request, user)
             success_context = {
-                'status': 'success',
+                'status': 'succeeded',
                 'message': _('Verification email sent'),
                 'data': {
                     'detail': _('Please check your inbox for the verification email')
@@ -403,7 +403,7 @@ class CustomResendVerificationEmailView(APIView):
             return Response(success_context, status=status.HTTP_200_OK)
         else:
             success_context = {
-                'status': 'success',
+                'status': 'succeeded',
                 'message': _('Email already verified'),
                 'data': {
                     'detail': _('Your email address has already been verified')
@@ -445,7 +445,7 @@ class CustomPasswordResetView(PasswordResetView):
         email = request.data.get("email", None)
         if not email:
             error_context = {
-                'status': 'error',
+                'status': 'failed',
                 'message': _('Missing email address'),
                 'error': {
                     'email': _('Please provide your email address')
@@ -455,7 +455,7 @@ class CustomPasswordResetView(PasswordResetView):
 
         if not User.objects.filter(email=email).exists():
             error_context = {
-                'status': 'error',
+                'status': 'failed',
                 'message': _('Account not found'),
                 'error': {
                     'email': _('No account exists with this email address')
@@ -496,7 +496,7 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 
         if response.status_code == status.HTTP_200_OK:
             success_context = {
-                'status': 'success',
+                'status': 'succeeded',
                 'message': _('Password successfully updated'),
                 'data': {
                     'detail': _('You can now sign in with your new password')
@@ -506,7 +506,7 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
             return Response(success_context, status=status.HTTP_200_OK)
 
         error_context = {
-            'status': 'error',
+            'status': 'failed',
             'message': _('Unable to reset password'),
             'error': response.data
         }
@@ -545,7 +545,7 @@ class UserInfoView(APIView):
         user = request.user
         serializer = UserSerializer(instance=user, many=False)
         success_context = {
-            'status': 'success',
+            'status': 'succeeded',
             'message': _('User profile retrieved successfully'),
             'data': serializer.data,
             'meta': None
