@@ -5,15 +5,15 @@
     bottom: unset;
     left: 0;
     min-height: var(--header-height);
-    background-color: var(--header-background);
+    /* background-color: var(--header-background); */
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: gold;
+    z-index: 999;
     
     .header-wrapper {
         width: 100%;
-        background-color: red;
     }
 }

@@ -1,5 +1,5 @@
 /* Reset.css
- * 
+ *
  * A comprehensive CSS reset that normalizes default browser styles,
  * ensuring consistent rendering across different browsers.
  */
@@ -25,6 +25,7 @@ html {
     line-height: 1.5;
     scroll-behavior: smooth;
     overflow: hidden;
+    z-index: 9999;
 }
 
 /* List Elements
@@ -123,4 +124,16 @@ b {
  */
 form {
     user-select: none;
+}
+
+/* Smooth transitions for theme switching */
+body,
+header,
+footer,
+input,
+button {
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border 0.3s ease;
 }
