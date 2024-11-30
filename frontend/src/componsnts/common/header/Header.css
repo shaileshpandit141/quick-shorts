@@ -1,3 +1,19 @@
 .header {
-    background-color: red;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: unset;
+    left: 0;
+    min-height: var(--header-height);
+    background-color: var(--header-background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: gold;
+    
+    .header-wrapper {
+        width: 100%;
+        background-color: red;
+    }
 }

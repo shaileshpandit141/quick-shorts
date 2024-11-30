@@ -10,7 +10,7 @@ const MainLayout: React.FC = (props) => {
       <header className='inner-grid-1-1 grid-12'>
         <Header />
       </header>
-      <main className='inner-grid-1-1 grid-12'>
+      <main className='inner-grid-1-1 grid-12 main-content'>
         <Outlet />
       </main>
       <footer className='inner-grid-1-1 grid-12'>
