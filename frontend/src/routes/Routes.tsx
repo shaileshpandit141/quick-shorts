@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import { lazyModuleImport, LazyModuleLoader } from 'lazyUtils/lazyModuleImport'
 import Loader from 'componsnts/common/loader/Loader'
+import IndexSkeleton from 'pages/index/IndexSkeleton'
 
 // Default Imports (user-defined components).
 import PrivateRoute from './PrivateRoute'
@@ -29,7 +30,7 @@ const AppRoutes: React.FC = () => {
           {/* Public Routes */}
           <Route element={<PublicRoute />}>
             <Route index element={
-              <LazyModuleLoader element={<Index />} fallback={<Loader />} />
+              <LazyModuleLoader element={<Index />} fallback={<IndexSkeleton />} />
             } />
           </Route>
 
