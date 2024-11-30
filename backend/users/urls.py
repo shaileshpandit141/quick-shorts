@@ -52,7 +52,7 @@ urlpatterns = [
         name="account_email_verification_sent"
     ),
     path(
-        "signup/resend-email-verification/",
+        "signup/resend-verification-email/",
         CustomResendVerificationEmailView.as_view(),
         name="account_resend_email_verification"
     ),
