@@ -1,15 +1,8 @@
-import React from 'react';
-import './styles/index.css'
+import Routes from 'routes/Routes'
 
-function App() {
-  return (
-    <main className='inner-grid-2-2'>
-      <div className="App">
-        <h1>This is a h1 tag</h1>
-        <h1 className='h1-skeleton'> </h1>
-      </div>
-    </main>
-  );
+// App entry point.
+const App = (): JSX.Element => {
+  return <Routes />
 }
 
-export default App;
+export default App
