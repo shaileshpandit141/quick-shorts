@@ -353,7 +353,7 @@ POST http://localhost:8000/api/v1/auth/token/refresh/
 Content-Type: application/json
 
 {
-  "refresh": "jwt_refresh_token"
+  "refresh_token": "jwt_refresh_token"
 }
 ```
 
