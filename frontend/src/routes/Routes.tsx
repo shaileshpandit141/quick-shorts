@@ -5,17 +5,20 @@ import {
   Routes,
   Route
 } from 'react-router-dom'
+import { lazyModuleImport, LazyModuleLoader } from 'lazyUtils/lazyModuleImport'
+import Loader from 'componsnts/common/loader/Loader'
 
 // Default Imports (user-defined components).
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
 import MainLayout from 'layouts//mainLayout/MainLayout'
 import AuthLayout from 'layouts/authLayout/AuthLayout'
-import Index from 'pages/index/Index'
-import Home from 'pages/home/Home'
-import Signin from 'pages/signin/Signin'
-import Signup from 'pages/signup/Signup'
-import NotFound from 'pages/NotFound/NotFound'
+
+const Index = lazyModuleImport(() => import('pages/index/Index'))
+const Home = lazyModuleImport(() => import('pages/home/Home'))
+const Signin = lazyModuleImport(() => import('pages/signin/Signin'))
+const Signup = lazyModuleImport(() => import('pages/signup/Signup'))
+const NotFound = lazyModuleImport(() => import('pages/NotFound/NotFound'))
 
 const AppRoutes: React.FC = () => {
   return (
@@ -25,21 +28,31 @@ const AppRoutes: React.FC = () => {
 
           {/* Public Routes */}
           <Route element={<PublicRoute />}>
-            <Route index element={<Index />} />
+            <Route index element={
+              <LazyModuleLoader element={<Index />} fallback={<Loader />} />
+            } />
           </Route>
 
           {/* Private Routes */}
           <Route element={<PrivateRoute />}>
-            <Route path='/home' element={<Home />} />
+            <Route path='/home' element={
+              <LazyModuleLoader element={<Home />} fallback={<Loader />} />
+            } />
           </Route>
         </Route>
 
         <Route element={<AuthLayout />}>
-          <Route path='/signin' element={<Signin />} />
-          <Route path='/signup' element={<Signup />} />
+          <Route path='/signin' element={
+            <LazyModuleLoader element={<Signin />} fallback={<Loader />} />
+          } />
+          <Route path='/signup' element={
+            <LazyModuleLoader element={<Signup />} fallback={<Loader />} />
+          } />
         </Route>
         {/* Catch-all route for 404 Not Found */}
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={
+          <LazyModuleLoader element={<NotFound />} fallback={<Loader />} />
+        } />
       </Routes>
     </Router>
   )

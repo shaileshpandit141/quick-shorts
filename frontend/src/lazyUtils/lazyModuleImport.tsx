@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import ErrorBoundary from 'componsnts/common/errorBoundary/ErrorBoundary';
 
-export const lazyImportWithRetry = (
+export const lazyModuleImport = (
   importFunction: () => Promise<any>,
   retries: number = 3,
   delay: number = 1000
@@ -25,7 +25,7 @@ export const lazyImportWithRetry = (
   })
 );
 
-export const LazyLoader: React.FC<{
+export const LazyModuleLoader: React.FC<{
   element: React.ReactNode;
   fallback: React.ReactNode;
 }> = ({ element, fallback }) => (
