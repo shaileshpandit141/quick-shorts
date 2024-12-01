@@ -50,6 +50,9 @@ class Response:
     Utility class that provides standardized formatting for API responses.
     Creates consistent error and success response structures.
     """
+
+    type = DRFResponse
+
     def __init__(self):
         pass
 
