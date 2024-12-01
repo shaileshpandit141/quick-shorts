@@ -34,8 +34,8 @@ class TypedSuccessResponse(TypedDict):
         meta (None | dict): Optional metadata about the response (e.g. pagination details)
     """
     message: str
-    data: dict
     meta: None | dict
+    data: dict
 
 
 TypedSuccessStatus = Literal[
@@ -90,6 +90,6 @@ class Response:
         return DRFResponse({
             'status': 'succeeded',
             'message': payload['message'],
-            'data': payload['data'],
-            'meta': payload['meta']
+            'meta': payload['meta'],
+            'data': payload['data']
         }, status=status)
