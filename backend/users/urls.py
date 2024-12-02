@@ -28,50 +28,21 @@ Available Endpoints:
 from django.urls import path
 from .views import (
     UserRegisterAPIView,
-    CustomLogoutView,
     CustomTokenObtainPairView,
     CustomTokenRefreshView,
-    CustomVerifyEmailView,
     CustomResendVerificationEmailView,
-    CustomPasswordResetView,
-    CustomPasswordResetConfirmView,
     UserInfoView
 )
 
 urlpatterns = [
     # Authentication endpoints for user registration and logout
     path("signup/", UserRegisterAPIView.as_view(), name="account_signup"),
-    path("signout/", CustomLogoutView.as_view(), name="custom_logout"),
     path("token/", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", CustomTokenRefreshView.as_view(), name="token_refresh"),
-
-    # Email verification endpoints for account confirmation
-    path(
-        "signup/verify-email/",
-        CustomVerifyEmailView.as_view(),
-        name="account_email_verification_sent"
-    ),
     path(
         "signup/resend-verification-email/",
         CustomResendVerificationEmailView.as_view(),
         name="account_resend_email_verification"
-    ),
-
-    # Password management endpoints for reset workflow
-    path(
-        "password/reset/",
-        CustomPasswordResetView.as_view(),
-        name="password_reset"
-    ),
-    path(
-        "password/reset/confirm/",
-        CustomPasswordResetConfirmView.as_view(),
-        name="password_reset_confirm"
-    ),
-    path(
-        "password/reset/confirm/<uidb64>/<token>/",
-        CustomPasswordResetConfirmView.as_view(),
-        name="password_reset_confirm"
     ),
 
     # User data endpoints for profile information

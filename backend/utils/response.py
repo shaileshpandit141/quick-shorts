@@ -1,4 +1,4 @@
-from typing import TypedDict, Literal, Dict, Union, List
+from typing import TypedDict, Literal, Dict, Union, List, Any, Optional
 from rest_framework.response import Response as DRFResponse
 from rest_framework import status
 
@@ -53,13 +53,17 @@ class Response:
 
     type = DRFResponse
 
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     @staticmethod
     def error(
         payload: TypedErrorResponse,
-        status: TypedErrorStatus=status.HTTP_400_BAD_REQUEST) -> DRFResponse:
+        status: TypedErrorStatus=status.HTTP_400_BAD_REQUEST,
+        template_name: Optional[Any] = None,
+        headers: Optional[Dict[str, str]] = None,
+        exception: bool = False,
+        content_type: Optional[str] = None) -> DRFResponse:
         """
         Creates a standardized error response structure.
 
@@ -74,12 +78,21 @@ class Response:
             'status': 'failed',
             'message': payload['message'],
             'errors': payload['errors']
-        }, status=status)
+        },
+        status=status,
+        template_name=template_name,
+        headers=headers,
+        exception=exception,
+        content_type=content_type)
 
     @staticmethod
     def success(
         payload: TypedSuccessResponse,
-        status: TypedSuccessStatus = status.HTTP_200_OK) -> DRFResponse:
+        status: TypedSuccessStatus = status.HTTP_200_OK,
+        template_name: Optional[Any] = None,
+        headers: Optional[Dict[str, str]] = None,
+        exception: bool = False,
+        content_type: Optional[str] = None) -> DRFResponse:
         """
         Creates a standardized success response structure.
 
@@ -95,4 +108,9 @@ class Response:
             'message': payload['message'],
             'meta': payload['meta'],
             'data': payload['data']
-        }, status=status)
+        },
+        status=status,
+        template_name=template_name,
+        headers=headers,
+        exception=exception,
+        content_type=content_type)

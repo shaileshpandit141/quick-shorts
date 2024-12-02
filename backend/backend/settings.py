@@ -45,14 +45,9 @@ INSTALLED_APPS = [
 # Third-party applications
 INSTALLED_APPS += [
     "django.contrib.sites",
-    "allauth",  # Authentication
-    "allauth.account",
-    "allauth.socialaccount",
     "rest_framework",  # REST API
     "rest_framework.authtoken",
     "rest_framework_simplejwt",  # JWT authentication
-    "dj_rest_auth",
-    "dj_rest_auth.registration",
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",  # CORS handling
 ]
@@ -72,8 +67,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware"
 ]
 
 # URL AND TEMPLATE CONFIGURATION
@@ -90,10 +84,7 @@ TEMPLATES = [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-                # Social account processors (uncomment if using social auth)
-                # "allauth.account.context_processors.account",
-                # "allauth.socialaccount.context_processors.socialaccount",
+                "django.contrib.messages.context_processors.messages"
             ],
         },
     },
@@ -220,13 +211,11 @@ SIMPLE_JWT = {
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
+    "django.contrib.auth.backends.ModelBackend"
 )
 
 # EMAIL SETTINGS
 # ------------
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 EMAIL_BACKEND = config("EMAIL_BACKEND", cast=str)
 EMAIL_HOST = config("EMAIL_HOST", cast=str)
 EMAIL_PORT = config("EMAIL_PORT", cast=int)
@@ -238,17 +227,17 @@ DEFAULT_FROM_EMAIL = config(
     "DEFAULT_FROM_EMAIL", cast=str, default=config("EMAIL_HOST_USER")
 )
 
-# ACCOUNT SETTINGS
-# --------------
-ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
+# # ACCOUNT SETTINGS
+# # --------------
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
+# ACCOUNT_AUTHENTICATION_METHOD = "email"
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_UNIQUE_EMAIL = True
 
-# CUSTOM TEMPLATES
-# --------------
-ACCOUNT_EMAIL_CONFIRMATION_TEMPLATE = "users/email/email_confirmation_message.txt"
-PASSWORD_RESET_TEMPLATE = "users/email/password_reset_key_message.txt"
-ACCOUNT_ADAPTER = "users.adapters.UserAdapter"
+# # CUSTOM TEMPLATES
+# # --------------
+# ACCOUNT_EMAIL_CONFIRMATION_TEMPLATE = "users/email/email_confirmation_message.txt"
+# PASSWORD_RESET_TEMPLATE = "users/email/password_reset_key_message.txt"
+# ACCOUNT_ADAPTER = "users.adapters.UserAdapter"

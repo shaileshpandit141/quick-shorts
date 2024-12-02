@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.postgres.forms.hstore import ValidationError
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.shortcuts import redirect
 
 # Django REST framework imports
 from rest_framework import status
@@ -18,12 +17,6 @@ from rest_framework.views import APIView
 # REST framework SimpleJWT imports
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
-# Django REST Auth imports
-# from dj_rest_auth.registration.serializers import RegisterSerializer
-# from dj_rest_auth.registration.views import RegisterView, VerifyEmailView
-from dj_rest_auth.registration.views import VerifyEmailView
-from dj_rest_auth.views import LogoutView, PasswordResetConfirmView, PasswordResetView
 
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.hashers import make_password
@@ -143,74 +136,6 @@ class UserRegisterAPIView(APIView):
             }
         }
         return Response(error_context, status=status.HTTP_400_BAD_REQUEST)
-
-
-class CustomLogoutView(LogoutView):
-    """
-    Custom view for handling user logout.
-
-    Extends LogoutView to handle JWT token blacklisting and session cleanup.
-    Requires authentication and validates refresh token before logout.
-
-    Methods:
-        post: Handle logout request and blacklist refresh token
-
-    Attributes:
-        permission_classes: Require authentication
-        throttle_classes: Rate limiting for authenticated users only
-    """
-    permission_classes = [IsAuthenticated]
-    throttle_classes = [UserRateThrottle]
-
-    def post(self, request, *args, **kwargs) -> Response:
-        """
-        Handle logout request and invalidate refresh token.
-
-        Checks for refresh token presence, blacklists it if valid,
-        and cleans up user session.
-
-        Args:
-            request: HTTP request containing refresh token
-
-        Returns:
-            Response indicating logout success or error
-        """
-        refresh_token = request.data.get("refresh_token", None)
-
-        if refresh_token is None:
-            error_context = {
-                'status': 'failed',
-                'message': _('Sign out failed - refresh token required'),
-                'error': {
-                    'refresh_token': _('Please provide your refresh token')
-                }
-            }
-            return Response(error_context, status=status.HTTP_400_BAD_REQUEST)
-
-        try:
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-        except Exception:
-            error_context = {
-                'status': 'failed',
-                'message': _('Sign out failed - invalid token'),
-                'error': {
-                    'refresh_token': _('The provided refresh token is not valid')
-                }
-            }
-            return Response(error_context, status=status.HTTP_400_BAD_REQUEST)
-
-        super().post(request, *args, **kwargs)
-
-        success_context = {
-            'status': 'succeeded',
-            'message': _('Goodbye! You have been successfully logged out'),
-            'data': {
-                'detail': _('Sign out completed successfully')
-            },
-            'meta': None
-        }
-        return Response(success_context, status=status.HTTP_200_OK)
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -350,61 +275,6 @@ class CustomTokenRefreshView(TokenRefreshView):
         return Response(error_context, status=response.status_code)
 
 
-class CustomVerifyEmailView(VerifyEmailView):
-    """
-    Custom view for verifying user email addresses.
-
-    Extends VerifyEmailView to provide custom response formatting
-    for email verification results.
-
-    Attributes:
-        permission_classes: Allow any user to access
-        throttle_classes: Rate limiting for anonymous requests
-    """
-    permission_classes = [AllowAny]
-    throttle_classes = [AnonRateThrottle]
-
-    def get(self, request, *args, **kwargs):
-        # You may want to send an email here instead of redirecting immediately
-        # Typically, email verification happens automatically after registration.
-        return redirect('account_email_verification_sent')
-
-    def post(self, request, *args, **kwargs) -> Response:
-        """
-        Process email verification request.
-
-        Verifies email token and updates user verification status.
-
-        Args:
-            request: HTTP request with verification token
-
-        Returns:
-            Response indicating verification success or failure
-        """
-        # Call the parent class to process the actual email verification logic
-        response = super().post(request, *args, **kwargs)
-
-        if response.status_code == status.HTTP_200_OK:
-            # Success response when email is verified
-            success_context = {
-                'status': 'succeeded',
-                'message': _('Great! Your email has been verified'),
-                'data': {
-                    'detail': _('Email verification completed successfully')
-                },
-                'meta': None
-            }
-            return Response(success_context, status=status.HTTP_200_OK)
-
-        # Failure response if verification fails
-        error_context = {
-            'status': 'failed',
-            'message': _('Unable to verify email address'),
-            'error': response.data
-        }
-        return Response(error_context, status=response.status_code)
-
-
 class CustomResendVerificationEmailView(APIView):
     """
     View for resending account verification emails.
@@ -480,106 +350,6 @@ class CustomResendVerificationEmailView(APIView):
                 'meta': None
             }
             return Response(success_context, status=status.HTTP_400_BAD_REQUEST,)
-
-
-class CustomPasswordResetView(PasswordResetView):
-    """
-    Custom view for handling password reset requests.
-
-    Extends PasswordResetView to add additional validation and custom responses.
-    Handles email validation and initiates password reset process.
-
-    Methods:
-        post: Handle password reset request
-
-    Attributes:
-        permission_classes: Allow any user to access
-        throttle_classes: Rate limiting for anonymous requests only
-    """
-    permission_classes = [AllowAny]
-    throttle_classes = [AnonRateThrottle]
-
-    def post(self, request, *args, **kwargs) -> Response:
-        """
-        Process password reset request.
-
-        Validates email existence before initiating password reset.
-
-        Args:
-            request: HTTP request containing email address
-
-        Returns:
-            Response indicating success or error status
-        """
-        email = request.data.get("email", None)
-        if not email:
-            error_context = {
-                'status': 'failed',
-                'message': _('Missing email address'),
-                'error': {
-                    'email': _('Please provide your email address')
-                }
-            }
-            return Response(error_context, status=status.HTTP_400_BAD_REQUEST)
-
-        if not User.objects.filter(email=email).exists():
-            error_context = {
-                'status': 'failed',
-                'message': _('Account not found'),
-                'error': {
-                    'email': _('No account exists with this email address')
-                }
-            }
-            return Response(error_context, status=status.HTTP_404_NOT_FOUND)
-
-        return super().post(request, *args, **kwargs)
-
-
-class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    """
-    Custom view for confirming password reset requests.
-
-    Extends PasswordResetConfirmView to provide custom response formatting
-    for password reset confirmation results.
-
-    Attributes:
-        permission_classes: Allow any user to access
-        throttle_classes: Rate limiting for anonymous requests
-    """
-    permission_classes = [AllowAny]
-    throttle_classes = [AnonRateThrottle]
-
-    def post(self, request, *args, **kwargs) -> Response:
-        """
-        Process password reset confirmation request.
-
-        Validates reset token and updates user password.
-
-        Args:
-            request: HTTP request with reset token and new password
-
-        Returns:
-            Response indicating reset success or failure
-        """
-        response = super().post(request, *args, **kwargs)
-
-        if response.status_code == status.HTTP_200_OK:
-            success_context = {
-                'status': 'succeeded',
-                'message': _('Password successfully updated'),
-                'data': {
-                    'detail': _('You can now sign in with your new password')
-                },
-                'meta': None
-            }
-            return Response(success_context, status=status.HTTP_200_OK)
-
-        error_context = {
-            'status': 'failed',
-            'message': _('Unable to reset password'),
-            'error': response.data
-        }
-        return Response(error_context, status=response.status_code)
 
 
 class UserInfoView(APIView):
