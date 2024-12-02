@@ -13,7 +13,7 @@ class CustomUserAdmin(UserAdmin):
     form = UserChangeForm  # Custom form for modifying existing users
 
     # Fields to display in the user list view
-    list_display = ('email', 'first_name', 'last_name', 'is_active', 'is_staff')
+    list_display = ('email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_email_verified')
     search_fields = ('email',)  # Enable searching by email
     readonly_fields = ('date_joined', 'last_login')  # Fields that cannot be modified
 
@@ -21,7 +21,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_email_verified')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
 
@@ -29,7 +29,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active')
+            'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active', 'is_email_verified')
         }),
     )
 

@@ -50,9 +50,10 @@ class UserManager(BaseUserManager):
         Raises:
             ValueError: If is_staff or is_superuser is not True
         """
+        extra_fields.setdefault('is_active', True)
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_active', True)
+        extra_fields.setdefault('is_email_verified', True)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
@@ -72,9 +73,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30, unique=False, blank=True, null=True)  # Optional last name
     date_joined = models.DateTimeField(auto_now_add=True, blank=False, null=False)  # Automatically set when account is created
     last_login = models.DateTimeField(auto_now=True, blank=False, null=False)  # Automatically updated on each login
-    is_active = models.BooleanField(default=True) # type: ignore  # Whether this user should be treated as active
-    is_staff = models.BooleanField(default=False) # type: ignore  # Whether this user can access the admin site
-    is_superuser = models.BooleanField(default=False) # type: ignore  # Whether this user has all permissions without explicitly assigning them
+    is_active = models.BooleanField(default=True)  # type: ignore  # Whether this user should be treated as active
+    is_staff = models.BooleanField(default=False)  # type: ignore  # Whether this user can access the admin site
+    is_superuser = models.BooleanField(default=False)  # type: ignore  # Whether this user has all permissions without explicitly assigning them
+    is_email_verified = models.BooleanField(default=False)  # type: ignore
 
     objects = UserManager()
 
@@ -95,12 +97,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self):
         """Returns the user's full name, with a space between first and last name"""
         return f'{self.first_name} {self.last_name}'.strip()
-
-    def create(self, validated_data):
-        # Handle the bulk records.
-        if isinstance(validated_data, list):
-            bulk_data = [User(**data) for data in validated_data]
-            return User.objects.bulk_create(bulk_data)
-
-        # Handle the single record.
-        return User.objects.create(**validated_data)

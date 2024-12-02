@@ -13,7 +13,7 @@ class UserCreationForm(DjangoUserCreationForm):
     """
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'is_active', 'is_staff')
+        fields = ('email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_email_verified')
 
     def clean_email(self):
         """
@@ -40,7 +40,7 @@ class UserChangeForm(DjangoUserChangeForm):
     """
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'is_active', 'is_staff')
+        fields = ('email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_email_verified')
 
     def clean_email(self):
         """

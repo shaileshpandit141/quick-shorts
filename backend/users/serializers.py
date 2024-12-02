@@ -9,37 +9,6 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    """
-    Custom token serializer that uses email instead of username for authentication.
-
-    Extends the JWT TokenObtainPairSerializer to override the validation method
-    to authenticate with email and password instead of username and password.
-
-    Raises:
-        ValidationError: If no active user is found or if the user account is inactive
-    """
-    def validate(self, attrs):
-        # Build credentials dictionary with email and password
-        credentials = {
-            'email': attrs.get('email'),
-            'password': attrs.get('password'),
-        }
-
-        # Attempt to authenticate the user with provided credentials
-        user = authenticate(**credentials)
-
-        # Raise validation error if no user found
-        if user is None:
-            raise serializers.ValidationError(_('No active account found with the given credentials'))
-
-        # Raise validation error if user account is inactive
-        if not user.is_active:
-            raise serializers.ValidationError(_('This account is not active'))
-
-        return super().validate(attrs)
-
-
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializer for User model that handles serialization and deserialization of User objects.
@@ -64,10 +33,13 @@ class UserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ["id", "email", "first_name", "last_name"]
-        read_only_fields = ['id']
+        fields = ["id", "email", 'is_email_verified', "first_name", "last_name"]
+        read_only_fields = ['id', 'is_email_verified']
         extra_kwargs = {
             'id': {
+                'read_only': True
+            },
+            'is_email_verified': {
                 'read_only': True
             },
             'email': {
@@ -99,3 +71,34 @@ class UserSerializer(serializers.ModelSerializer):
             raise ValidationError('Invalid password')
         # Handle the single record.
         return User.objects.create(password=hashed_password, **validated_data)
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """
+    Custom token serializer that uses email instead of username for authentication.
+
+    Extends the JWT TokenObtainPairSerializer to override the validation method
+    to authenticate with email and password instead of username and password.
+
+    Raises:
+        ValidationError: If no active user is found or if the user account is inactive
+    """
+    def validate(self, attrs):
+        # Build credentials dictionary with email and password
+        credentials = {
+            'email': attrs.get('email'),
+            'password': attrs.get('password'),
+        }
+
+        # Attempt to authenticate the user with provided credentials
+        user = authenticate(**credentials)
+
+        # Raise validation error if no user found
+        if user is None:
+            raise serializers.ValidationError(_('No active account found with the given credentials'))
+
+        # Raise validation error if user account is inactive
+        if not user.is_active:
+            raise serializers.ValidationError(_('This account is not active'))
+
+        return super().validate(attrs)
