@@ -44,7 +44,6 @@ INSTALLED_APPS = [
 
 # Third-party applications
 INSTALLED_APPS += [
-    "django.contrib.sites",
     "rest_framework",  # REST API
     "rest_framework.authtoken",
     "rest_framework_simplejwt",  # JWT authentication
@@ -208,11 +207,9 @@ SIMPLE_JWT = {
 
 # AUTHENTICATION SETTINGS
 # ---------------------
-SITE_ID = 1
-
-AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend"
-)
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # EMAIL SETTINGS
 # ------------
@@ -226,18 +223,3 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str)
 DEFAULT_FROM_EMAIL = config(
     "DEFAULT_FROM_EMAIL", cast=str, default=config("EMAIL_HOST_USER")
 )
-
-# # ACCOUNT SETTINGS
-# # --------------
-# ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
-# ACCOUNT_AUTHENTICATION_METHOD = "email"
-# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-# ACCOUNT_USERNAME_REQUIRED = False
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_UNIQUE_EMAIL = True
-
-# # CUSTOM TEMPLATES
-# # --------------
-# ACCOUNT_EMAIL_CONFIRMATION_TEMPLATE = "users/email/email_confirmation_message.txt"
-# PASSWORD_RESET_TEMPLATE = "users/email/password_reset_key_message.txt"
-# ACCOUNT_ADAPTER = "users.adapters.UserAdapter"
