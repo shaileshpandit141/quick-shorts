@@ -21,9 +21,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.hashers import make_password
 
-# All Auth imports
-from allauth.account.utils import send_email_confirmation
-
 # Local imports
 from .serializers import UserSerializer, CustomTokenObtainPairSerializer
 # from utils.response import Responsefrom .response import Response
@@ -83,7 +80,7 @@ class UserRegisterAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
             user = serializer.instance
-            send_email_confirmation(request, user)
+            # send_email_confirmation(request, user)
             success_context = {
                 'status': 'succeeded',
                 'message': _('Verification email sent'),
@@ -330,7 +327,7 @@ class CustomResendVerificationEmailView(APIView):
             return Response(error_context, status=status.HTTP_404_NOT_FOUND)
 
         if user.emailaddress_set.filter(email=user.email, verified=False).exists():
-            send_email_confirmation(request, user)
+            # send_email_confirmation(request, user)
             success_context = {
                 'status': 'succeeded',
                 'message': _('Verification email sent'),
