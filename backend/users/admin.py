@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import User
 from .forms import UserCreationForm, UserChangeForm
+from django.utils.html import format_html
 
 class CustomUserAdmin(UserAdmin):
     """
@@ -13,15 +14,30 @@ class CustomUserAdmin(UserAdmin):
     form = UserChangeForm  # Custom form for modifying existing users
 
     # Fields to display in the user list view
-    list_display = ('email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_email_verified')
-    search_fields = ('email',)  # Enable searching by email
-    readonly_fields = ('date_joined', 'last_login')  # Fields that cannot be modified
+    list_display = ('email', 'full_name', 'is_active_colored', 'is_email_verified', 'is_staff', 'last_login')
+    list_filter = ('is_active', 'is_staff', 'is_email_verified', 'groups')
+    search_fields = ('email', 'first_name', 'last_name')
+    readonly_fields = ('date_joined', 'last_login')
+    list_per_page = 25
+
+    def full_name(self, obj):
+        return f"{obj.first_name} {obj.last_name}"
+    full_name.short_description = 'Full Name'
+
+    def is_active_colored(self, obj):
+        if obj.is_active:
+            return format_html('<span style="color: green;">Active</span>')
+        return format_html('<span style="color: red;">Inactive</span>')
+    is_active_colored.short_description = 'Status'
 
     # Define how fields are grouped and displayed when editing existing users
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_email_verified')}),
+        ('Permissions', {
+            'fields': ('is_active', 'is_email_verified', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+            'classes': ('collapse',)
+        }),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
 
@@ -29,11 +45,27 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active', 'is_email_verified')
+            'fields': ('email', 'password1', 'password2', 'first_name', 'last_name', 'is_active', 'is_email_verified', 'is_staff')
         }),
     )
 
-    ordering = ('email',)  # Default ordering by email address
+    ordering = ('-date_joined',)  # Default ordering by newest first
+    filter_horizontal = ('groups', 'user_permissions',)
+    actions = ['activate_users', 'deactivate_users', 'send_email_verification']
+
+    def activate_users(self, request, queryset):
+        queryset.update(is_active=True)
+    activate_users.short_description = "Activate selected users"
+
+    def deactivate_users(self, request, queryset):
+        queryset.update(is_active=False)
+    deactivate_users.short_description = "Deactivate selected users"
+
+    def send_email_verification(self, request, queryset):
+        for user in queryset:
+            # Add your email verification logic here
+            pass
+    send_email_verification.short_description = "Send email verification"
 
 # Register the custom admin interface
 admin.site.register(User, CustomUserAdmin)
