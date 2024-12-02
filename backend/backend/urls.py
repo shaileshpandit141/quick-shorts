@@ -26,6 +26,7 @@ from users import urls
 
 # Main URL patterns defining route-to-view mappings
 urlpatterns = [
+    # path('accounts/', include('allauth.urls')),
     # Frontend application served at root URL
     path("", IndexTemplateView.as_view(), name='index'),
 

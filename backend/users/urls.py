@@ -27,7 +27,7 @@ Available Endpoints:
 
 from django.urls import path
 from .views import (
-    CustomRegisterView,
+    UserRegisterAPIView,
     CustomLogoutView,
     CustomTokenObtainPairView,
     CustomTokenRefreshView,
@@ -40,7 +40,7 @@ from .views import (
 
 urlpatterns = [
     # Authentication endpoints for user registration and logout
-    path("signup/", CustomRegisterView.as_view(), name="account_signup"),
+    path("signup/", UserRegisterAPIView.as_view(), name="account_signup"),
     path("signout/", CustomLogoutView.as_view(), name="custom_logout"),
     path("token/", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", CustomTokenRefreshView.as_view(), name="token_refresh"),

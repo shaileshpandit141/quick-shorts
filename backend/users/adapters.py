@@ -114,3 +114,7 @@ class UserAdapter(DefaultAccountAdapter):
 
         email_message.attach_alternative(message_html, "text/html")
         email_message.send(fail_silently=False)
+
+    def populate_username(self, request, user):
+        # Do nothing as we're using email as the identifier
+        pass

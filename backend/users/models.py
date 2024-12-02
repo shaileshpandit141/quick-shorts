@@ -86,7 +86,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'User'
         verbose_name_plural = 'Users'
         ordering = ['-date_joined']  # Order users by join date (newest first)
-        unique_together = (('email', 'first_name'), ('email', 'last_name'), ('first_name', 'last_name'))  # Enforce unique combinations
+        # unique_together = (('first_name', 'last_name'),)
 
     def __str__(self):
         """Returns the string representation of the user (email)"""
@@ -95,3 +95,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self):
         """Returns the user's full name, with a space between first and last name"""
         return f'{self.first_name} {self.last_name}'.strip()
+
+    def create(self, validated_data):
+        # Handle the bulk records.
+        if isinstance(validated_data, list):
+            bulk_data = [User(**data) for data in validated_data]
+            return User.objects.bulk_create(bulk_data)
+
+        # Handle the single record.
+        return User.objects.create(**validated_data)

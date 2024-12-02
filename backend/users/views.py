@@ -3,8 +3,10 @@ from typing import NoReturn
 
 # Django imports
 from django.contrib.auth import get_user_model
+from django.contrib.postgres.forms.hstore import ValidationError
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.shortcuts import redirect
 
 # Django REST framework imports
 from rest_framework import status
@@ -18,68 +20,127 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 # Django REST Auth imports
-from dj_rest_auth.registration.serializers import RegisterSerializer
-from dj_rest_auth.registration.views import RegisterView, VerifyEmailView
+# from dj_rest_auth.registration.serializers import RegisterSerializer
+# from dj_rest_auth.registration.views import RegisterView, VerifyEmailView
+from dj_rest_auth.registration.views import VerifyEmailView
 from dj_rest_auth.views import LogoutView, PasswordResetConfirmView, PasswordResetView
+
+from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.hashers import make_password
 
 # All Auth imports
 from allauth.account.utils import send_email_confirmation
 
 # Local imports
 from .serializers import UserSerializer, CustomTokenObtainPairSerializer
+# from utils.response import Responsefrom .response import Response
 
 
 User = get_user_model()
 
 
-class CustomRegisterView(RegisterView):
-    """
-    Custom registration view for creating new user accounts.
-
-    Extends the default RegisterView to provide custom response formatting
-    and token generation on successful registration.
-
-    Attributes:
-        permission_classes: Allow any user to access this endpoint
-        throttle_classes: Rate limiting for anonymous requests
-    """
+class UserRegisterAPIView(APIView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
-    def create(self, request, *args, **kwargs) -> Response:
-        """
-        Handle user registration requests.
+    def get(self, request, *args, **kwargs) -> Response:
+        error_context = {
+            'status': 'failed',
+            'message': 'Method not allowed',
+            'error': {
+                'non_field_errors': [
+                    _('GET operations are not supported on this endpoint')
+                ]
+            }
+        }
+        return Response(error_context, status=status.HTTP_400_BAD_REQUEST)
 
-        Validates registration data and creates new user account.
-        Generates JWT tokens upon successful registration.
+    def post(self, request, *args, **kwargs) -> Response:
+        # Extract the password from request data
+        password = request.data.get('password', None)
 
-        Args:
-            request: HTTP request containing registration data
+        # Check if the password is provided
+        if password is None:
+            error_context = {
+                'status': 'failed',
+                'message': _('Validation error'),
+                'error': {
+                    'password': _('Password field is required.')
+                }
+            }
+            return Response(error_context, status=status.HTTP_400_BAD_REQUEST)
 
-        Returns:
-            Response with JWT tokens or validation errors
-        """
-        serializer = RegisterSerializer(data=request.data)
+        # Validate the password
+        try:
+            validate_password(password)
+        except ValidationError as e:
+            error_context = {
+                'status': 'failed',
+                'message': _('Invalid password'),
+                'error': {'password': list(e.messages)}
+            }
+            return Response(error_context, status=status.HTTP_400_BAD_REQUEST)
 
+        # Hash the password
+        # request.data['password'] = make_password(password)
+        hashed_password = make_password(password)
+
+        # Serialize and validate the data
+        serializer = UserSerializer(data=request.data, context={'hashed_password': hashed_password})
         if serializer.is_valid():
-            user = self.perform_create(serializer)
-            refresh = self.get_token(user)  # type: ignore
-
+            serializer.save()
+            user = serializer.instance
+            send_email_confirmation(request, user)
             success_context = {
                 'status': 'succeeded',
-                'message': _('Registration successful! Welcome aboard!'),
+                'message': _('Verification email sent'),
                 'data': {
-                    'access_token': str(refresh.access_token),
-                    'refresh_token': str(refresh)
+                    'detail': _('Please check your inbox for the verification email.')
                 },
                 'meta': None
             }
-            return Response(success_context, status=status.HTTP_201_CREATED)
+            return Response(success_context, status=status.HTTP_200_OK)
 
+        # Return errors if serializer is invalid
         error_context = {
             'status': 'failed',
-            'message': _('Registration failed. Please check your information.'),
+            'message': _('Invalid data provided'),
             'error': serializer.errors
+        }
+        return Response(error_context, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, *args, **kwargs) -> Response:
+        error_context = {
+            'status': 'failed',
+            'message': 'Method not allowed',
+            'error': {
+                'non_field_errors': [
+                    _('PUT operations are not supported on this endpoint')
+                ]
+            }
+        }
+        return Response(error_context, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, *args, **kwargs) -> Response:
+        error_context = {
+            'status': 'failed',
+            'message': 'Method not allowed',
+            'error': {
+                'non_field_errors': [
+                    _('PATCH operations are not supported on this endpoint')
+                ]
+            }
+        }
+        return Response(error_context, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, *args, **kwargs) -> Response:
+        error_context = {
+            'status': 'failed',
+            'error': {
+                'non_field_errors': [
+                    _('DELETE operations are not supported on this endpoint')
+                ]
+            }
         }
         return Response(error_context, status=status.HTTP_400_BAD_REQUEST)
 
@@ -303,6 +364,11 @@ class CustomVerifyEmailView(VerifyEmailView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
+    def get(self, request, *args, **kwargs):
+        # You may want to send an email here instead of redirecting immediately
+        # Typically, email verification happens automatically after registration.
+        return redirect('account_email_verification_sent')
+
     def post(self, request, *args, **kwargs) -> Response:
         """
         Process email verification request.
@@ -315,9 +381,11 @@ class CustomVerifyEmailView(VerifyEmailView):
         Returns:
             Response indicating verification success or failure
         """
+        # Call the parent class to process the actual email verification logic
         response = super().post(request, *args, **kwargs)
 
         if response.status_code == status.HTTP_200_OK:
+            # Success response when email is verified
             success_context = {
                 'status': 'succeeded',
                 'message': _('Great! Your email has been verified'),
@@ -328,6 +396,7 @@ class CustomVerifyEmailView(VerifyEmailView):
             }
             return Response(success_context, status=status.HTTP_200_OK)
 
+        # Failure response if verification fails
         error_context = {
             'status': 'failed',
             'message': _('Unable to verify email address'),

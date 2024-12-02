@@ -1,3 +1,4 @@
+from django.contrib.postgres.forms.hstore import ValidationError
 from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import authenticate
@@ -73,7 +74,8 @@ class UserSerializer(serializers.ModelSerializer):
                 'required': True,
                 'error_messages': {
                     'required': _('Please provide a valid email address to continue'),
-                    'invalid': _('The email address format is not valid, please check and try again')
+                    'invalid': _('The email address format is not valid, please check and try again'),
+                    'unique': _('This email is already in use. Please provide a different email address.')
                 }
             },
             'first_name': {
@@ -89,3 +91,11 @@ class UserSerializer(serializers.ModelSerializer):
                 }
             }
         }
+
+    def create(self, validated_data):
+        hashed_password = self.context.get('hashed_password', None)
+
+        if hashed_password is None:
+            raise ValidationError('Invalid password')
+        # Handle the single record.
+        return User.objects.create(password=hashed_password, **validated_data)
