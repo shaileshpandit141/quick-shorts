@@ -28,22 +28,22 @@ Available Endpoints:
 from django.urls import path
 from .views import (
     UserRegisterAPIView,
-    CustomTokenObtainPairView,
-    CustomTokenRefreshView,
-    CustomResendVerificationEmailView,
+    # CustomTokenObtainPairView,
+    # CustomTokenRefreshView,
+    # CustomResendVerificationEmailView,
     UserInfoView
 )
 
 urlpatterns = [
     # Authentication endpoints for user registration and logout
     path("signup/", UserRegisterAPIView.as_view(), name="account_signup"),
-    path("token/", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("token/refresh/", CustomTokenRefreshView.as_view(), name="token_refresh"),
-    path(
-        "signup/resend-verification-email/",
-        CustomResendVerificationEmailView.as_view(),
-        name="account_resend_email_verification"
-    ),
+    # path("token/", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
+    # path("token/refresh/", CustomTokenRefreshView.as_view(), name="token_refresh"),
+    # path(
+    #     "signup/resend-verification-email/",
+    #     CustomResendVerificationEmailView.as_view(),
+    #     name="account_resend_email_verification"
+    # ),
 
     # User data endpoints for profile information
     path("user/", UserInfoView.as_view(), name="user")
