@@ -1,6 +1,3 @@
-# Python imports
-from typing import NoReturn
-
 # Django imports
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.forms.hstore import ValidationError
@@ -23,6 +20,7 @@ from django.contrib.auth.hashers import make_password
 # Local imports
 from utils.response import Response
 from utils.send_email import SendEmail
+from utils.token_generator import TokenGenerator
 from .serializers import UserSerializer, CustomTokenObtainPairSerializer
 
 
@@ -93,7 +91,12 @@ class UserRegisterAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
             user = serializer.instance
+            id = user.id  # type: ignore
             email = user.email  # type: ignore
+
+            # Generate token
+            token = TokenGenerator.generate({"id": id}, 'email_verification_salt')
+
             SendEmail({
                 'subject': 'For email verification',
                 'emails': {
@@ -101,7 +104,7 @@ class UserRegisterAPIView(APIView):
                 },
                 'context': {
                     'user': user,
-                    'activate_url': 'http://localhost:3000/'
+                    'activate_url': f'http://localhost:3000/api/v1/auth/verify-email/{token}/'
                 },
                 'templates': {
                     'txt': 'users/email_verification_message.txt',
