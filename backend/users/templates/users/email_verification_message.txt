@@ -1,6 +1,4 @@
-{% load account %}
-
-Hello {{ user.username }},
+Hello {{ user.get_full_name|default:user.email }},
 
 Welcome to [Service Name]! We're excited to have you join our community.
 
