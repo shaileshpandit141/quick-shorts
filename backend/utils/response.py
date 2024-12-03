@@ -35,7 +35,7 @@ class TypedSuccessResponse(TypedDict):
     """
     message: str
     meta: NotRequired[Dict]
-    data: Dict
+    data: Dict[str, Any] | List[Dict[str, Any]]
 
 
 TypedSuccessStatus = Literal[
@@ -86,7 +86,7 @@ class Response:
         content_type=content_type)
 
     @staticmethod
-    def method_not_allowed(name: Literal['get', 'post', 'put', 'patch', 'delete']) -> DRFResponse:
+    def method_not_allowed(name: Literal['get', 'post', 'put', 'patch', 'delete', 'head', 'options']) -> DRFResponse:
         """
         Creates a standardized error response for unsupported HTTP methods.
 
@@ -101,7 +101,7 @@ class Response:
             'message': 'Method not allowed',
             'errors': {
                 'non_field_errors': [
-                    f'{name.capitalize()} operations are not supported on this endpoint'
+                    f'{name.upper()} operations are not supported on this endpoint'
                 ]
             }
         }, status=status.HTTP_400_BAD_REQUEST)
