@@ -72,7 +72,7 @@ class Response:
             status (TypedErrorStatus): The HTTP status code to return (400, 401, or 404)
 
         Returns:
-            DRFResponse: A Django REST framework Response object with formatted error details
+            Response: A Django REST framework Response object with formatted error details
         """
         return DRFResponse({
             'status': 'failed',
@@ -84,6 +84,27 @@ class Response:
         headers=headers,
         exception=exception,
         content_type=content_type)
+
+    @staticmethod
+    def method_not_allowed(name: Literal['get', 'post', 'put', 'patch', 'delete']) -> DRFResponse:
+        """
+        Creates a standardized error response for unsupported HTTP methods.
+
+        Args:
+            name (Literal['get', 'post', 'put', 'patch', 'delete']): The HTTP method name that was attempted
+
+        Returns:
+            Response: A Django REST framework Response object with formatted error indicating
+                        the specified HTTP method is not supported on this endpoint
+        """
+        return Response.error({
+            'message': 'Method not allowed',
+            'errors': {
+                'non_field_errors': [
+                    f'{name.capitalize()} operations are not supported on this endpoint'
+                ]
+            }
+        }, status=status.HTTP_400_BAD_REQUEST)
 
     @staticmethod
     def success(
@@ -101,7 +122,7 @@ class Response:
             status (TypedSuccessStatus): The HTTP status code to return (200, 201, or 204)
 
         Returns:
-            DRFResponse: A Django REST framework Response object with formatted success details
+            Response: A Django REST framework Response object with formatted success details
         """
         return DRFResponse({
             'status': 'succeeded',
