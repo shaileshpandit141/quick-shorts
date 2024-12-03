@@ -96,4 +96,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         """Returns the user's full name, with a space between first and last name"""
+        if self.first_name is None or self.last_name:
+            return None
         return f'{self.first_name} {self.last_name}'.strip()
