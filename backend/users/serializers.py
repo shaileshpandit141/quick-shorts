@@ -1,7 +1,7 @@
 from django.contrib.postgres.forms.hstore import ValidationError
 from rest_framework import serializers
-from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import authenticate
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import get_user_model
 
@@ -45,21 +45,21 @@ class UserSerializer(serializers.ModelSerializer):
             'email': {
                 'required': True,
                 'error_messages': {
-                    'required': _('Please provide a valid email address to continue'),
-                    'invalid': _('The email address format is not valid, please check and try again'),
-                    'unique': _('This email is already in use. Please provide a different email address.')
+                    'required': 'Please provide a valid email address to continue',
+                    'invalid': 'The email address format is not valid, please check and try again',
+                    'unique': 'This email is already in use. Please provide a different email address.'
                 }
             },
             'first_name': {
                 'required': False,
                 'error_messages': {
-                    'invalid': _('The first name contains invalid characters. Please use letters only.')
+                    'invalid': 'The first name contains invalid characters. Please use letters only.'
                 }
             },
             'last_name': {
                 'required': False,
                 'error_messages': {
-                    'invalid': _('The last name contains invalid characters. Please use letters only.')
+                    'invalid': 'The last name contains invalid characters. Please use letters only.'
                 }
             }
         }
@@ -69,36 +69,38 @@ class UserSerializer(serializers.ModelSerializer):
 
         if hashed_password is None:
             raise ValidationError('Invalid password')
+
         # Handle the single record.
         return User.objects.create(password=hashed_password, **validated_data)
 
 
-class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+class SigninTokenObtainPairSerializer(TokenObtainPairSerializer):
     """
-    Custom token serializer that uses email instead of username for authentication.
-
-    Extends the JWT TokenObtainPairSerializer to override the validation method
-    to authenticate with email and password instead of username and password.
-
-    Raises:
-        ValidationError: If no active user is found or if the user account is inactive
+    Custom serializer to issue JWT tokens for users, replacing the username
+    field with email for authentication.
     """
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
     def validate(self, attrs):
-        # Build credentials dictionary with email and password
+        # Authenticate the user
         credentials = {
-            'email': attrs.get('email'),
-            'password': attrs.get('password'),
+            'email': attrs['email'],
+            'password': attrs['password'],
         }
 
-        # Attempt to authenticate the user with provided credentials
         user = authenticate(**credentials)
-
-        # Raise validation error if no user found
-        if user is None:
-            raise serializers.ValidationError(_('No active account found with the given credentials'))
-
-        # Raise validation error if user account is inactive
+        if not user:
+            raise serializers.ValidationError('Invalid credentials')
         if not user.is_active:
-            raise serializers.ValidationError(_('This account is not active'))
+            raise serializers.ValidationError('This account is inactive')
 
-        return super().validate(attrs)
+        # Generate tokens
+        refresh = RefreshToken.for_user(user)
+
+        # Include user in the validated data
+        return {
+            'user': user,
+            'access': str(refresh.access_token),  # type: ignore
+            'refresh': str(refresh),
+        }
