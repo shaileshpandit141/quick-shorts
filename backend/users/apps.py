@@ -9,7 +9,7 @@ class UsersConfig(AppConfig):
 
     Attributes:
         default_auto_field (str): The default auto field type to use for models
-                                 in this app. Set to Django's BigAutoField.
+        in this app. Set to Django's BigAutoField.
         name (str): The name of this Django app, set to 'users'.
     """
     default_auto_field = 'django.db.models.BigAutoField' # type: ignore
