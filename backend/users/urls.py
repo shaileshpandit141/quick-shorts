@@ -30,6 +30,7 @@ from .views import (
     UserRegisterAPIView,
     # CustomTokenObtainPairView,
     # CustomTokenRefreshView,
+    EmailVerificationAPIView,
     # CustomResendVerificationEmailView,
     UserInfoView
 )
@@ -39,6 +40,7 @@ urlpatterns = [
     path("signup/", UserRegisterAPIView.as_view(), name="account_signup"),
     # path("token/", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
     # path("token/refresh/", CustomTokenRefreshView.as_view(), name="token_refresh"),
+    path('email-verification/', EmailVerificationAPIView.as_view(), name='email_verification'),
     # path(
     #     "signup/resend-verification-email/",
     #     CustomResendVerificationEmailView.as_view(),
