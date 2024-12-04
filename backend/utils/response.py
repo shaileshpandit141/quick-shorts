@@ -10,8 +10,8 @@ class TypedErrorResponse(TypedDict):
     Attributes:
         message (str): A human-readable error message explaining what went wrong
         errors (Dict[str, Union[List[str], str]]): A dictionary containing field-level validation errors.
-            The keys are field names and values can be either a single error string
-            or a list of error strings related to that field.
+        The keys are field names and values can be either a single error string
+        or a list of error strings related to that field.
     """
     message: str
     errors: Dict[str, Union[List[str], str]]
@@ -86,27 +86,6 @@ class Response:
         content_type=content_type)
 
     @staticmethod
-    def method_not_allowed(name: Literal['get', 'post', 'put', 'patch', 'delete', 'head', 'options']) -> DRFResponse:
-        """
-        Creates a standardized error response for unsupported HTTP methods.
-
-        Args:
-            name (Literal['get', 'post', 'put', 'patch', 'delete']): The HTTP method name that was attempted
-
-        Returns:
-            Response: A Django REST framework Response object with formatted error indicating
-                        the specified HTTP method is not supported on this endpoint
-        """
-        return Response.error({
-            'message': 'Method not allowed',
-            'errors': {
-                'non_field_errors': [
-                    f'{name.upper()} operations are not supported on this endpoint'
-                ]
-            }
-        }, status=status.HTTP_400_BAD_REQUEST)
-
-    @staticmethod
     def success(
         payload: TypedSuccessResponse,
         status: TypedSuccessStatus = status.HTTP_200_OK,
@@ -135,3 +114,54 @@ class Response:
         headers=headers,
         exception=exception,
         content_type=content_type)
+
+    @staticmethod
+    def method_not_allowed(name: Literal['get', 'post', 'put', 'patch', 'delete', 'head', 'options']) -> DRFResponse:
+        """
+        Creates a standardized error response for unsupported HTTP methods.
+
+        Args:
+            name (Literal['get', 'post', 'put', 'patch', 'delete']): The HTTP method name that was attempted
+
+        Returns:
+            Response: A Django REST framework Response object with formatted error indicating
+            the specified HTTP method is not supported on this endpoint
+        """
+        return Response.error({
+            'message': 'Method not allowed',
+            'errors': {
+                'non_field_errors': [
+                    f'{name.upper()} operations are not supported on this endpoint'
+                ]
+            }
+        }, status=status.HTTP_200_OK)  # type: ignore
+
+    @staticmethod
+    def options(allowed_methods: List[Literal['GET', 'POST', 'PUT', 'PATCH', 'DELETE']]) -> DRFResponse:
+        """
+        Creates a standardized response for OPTIONS requests that describes the API endpoint capabilities.
+
+        Args:
+            allowed_methods (List[Literal['GET', 'POST', 'PUT', 'PATCH', 'DELETE']]):
+            List of HTTP methods supported by this endpoint
+
+        Returns:
+            DRFResponse: A Django REST framework Response object containing:
+            - Supported HTTP methods
+            - API description
+            - Documentation links
+            - Contact information
+        """
+        return Response.success({
+            'message': 'Options request successfully processed',
+            'data': {
+                'methods': allowed_methods,
+                'description': 'This API allows CRUD operations on the resource.',
+                'documentation_url': 'https://example.com/docs',
+                'terms_of_service': 'https://example.com/terms',
+                'contact': {
+                    'email': 'support@example.com',
+                    'phone': '+1-800-123-4567'
+                }
+            }
+        }, status.HTTP_200_OK)
