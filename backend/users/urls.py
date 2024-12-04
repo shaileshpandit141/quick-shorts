@@ -29,7 +29,7 @@ from django.urls import path
 from .views import (
     UserRegisterAPIView,
     SigninTokenObtainPairAPIView,
-    # CustomTokenRefreshView,
+    SigninTokenRefreshAPIView,
     EmailVerificationAPIView,
     # CustomResendVerificationEmailView,
     UserInfoView
@@ -39,7 +39,7 @@ urlpatterns = [
     # Authentication endpoints for user registration and logout
     path("signup/", UserRegisterAPIView.as_view(), name="account_signup"),
     path("token/", SigninTokenObtainPairAPIView.as_view(), name="token_obtain_pair"),
-    # path("token/refresh/", CustomTokenRefreshView.as_view(), name="token_refresh"),
+    path("token/refresh/", SigninTokenRefreshAPIView.as_view(), name="token_refresh"),
     path('email-verification/', EmailVerificationAPIView.as_view(), name='email_verification'),
     # path(
     #     "signup/resend-verification-email/",
