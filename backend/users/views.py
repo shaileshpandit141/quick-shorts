@@ -6,8 +6,6 @@ from django.utils.translation import gettext_lazy as _
 
 # Django REST framework imports
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 from rest_framework.views import APIView
 
 # REST framework SimpleJWT imports
@@ -18,10 +16,10 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.hashers import make_password
 
 # Local imports
-from utils.response import Response
-from utils.send_email import SendEmail
-from utils.token_generator import TokenGenerator
-from .serializers import UserSerializer, CustomTokenObtainPairSerializer
+from permissions import AllowAny, IsAuthenticated, IsEmailVerified
+from throttles import AnonRateThrottle, UserRateThrottle
+from utils import Response, SendEmail, TokenGenerator
+from .serializers import UserSerializer, SigninTokenObtainPairSerializer
 
 
 User = get_user_model()
@@ -199,80 +197,47 @@ class EmailVerificationAPIView(APIView):
         return Response.options(['POST'])
 
 
+class SigninTokenObtainPairAPIView(TokenObtainPairView):
+    """
+    Custom JWT token view for user authentication.
+    """
+    permission_classes = [AllowAny]
+    throttle_classes = [AnonRateThrottle]
+    serializer_class = SigninTokenObtainPairSerializer
 
+    def post(self, request, *args, **kwargs):
+        """
+        Handle login request and return JWT tokens.
+        """
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-# class CustomTokenObtainPairView(TokenObtainPairView):
-#     """
-#     Custom JWT token view for user authentication.
+        # Get the user from the serializer
+        user = serializer.validated_data['user']
 
-#     Extends TokenObtainPairView to provide JWT tokens for authentication. Validates user
-#     credentials and enforces email verification requirements before issuing tokens.
+        # Enforce email verification for non-superusers
+        if not user.is_superuser and not user.is_email_verified:
+            return Response.error({
+                'message': 'Sign in failed - email not verified',
+                'errors': {
+                    'non_field_errors': [
+                        'Please verify your email address before signing in'
+                    ]
+                }
+            }, status.HTTP_401_UNAUTHORIZED)
 
-#     Methods:
-#         post: Handle login requests and return JWT tokens
+        # Update last login timestamp
+        user.last_login = timezone.now()
+        user.save(update_fields=["last_login"])
 
-#     Attributes:
-#         permission_classes: Allow any user to access this endpoint
-#         throttle_classes: Rate limiting for anonymous requests only
-#         serializer_class: Custom serializer for token generation
-#     """
-#     permission_classes = [AllowAny]
-#     throttle_classes = [AnonRateThrottle]
-#     serializer_class = CustomTokenObtainPairSerializer
-
-#     def post(self, request, *args, **kwargs) -> Response:
-#         """
-#         Handle login request and generate JWT tokens.
-
-#         Validates user credentials, checks email verification status for non-superusers,
-#         updates last login timestamp, and returns access and refresh tokens.
-
-#         Args:
-#             request: HTTP request object containing login credentials
-
-#         Returns:
-#             Response with JWT tokens or error details
-#         """
-#         serializer = self.get_serializer(data=request.data, many=False)
-
-#         if not serializer.is_valid():
-#             error_context = {
-#                 'status': 'failed',
-#                 'message': _('Sign in failed - invalid credentials'),
-#                 'error': serializer.errors
-#             }
-#             return Response(error_context, status=status.HTTP_400_BAD_REQUEST)
-
-#         user = serializer.user
-
-#         if not user.is_superuser:
-#             if not user.emailaddress_set.filter(verified=True).exists():
-#                 error_context = {
-#                     'status': 'failed',
-#                     'message': _('Sign in failed - email not verified'),
-#                     'error': {
-#                         'non_field_errors': [
-#                             _('Please verify your email address before logging in')
-#                         ]
-#                     }
-#                 }
-#                 return Response(error_context, status=status.HTTP_401_UNAUTHORIZED)
-
-#         user.last_login = timezone.now()
-#         user.save(update_fields=["last_login"])
-
-#         refresh = RefreshToken.for_user(user)
-
-#         success_context = {
-#             'status': 'succeeded',
-#             'message': _('Welcome back! Sign in successful'),
-#             'data': {
-#                 'access_token': str(refresh.access_token),
-#                 'refresh_token': str(refresh)
-#             },
-#             'meta': None
-#         }
-#         return Response(success_context, status=status.HTTP_200_OK)
+        # Return tokens from the serializer
+        return Response.success({
+            'message': 'Welcome back! Sign in successful',
+            'data': {
+                'access_token': serializer.validated_data['access'],
+                'refresh_token': serializer.validated_data['refresh'],
+            }
+        }, status.HTTP_200_OK)
 
 
 # class CustomTokenRefreshView(TokenRefreshView):
