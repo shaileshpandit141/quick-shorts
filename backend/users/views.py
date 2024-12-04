@@ -25,7 +25,7 @@ from .serializers import UserSerializer, SigninTokenObtainPairSerializer
 User = get_user_model()
 
 
-class UserRegisterAPIView(APIView):
+class SignupAPIView(APIView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
