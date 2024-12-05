@@ -20,7 +20,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import handler404
-from .views import custom_404_view, IndexTemplateView
+from .views import custom_404_apiview, IndexTemplateView
 from users import urls
 
 
@@ -38,7 +38,7 @@ urlpatterns = [
 ]
 
 # Configure custom error handling
-handler404 = custom_404_view
+handler404 = custom_404_apiview
 
 # Enable serving of user-uploaded media files
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
