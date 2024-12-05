@@ -1,4 +1,4 @@
-from typing import Dict, Any, NoReturn
+from typing import TypedDict, Dict, Any, NoReturn
 from datetime import datetime, timedelta
 from django.conf import settings
 import logging
@@ -7,8 +7,14 @@ from itsdangerous import (
     BadSignature,
     SignatureExpired
 )
+import secrets
 
 logger = logging.getLogger(__name__)
+
+class TokenGeneratorResponse(TypedDict):
+    token: str
+    token_salt: str
+
 
 class TokenGenerator:
     """
@@ -16,45 +22,54 @@ class TokenGenerator:
     """
 
     @staticmethod
-    def generate(data: Dict[str, Any], salt: str, expiry_seconds=3600) -> str:
+    def generate_one_time_token(num_bytes:int = 16):
+        return secrets.token_hex(num_bytes)
+
+    @staticmethod
+    def generate(payload: Dict[str, Any], token_expiry_seconds=3600) -> TokenGeneratorResponse:
         """
         Generates a secure token with expiration, revocation, and custom claims.
 
-        :param data: A dictionary or data object to encode into the token.
+        :param payload: A dictionary or data object to encode into the token.
         :param salt: A unique salt for added security.
-        :param expiry_seconds: The expiration time for the token in seconds.
+        :param token_expiry_seconds: The expiration time for the token in seconds.
         """
-        logger.debug(f"Generating token with salt: {salt} and expiry: {expiry_seconds}s")
-        expiry_time = datetime.utcnow() + timedelta(seconds=expiry_seconds)
-        data["expiry_time"] = expiry_time.isoformat()
+        # logger.debug(f"Generating token with salt: {salt} and expiry: {token_expiry_seconds}s")
+        token_expiry_time = datetime.utcnow() + timedelta(seconds=token_expiry_seconds)
+        payload["expiry_time"] = token_expiry_time.isoformat()
 
-        serializer = URLSafeTimedSerializer(settings.SECRET_KEY, salt=salt)
-        token = serializer.dumps(data)
+        token_salt = TokenGenerator.generate_one_time_token()
+
+        token_serializer = URLSafeTimedSerializer(settings.SECRET_KEY, salt=token_salt)
+        generated_token = token_serializer.dumps(payload)
         logger.debug("Token generated successfully")
-        return token
+        return {
+            'token': generated_token,
+            'token_salt': token_salt
+        }
 
     @staticmethod
-    def decode(token: str, salt: str, expiry_seconds=3600) -> Dict[str, Any] | NoReturn:
+    def decode(encoded_token: str, token_salt: str, token_expiry_seconds=3600) -> Dict[str, Any] | NoReturn:
         """
         Decodes a token, checks its validity, and handles expiration and revocation.
 
-        :param token: The signed token to decode.
-        :param salt: The same salt used during token generation.
-        :param expiry_seconds: The maximum allowable age of the token.
+        :param encoded_token: The signed token to decode.
+        :param token_salt: The same salt used during token generation.
+        :param token_expiry_seconds: The maximum allowable age of the token.
         :return: Decoded data if valid, or raises an exception if invalid.
         """
-        logger.debug(f"Attempting to decode token with salt: {salt}")
-        serializer = URLSafeTimedSerializer(settings.SECRET_KEY, salt=salt)
+        logger.debug(f"Attempting to decode token with salt: {token_salt}")
+        token_serializer = URLSafeTimedSerializer(settings.SECRET_KEY, salt=token_salt)
 
         try:
-            data = serializer.loads(token, max_age=expiry_seconds)
-            expiry_time = datetime.fromisoformat(data["expiry_time"])
+            decoded_payload = token_serializer.loads(encoded_token, max_age=token_expiry_seconds)
+            token_expiry_time = datetime.fromisoformat(decoded_payload["expiry_time"])
 
-            if expiry_time < datetime.utcnow():
+            if token_expiry_time < datetime.utcnow():
                 logger.warning("Token has expired")
                 raise ValueError("The token has expired.")
             logger.debug("Token decoded successfully")
-            return data
-        except (SignatureExpired, BadSignature) as error:
-            logger.error(f"Token validation failed: {str(error)}")
-            raise ValueError(f"Invalid or expired token: {str(error)}")
+            return decoded_payload
+        except (SignatureExpired, BadSignature) as validation_error:
+            logger.error(f"Token validation failed: {str(validation_error)}")
+            raise ValueError(f"Invalid or expired token: {str(validation_error)}")
