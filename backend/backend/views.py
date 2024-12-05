@@ -1,9 +1,8 @@
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-from django.utils.translation import gettext_lazy as _
 
 
-def custom_404_view(request, exception=None):
+def custom_404_apiview(request, exception=None):
     """
     Custom 404 error handler that returns a JSON response when a page/endpoint is not found.
 
@@ -15,17 +14,17 @@ def custom_404_view(request, exception=None):
         exception (Exception, optional): The exception that caused the 404, if any. Defaults to None.
 
     Returns:
-        JsonResponse: A JSON response with 404 status code containing:
-            - status: 'error'
-            - error: 'Not Found'
-            - message: Error description
+        JsonResponse: A JSON response with 404 status.
     """
-    error_context = {
-        'status': _('error'),
-        'error': _('Not Found'),
-        'message': _('The endpoint you requested was not found.')
-    }
-    return JsonResponse(error_context, status=404)
+    return JsonResponse({
+        'status': 'failed',
+        'message': 'The requested endpoint could not be found.',
+        'errors': {
+            'non_field_errors': [
+                'The requested endpoint could not be found. Please check the URL and try again.'
+            ]
+        }
+    }, status=404)
 
 
 class IndexTemplateView(TemplateView):
