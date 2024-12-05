@@ -81,20 +81,17 @@ class SignupAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
             user = serializer.instance
-            id = user.id  # type: ignore
-            email = user.email  # type: ignore
-
             # Generate token
-            token = TokenGenerator.generate({"user_id": id}, 'email_verification_salt')
+            payload = TokenGenerator.generate({"user_id": user.id}) # type: ignore
 
             SendEmail({
                 'subject': 'For email verification',
                 'emails': {
-                    'to_emails': email
+                    'to_emails': user.email # type: ignore
                 },
                 'context': {
                     'user': user,
-                    'activate_url': f'http://localhost:3000/api/v1/auth/verify-email/{token}/'
+                    'activate_url': f'http://localhost:3000/api/v1/auth/verify-email?token_salt={payload['token_salt']}&token={payload['token']}'
                 },
                 'templates': {
                     'txt': 'users/email_verification_message.txt',
