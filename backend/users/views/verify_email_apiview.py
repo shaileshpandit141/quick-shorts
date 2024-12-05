@@ -23,17 +23,22 @@ class VerifyEmailAPIView(APIView):
 
     def post(self, request, *args, **kwargs) -> Response.type:
         token = request.data.get('token', None)
+        token_salt = request.data.get('token_salt', None)
 
-        if token is None:
+        if token is None or token_salt is None:
+            errors = {}
+            if token is None:
+                errors['token'] = ['Token `token` can has not be empty']
+            if token_salt is None:
+                errors['token_salt'] = ['Token salt `token_salt` can has not be empty']
+
             return Response.error({
                 'message': 'Invalid request',
-                'errors': {
-                    'token': 'Token can has not be empty'
-                }
+                'errors': errors
             }, status.HTTP_400_BAD_REQUEST)
 
         try:
-            data = TokenGenerator.decode(token, 'email_verification_salt')
+            data = TokenGenerator.decode(token, token_salt)
             user_id = data["user_id"]
 
             user = User.objects.get(id=user_id)
