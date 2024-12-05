@@ -30,6 +30,10 @@ DEBUG = config("DEBUG", cast=bool, default=False)  # Debug mode setting
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())  # Allowed host domains
 APPEND_SLASH = False  # Don't append slashes to URLs
 
+# FRONTEND URL SETTINGS
+# ----------------
+FRONTEND_URL = config("FRONTEND_URL", cast=str)
+
 # APPLICATION CONFIGURATION
 # -----------------------
 INSTALLED_APPS = [
@@ -179,11 +183,6 @@ REST_FRAMEWORK = {
 # ---------------
 REST_USE_JWT = True
 JWT_AUTH_HEADER_PREFIX = 'Bearer'
-
-# CORS SETTINGS
-# ------------
-CORS_ALLOW_ALL_ORIGINS = config("CORS_ALLOW_ALL_ORIGINS", cast=bool, default=False)
-CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
 
 # JWT TOKEN SETTINGS
 # ----------------
