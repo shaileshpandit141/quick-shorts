@@ -30,7 +30,7 @@ class GenerateEmailVerificationLinkAPIView(APIView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
-    def get(self) -> Response.type:
+    def get(self, request, *args, **kwargs) -> Response.type:
         return Response.method_not_allowed('get')
 
     def post(self, request, *args, **kwargs) -> Response.type:
@@ -71,7 +71,23 @@ class GenerateEmailVerificationLinkAPIView(APIView):
             }, status.HTTP_400_BAD_REQUEST)
 
         if not user.is_email_verified:
-            # send_email_confirmation(request, user)
+            # Generate token
+            payload = TokenGenerator.generate({"user_id": user.id})
+
+            SendEmail({
+                'subject': 'Email Verification Request',
+                'emails': {
+                    'to_emails': email
+                },
+                'context': {
+                    'user': user,
+                    'activate_url': f'http://localhost:3000/api/v1/auth/verify-email?token_salt={payload['token_salt']}&token={payload['token']}'
+                },
+                'templates': {
+                    'txt': 'users/email_verification_message.txt',
+                    'html': 'users/email_verification_message.html'
+                }
+            })
             return Response.success({
                 'message': 'Verification email sent',
                 'data': {
