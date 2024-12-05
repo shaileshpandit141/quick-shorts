@@ -1,17 +1,18 @@
 # Django imports
 from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.hashers import make_password
 
 # Django REST framework imports
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.exceptions import ValidationError
-from django.contrib.auth.password_validation import validate_password
-from django.contrib.auth.hashers import make_password
 
 # Local imports
 from permissions import AllowAny
 from throttles import AnonRateThrottle
-from utils import Response, SendEmail, TokenGenerator
+from utils import Response, SendEmail, TokenGenerator, add_query_params
 from users.serializers import UserSerializer
 
 User = get_user_model()
@@ -83,6 +84,10 @@ class SignupAPIView(APIView):
             user = serializer.instance
             # Generate token
             payload = TokenGenerator.generate({"user_id": user.id}) # type: ignore
+            activate_url = add_query_params(f'{settings.FRONTEND_URL}/auth/verify-email', {
+                'token': payload['token'],
+                'token_salt': payload['token_salt']
+            })
 
             SendEmail({
                 'subject': 'For email verification',
@@ -91,7 +96,7 @@ class SignupAPIView(APIView):
                 },
                 'context': {
                     'user': user,
-                    'activate_url': f'http://localhost:3000/api/v1/auth/verify-email?token_salt={payload['token_salt']}&token={payload['token']}'
+                    'activate_url': activate_url
                 },
                 'templates': {
                     'txt': 'users/email_verification_message.txt',

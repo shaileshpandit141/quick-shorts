@@ -1,5 +1,6 @@
 # Django imports
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 # Django REST framework imports
 from rest_framework import status
@@ -8,7 +9,7 @@ from rest_framework.views import APIView
 # Local imports
 from permissions import AllowAny
 from throttles import AnonRateThrottle
-from utils import Response, SendEmail, TokenGenerator
+from utils import Response, SendEmail, TokenGenerator, add_query_params
 
 User = get_user_model()
 
@@ -73,6 +74,10 @@ class GenerateEmailVerificationLinkAPIView(APIView):
         if not user.is_email_verified:
             # Generate token
             payload = TokenGenerator.generate({"user_id": user.id})
+            activate_url = add_query_params(f'{settings.FRONTEND_URL}/auth/verify-email', {
+                'token': payload['token'],
+                'token_salt': payload['token_salt']
+            })
 
             SendEmail({
                 'subject': 'Email Verification Request',
@@ -81,7 +86,7 @@ class GenerateEmailVerificationLinkAPIView(APIView):
                 },
                 'context': {
                     'user': user,
-                    'activate_url': f'http://localhost:3000/api/v1/auth/verify-email?token_salt={payload['token_salt']}&token={payload['token']}'
+                    'activate_url': activate_url
                 },
                 'templates': {
                     'txt': 'users/email_verification_message.txt',
