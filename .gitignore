@@ -2,7 +2,7 @@
 backend/venv
 backend/.env
 backend/*/__pycache__
-backend/users/*/__pycache__
+backend/*/*/__pycache__
 backend/*/migrations
 backend/db.sqlite3
 

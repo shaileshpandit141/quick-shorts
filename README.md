@@ -5,7 +5,7 @@ This project is a boilerplate for setting up a web application using Django for 
 ## Features
 
 - Django backend with custom user model (using email authentication)
-- JWT Authentication for all actions 
+- JWT Authentication for all actions
 - React with TypeScript frontend setup with Create React App
 - Integration between Django and React
 
@@ -13,7 +13,7 @@ This project is a boilerplate for setting up a web application using Django for 
 
 - Python 3.8+
 - Node.js 14+
-- npm (or yarn)
+- npm
 - PostgreSQL (default: db.sqlite3)
 
 ## Setup Instructions
@@ -45,23 +45,32 @@ This project is a boilerplate for setting up a web application using Django for 
   Create a `.env` file in the root directory and add the following:
 
   ```plaintext
+
+  # DJANGO_ENV mode as development, production, or testing
+  DJANGO_ENV=development
+  # DJANGO_ENV=production
+  # DJANGO_ENV=testing
+
+  # Server Configuration
   HOST=localhost
   PORT=8000
-  SEND_VERIFICATION_URL_HOST=localhost
-  SEND_VERIFICATION_URL_PORT=3000
-  SECRET_KEY=your_secret_key
-  DEBUG=True
-  ALLOWED_HOSTS=localhost,
-  CORS_ALLOWED_ORIGINS=http://localhost:3000,
+  FRONTEND_URL=http://localhost:3000
 
-  # Uncomment and configure the following for PostgreSQL:
+  # Application Settings
+  SECRET_KEY=your_secret_key
+
+  # # Access Control, (Only for production)
+  # ALLOWED_HOSTS=http:localhost,127.0.0.1
+  # CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+
+  # PostgreSQL DB Configuration Settings
   # DB_NAME=your_db_name
   # DB_USER=your_db_user
   # DB_PASSWORD=your_db_password
   # DB_HOST=localhost
   # DB_PORT=5432
 
-  # Email Configuration
+  # Email Configuration Settings
   EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
   EMAIL_HOST=smtp.gmail.com
   EMAIL_PORT=587
@@ -192,7 +201,7 @@ Success response:
 Error response:
 ```
 {
-  "status": "error", 
+  "status": "error",
   "message": "The request was not successful",
   "error": {
     "email": "Invalid email address",
@@ -230,7 +239,7 @@ Error response:
 ```
 {
   "status": "error",
-  "message": "The request was not successful", 
+  "message": "The request was not successful",
   "error": {
     "detail": "No active account found with the given credentials"
   }
@@ -320,7 +329,7 @@ Content-Type: application/json
 Success response:
 ```
 {
-  "status": "success", 
+  "status": "success",
   "message": "The request was successful",
   "data": {
     "detail": "ok"
