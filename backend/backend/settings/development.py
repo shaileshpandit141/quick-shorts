@@ -30,4 +30,5 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',    # Strong fallback option
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher', # Additional fallback
     'django.contrib.auth.hashers.ScryptPasswordHasher',    # Final fallback option
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher'
 ]
