@@ -9,7 +9,7 @@ when included in the main URLs.
 from django.urls import path
 from .views import (
     GenerateEmailVerificationLinkAPIView,
-    PasswordChangeAPIView,
+    ChangePasswordAPIView,
     SigninTokenAPIView,
     SigninTokenRefreshAPIView,
     SignupAPIView,
@@ -26,7 +26,7 @@ urlpatterns = [
     path('token/', SigninTokenAPIView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', SigninTokenRefreshAPIView.as_view(), name='token_refresh'),
     path('signup/', SignupAPIView.as_view(), name='signup'),
-    path('change-password/', PasswordChangeAPIView.as_view(), name='change_password'),
+    path('change-password/', ChangePasswordAPIView.as_view(), name='change_password'),
 
     # User data endpoints for profile information
     path('user/', UserInfoAPIView.as_view(), name='user'),
