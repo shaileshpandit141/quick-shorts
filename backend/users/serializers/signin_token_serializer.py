@@ -15,7 +15,7 @@ class SigninTokenSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         # Authenticate the user
         credentials = {
-            'email': attrs['email'],
+            'user': attrs['email'],
             'password': attrs['password'],
         }
 

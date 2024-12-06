@@ -43,9 +43,7 @@ class SigninTokenRefreshAPIView(TokenRefreshView):
         Handle token refresh requests.
         """
         try:
-            print("Before calling super().post")
             response = super().post(request, *args, **kwargs)
-            print(f"Response Data: {response.data}")
             if response.status_code == status.HTTP_200_OK:
                 return Response.success({
                     'message': 'Access token successfully renewed',

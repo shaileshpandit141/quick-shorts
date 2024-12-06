@@ -22,9 +22,12 @@ DATABASES = {
     }
 }
 
-# Authentication Settings
+# Password hashing algorithms in order of preference
 # -----------------------
-# MD5 password hashing configuration
+# Using multiple algorithms provides additional security layers
 PASSWORD_HASHERS = [
-    "django.contrib.auth.hashers.MD5PasswordHasher",
+    'django.contrib.auth.hashers.Argon2PasswordHasher',    # Recommended primary hasher
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',    # Strong fallback option
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher', # Additional fallback
+    'django.contrib.auth.hashers.ScryptPasswordHasher',    # Final fallback option
 ]

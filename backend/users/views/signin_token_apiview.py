@@ -28,7 +28,11 @@ class SigninTokenAPIView(TokenObtainPairView):
         Handle login request and return JWT tokens.
         """
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        if not serializer.is_valid():
+            return Response.error({
+                'message': 'Sign in failed',
+                'errors': serializer.errors
+            }, status.HTTP_400_BAD_REQUEST)
 
         # Get the user from the serializer
         user = serializer.validated_data['user']
