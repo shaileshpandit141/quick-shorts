@@ -1,7 +1,6 @@
-from rest_framework import serializers
 from django.contrib.auth import authenticate
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework.exceptions import AuthenticationFailed
 
 
 class SigninTokenSerializer(TokenObtainPairSerializer):
@@ -9,28 +8,21 @@ class SigninTokenSerializer(TokenObtainPairSerializer):
     Custom serializer to issue JWT tokens for users, replacing the username
     field with email for authentication.
     """
-    email = serializers.EmailField()
-    password = serializers.CharField()
-
     def validate(self, attrs):
-        # Authenticate the user
-        credentials = {
-            'user': attrs['email'],
-            'password': attrs['password'],
-        }
+        email = attrs.get("email")
+        password = attrs.get("password")
 
-        user = authenticate(**credentials)
-        if not user:
-            raise serializers.ValidationError('Invalid credentials')
-        if not user.is_active:
-            raise serializers.ValidationError('This account is inactive')
+        if email and password:
+            user = authenticate(request=self.context.get("request"), email=email, password=password)
 
-        # Generate tokens
-        refresh = RefreshToken.for_user(user)
+            if not user:
+                raise AuthenticationFailed("Invalid email or password")
 
-        # Include user in the validated data
-        return {
-            'user': user,
-            'access': str(refresh.access_token),  # type: ignore
-            'refresh': str(refresh),
-        }
+            if not user.is_active:
+                raise AuthenticationFailed("Account is disabled")
+
+            data = super().validate(attrs)
+            data.update({"email": user.email})
+            return data
+
+        raise AuthenticationFailed("Email and password must be provided")
