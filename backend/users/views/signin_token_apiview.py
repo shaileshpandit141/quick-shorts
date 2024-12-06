@@ -14,11 +14,11 @@ from users.serializers import SigninTokenSerializer
 
 class SigninTokenAPIView(TokenObtainPairView):
     """
-    Custom JWT token view for user authentication.
+    Custom JWT token view for user authentication using email and password.
     """
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
-    serializer_class = SigninTokenSerializer
+    serializer_class = SigninTokenSerializer  # Use the custom serializer
 
     def get(self, request, *args, **kwargs) -> Response.type:
         return Response.method_not_allowed('get')
@@ -35,10 +35,10 @@ class SigninTokenAPIView(TokenObtainPairView):
             }, status.HTTP_400_BAD_REQUEST)
 
         # Get the user from the serializer
-        user = serializer.validated_data['user']
+        user = serializer.validated_data.get('user')
 
         # Enforce email verification for non-superusers
-        if not user.is_superuser and not user.is_email_verified:
+        if user and not user.is_superuser and not user.is_email_verified:
             return Response.error({
                 'message': 'Sign in failed - email not verified',
                 'errors': {
@@ -49,8 +49,9 @@ class SigninTokenAPIView(TokenObtainPairView):
             }, status.HTTP_401_UNAUTHORIZED)
 
         # Update last login timestamp
-        user.last_login = timezone.now()
-        user.save(update_fields=['ast_login'])
+        if user:
+            user.last_login = timezone.now()
+            user.save(update_fields=['last_login'])
 
         # Return tokens from the serializer
         return Response.success({
