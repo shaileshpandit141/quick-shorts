@@ -51,16 +51,16 @@ class UserInfoAPIView(APIView):
         }, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('post')
+        return Response.method_not_allowed('POST')
 
     def put(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('put')
+        return Response.method_not_allowed('PUT')
 
     def patch(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('patch')
+        return Response.method_not_allowed('PATCH')
 
     def delete(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('delete')
+        return Response.method_not_allowed('DELETE')
 
     def options(self, request, *args, **kwargs) -> Response.type:
         return Response.options(['POST'])

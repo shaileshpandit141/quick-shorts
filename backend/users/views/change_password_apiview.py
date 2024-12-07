@@ -25,7 +25,7 @@ class ChangePasswordAPIView(APIView):
 
     def get(self, request, *args, **kwargs) -> Response.type:
         """GET method not supported."""
-        return Response.method_not_allowed('get')
+        return Response.method_not_allowed('GET')
 
     def post(self, request, *args, **kwargs) -> Response.type:
         """Create one or more new YourModel instances."""
@@ -78,15 +78,15 @@ class ChangePasswordAPIView(APIView):
 
     def put(self, request, *args, **kwargs) -> Response.type:
         """PUT method not supported."""
-        return Response.method_not_allowed('put')
+        return Response.method_not_allowed('PUT')
 
     def patch(self, request, *args, **kwargs) -> Response.type:
         """PATCH method not supported."""
-        return Response.method_not_allowed('patch')
+        return Response.method_not_allowed('PATCH')
 
     def delete(self, request, *args, **kwargs) -> Response.type:
         """DELETE method not supported."""
-        return Response.method_not_allowed('delete')
+        return Response.method_not_allowed('DELETE')
 
     def options(self, request, *args, **kwargs) -> Response.type:
         """OPTIONS method not supported."""

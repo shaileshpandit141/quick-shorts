@@ -19,7 +19,7 @@ class ForgotPasswordConfirmAPIView(APIView):
     throttle_classes = [AnonRateThrottle]
 
     def get(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('get')
+        return Response.method_not_allowed('GET')
 
     def post(self, request, *args, **kwargs) -> Response.type:
         token = request.data.get('token', None)
@@ -65,13 +65,13 @@ class ForgotPasswordConfirmAPIView(APIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('put')
+        return Response.method_not_allowed('PUT')
 
     def patch(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('patch')
+        return Response.method_not_allowed('PATCH')
 
     def delete(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('delete')
+        return Response.method_not_allowed('DELETE')
 
     def options(self, request, *args, **kwargs) -> Response.type:
         """OPTIONS method not supported."""

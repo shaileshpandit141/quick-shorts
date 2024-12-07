@@ -32,7 +32,7 @@ class VerifyEmailAPIView(APIView):
     throttle_classes = [AnonRateThrottle]
 
     def get(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('get')
+        return Response.method_not_allowed('GET')
 
     def post(self, request, *args, **kwargs) -> Response.type:
         """
@@ -108,13 +108,13 @@ class VerifyEmailAPIView(APIView):
             }, status.HTTP_200_OK)
 
     def put(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('put')
+        return Response.method_not_allowed('PUT')
 
     def patch(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('patch')
+        return Response.method_not_allowed('PATCH')
 
     def delete(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('delete')
+        return Response.method_not_allowed('DELETE')
 
     def options(self, request, *args, **kwargs) -> Response.type:
         return Response.options(['POST'])
