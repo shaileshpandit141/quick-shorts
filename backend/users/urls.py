@@ -23,7 +23,7 @@ from .views import (
 
 urlpatterns = [
     path('signup/', SignupAPIView.as_view(), name='signup'),
-    path('signin/token', SigninTokenAPIView.as_view(), name='signin_token'),
+    path('signin/token/', SigninTokenAPIView.as_view(), name='signin_token'),
     path('signin/token/refresh/', SigninTokenRefreshAPIView.as_view(), name='signin_token_refresh'),
     path('signout/', SignoutAPIView.as_view(), name='sign_out'),
     path('verify-email/', VerifyEmailAPIView.as_view(), name='verify_email'),
