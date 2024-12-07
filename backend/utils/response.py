@@ -116,7 +116,7 @@ class Response:
         content_type=content_type)
 
     @staticmethod
-    def method_not_allowed(name: Literal['get', 'post', 'put', 'patch', 'delete', 'options']) -> DRFResponse:
+    def method_not_allowed(name: Literal['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']) -> DRFResponse:
         """
         Creates a standardized error response for unsupported HTTP methods.
 
