@@ -18,7 +18,7 @@ class SigninTokenAPIView(TokenObtainPairView):
     """
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
-    serializer_class = SigninTokenSerializer  # Use the custom serializer
+    serializer_class = SigninTokenSerializer
 
     def get(self, request, *args, **kwargs) -> Response.type:
         return Response.method_not_allowed('get')
