@@ -1,8 +1,7 @@
 from rest_framework.views import exception_handler
 from rest_framework.exceptions import NotAuthenticated, AuthenticationFailed
-from rest_framework.response import Response
 from rest_framework import status
-from django.utils.translation import gettext_lazy as _
+from utils import Response
 
 def custom_exception_handler(exc, context):
     """
@@ -24,27 +23,22 @@ def custom_exception_handler(exc, context):
     # Handle NotAuthenticated exceptions
     if isinstance(exc, NotAuthenticated):
         # Format custom error response for missing authentication
-        error_context = {
-            'status': _('error'),
-            'message': _('Authentication Failed'),
-            'error': {
-                'detail': _('Authentication credentials were not provided or invalid.')
+        return Response.error({
+            'message': 'Authentication Failed',
+            'errors': {
+                'detail': 'Authentication credentials were not provided or invalid.'
             }
-        }
-        return Response(error_context, status=status.HTTP_401_UNAUTHORIZED)
+        }, status.HTTP_401_UNAUTHORIZED)
 
     # Handle AuthenticationFailed exceptions
     if isinstance(exc, AuthenticationFailed):
         # Format custom error response for invalid authentication
-        error_context = {
-            'status': _('error'),
-            'message': _('Access Denied'),
-            'error': {
-                'detail': _('Please provide valid authentication credentials.'),
-                'refresh_token': _('Provided refresh token has expired.')
+        return Response.error({
+            'message': 'Access Denied',
+            'errors': {
+                'detail': 'Please provide valid authentication credentials.'
             }
-        }
-        return Response(error_context, status=status.HTTP_401_UNAUTHORIZED)
+        }, status.HTTP_401_UNAUTHORIZED)
 
     # Return default response for any other exceptions
     return response
