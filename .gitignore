@@ -1,5 +1,5 @@
 # Ignore the backend dependency
-backend/venv
+venv
 backend/.env
 backend/*/__pycache__
 backend/*/*/__pycache__
