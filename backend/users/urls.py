@@ -8,27 +8,29 @@ when included in the main URLs.
 
 from django.urls import path
 from .views import (
-    GenerateEmailVerificationLinkAPIView,
-    ChangePasswordAPIView,
+    SignupAPIView,
     SigninTokenAPIView,
     SigninTokenRefreshAPIView,
-    SignupAPIView,
-    UserInfoAPIView,
+    SignoutAPIView,
     VerifyEmailAPIView,
+    VerifyEmailConfirmAPIView,
+    ChangePasswordAPIView,
+    ForgotPasswordAPIView,
+    ForgotPasswordConfirmAPIView,
+    DeactivateAccountAPIView,
+    UserInfoAPIView,
 )
 
 urlpatterns = [
-    path(
-        'generate-email-verification-link/',
-        GenerateEmailVerificationLinkAPIView.as_view(),
-        name='generate-email-verification-link'
-    ),
-    path('token/', SigninTokenAPIView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', SigninTokenRefreshAPIView.as_view(), name='token_refresh'),
     path('signup/', SignupAPIView.as_view(), name='signup'),
-    path('change-password/', ChangePasswordAPIView.as_view(), name='change_password'),
-
-    # User data endpoints for profile information
-    path('user/', UserInfoAPIView.as_view(), name='user'),
-    path('verify-email/', VerifyEmailAPIView.as_view(), name='verify_email')
+    path('signin/token', SigninTokenAPIView.as_view(), name='signin_token'),
+    path('signin/token/refresh/', SigninTokenRefreshAPIView.as_view(), name='signin_token_refresh'),
+    path('signout/', SignoutAPIView.as_view(), name='sign_out'),
+    path('verify-email/', VerifyEmailAPIView.as_view(), name='verify_email'),
+    path('verify-email-confirm/', VerifyEmailConfirmAPIView.as_view(), name='verify_email_confirm'),
+    path('change-pasaword/', ChangePasswordAPIView.as_view(), name='change_password'),
+    path('forgot-password/', ForgotPasswordAPIView.as_view(), name='forgot_password'),
+    path('forgot-password-confirm/', ForgotPasswordConfirmAPIView.as_view(), name='forgot_password_confirm'),
+    path('deactivate-account/', DeactivateAccountAPIView.as_view(), name='deactivate_account'),
+    path('user/', UserInfoAPIView.as_view(), name='user-info'),
 ]

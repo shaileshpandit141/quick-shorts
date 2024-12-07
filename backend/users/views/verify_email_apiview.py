@@ -1,20 +1,33 @@
 # Django imports
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 # Django REST framework imports
 from rest_framework import status
 from rest_framework.views import APIView
-# from rest_framework_simplejwt.views import TokenRefreshView
 
 # Local imports
 from permissions import AllowAny
 from throttles import AnonRateThrottle
-from utils import Response, TokenGenerator
+from utils import Response, SendEmail, TokenGenerator, add_query_params
 
 User = get_user_model()
 
 
 class VerifyEmailAPIView(APIView):
+    """
+    View for resending account verification emails.
+
+    Handles requests to resend verification emails for unverified accounts.
+    Validates email existence and verification status before sending.
+
+    Methods:
+        post: Process email verification resend request
+
+    Attributes:
+        permission_classes: Allow any user to access
+        throttle_classes: Rate limiting for anonymous requests only
+    """
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
@@ -22,50 +35,77 @@ class VerifyEmailAPIView(APIView):
         return Response.method_not_allowed('get')
 
     def post(self, request, *args, **kwargs) -> Response.type:
-        token = request.data.get('token', None)
-        token_salt = request.data.get('token_salt', None)
+        """
+        Process request to resend verification email.
 
-        if token is None or token_salt is None:
-            errors = {}
-            if token is None:
-                errors['token'] = ['Token `token` can has not be empty']
-            if token_salt is None:
-                errors['token_salt'] = ['Token salt `token_salt` can has not be empty']
+        Validates email existence and current verification status
+        before sending new verification email.
 
+        Args:
+            request: HTTP request containing email address
+
+        Returns:
+            Response indicating success or error status
+        """
+        email = request.data.get("email", None)
+
+        if not email:
             return Response.error({
-                'message': 'Invalid request',
-                'errors': errors
+                'message': 'Missing email address',
+                'errors': {
+                    'email': [
+                        'Please provide your email address'
+                    ]
+                }
             }, status.HTTP_400_BAD_REQUEST)
 
         try:
-            data = TokenGenerator.decode(token, token_salt)
-            user_id = data["user_id"]
-
-            user = User.objects.get(id=user_id)
-            if user.is_email_verified:
-                return Response.success({
-                    'message': 'Email already verified',
-                    'data': {
-                        'detail': 'Email already verified.'
-                    }
-                }, status.HTTP_200_OK)
-
-            user.is_email_verified = True
-            user.save()
-            return Response.success({
-                'message': 'Email verified successfully',
-                'data': {
-                    'detail': 'Email verified successfully'
-                }
-            }, status.HTTP_200_OK)
-
-        except ValueError as error:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
             return Response.error({
-                'message': 'Invalid token',
+                'message': 'Account not found',
                 'errors': {
-                    'non_field_errors': [str(error)]
+                    'email': [
+                        'No account exists with this email address'
+                    ]
                 }
             }, status.HTTP_400_BAD_REQUEST)
+
+        if not user.is_email_verified:
+            # Generate token
+            payload = TokenGenerator.generate({"user_id": user.id})
+            activate_url = add_query_params(f'{settings.FRONTEND_URL}/auth/verify-email', {
+                'token': payload['token'],
+                'token_salt': payload['token_salt']
+            })
+
+            SendEmail({
+                'subject': 'Email Verification Request',
+                'emails': {
+                    'to_emails': email
+                },
+                'context': {
+                    'user': user,
+                    'activate_url': activate_url
+                },
+                'templates': {
+                    'txt': 'users/verify_email_confirm_message.txt',
+                    'html': 'users/verify_email_confirm_message.html'
+                }
+            })
+            return Response.success({
+                'message': 'Verification email sent',
+                'data': {
+                    'detail': 'Please check your inbox for the verification email'
+                }
+            }, status.HTTP_200_OK)
+        else:
+            return Response.success({
+                'message': 'Email already verified',
+                'data': {
+                    'detail': 'Your email address has already been verified'
+                }
+            }, status.HTTP_200_OK)
 
     def put(self, request, *args, **kwargs) -> Response.type:
         return Response.method_not_allowed('put')

@@ -14,7 +14,7 @@ from utils import Response, SendEmail, TokenGenerator, add_query_params
 User = get_user_model()
 
 
-class GenerateEmailVerificationLinkAPIView(APIView):
+class ForgotPasswordAPIView(APIView):
     """
     View for resending account verification emails.
 
@@ -71,41 +71,42 @@ class GenerateEmailVerificationLinkAPIView(APIView):
                 }
             }, status.HTTP_400_BAD_REQUEST)
 
-        if not user.is_email_verified:
+        if user.is_email_verified:
             # Generate token
             payload = TokenGenerator.generate({"user_id": user.id})
-            activate_url = add_query_params(f'{settings.FRONTEND_URL}/auth/verify-email', {
+            active_url = add_query_params(f'{settings.FRONTEND_URL}/auth/verify-email', {
                 'token': payload['token'],
                 'token_salt': payload['token_salt']
             })
-
             SendEmail({
-                'subject': 'Email Verification Request',
+                'subject': 'Forgot Password Request',
                 'emails': {
                     'to_emails': email
                 },
                 'context': {
                     'user': user,
-                    'activate_url': activate_url
+                    'active_url': active_url
                 },
                 'templates': {
-                    'txt': 'users/email_verification_message.txt',
-                    'html': 'users/email_verification_message.html'
+                    'txt': 'users/forgot_password_confirm_message.txt',
+                    'html': 'users/forgot_password_confirm_message.html'
                 }
             })
             return Response.success({
-                'message': 'Verification email sent',
+                'message': 'Forgot password email sent',
                 'data': {
-                    'detail': 'Please check your inbox for the verification email'
+                    'detail': 'Please check your inbox for the Forgot password'
                 }
             }, status.HTTP_200_OK)
         else:
-            return Response.success({
-                'message': 'Email already verified',
-                'data': {
-                    'detail': 'Your email address has already been verified'
+            return Response.error({
+                "message": "Please verify your email to continue.",
+                "errors": {
+                    "detail": [
+                        "You must verify your email address to access this resource."
+                    ]
                 }
-            }, status.HTTP_200_OK)
+            }, status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, *args, **kwargs) -> Response.type:
         return Response.method_not_allowed('put')
@@ -117,4 +118,5 @@ class GenerateEmailVerificationLinkAPIView(APIView):
         return Response.method_not_allowed('delete')
 
     def options(self, request, *args, **kwargs) -> Response.type:
+        """OPTIONS method not supported."""
         return Response.options(['POST'])

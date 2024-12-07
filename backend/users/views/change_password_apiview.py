@@ -90,4 +90,4 @@ class ChangePasswordAPIView(APIView):
 
     def options(self, request, *args, **kwargs) -> Response.type:
         """OPTIONS method not supported."""
-        return Response.method_not_allowed('options')
+        return Response.options(['POST'])
