@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 # Local imports
 from permissions import IsAuthenticated, IsEmailVerified
 from throttles import UserRateThrottle
-from utils import Response
+from utils import Response, FieldValidator
 from users.serializers import UserSerializer
 
 User = get_user_model()
@@ -57,10 +57,43 @@ class UserInfoAPIView(APIView):
         return Response.method_not_allowed('PUT')
 
     def patch(self, request, *args, **kwargs) -> Response.type:
-        return Response.method_not_allowed('PATCH')
+        user = request.user
+        data = {
+            'first_name': request.data.get('first_name'),
+            'last_name': request.data.get('last_name')
+        }
+        clean_data = FieldValidator(data, ['first_name', 'last_name'])
+        if not clean_data.is_valid():
+            return Response.error({
+                'message': 'Invalid Request',
+                'errors': clean_data.get_errors()
+            }, status.HTTP_400_BAD_REQUEST)
+
+        instance = UserSerializer(
+            data=data,
+            instance=user,
+            many=False,
+            partial=True
+        )
+
+        if not instance.is_valid():
+            return Response.error({
+                'message': 'Opps! something is wrong',
+                'errors': {
+                    'non_field_errors': [
+                        'Something is worng. try sometime leater.'
+                    ]
+                }
+            }, status.HTTP_400_BAD_REQUEST)
+        
+        instance.save()
+        return Response.success({
+            'message': 'User profile update successfully',
+            'data': instance.data
+        }, status=status.HTTP_200_OK)
 
     def delete(self, request, *args, **kwargs) -> Response.type:
         return Response.method_not_allowed('DELETE')
 
     def options(self, request, *args, **kwargs) -> Response.type:
-        return Response.options(['POST'])
+        return Response.options(['POST', 'PATCH'])
