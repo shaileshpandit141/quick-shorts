@@ -3,7 +3,7 @@ from rest_framework.response import Response as DRFResponse
 from rest_framework import status
 
 
-class TypedErrorResponse(TypedDict):
+class ErrorResponseType(TypedDict):
     """
     Defines the structure of a standardized error response.
 
@@ -17,14 +17,14 @@ class TypedErrorResponse(TypedDict):
     errors: Dict[str, Union[List[str], str]]
 
 
-TypedErrorStatus = Literal[
+ErrorStatusType = Literal[
     400,   # HTTP_400_BAD_REQUEST - Malformed request or validation error
     401,   # HTTP_401_UNAUTHORIZED - Missing or invalid authentication
     404    # HTTP_404_NOT_FOUND - Resource not found
 ]
 
 
-class TypedSuccessResponse(TypedDict):
+class SuccessResponseType(TypedDict):
     """
     Defines the structure of a standardized success response.
 
@@ -38,7 +38,7 @@ class TypedSuccessResponse(TypedDict):
     data: Dict[str, Any] | List[Dict[str, Any]]
 
 
-TypedSuccessStatus = Literal[
+SuccessStatusType = Literal[
     200,   # HTTP_200_OK - Request completed successfully
     201,   # HTTP_201_CREATED - New resource created successfully
     204    # HTTP_204_NO_CONTENT - Success but no content returned
@@ -58,8 +58,8 @@ class Response:
 
     @staticmethod
     def error(
-        payload: TypedErrorResponse,
-        status: TypedErrorStatus=status.HTTP_400_BAD_REQUEST,
+        payload: ErrorResponseType,
+        status: ErrorStatusType=status.HTTP_400_BAD_REQUEST,
         template_name: Optional[Any] = None,
         headers: Optional[Dict[str, str]] = None,
         exception: bool = False,
@@ -68,8 +68,8 @@ class Response:
         Creates a standardized error response structure.
 
         Args:
-            payload (TypedErrorResponse): The error details including message and field-level errors
-            status (TypedErrorStatus): The HTTP status code to return (400, 401, or 404)
+            payload (ErrorResponseType): The error details including message and field-level errors
+            status (ErrorStatusType): The HTTP status code to return (400, 401, or 404)
 
         Returns:
             Response: A Django REST framework Response object with formatted error details
@@ -87,8 +87,8 @@ class Response:
 
     @staticmethod
     def success(
-        payload: TypedSuccessResponse,
-        status: TypedSuccessStatus = status.HTTP_200_OK,
+        payload: SuccessResponseType,
+        status: SuccessStatusType = status.HTTP_200_OK,
         template_name: Optional[Any] = None,
         headers: Optional[Dict[str, str]] = None,
         exception: bool = False,
@@ -97,8 +97,8 @@ class Response:
         Creates a standardized success response structure.
 
         Args:
-            payload (TypedSuccessResponse): The success details including message, data and metadata
-            status (TypedSuccessStatus): The HTTP status code to return (200, 201, or 204)
+            payload (SuccessResponseType): The success details including message, data and metadata
+            status (SuccessStatusType): The HTTP status code to return (200, 201, or 204)
 
         Returns:
             Response: A Django REST framework Response object with formatted success details
