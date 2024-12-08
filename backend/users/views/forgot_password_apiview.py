@@ -88,8 +88,8 @@ class ForgotPasswordAPIView(APIView):
                     'active_url': active_url
                 },
                 'templates': {
-                    'txt': 'users/forgot_password_confirm_message.txt',
-                    'html': 'users/forgot_password_confirm_message.html'
+                    'txt': 'users/forgot_password/confirm_message.txt',
+                    'html': 'users/forgot_password/confirm_message.html'
                 }
             })
             return Response.success({

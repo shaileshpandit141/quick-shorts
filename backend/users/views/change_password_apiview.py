@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 # Local imports
 from permissions import IsAuthenticated
 from throttles import UserRateThrottle
-from utils import Response
+from utils import Response, SendEmail
 
 User = get_user_model()
 
@@ -68,7 +68,19 @@ class ChangePasswordAPIView(APIView):
         # Set the new password
         user.set_password(new_password)
         user.save()
-
+        SendEmail({
+            'subject': 'Forgot Password Request',
+            'emails': {
+                'to_emails': user.email
+            },
+            'context': {
+                'user': user
+            },
+            'templates': {
+                'txt': 'users/change_password/success_message.txt',
+                'html': 'users/change_password/success_message.html'
+            }
+        })
         return Response.success({
             'message': 'Your password has been changed',
             'data': {

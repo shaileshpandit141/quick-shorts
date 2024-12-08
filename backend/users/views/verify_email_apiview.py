@@ -89,8 +89,8 @@ class VerifyEmailAPIView(APIView):
                     'activate_url': activate_url
                 },
                 'templates': {
-                    'txt': 'users/verify_email_confirm_message.txt',
-                    'html': 'users/verify_email_confirm_message.html'
+                    'txt': 'users/verify_email/confirm_message.txt',
+                    'html': 'users/verify_email/confirm_message.html'
                 }
             })
             return Response.success({
