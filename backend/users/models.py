@@ -24,11 +24,20 @@ class UserManager(BaseUserManager):
             The created user instance
 
         Raises:
-            ValueError: If email is not provided
+            ValueError: If email is not provided or invalid
         """
         if not email:
             raise ValueError('The Email field must be set')
+
+        # Normalize and validate email
         email = self.normalize_email(email)
+        if '@' not in email:
+            raise ValueError('Invalid email address')
+
+        # Set username from email
+        extra_fields["username"] = email.split('@')[0]
+
+        # Create and save user
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -81,6 +90,20 @@ class User(AbstractBaseUser, PermissionsMixin):
             'blank': 'Email address cannot be empty'
         }
     )
+    username = models.CharField(
+        max_length=30,
+        unique=True,
+        null=False,
+        blank=False,
+        db_index=False,
+        default='',
+        error_messages={
+            'invalid': 'Please enter a valid last name',
+            'null': 'Last name is required',
+            'blank': 'Last name cannot be empty',
+            'max_length': 'Last name cannot be longer than 30 characters'
+        }
+    )
     first_name = models.CharField(
         max_length=30,
         unique=False,
@@ -107,6 +130,26 @@ class User(AbstractBaseUser, PermissionsMixin):
             'null': 'Last name is required',
             'blank': 'Last name cannot be empty',
             'max_length': 'Last name cannot be longer than 30 characters'
+        }
+    )
+    avatar = models.ImageField(
+        upload_to='users/avatars/',
+        height_field=None,
+        width_field=None,
+        max_length=100,
+        null=False,
+        blank=False,
+        storage=None,
+        db_index=False,
+        default='users/avatars/default.png',
+        error_messages={
+            'invalid': 'Please provide a valid image file',
+            'invalid_image': 'The uploaded file must be a valid image format like JPG, PNG or GIF',
+            'missing': 'Please select an image file to upload',
+            'empty': 'The uploaded file is empty. Please select a valid image file',
+            'max_length': 'The filename is too long. 100 characters allowed',
+            'null': 'An avatar image is required',
+            'blank': 'An avatar image is required'
         }
     )
     date_joined = models.DateTimeField(
@@ -184,7 +227,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'User'
         verbose_name_plural = 'Users'
         ordering = ['-date_joined']  # Order users by join date (newest first)
-        # unique_together = (('first_name', 'last_name'),)
 
     def __str__(self):
         """Returns the string representation of the user (email)"""
