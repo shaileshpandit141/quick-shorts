@@ -79,6 +79,10 @@ class FieldValidator:
     def is_valid(self) -> bool:
         """Return True if no validation errors were found."""
         return not self.errors
+        
+    def get(self, field) -> Any | None:
+        """Return value with provided field. Otherwise None."""
+        return self.data.get(field, None)
 
     def get_errors(self) -> Dict[str, Any]:
         """Return the dictionary of validation errors."""
