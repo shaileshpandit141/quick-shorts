@@ -9,14 +9,14 @@ class CustomUserAdmin(UserAdmin):
     Custom admin interface for User model that extends Django's built-in UserAdmin.
     Customizes the admin forms, display fields and fieldsets for managing users.
     """
-    model = User
+    model = User 
     add_form = UserCreationForm  # Custom form for creating new users
     form = UserChangeForm  # Custom form for modifying existing users
 
     # Fields to display in the user list view
-    list_display = ('email', 'full_name', 'is_active_colored', 'is_email_verified', 'is_staff', 'last_login')
+    list_display = ('email', 'username', 'full_name', 'is_active_colored', 'is_email_verified', 'is_staff', 'last_login')
     list_filter = ('is_active', 'is_staff', 'is_email_verified', 'groups')
-    search_fields = ('email', 'first_name', 'last_name')
+    search_fields = ('email', 'username', 'first_name', 'last_name')
     readonly_fields = ('date_joined', 'last_login')
     list_per_page = 25
 
@@ -32,8 +32,8 @@ class CustomUserAdmin(UserAdmin):
 
     # Define how fields are grouped and displayed when editing existing users
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name')}),
+        (None, {'fields': ('email', 'username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'avatar')}),
         ('Permissions', {
             'fields': ('is_active', 'is_email_verified', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
             'classes': ('collapse',)
@@ -45,7 +45,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'first_name', 'last_name', 'is_active', 'is_email_verified', 'is_staff')
+            'fields': ('email', 'username', 'password1', 'password2', 'first_name', 'last_name', 'avatar', 'is_active', 'is_email_verified', 'is_staff')
         }),
     )
 

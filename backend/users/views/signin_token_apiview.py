@@ -1,5 +1,6 @@
 # Django imports
 from django.utils import timezone
+from django.contrib.auth.validators import UnicodeUsernameValidator
 
 # Django REST framework imports
 from rest_framework import status
@@ -34,7 +35,7 @@ class SigninTokenAPIView(TokenObtainPairView):
                 'errors': clean_data.get_errors()
             }, status.HTTP_400_BAD_REQUEST)
 
-        serializer = self.get_serializer(data=clean_data)
+        serializer = self.get_serializer(data=clean_data.data)
         if not serializer.is_valid():
             return Response.error({
                 'message': 'Sign in failed',

@@ -17,18 +17,20 @@ class UserCreationForm(DjangoUserCreationForm):
         help_text="Your password must contain at least 8 characters."
     )
     password2 = forms.CharField(
-        label='Password confirmation',
+        label='Password confirmation', 
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
         help_text="Enter the same password as above, for verification."
     )
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'is_active', 'is_email_verified', 'is_staff')
+        fields = ('email', 'username', 'first_name', 'last_name', 'avatar', 'is_active', 'is_email_verified', 'is_staff')
         widgets = {
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'avatar': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
     def clean_email(self):
@@ -90,11 +92,13 @@ class UserChangeForm(DjangoUserChangeForm):
     """
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'is_active', 'is_email_verified', 'is_staff')
+        fields = ('email', 'username', 'first_name', 'last_name', 'avatar', 'is_active', 'is_email_verified', 'is_staff')
         widgets = {
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'avatar': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
     def clean_email(self):
