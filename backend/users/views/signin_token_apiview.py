@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 # Local imports
 from permissions import AllowAny
 from throttles import AnonRateThrottle
-from utils import Response
+from utils import Response, FieldValidator
 from users.serializers import SigninTokenSerializer
 
 
@@ -27,7 +27,14 @@ class SigninTokenAPIView(TokenObtainPairView):
         """
         Handle login request and return JWT tokens.
         """
-        serializer = self.get_serializer(data=request.data)
+        clean_data = FieldValidator(request.data, ['email', 'password'])  # type: ignore
+        if not clean_data.is_valid():
+            return Response.error({
+                'message': 'Sign in failed',
+                'errors': clean_data.get_errors()
+            }, status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.get_serializer(data=clean_data)
         if not serializer.is_valid():
             return Response.error({
                 'message': 'Sign in failed',

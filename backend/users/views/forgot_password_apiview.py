@@ -9,7 +9,13 @@ from rest_framework.views import APIView
 # Local imports
 from permissions import AllowAny
 from throttles import AnonRateThrottle
-from utils import Response, SendEmail, TokenGenerator, add_query_params
+from utils import (
+    Response, 
+    SendEmail, 
+    TokenGenerator, 
+    FieldValidator,
+    add_query_params
+)
 
 User = get_user_model()
 
@@ -47,20 +53,16 @@ class ForgotPasswordAPIView(APIView):
         Returns:
             Response indicating success or error status
         """
-        email = request.data.get("email", None)
+        clean_data = FieldValidator(request.data, ['email'])
 
-        if not email:
+        if not clean_data.is_valid():
             return Response.error({
                 'message': 'Missing email address',
-                'errors': {
-                    'email': [
-                        'Please provide your email address'
-                    ]
-                }
+                'errors': clean_data.get_errors()
             }, status.HTTP_400_BAD_REQUEST)
 
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(email=clean_data.get('email'))
         except User.DoesNotExist:
             return Response.error({
                 'message': 'Account not found',
@@ -79,9 +81,9 @@ class ForgotPasswordAPIView(APIView):
                 'token_salt': payload['token_salt']
             })
             SendEmail({
-                'subject': 'Forgot Password Request',
+                'subject': 'Password Reset Request',
                 'emails': {
-                    'to_emails': email
+                    'to_emails': [user.email]
                 },
                 'context': {
                     'user': user,

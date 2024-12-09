@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 # Local imports
 from permissions import IsAuthenticated
 from throttles import UserRateThrottle
-from utils import Response
+from utils import Response, FieldValidator
 
 
 class SignoutAPIView(APIView):
@@ -24,17 +24,14 @@ class SignoutAPIView(APIView):
 
     def post(self, request, *args, **kwargs) -> Response.type:
         """Create one or more new YourModel instances."""
-        refresh_token = request.data.get('refresh_token', None)
-
-        if refresh_token is None:
+        clean_data = FieldValidator(request.data, ['refresh_token'])
+        if not clean_data.is_valid():
             return Response.error({
                 'message': 'Invalid Request',
-                'errors': {
-                    'refresh_token': ['refresh token filed is redquired']
-                }
+                'errors': clean_data.get_errors()
             })
 
-        token = RefreshToken(refresh_token)
+        token = RefreshToken(clean_data.get('refresh_token'))
         # Blacklist the token
         token.blacklist()
         return Response.success({

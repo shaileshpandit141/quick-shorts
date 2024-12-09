@@ -12,7 +12,13 @@ from rest_framework.exceptions import ValidationError
 # Local imports
 from permissions import AllowAny
 from throttles import AnonRateThrottle
-from utils import Response, SendEmail, TokenGenerator, add_query_params
+from utils import (
+    Response, 
+    SendEmail, 
+    TokenGenerator, 
+    add_query_params,
+    FieldValidator
+)
 from users.serializers import UserSerializer
 
 User = get_user_model()
@@ -26,31 +32,21 @@ class SignupAPIView(APIView):
         return Response.method_not_allowed('GET')
 
     def post(self, request, *args, **kwargs) -> Response.type:
-        # Extract the password from request data
-        email = request.data.get('email', None)
-        password = request.data.get('password', None)
-        confirm_password = request.data.get('confirm_password', None)
-
-        # Check if the password and confirm_password is provided or not
-        if email is None or password is None or confirm_password is None:
-            errors = {}
-            if email is None:
-                errors['email'] = ['Email field is required']
-            elif User.objects.filter(email=email).exists():
-                errors['email'] = ['User with this email already exists.']
-                return Response.error({
-                    'message': 'Validation error',
-                    'errors': errors
-                }, status=status.HTTP_400_BAD_REQUEST)
-            if password is None:
-                errors['password'] = ['Password field is required']
-            if confirm_password is None:
-                errors['confirm_password'] = ['Confirm password field is required']
-
+        # Validate the data
+        clean_data = FieldValidator(request.data, [
+            'email', 
+            'password', 
+            'confirm_password'
+        ])
+        
+        if not clean_data.is_valid():
             return Response.error({
                 'message': 'Validation error',
-                'errors': errors
+                'errors': clean_data.get_errors()
             }, status=status.HTTP_400_BAD_REQUEST)
+
+        password = clean_data.get('password')
+        confirm_password = clean_data.get('confirm_password')
 
         # Validate the password
         try:
@@ -76,7 +72,7 @@ class SignupAPIView(APIView):
 
         # Serialize and validate the data
         serializer = UserSerializer(
-            data=request.data,
+            data=clean_data.data,
             context={'hashed_password': hashed_password}
         )
         if serializer.is_valid():

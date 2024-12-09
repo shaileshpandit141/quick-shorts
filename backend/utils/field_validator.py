@@ -18,8 +18,8 @@ class FieldValidator:
 
     def __init__(
         self,
-        data: Dict[str, Any],
-        fields: List[str],
+        data: Dict[str, Any] = {},
+        fields: List[str] = [],
         custom_validators: Dict[str, Callable] | None = None,
         case_sensitive: bool = False
     ) -> None:
@@ -79,10 +79,22 @@ class FieldValidator:
     def is_valid(self) -> bool:
         """Return True if no validation errors were found."""
         return not self.errors
-        
-    def get(self, field) -> Any | None:
-        """Return value with provided field. Otherwise None."""
-        return self.data.get(field, None)
+
+    def get(self, field: str) -> Any:
+        """Return value with provided field name.
+
+        Args:
+            field: The field name to get the value for
+
+        Returns:
+            The value associated with the field
+
+        Raises:
+            KeyError: If the field does not exist in the data
+        """
+        if field in self.data:
+            return self.data[field]
+        raise KeyError(f'Field "{field}" does not exist in the data')
 
     def get_errors(self) -> Dict[str, Any]:
         """Return the dictionary of validation errors."""

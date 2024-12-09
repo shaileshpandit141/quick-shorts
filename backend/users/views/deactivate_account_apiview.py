@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 # Local imports
 from permissions import IsAuthenticated
 from throttles import UserRateThrottle
-from utils import Response
+from utils import Response, FieldValidator, SendEmail
 
 
 class DeactivateAccountAPIView(APIView):
@@ -25,15 +25,12 @@ class DeactivateAccountAPIView(APIView):
         """Create one or more new YourModel instances."""
         user = request.user
         password = request.data.get('password', None)
-
-        if password is None:
+        clean_data = FieldValidator(request.data, ['password'])
+        if not clean_data.is_valid():
             return Response.error({
                 'message': 'Invalid Password',
-                'errors': {
-                    'password': ['password filed is redquired.']
-                }
+                'errors': clean_data.get_errors()
             })
-
         if not user.check_password(password):
             return Response.error({
                 'message': 'Invalid Password',
@@ -44,6 +41,19 @@ class DeactivateAccountAPIView(APIView):
 
         user.is_active = False
         user.save()
+        SendEmail({
+            'subject': 'Account Deactivation Confirmation',
+            'emails': {
+                'to_emails': [user.email]
+            },
+            'context': {
+                'user': user
+            },
+            'templates': {
+                'txt': 'users/deactivate_account/confirm_message.txt',
+                'html': 'users/deactivate_account/confirm_message.html'
+            }
+        })
         return Response.success({
             'message': 'Account deactivation successful',
             'data': {

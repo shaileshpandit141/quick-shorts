@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 # Local imports
 from permissions import AllowAny
 from throttles import AnonRateThrottle
-from utils import Response, TokenGenerator
+from utils import Response, TokenGenerator, FieldValidator
 
 User = get_user_model()
 
@@ -22,33 +22,27 @@ class ForgotPasswordConfirmAPIView(APIView):
         return Response.method_not_allowed('GET')
 
     def post(self, request, *args, **kwargs) -> Response.type:
-        token = request.data.get('token', None)
-        token_salt = request.data.get('token_salt', None)
-        new_password = request.data.get('new_password', None)
-
-        if token is None or token_salt is None or new_password is None:
-            errors = {}
-            if token is None:
-                errors['token'] = ['Token `token` can has not be empty']
-            if token_salt is None:
-                errors['token_salt'] = ['Token salt `token_salt` can has not be empty']
-            if new_password is None:
-                errors['new_password'] = ['New password `new_password` can has not be empty']
-
+        clean_data = FieldValidator(request.data, [
+            'token',
+            'token_salt',
+            'new_password'
+        ])
+        if not clean_data.is_valid():
             return Response.error({
                 'message': 'Invalid request',
-                'errors': errors
+                'errors': clean_data.get_errors()
             }, status.HTTP_400_BAD_REQUEST)
 
         try:
-            data = TokenGenerator.decode(token, token_salt)
-            user_id = data["user_id"]
-            user = User.objects.get(id=user_id)
-
+            data = TokenGenerator.decode(
+                clean_data.get('token'),
+                clean_data.get('token_salt')
+            )
+            user = User.objects.get(id=data["user_id"])
             # Validate the password
-            validate_password(new_password)
+            validate_password(clean_data.get('new_password'))
             # Set the new password
-            user.set_password(new_password)
+            user.set_password(clean_data.get('new_password'))
             user.save()
             return Response.success({
                 'message': 'Your password change successfu',

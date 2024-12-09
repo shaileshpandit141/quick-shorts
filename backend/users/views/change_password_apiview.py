@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 # Local imports
 from permissions import IsAuthenticated
 from throttles import UserRateThrottle
-from utils import Response, SendEmail
+from utils import Response, SendEmail, FieldValidator
 
 User = get_user_model()
 
@@ -30,23 +30,20 @@ class ChangePasswordAPIView(APIView):
     def post(self, request, *args, **kwargs) -> Response.type:
         """Create one or more new YourModel instances."""
         user = request.user
-        old_password = request.data.get('old_password')
-        new_password = request.data.get('new_password')
 
-        if old_password is None or new_password is None:
-            errors = {}
-            if old_password is None:
-                errors['old_password'] = ['old password can not be empty']
-            if new_password is None:
-                errors['new_password'] = ['new password can not be empty']
+        clean_data = FieldValidator(request.data, [
+            'old_password',
+            'new_password'
+        ])
 
+        if not clean_data.is_valid():
             return Response.error({
                 'message': 'Validation error',
-                'errors': errors
+                'errors': clean_data.get_errors()
             }, status.HTTP_400_BAD_REQUEST)
 
         # Check if the old password is correct
-        if not user.check_password(old_password):
+        if not user.check_password(clean_data.get('old_password')):
             return Response.error({
                 'message': 'Old password is incorrect',
                 'errors': {
@@ -56,7 +53,7 @@ class ChangePasswordAPIView(APIView):
 
         # Validate the password
         try:
-            validate_password(new_password)
+            validate_password(clean_data.get('new_password'))
         except Exception as error:
             return Response.error({
                 'message': 'New password Invalid',
@@ -66,7 +63,7 @@ class ChangePasswordAPIView(APIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         # Set the new password
-        user.set_password(new_password)
+        user.set_password(clean_data.get('new_password'))
         user.save()
         SendEmail({
             'subject': 'Forgot Password Request',
