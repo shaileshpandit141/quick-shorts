@@ -32,34 +32,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ["id", "email", 'is_email_verified', "first_name", "last_name"]
         read_only_fields = ['id', 'is_email_verified']
-        extra_kwargs = {
-            'id': {
-                'read_only': True
-            },
-            'is_email_verified': {
-                'read_only': True
-            },
-            'email': {
-                'required': True,
-                'error_messages': {
-                    'required': 'Please provide a valid email address to continue',
-                    'invalid': 'The email address format is not valid, please check and try again',
-                    'unique': 'This email is already in use. Please provide a different email address.'
-                }
-            },
-            'first_name': {
-                'required': False,
-                'error_messages': {
-                    'invalid': 'The first name contains invalid characters. Please use letters only.'
-                }
-            },
-            'last_name': {
-                'required': False,
-                'error_messages': {
-                    'invalid': 'The last name contains invalid characters. Please use letters only.'
-                }
-            }
-        }
 
     def create(self, validated_data):
         hashed_password = self.context.get('hashed_password', None)
