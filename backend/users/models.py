@@ -115,7 +115,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=False,
         blank=False,
         db_index=False,
-        default=None,
         error_messages={
             'invalid': 'Please enter a valid date and time',
             'null': 'Date joined is required',
@@ -128,7 +127,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=False,
         blank=False,
         db_index=False,
-        default=None,
         error_messages={
             'invalid': 'Please enter a valid date and time',
             'null': 'Last login date is required',
