@@ -41,4 +41,5 @@ urlpatterns = [
 handler404 = custom_404_apiview
 
 # Enable serving of user-uploaded media files
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
