@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import ErrorBoundary from 'componsnts/common/errorBoundary/ErrorBoundary';
+import ErrorBoundary from 'components/common/errorBoundary/ErrorBoundary';
 
 export const lazyModuleImport = (
   importFunction: () => Promise<any>,
