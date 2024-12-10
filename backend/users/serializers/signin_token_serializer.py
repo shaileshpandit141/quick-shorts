@@ -22,7 +22,7 @@ class SigninTokenSerializer(TokenObtainPairSerializer):
                 raise AuthenticationFailed("Account is disabled")
 
             data = super().validate(attrs)
-            data.update({"email": user.email})
+            data.update({"user": user})
             return data
 
         raise AuthenticationFailed("Email and password must be provided")

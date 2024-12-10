@@ -20,7 +20,7 @@ from utils import (
 User = get_user_model()
 
 
-class VerifyEmailAPIView(APIView):
+class VerifyAccountAPIView(APIView):
     """
     View for resending account verification emails.
 
@@ -73,7 +73,7 @@ class VerifyEmailAPIView(APIView):
                 }
             }, status.HTTP_400_BAD_REQUEST)
 
-        if not user.is_email_verified:
+        if not user.is_verified:
             # Generate token
             payload = TokenGenerator.generate({"user_id": user.id})
             activate_url = add_query_params(f'{settings.FRONTEND_URL}/auth/verify-email', {
@@ -82,7 +82,7 @@ class VerifyEmailAPIView(APIView):
             })
 
             SendEmail({
-                'subject': 'Email Verification Request',
+                'subject': 'Account Verification Request',
                 'emails': {
                     'to_emails': [clean_data.get('email')]
                 },
@@ -91,21 +91,21 @@ class VerifyEmailAPIView(APIView):
                     'activate_url': activate_url
                 },
                 'templates': {
-                    'txt': 'users/verify_email/confirm_message.txt',
-                    'html': 'users/verify_email/confirm_message.html'
+                    'txt': 'users/verify_account/confirm_message.txt',
+                    'html': 'users/verify_account/confirm_message.html'
                 }
             })
             return Response.success({
-                'message': 'Verification email sent',
+                'message': 'Account verification email sent',
                 'data': {
-                    'detail': 'Please check your inbox for the verification email'
+                    'detail': 'Please check your inbox for the account verification.'
                 }
             }, status.HTTP_200_OK)
         else:
             return Response.success({
-                'message': 'Email already verified',
+                'message': 'Account already verified',
                 'data': {
-                    'detail': 'Your email address has already been verified'
+                    'detail': 'Your account has already been verified.'
                 }
             }, status.HTTP_200_OK)
 

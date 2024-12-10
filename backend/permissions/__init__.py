@@ -1,9 +1,9 @@
 from .allow_any import AllowAny
 from .is_authenticated  import IsAuthenticated
-from .is_email_verified import IsEmailVerified
+from .is_verified import IsVerified
 
 __all__ = [
     'AllowAny',
     'IsAuthenticated',
-    'IsEmailVerified'
+    'IsVerified'
 ]

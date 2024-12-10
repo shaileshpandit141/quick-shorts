@@ -24,7 +24,7 @@ class UserCreationForm(DjangoUserCreationForm):
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'first_name', 'last_name', 'avatar', 'is_active', 'is_email_verified', 'is_staff')
+        fields = ('email', 'username', 'first_name', 'last_name', 'avatar', 'is_active', 'is_verified', 'is_staff')
         widgets = {
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'username': forms.TextInput(attrs={'class': 'form-control'}),
@@ -92,7 +92,7 @@ class UserChangeForm(DjangoUserChangeForm):
     """
     class Meta:
         model = User
-        fields = ('email', 'username', 'first_name', 'last_name', 'avatar', 'is_active', 'is_email_verified', 'is_staff')
+        fields = ('email', 'username', 'first_name', 'last_name', 'avatar', 'is_active', 'is_verified', 'is_staff')
         widgets = {
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'username': forms.TextInput(attrs={'class': 'form-control'}),

@@ -73,7 +73,7 @@ class ForgotPasswordAPIView(APIView):
                 }
             }, status.HTTP_400_BAD_REQUEST)
 
-        if user.is_email_verified:
+        if user.is_verified:
             # Generate token
             payload = TokenGenerator.generate({"user_id": user.id})
             active_url = add_query_params(f'{settings.FRONTEND_URL}/auth/verify-email', {

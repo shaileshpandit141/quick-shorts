@@ -206,14 +206,14 @@ class User(AbstractBaseUser, PermissionsMixin):
             'blank': 'Superuser status cannot be empty'
         }
     )
-    is_email_verified = models.BooleanField(
+    is_verified = models.BooleanField(
         default=False,  # type: ignore
         null=False,
         db_index=False,
         error_messages={
-            'invalid': 'Please specify whether the email is verified',
-            'null': 'Email verification status is required',
-            'blank': 'Email verification status cannot be empty'
+            'invalid': 'Please specify whether the account is verified',
+            'null': 'Account verification status is required',
+            'blank': 'Account verification status cannot be empty'
         }
     )
 

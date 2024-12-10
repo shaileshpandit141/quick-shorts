@@ -61,14 +61,13 @@ class SigninTokenAPIView(TokenObtainPairView):
 
         # Get the user from the serializer
         user = serializer.validated_data.get('user')
-
         # Enforce email verification for non-superusers
-        if user and not user.is_superuser and not user.is_email_verified:
+        if user and not user.is_superuser and not user.is_verified:
             return Response.error({
-                'message': 'Sign in failed - email not verified',
+                'message': 'Sign in failed - account not verified',
                 'errors': {
                     'non_field_errors': [
-                        'Please verify your email address before signing in'
+                        'Please verify your account before signing in'
                     ]
                 }
             }, status.HTTP_401_UNAUTHORIZED)

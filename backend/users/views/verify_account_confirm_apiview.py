@@ -14,7 +14,7 @@ from utils import Response, TokenGenerator, FieldValidator
 User = get_user_model()
 
 
-class VerifyEmailConfirmAPIView(APIView):
+class VerifyAccountConfirmAPIView(APIView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
@@ -35,7 +35,7 @@ class VerifyEmailConfirmAPIView(APIView):
                 clean_data.get('token_salt')
             )
             user = User.objects.get(id=data["user_id"])
-            if user.is_email_verified:
+            if user.is_verified:
                 return Response.success({
                     'message': 'Email already verified',
                     'data': {
@@ -43,7 +43,7 @@ class VerifyEmailConfirmAPIView(APIView):
                     }
                 }, status.HTTP_200_OK)
 
-            user.is_email_verified = True
+            user.is_verified = True
             user.save()
             return Response.success({
                 'message': 'Email verified successfully',

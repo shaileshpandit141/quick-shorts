@@ -14,8 +14,8 @@ class CustomUserAdmin(UserAdmin):
     form = UserChangeForm  # Custom form for modifying existing users
 
     # Fields to display in the user list view
-    list_display = ('email', 'username', 'full_name', 'is_active_colored', 'is_email_verified', 'is_staff', 'last_login')
-    list_filter = ('is_active', 'is_staff', 'is_email_verified', 'groups')
+    list_display = ('email', 'username', 'full_name', 'is_active_colored', 'is_verified', 'is_staff', 'last_login')
+    list_filter = ('is_active', 'is_staff', 'is_verified', 'groups')
     search_fields = ('email', 'username', 'first_name', 'last_name')
     readonly_fields = ('date_joined', 'last_login')
     list_per_page = 25
@@ -35,7 +35,7 @@ class CustomUserAdmin(UserAdmin):
         (None, {'fields': ('email', 'username', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'avatar')}),
         ('Permissions', {
-            'fields': ('is_active', 'is_email_verified', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+            'fields': ('is_active', 'is_verified', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
             'classes': ('collapse',)
         }),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
@@ -45,7 +45,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'username', 'password1', 'password2', 'first_name', 'last_name', 'avatar', 'is_active', 'is_email_verified', 'is_staff')
+            'fields': ('email', 'username', 'password1', 'password2', 'first_name', 'last_name', 'avatar', 'is_active', 'is_verified', 'is_staff')
         }),
     )
 

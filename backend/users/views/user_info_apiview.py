@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 
 # Local imports
-from permissions import IsAuthenticated, IsEmailVerified
+from permissions import IsAuthenticated, IsVerified
 from throttles import UserRateThrottle
 from utils import Response, FieldValidator
 from users.serializers import UserSerializer
@@ -28,7 +28,7 @@ class UserInfoAPIView(APIView):
         permission_classes: Require authentication
         throttle_classes: Rate limiting for authenticated users only
     """
-    permission_classes = [IsAuthenticated, IsEmailVerified]
+    permission_classes = [IsAuthenticated, IsVerified]
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, *args, **kwargs) -> Response.type:

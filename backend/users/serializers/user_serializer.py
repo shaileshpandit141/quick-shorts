@@ -30,8 +30,8 @@ class UserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ["id", "email", "username", "first_name", "last_name", "is_email_verified", "avatar"]
-        read_only_fields = ['id', 'is_email_verified']
+        fields = ["id", "email", "username", "first_name", "last_name", "is_verified", "avatar"]
+        read_only_fields = ['id', 'usename', 'is_verified']
 
     def create(self, validated_data):
         hashed_password = self.context.get('hashed_password', None)
