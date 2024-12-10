@@ -1,6 +1,6 @@
 # Django imports
 from django.utils import timezone
-from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.contrib.auth import get_user_model
 
 # Django REST framework imports
 from rest_framework import status
@@ -11,6 +11,8 @@ from permissions import AllowAny
 from throttles import AnonRateThrottle
 from utils import Response, FieldValidator
 from users.serializers import SigninTokenSerializer
+
+User = get_user_model()
 
 
 class SigninTokenAPIView(TokenObtainPairView):
@@ -35,7 +37,22 @@ class SigninTokenAPIView(TokenObtainPairView):
                 'errors': clean_data.get_errors()
             }, status.HTTP_400_BAD_REQUEST)
 
-        serializer = self.get_serializer(data=clean_data.data)
+        data = clean_data.data.copy()
+        if not '@' in clean_data.get('email'):
+            try:
+                user = User.objects.get(username=clean_data.get('email'))
+                data['email'] = user.email
+            except User.DoesNotExist:
+                return Response.error({
+                    'message': 'Sign in failed',
+                    'errors': {
+                        'non_field_errors': [
+                            'Please provide valid authentication credentials.'
+                        ]
+                    }
+                }, status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.get_serializer(data=data)
         if not serializer.is_valid():
             return Response.error({
                 'message': 'Sign in failed',
