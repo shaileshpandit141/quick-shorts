@@ -26,7 +26,9 @@ def custom_exception_handler(exc, context):
         return Response.error({
             'message': 'Authentication Failed',
             'errors': {
-                'detail': 'Authentication credentials were not provided or invalid.'
+                'non_field_errors': [
+                    'Authentication credentials were not provided or invalid.'
+                ]
             }
         }, status.HTTP_401_UNAUTHORIZED)
 
@@ -36,7 +38,9 @@ def custom_exception_handler(exc, context):
         return Response.error({
             'message': 'Access Denied',
             'errors': {
-                'detail': 'Please provide valid authentication credentials.'
+                'non_field_errors': [
+                    'Please provide valid authentication credentials.'
+                ]
             }
         }, status.HTTP_401_UNAUTHORIZED)
 
