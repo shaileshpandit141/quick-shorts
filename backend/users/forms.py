@@ -17,7 +17,7 @@ class UserCreationForm(DjangoUserCreationForm):
         help_text="Your password must contain at least 8 characters."
     )
     password2 = forms.CharField(
-        label='Password confirmation', 
+        label='Password confirmation',
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
         help_text="Enter the same password as above, for verification."
     )
@@ -98,8 +98,15 @@ class UserChangeForm(DjangoUserChangeForm):
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'avatar': forms.FileInput(attrs={'class': 'form-control'}),
+            'avatar': forms.FileInput(attrs={'class': 'form-control', 'style': 'margin-block: 8px;'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.avatar:
+            self.fields['avatar'].help_text = (
+                f'<a href="{self.instance.avatar.url}" target="_blank" style="padding-inline: 4px;">View Current Avatar</a>'
+            )
 
     def clean_email(self):
         """

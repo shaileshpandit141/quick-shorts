@@ -45,11 +45,23 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'username', 'password1', 'password2', 'first_name', 'last_name', 'avatar', 'is_active', 'is_verified', 'is_staff')
+            'fields': (
+                'email', 
+                'username', 
+                'password1', 
+                'password2', 
+                'first_name', 
+                'last_name', 
+                'avatar', 
+                'is_active', 
+                'is_verified', 
+                'is_staff'
+            )
         }),
     )
 
-    ordering = ('-date_joined',)  # Default ordering by newest first
+    # Default ordering by newest first
+    ordering = ('-date_joined',)
     filter_horizontal = ('groups', 'user_permissions',)
     actions = ['activate_users', 'deactivate_users', 'send_email_verification']
 
