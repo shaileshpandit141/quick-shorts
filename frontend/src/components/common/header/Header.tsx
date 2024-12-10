@@ -1,20 +1,24 @@
 import React from 'react'
 import './Header.css'
-import { NavLink } from 'react-router-dom'
+import LeftHeader from './subHeader/leftHeader/LeftHeader'
+import CenterHeader from './subHeader/centerHeader/CenterHeader'
+import RightHeader from './subHeader/rightHeader/RightHeader'
 
 const Header: React.FC = (props) => {
   return (
-    <div className='inner-grid-1-1 grid-12 header'>
+    <header className='inner-grid-1-1 grid-12 header'>
       <div className='inner-grid-2-2 header-links'>
-        <div className='left-header'>left</div>
-        <div className='center-header'>center</div>
+        <div className='left-header'>
+          <LeftHeader />
+        </div>
+        <div className='center-header'>
+          <CenterHeader />
+        </div>
         <div className='right-header'>
-          <NavLink to='/home'>Home</NavLink>
-          <NavLink to='/signin'>Sign in</NavLink>
-          <NavLink to='/signup'>Sign up</NavLink>
+          <RightHeader />
         </div>
       </div>
-    </div>
+    </header>
   )
 }
 

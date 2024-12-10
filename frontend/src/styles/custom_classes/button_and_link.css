@@ -1,10 +1,10 @@
 /**
  * Button Component
  * @class .button
- * 
+ *
  * Primary button component with rounded corners and smooth hover transitions.
  * Supports both text and icon content.
- * 
+ *
  * Properties:
  * - Pill-shaped with rounded corners
  * - Custom background and text colors via CSS variables
@@ -14,23 +14,23 @@
  */
 .button {
     border: none;
-    outline: none; 
+    outline: none;
     border-radius: 999rem;
     background-color: var(--button-primary-background);
     color: var(--button-text-color);
-    height: em(40);
+    height: calc(40/16 * 1em);
     width: 100%;
-    min-width: em(40);
-    padding-block: em(16);
-    padding-inline: em(16);
+    min-width: calc(40/16 * 1em);
+    padding-block: calc(16/16 * 1em);
+    padding-inline: calc(16/16 * 1em);
     display: flex;
     align-items: center;
     justify-content: center;
-    column-gap: em(4);
-    transition: background-color 0.3s ease;
+    column-gap: calc(4/16 * 1em);
+    transition: background-color 0.3s, color 0.3s;
 
     &:hover {
-        background-color: $button-primary-hover;
+        background-color: var(--button-primary-hover);
     }
 
     /**
@@ -64,7 +64,7 @@
     /**
      * Text Label
      * @element .label
-     * 
+     *
      * Button text content with consistent typography.
      * Auto-capitalizes first letter while keeping rest lowercase.
      */
@@ -95,7 +95,6 @@
  * Square variant of primary button containing only an icon.
  */
 .button-as-icon {
-    @extend .button;
     width: calc(40/16 * 1em);
     padding-inline: 0;
 }
@@ -127,7 +126,7 @@
     justify-content: center;
     column-gap: calc(4/16 * 1em);
     cursor: default;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s, color 0.3s;
 
     &:hover {
         background-color: var(--button-primary-hover);
@@ -195,7 +194,6 @@
  * Square variant of styled link containing only an icon.
  */
 .link-as-icon {
-    @extend .link;
     width: calc(40/16 * 1em);
     padding-inline: 0;
 }

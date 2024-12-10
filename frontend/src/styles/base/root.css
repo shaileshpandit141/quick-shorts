@@ -24,9 +24,4 @@
     overflow: hidden;
     overflow-y: auto;
     position: relative;
-    transition:
-        background-color 0.3s ease,
-        min-height 0.3s ease,
-        height 0.3s ease,
-        max-height 0.3s ease;
 }

@@ -4,7 +4,6 @@
     min-height: 16em;
     
     .wrapper {
-        background-color: inherit;
-        color: inherit;
+        padding-block: 16px;
     }
 }

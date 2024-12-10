@@ -30,10 +30,8 @@
 @import './base/reset.css';
 @import './base/typography.css';
 @import './layouts/layout.css';
-@import './base/body.css';
-@import './base/root.css';
-
-/* Components & Utilities */
 @import './custom_classes/button_and_link.css';
 @import './custom_classes/skeleton.css';
 @import './custom_classes/success_and_error_message.css';
+@import './base/body.css';
+@import './base/root.css';

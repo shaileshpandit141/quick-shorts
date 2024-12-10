@@ -131,9 +131,10 @@ body,
 header,
 footer,
 input,
+main,
 button {
     transition:
-        background-color 0.3s ease,
-        color 0.3s ease,
-        border 0.3s ease;
+        background-color 0.3s,
+        color 0.3s,
+        border 0.3s;
 }

@@ -21,6 +21,7 @@ h6 {
     line-height: 1.2;
     letter-spacing: 0.04em;
     color: var(--text-primary);
+    transition: color 0.3s;
 
     &::first-letter {
         text-transform: capitalize;
@@ -74,6 +75,7 @@ details {
     letter-spacing: 0.04em;
     color: var(--text-primary);
     line-height: 1.5;
+    transition: color 0.3s;
 }
 
 /* Form Typography 
@@ -88,6 +90,7 @@ select {
     letter-spacing: 0.04em;
     color: var(--text-primary);
     font-size: calc(16/16 * 1em);
+    transition: color 0.3s;
 
     &::placeholder {
         letter-spacing: 0.04em;
@@ -142,4 +145,8 @@ button::first-letter {
     button {
         cursor: pointer;
     }
+}
+
+p {
+    transition: color 0.3s;
 }

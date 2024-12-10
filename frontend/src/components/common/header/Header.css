@@ -6,29 +6,32 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+    /* border-bottom: var(--border); */
+
     .header-links {
         width: 100%;
+        height: 100%;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: auto auto 1fr;
         align-items: center;
         justify-content: space-between;
-        
+        transition: background-color 3s;
+
         .left-header {
-            background: yellow;
+            height: fit-content;
             display: flex;
             align-items: center;
         }
-        
+
         .center-header {
-            background: moccasin;
+            height: fit-content;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
+
         .right-header {
-            background: darkcyan;
+            height: fit-content;
             display: flex;
             align-items: center;
             justify-content: flex-end;

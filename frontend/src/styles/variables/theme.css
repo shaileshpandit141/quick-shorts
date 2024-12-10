@@ -2,10 +2,10 @@
  * Light theme (default) and dark theme color scheme
  *
  * Color Palette:
- * - Primary: Purple shades for main UI elements 
+ * - Primary: Purple shades for main UI elements
  * - Secondary: Teal shades for complementary UI elements
  * - Background: Light/dark variants for different surface levels
- * - Text: Various shades for different text hierarchies 
+ * - Text: Various shades for different text hierarchies
  * - Borders: Light/dark variants for separation
  * - Buttons: Uses primary/secondary colors with hover states
  * - Links: Custom colors for hyperlinks
@@ -13,25 +13,17 @@
  */
 
 :root {
-    /* Primary Colors */
-    --primary-color: #7E57C2;
-    --secondary-color: #26A69A;
-    --primary-light: #9575CD;
-    --primary-dark: #5E35B1;
-    --secondary-light: #4DB6AC;
-    --secondary-dark: #00897B;
-
     /* Background Colors */
     --background-light: #FAFAFA;
     --background-dark: #121212;
     --card-background: #EEEEEE;
     --header-background: #fafafaf2;
-    --footer-background: #263238;
+    --footer-background: #EEEEEE;
 
     /* Text Colors */
     --text-primary: #212121;
     --text-secondary: #757575;
-    --text-light: #FFFFFF; 
+    --text-light: #FFFFFF;
     --text-accent: #FF4081;
     --error-text-primary: #D32F2F;
 
@@ -40,11 +32,11 @@
     --border-color-dark: #424242;
 
     /* Button Colors */
-    --button-primary-background: var(--primary-color);
-    --button-primary-hover: var(--primary-light);
-    --button-secondary-background: var(--secondary-color);
-    --button-secondary-hover: var(--secondary-light);
-    --button-text-color: var(--text-primary);
+    --button-primary-background: #FFE4B5;
+    --button-primary-hover: #FFDEAD;
+    --button-secondary-background: #FFE4B5;
+    --button-secondary-hover: #FFDEAD;
+    --button-text-color: #000000;
 
     /* Scrollbar Colors */
     --scrollbar-thumb: #BDBDBD;
@@ -53,18 +45,10 @@
     /* Link Colors */
     --link-color: #651FFF;
     --link-hover-color: #7C4DFF;
-    transition: all 0.3s ease;
+    transition: all 0.3s;
 }
 
 [data-theme="dark"] {
-    /* Primary Colors - Dark Theme */
-    --primary-color: #9575CD;
-    --secondary-color: #4DB6AC;
-    --primary-light: #B39DDB;
-    --primary-dark: #7E57C2;
-    --secondary-light: #80CBC4;
-    --secondary-dark: #26A69A;
-
     /* Background Colors - Dark Theme */
     --background-light: #1E1E1E;
     --background-dark: #121212;
@@ -84,11 +68,11 @@
     --border-color-dark: #616161;
 
     /* Button Colors - Dark Theme */
-    --button-primary-background: var(--primary-color);
-    --button-primary-hover: var(--primary-dark);
-    --button-secondary-background: var(--secondary-color);
-    --button-secondary-hover: var(--secondary-dark);
-    --button-text-color: var(--text-primary);
+    --button-primary-background: #B8860B;
+    --button-primary-hover: #8B6508;
+    --button-secondary-background: #B8860B;
+    --button-secondary-hover: #8B6508;
+    --button-text-color: #FFFFFF;
 
     /* Scrollbar Colors - Dark Theme */
     --scrollbar-thumb: #757575;
