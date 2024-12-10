@@ -8,11 +8,7 @@
 .grid-12 {
     display: grid;
     grid-template-columns: calc(25/16 * 1rem) repeat(10, 1fr) calc(25/16 * 1rem);
-    transition:
-        background-color 0.3s ease,
-        min-height 0.3s ease,
-        height 0.3s ease,
-        max-height 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 /* Inner grid spanning full width (columns 1 to -1) */
@@ -20,11 +16,7 @@
     grid-column: 1/-1;
     width: 100%;
     height: fit-content;
-    transition:
-        background-color 0.3s ease,
-        min-height 0.3s ease,
-        height 0.3s ease,
-        max-height 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 /* Inner grid with side margins (columns 2 to -2) */
@@ -32,9 +24,5 @@
     grid-column: 2/-2;
     width: 100%;
     height: fit-content;
-    transition:
-        background-color 0.3s ease,
-        min-height 0.3s ease,
-        height 0.3s ease,
-        max-height 0.3s ease;
+    transition: background-color 0.3s ease;
 }

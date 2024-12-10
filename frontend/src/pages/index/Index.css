@@ -1,5 +1,5 @@
 .index {
-    min-height: var(--screen-height);
+    min-height: 100%;
     display: grid;
     align-items: center;
     justify-content: center;

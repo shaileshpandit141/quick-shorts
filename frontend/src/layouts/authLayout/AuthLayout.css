@@ -5,4 +5,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    
+    .form-wrapper {
+        background-color: var(--card-background);
+        height: fit-content;
+        min-height: calc(450/16 * 1em);
+        width: 100%;
+        max-width: calc(775/16 * 1em);
+        padding: 32px;
+        border-radius: 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
 }

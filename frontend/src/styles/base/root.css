@@ -1,15 +1,15 @@
 /* Root element (#root) styles
- * 
+ *
  * Layout:
  * - Uses CSS Grid display
  * - Creates 12-column grid with fixed side margins (25/16rem) and 10 equal middle columns
  * - Takes up 100% width of container
  * - Uses dynamic viewport height (100dvh)
- * 
+ *
  * Overflow behavior:
  * - Hides horizontal overflow
  * - Shows scrollbar for vertical overflow
- * 
+ *
  * Visual:
  * - Inherits background color from parent
  * - Smooth transitions for background and height changes (0.3s)
@@ -21,8 +21,9 @@
     max-height: 100dvh;
     background-color: inherit;
     width: 100%;
-    overflow: hidden; 
+    overflow: hidden;
     overflow-y: auto;
+    position: relative;
     transition:
         background-color 0.3s ease,
         min-height 0.3s ease,

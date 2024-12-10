@@ -24,8 +24,8 @@
     /* Background Colors */
     --background-light: #FAFAFA;
     --background-dark: #121212;
-    --card-background: #FFFFFF;
-    --header-background: #FAFAFA;
+    --card-background: #EEEEEE;
+    --header-background: #fafafaf2;
     --footer-background: #263238;
 
     /* Text Colors */
@@ -69,7 +69,7 @@
     --background-light: #1E1E1E;
     --background-dark: #121212;
     --card-background: #2D2D2D;
-    --header-background: #1E1E1E;
+    --header-background: #1e1e1ef2;
     --footer-background: #1A1A1A;
 
     /* Text Colors - Dark Theme */

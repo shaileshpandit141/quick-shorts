@@ -10,7 +10,7 @@
 :root {
     --opacity: 1;
     --box-shadow: 0 0 1.5px #0000004d;
-    --border: 1px solid var(border-color-light);
+    --border: 1px solid var(--border-color-light);
     --header-height: calc(64/16 * 1em);
     --screen-height: calc(100dvh - var(--header-height));
 }

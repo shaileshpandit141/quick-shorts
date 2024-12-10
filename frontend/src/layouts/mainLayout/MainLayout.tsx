@@ -7,7 +7,7 @@ import Footer from 'componsnts/common/footer/Footer'
 const MainLayout: React.FC = (props) => {
   return (
     <>
-      <header className='inner-grid-1-1 grid-12'>
+      <header className='inner-grid-1-1 grid-12 header-wrapper'>
         <Header />
       </header>
       <main className='inner-grid-1-1 grid-12 main-content'>
