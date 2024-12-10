@@ -10,20 +10,32 @@ from utils import Response, FieldValidator
 
 
 class SignoutAPIView(APIView):
-    """API view for listing and creating YourModel instances.
+    """API view for user sign out functionality.
 
-    Supports GET and POST methods. Other HTTP methods return 400 errors.
-    Requires authentication and implements rate limiting.
+    This view handles user sign out by blacklisting their JWT refresh token.
+    Only POST method is supported. All other HTTP methods return 405 Method Not Allowed.
+    Requires user authentication and implements rate limiting.
     """
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, *args, **kwargs) -> Response.type:
-        """Retrieve YourModel instances for the authenticated user."""
+        """GET method not supported for sign out."""
         return Response.method_not_allowed('GET')
 
     def post(self, request, *args, **kwargs) -> Response.type:
-        """Create one or more new YourModel instances."""
+        """Handle user sign out by blacklisting their refresh token.
+
+        Args:
+            request: HTTP request object containing refresh_token in request.data
+
+        Returns:
+            Response object with success/error message
+
+        Raises:
+            ValidationError: If refresh_token is missing or invalid
+        """
+        # Validate the refresh token is present in request data
         clean_data = FieldValidator(request.data, ['refresh_token'])
         if not clean_data.is_valid():
             return Response.error({
@@ -31,9 +43,10 @@ class SignoutAPIView(APIView):
                 'errors': clean_data.get_errors()
             })
 
+        # Get and blacklist the refresh token
         token = RefreshToken(clean_data.get('refresh_token'))
-        # Blacklist the token
         token.blacklist()
+
         return Response.success({
             'message': 'Sign out successful',
             'data': {
@@ -42,17 +55,17 @@ class SignoutAPIView(APIView):
         }, status.HTTP_200_OK)
 
     def put(self, request, *args, **kwargs) -> Response.type:
-        """PUT method not supported."""
+        """PUT method not supported for sign out."""
         return Response.method_not_allowed('PUT')
 
     def patch(self, request, *args, **kwargs) -> Response.type:
-        """PATCH method not supported."""
+        """PATCH method not supported for sign out."""
         return Response.method_not_allowed('PATCH')
 
     def delete(self, request, *args, **kwargs) -> Response.type:
-        """DELETE method not supported."""
+        """DELETE method not supported for sign out."""
         return Response.method_not_allowed('DELETE')
 
     def options(self, request, *args, **kwargs) -> Response.type:
-        """OPTIONS method not supported."""
+        """Return allowed HTTP methods for this endpoint."""
         return Response.options(['POST'])

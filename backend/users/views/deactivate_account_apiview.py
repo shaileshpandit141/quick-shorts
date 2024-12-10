@@ -9,38 +9,59 @@ from utils import Response, FieldValidator, SendEmail
 
 
 class DeactivateAccountAPIView(APIView):
-    """API view for listing and creating YourModel instances.
+    """API view for deactivating user accounts.
 
-    Supports GET and POST methods. Other HTTP methods return 400 errors.
+    Supports POST method for account deactivation.
     Requires authentication and implements rate limiting.
+    Other HTTP methods return method not allowed responses.
     """
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, *args, **kwargs) -> Response.type:
-        """Retrieve YourModel instances for the authenticated user."""
+        """GET method not supported for account deactivation."""
         return Response.method_not_allowed('GET')
 
     def post(self, request, *args, **kwargs) -> Response.type:
-        """Create one or more new YourModel instances."""
+        """Deactivate the authenticated user's account.
+
+        Args:
+            request: HTTP request object containing user credentials
+            *args: Variable length argument list
+            **kwargs: Arbitrary keyword arguments
+
+        Returns:
+            Response object with success/error message and status code
+
+        Raises:
+            None. All errors are handled and returned as Response objects.
+        """
+        # Get user and password from request
         user = request.user
         password = request.data.get('password', None)
-        clean_data = FieldValidator(request.data, ['password'])
-        if not clean_data.is_valid():
+
+        # Validate the request data
+        validator = FieldValidator(request.data, ['password'])
+        if not validator.is_valid():
             return Response.error({
                 'message': 'Invalid Password',
-                'errors': clean_data.get_errors()
+                'errors': validator.errors
             })
+
+        # Verify password matches
         if not user.check_password(password):
             return Response.error({
                 'message': 'Invalid Password',
                 'errors': {
-                    'password': ['Your password is not currect.']
+                    'password': ['Your password is not correct.']
                 }
             })
 
+        # Deactivate the account
         user.is_active = False
         user.save()
+
+        # Send confirmation email
         SendEmail({
             'subject': 'Account Deactivation Confirmation',
             'emails': {
@@ -54,6 +75,7 @@ class DeactivateAccountAPIView(APIView):
                 'html': 'users/deactivate_account/confirm_message.html'
             }
         })
+
         return Response.success({
             'message': 'Account deactivation successful',
             'data': {
@@ -62,17 +84,17 @@ class DeactivateAccountAPIView(APIView):
         }, status.HTTP_200_OK)
 
     def put(self, request, *args, **kwargs) -> Response.type:
-        """PUT method not supported."""
+        """PUT method not supported for account deactivation."""
         return Response.method_not_allowed('PUT')
 
     def patch(self, request, *args, **kwargs) -> Response.type:
-        """PATCH method not supported."""
+        """PATCH method not supported for account deactivation."""
         return Response.method_not_allowed('PATCH')
 
     def delete(self, request, *args, **kwargs) -> Response.type:
-        """DELETE method not supported."""
+        """DELETE method not supported for account deactivation."""
         return Response.method_not_allowed('DELETE')
 
     def options(self, request, *args, **kwargs) -> Response.type:
-        """OPTIONS method not supported."""
+        """Return allowed HTTP methods for this endpoint."""
         return Response.options(['POST'])

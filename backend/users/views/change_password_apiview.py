@@ -15,22 +15,33 @@ User = get_user_model()
 
 
 class ChangePasswordAPIView(APIView):
-    """API view for listing and creating YourModel instances.
+    """API view for changing user password.
 
-    Supports GET and POST methods. Other HTTP methods return 400 errors.
+    Supports only POST method for changing password.
     Requires authentication and implements rate limiting.
     """
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, *args, **kwargs) -> Response.type:
-        """GET method not supported."""
+        """GET method not supported for password change."""
         return Response.method_not_allowed('GET')
 
     def post(self, request, *args, **kwargs) -> Response.type:
-        """Create one or more new YourModel instances."""
+        """Change user password.
+
+        Args:
+            request: HTTP request containing old_password and new_password
+
+        Returns:
+            Response with success/error message
+
+        Raises:
+            400 Bad Request: If validation fails or old password is incorrect
+        """
         user = request.user
 
+        # Validate required fields
         clean_data = FieldValidator(request.data, [
             'old_password',
             'new_password'
@@ -42,7 +53,7 @@ class ChangePasswordAPIView(APIView):
                 'errors': clean_data.get_errors()
             }, status.HTTP_400_BAD_REQUEST)
 
-        # Check if the old password is correct
+        # Verify current password is correct
         if not user.check_password(clean_data.get('old_password')):
             return Response.error({
                 'message': 'Old password is incorrect',
@@ -51,7 +62,7 @@ class ChangePasswordAPIView(APIView):
                 }
             }, status.HTTP_400_BAD_REQUEST)
 
-        # Validate the password
+        # Validate new password meets requirements
         try:
             validate_password(clean_data.get('new_password'))
         except Exception as error:
@@ -62,11 +73,11 @@ class ChangePasswordAPIView(APIView):
                 }
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        # Set the new password
+        # Update password and notify user
         user.set_password(clean_data.get('new_password'))
         user.save()
         SendEmail({
-            'subject': 'Forgot Password Request',
+            'subject': 'Password Change Notification',
             'emails': {
                 'to_emails': user.email
             },
@@ -81,22 +92,22 @@ class ChangePasswordAPIView(APIView):
         return Response.success({
             'message': 'Your password has been changed',
             'data': {
-                'detail': 'Your new password has been change successful'
+                'detail': 'Your new password has been changed successfully'
             }
         }, status.HTTP_200_OK)
 
     def put(self, request, *args, **kwargs) -> Response.type:
-        """PUT method not supported."""
+        """PUT method not supported for password change."""
         return Response.method_not_allowed('PUT')
 
     def patch(self, request, *args, **kwargs) -> Response.type:
-        """PATCH method not supported."""
+        """PATCH method not supported for password change."""
         return Response.method_not_allowed('PATCH')
 
     def delete(self, request, *args, **kwargs) -> Response.type:
-        """DELETE method not supported."""
+        """DELETE method not supported for password change."""
         return Response.method_not_allowed('DELETE')
 
     def options(self, request, *args, **kwargs) -> Response.type:
-        """OPTIONS method not supported."""
+        """Return allowed HTTP methods for this endpoint."""
         return Response.options(['POST'])

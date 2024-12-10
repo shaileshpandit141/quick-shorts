@@ -13,9 +13,9 @@ from rest_framework.exceptions import ValidationError
 from permissions import AllowAny
 from throttles import AnonRateThrottle
 from utils import (
-    Response, 
-    SendEmail, 
-    TokenGenerator, 
+    Response,
+    SendEmail,
+    TokenGenerator,
     add_query_params,
     FieldValidator
 )
@@ -25,20 +25,37 @@ User = get_user_model()
 
 
 class SignupAPIView(APIView):
+    """
+    API view for handling user signup functionality.
+    Allows new users to register and sends email verification.
+    """
+
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
     def get(self, request, *args, **kwargs) -> Response.type:
+        """Disallow GET method"""
         return Response.method_not_allowed('GET')
 
     def post(self, request, *args, **kwargs) -> Response.type:
-        # Validate the data
+        """
+        Handle user registration:
+        1. Validate required fields (email, password, confirm_password)
+        2. Validate and hash password
+        3. Create new user
+        4. Send verification email
+
+        Returns:
+            Success response with verification email status or
+            Error response with validation errors
+        """
+        # Validate required fields
         clean_data = FieldValidator(request.data, [
-            'email', 
-            'password', 
+            'email',
+            'password',
             'confirm_password'
         ])
-        
+
         if not clean_data.is_valid():
             return Response.error({
                 'message': 'Validation error',
@@ -48,7 +65,7 @@ class SignupAPIView(APIView):
         password = clean_data.get('password')
         confirm_password = clean_data.get('confirm_password')
 
-        # Validate the password
+        # Validate password meets requirements
         try:
             validate_password(password)
         except ValidationError as error:
@@ -59,6 +76,7 @@ class SignupAPIView(APIView):
                 }
             }, status=status.HTTP_400_BAD_REQUEST)
 
+        # Check password confirmation matches
         if password != confirm_password:
             return Response.error({
                 'message': 'Validation error',
@@ -67,10 +85,10 @@ class SignupAPIView(APIView):
                 }
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        # Hash the password
+        # Hash the password for secure storage
         hashed_password = make_password(password)
 
-        # Serialize and validate the data
+        # Create new user instance
         serializer = UserSerializer(
             data=clean_data.data,
             context={'hashed_password': hashed_password}
@@ -78,13 +96,15 @@ class SignupAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
             user = serializer.instance
-            # Generate token
+
+            # Generate verification token and URL
             payload = TokenGenerator.generate({"user_id": user.id}) # type: ignore
             activate_url = add_query_params(f'{settings.FRONTEND_URL}/auth/verify-email', {
                 'token': payload['token'],
                 'token_salt': payload['token_salt']
             })
 
+            # Send verification email
             SendEmail({
                 'subject': 'For email verification',
                 'emails': {
@@ -107,20 +127,23 @@ class SignupAPIView(APIView):
                 }
             }, status=status.HTTP_200_OK)
 
-        # Return errors if serializer is invalid
         return Response.error({
             'message': 'Invalid data provided',
             'errors': serializer.errors  # type: ignore
         }, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, *args, **kwargs) -> Response.type:
+        """Disallow PUT method"""
         return Response.method_not_allowed('PUT')
 
     def patch(self, request, *args, **kwargs) -> Response.type:
+        """Disallow PATCH method"""
         return Response.method_not_allowed('PATCH')
 
     def delete(self, request, *args, **kwargs) -> Response.type:
+        """Disallow DELETE method"""
         return Response.method_not_allowed('DELETE')
 
     def options(self, request, *args, **kwargs) -> Response.type:
+        """Return allowed HTTP methods for this endpoint."""
         return Response.options(['POST'])

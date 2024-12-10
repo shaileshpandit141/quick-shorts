@@ -12,7 +12,15 @@ from utils import Response
 
 class SigninTokenRefreshAPIView(TokenRefreshView):
     """
-    Custom token refresh view for updating JWT tokens.
+    Custom token refresh view for handling JWT token refresh operations.
+
+    This view extends Django REST framework's TokenRefreshView to provide
+    custom token refresh functionality with additional error handling and
+    response formatting.
+
+    Permissions:
+        - Allows any user (authenticated or not) to access the endpoint
+        - Rate limited for anonymous users via AnonRateThrottle
     """
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
@@ -20,6 +28,16 @@ class SigninTokenRefreshAPIView(TokenRefreshView):
     def get_serializer(self, *args, **kwargs) -> TokenRefreshView:
         """
         Customize serializer to handle refresh token field name.
+
+        Args:
+            *args: Variable length argument list
+            **kwargs: Arbitrary keyword arguments
+
+        Returns:
+            TokenRefreshView: Configured serializer instance
+
+        Raises:
+            ValidationError: If refresh token is missing
         """
         data = self.request.data.copy()  # type: ignore
         refresh_token = data.pop('refresh_token', None)
@@ -36,11 +54,22 @@ class SigninTokenRefreshAPIView(TokenRefreshView):
         return super().get_serializer(data=data)
 
     def get(self, request, *args, **kwargs) -> Response.type:
+        """Handle GET requests by returning method not allowed response."""
         return Response.method_not_allowed('GET')
 
     def post(self, request, *args, **kwargs) -> Response.type:
         """
-        Handle token refresh requests.
+        Handle token refresh POST requests.
+
+        Attempts to refresh the access token using the provided refresh token.
+
+        Args:
+            request: The HTTP request object
+            *args: Variable length argument list
+            **kwargs: Arbitrary keyword arguments
+
+        Returns:
+            Response: JSON response with new access token or error details
         """
         try:
             response = super().post(request, *args, **kwargs)
@@ -86,13 +115,17 @@ class SigninTokenRefreshAPIView(TokenRefreshView):
             }, status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, *args, **kwargs) -> Response.type:
+        """Handle PUT requests by returning method not allowed response."""
         return Response.method_not_allowed('PUT')
 
     def patch(self, request, *args, **kwargs) -> Response.type:
+        """Handle PATCH requests by returning method not allowed response."""
         return Response.method_not_allowed('PATCH')
 
     def delete(self, request, *args, **kwargs) -> Response.type:
+        """Handle DELETE requests by returning method not allowed response."""
         return Response.method_not_allowed('DELETE')
 
     def options(self, request, *args, **kwargs) -> Response.type:
+        """Return allowed HTTP methods for this endpoint."""
         return Response.options(['POST'])

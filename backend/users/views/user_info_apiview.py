@@ -16,32 +16,35 @@ User = get_user_model()
 
 class UserInfoAPIView(APIView):
     """
-    View for retrieving authenticated user information.
+    API View for managing authenticated user information.
 
-    Provides endpoint to get current user's profile data.
-    Requires authentication to access.
+    Provides endpoints to retrieve and update user profile data.
+    Authentication and verification required for all operations.
 
     Methods:
         get: Retrieve user information
+        post: Not allowed
+        put: Not allowed
+        patch: Update user information
+        delete: Not allowed
+        options: Get allowed methods
 
     Attributes:
-        permission_classes: Require authentication
-        throttle_classes: Rate limiting for authenticated users only
+        permission_classes: Requires authenticated and verified user
+        throttle_classes: Rate limits requests for authenticated users
     """
     permission_classes = [IsAuthenticated, IsVerified]
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, *args, **kwargs) -> Response.type:
         """
-        Retrieve current user's information.
-
-        Serializes and returns authenticated user's profile data.
+        Retrieve current user's profile information.
 
         Args:
-            request: HTTP request from authenticated user
+            request: HTTP request object containing authenticated user
 
         Returns:
-            Response containing serialized user data
+            Response: JSON response with user data and success message
         """
         user = request.user
         serializer = UserSerializer(instance=user, many=False)
@@ -51,17 +54,32 @@ class UserInfoAPIView(APIView):
         }, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs) -> Response.type:
+        """Not supported - returns method not allowed response"""
         return Response.method_not_allowed('POST')
 
     def put(self, request, *args, **kwargs) -> Response.type:
+        """Not supported - returns method not allowed response"""
         return Response.method_not_allowed('PUT')
 
     def patch(self, request, *args, **kwargs) -> Response.type:
+        """
+        Update authenticated user's profile information.
+
+        Validates and updates first name and last name fields.
+
+        Args:
+            request: HTTP request containing user data updates
+
+        Returns:
+            Response: JSON response with updated data or validation errors
+        """
         user = request.user
         data = {
             'first_name': request.data.get('first_name'),
             'last_name': request.data.get('last_name')
         }
+
+        # Validate required fields
         clean_data = FieldValidator(data, ['first_name', 'last_name'])
         if not clean_data.is_valid():
             return Response.error({
@@ -69,6 +87,7 @@ class UserInfoAPIView(APIView):
                 'errors': clean_data.get_errors()
             }, status.HTTP_400_BAD_REQUEST)
 
+        # Update user instance with new data
         instance = UserSerializer(
             data=data,
             instance=user,
@@ -78,22 +97,24 @@ class UserInfoAPIView(APIView):
 
         if not instance.is_valid():
             return Response.error({
-                'message': 'Opps! something is wrong',
+                'message': 'Oops! Something went wrong',
                 'errors': {
                     'non_field_errors': [
-                        'Something is worng. try sometime leater.'
+                        'Something went wrong. Please try again later.'
                     ]
                 }
             }, status.HTTP_400_BAD_REQUEST)
-        
+
         instance.save()
         return Response.success({
-            'message': 'User profile update successfully',
+            'message': 'User profile updated successfully',
             'data': instance.data
         }, status=status.HTTP_200_OK)
 
     def delete(self, request, *args, **kwargs) -> Response.type:
+        """Not supported - returns method not allowed response"""
         return Response.method_not_allowed('DELETE')
 
     def options(self, request, *args, **kwargs) -> Response.type:
+        """Return allowed HTTP methods for this endpoint."""
         return Response.options(['POST', 'PATCH'])

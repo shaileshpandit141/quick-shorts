@@ -10,9 +10,9 @@ from rest_framework.views import APIView
 from permissions import AllowAny
 from throttles import AnonRateThrottle
 from utils import (
-    Response, 
-    SendEmail, 
-    TokenGenerator, 
+    Response,
+    SendEmail,
+    TokenGenerator,
     FieldValidator,
     add_query_params
 )
@@ -22,47 +22,59 @@ User = get_user_model()
 
 class ForgotPasswordAPIView(APIView):
     """
-    View for resending account verification emails.
+    API endpoint for handling forgot password functionality.
 
-    Handles requests to resend verification emails for unverified accounts.
-    Validates email existence and verification status before sending.
+    This view handles password reset requests by sending reset emails to verified users.
+    It validates the email address, checks account verification status, and sends password
+    reset instructions via email.
 
     Methods:
-        post: Process email verification resend request
+        get: Not supported
+        post: Process forgot password request and send reset email
+        put: Not supported
+        patch: Not supported
+        delete: Not supported
+        options: Returns allowed HTTP methods
 
     Attributes:
-        permission_classes: Allow any user to access
-        throttle_classes: Rate limiting for anonymous requests only
+        permission_classes (list): Allows access to any user (authenticated or not)
+        throttle_classes (list): Applies rate limiting for anonymous requests
     """
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
     def get(self, request, *args, **kwargs) -> Response.type:
+        """GET method not supported."""
         return Response.method_not_allowed('GET')
 
     def post(self, request, *args, **kwargs) -> Response.type:
         """
-        Process request to resend verification email.
+        Process forgot password request and send reset email.
 
-        Validates email existence and current verification status
-        before sending new verification email.
+        Validates the submitted email address, checks if the associated account exists
+        and is verified. For verified accounts, generates a password reset token and
+        sends reset instructions via email.
 
         Args:
-            request: HTTP request containing email address
+            request: HTTP request object containing email address in request.data
 
         Returns:
-            Response indicating success or error status
+            Response: JSON response with appropriate success/error message and status code
+                - 200 OK: Reset email sent successfully
+                - 400 Bad Request: Invalid email, account not found, or unverified account
         """
-        clean_data = FieldValidator(request.data, ['email'])
+        # Validate required fields
+        validator = FieldValidator(request.data, ['email'])
 
-        if not clean_data.is_valid():
+        if not validator.is_valid():
             return Response.error({
                 'message': 'Missing email address',
-                'errors': clean_data.get_errors()
+                'errors': validator.errors
             }, status.HTTP_400_BAD_REQUEST)
 
+        # Check if user exists
         try:
-            user = User.objects.get(email=clean_data.get('email'))
+            user = User.objects.get(email=validator.get('email'))
         except User.DoesNotExist:
             return Response.error({
                 'message': 'Account not found',
@@ -73,13 +85,16 @@ class ForgotPasswordAPIView(APIView):
                 }
             }, status.HTTP_400_BAD_REQUEST)
 
+        # Process request for verified users
         if user.is_verified:
-            # Generate token
+            # Generate reset token
             payload = TokenGenerator.generate({"user_id": user.id})
             active_url = add_query_params(f'{settings.FRONTEND_URL}/auth/verify-email', {
                 'token': payload['token'],
                 'token_salt': payload['token_salt']
             })
+
+            # Send reset email
             SendEmail({
                 'subject': 'Password Reset Request',
                 'emails': {
@@ -111,14 +126,17 @@ class ForgotPasswordAPIView(APIView):
             }, status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, *args, **kwargs) -> Response.type:
+        """PUT method not supported."""
         return Response.method_not_allowed('PUT')
 
     def patch(self, request, *args, **kwargs) -> Response.type:
+        """PATCH method not supported."""
         return Response.method_not_allowed('PATCH')
 
     def delete(self, request, *args, **kwargs) -> Response.type:
+        """DELETE method not supported."""
         return Response.method_not_allowed('DELETE')
 
     def options(self, request, *args, **kwargs) -> Response.type:
-        """OPTIONS method not supported."""
+        """Return allowed HTTP methods for this endpoint."""
         return Response.options(['POST'])
