@@ -13,4 +13,12 @@
     --border: 1px solid var(--border-color-light);
     --header-height: calc(64/16 * 1em);
     --screen-height: calc(100dvh - var(--header-height));
+    
+    /* Define CSS Breakpoints as Variables */
+    --breakpoint-xs: 480px;  /* Small Devices Start (Mobile Phones) */
+    --breakpoint-sm: 768px;  /* Medium Devices Start (Large Mobile Phones) */
+    --breakpoint-md: 1024px; /* Large Devices Start (Tablets) */
+    --breakpoint-lg: 1280px; /* Extra Large Devices Start (Small Laptops and Desktops) */
+    --breakpoint-xl: 1600px; /* Ultra Large Devices Start (4K and Beyond) */
 }
+

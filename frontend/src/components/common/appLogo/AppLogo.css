@@ -1,0 +1,16 @@
+.app-logo {
+    height: 40px;
+    width: 40px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+
+    img {
+        height: 40px;
+        width: 40px;
+        object-fit: contain;
+        object-position: center;
+    }
+}
