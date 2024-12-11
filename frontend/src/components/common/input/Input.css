@@ -1,0 +1,91 @@
+.input-component {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: transparent;
+    padding-block: 8px;
+    user-select: none;
+
+    .input-element-wrapper {
+        width: 100%;
+        background-color: var(--background-light);
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        justify-content: center;
+        padding-left: 8px;
+        border-radius: 16px;
+        border: var(--border);
+        user-select: none;
+        transition: background-color 0.3s, border 0.3s;
+
+        .input-element {
+            position: relative;
+            height: fit-content;
+            background-color: transparent;
+
+            .input,
+            .label {
+                font-size: calc(14/16 * 1rem);
+                letter-spacing: 0.05em;
+                color: var(--text-primary);
+            }
+
+            .input {
+                width: 100%;
+                padding-block: 12px;
+                padding-inline: 6px;
+                z-index: -1;
+            }
+
+            .label {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                user-select: none;
+                transition: all 0.3s;
+
+                span {
+                    background-color: var(--background-light);
+                    padding-inline: 6px;
+                    border-radius: 999rem;
+                    transition: background-color 0.3s, border 0.3s;
+
+                    &::first-letter {
+                        text-transform: capitalize;
+                    }
+                }
+            }
+
+            .input:focus~.label,
+            .input:not(:placeholder-shown).input:not(:focus)~.label {
+                transform: translateY(-50%);
+
+                span {
+                    border-top: var(--border);
+                    color: var(--text-accent);
+                }
+            }
+        }
+
+        .show-password-icon-container {
+            aspect-ratio: 1/1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999rem;
+
+            .button.button-as-icon {
+                background-color: transparent;
+
+                &:hover {
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+}
