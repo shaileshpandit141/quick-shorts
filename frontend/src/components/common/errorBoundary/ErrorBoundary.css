@@ -10,16 +10,16 @@
     .inner-error-boundary {
         height: 100%;
         width: 100%;
-        padding: em(8);
-        box-shadow: $box-shadow;
-        background-color: $card-background;
+        padding: calc(8/16 * 3em);
+        box-shadow: var(--box-shadow);
+        background-color: var(--card-background);
         overflow: hidden;
         overflow-x: auto;
 
         h4,
         p {
-            padding-inline: em(3);
-            color: $error-text-primary;
+            padding-inline: calc(3/16 * 3em);
+            color: var(--error-text-primary);
 
             span {
                 font-weight: 600;
@@ -27,14 +27,14 @@
         }
 
         p {
-            margin-top: em(8);
+            margin-top: calc(8/16 * 3em);
         }
 
         button {
             max-width: fit-content;
             background-color: transparent;
-            box-shadow: $box-shadow;
-            margin-top: em(8);
+            box-shadow: var(--box-shadow);
+            margin-top: calc(8/16 * 3em);
 
             &:hover {
                 background-color: transparent;

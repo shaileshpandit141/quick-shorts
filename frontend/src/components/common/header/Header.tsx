@@ -7,7 +7,7 @@ import RightHeader from './subHeader/rightHeader/RightHeader'
 const Header: React.FC = (props) => {
   return (
     <header className='inner-grid-1-1 grid-12 header'>
-      <div className='inner-grid-2-2 header-links'>
+      <div className='inner-grid-2-2 sub-headers'>
         <div className='left-header'>
           <LeftHeader />
         </div>
