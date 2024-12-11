@@ -126,6 +126,18 @@ form {
     user-select: none;
 }
 
+/* Target only touch devices */
+@media (hover: none) and (pointer: coarse) {
+  * {
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling */
+    scrollbar-width: none; /* Hides scrollbar in Firefox */
+  }
+
+  *::-webkit-scrollbar {
+    display: none; /* Hides scrollbar in WebKit-based browsers */
+  }
+}
+
 /* Smooth transitions for theme switching */
 body,
 header,

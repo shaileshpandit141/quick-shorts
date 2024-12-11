@@ -5,25 +5,46 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
-    .theme-button-container {
+    transition: background-color 0.3s;
+
+    .theme-button-wrapper {
+        height: var(--header-height);
+        background-color: transparent;
         position: fixed;
         top: 0;
         right: 0;
+        bottom: unset;
+        left: 0;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s;
+
+        .theme-button-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
     }
-    
+
     .form-wrapper {
         background-color: var(--card-background);
         /* height: 100%; */
         height: calc(450/16 * 1em);
         width: 100%;
-        max-width: calc(775/16 * 1em);
+        max-width: calc(768/16 * 1em);
         padding: 32px;
         border-radius: 32px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        transition: background-color 0.3s;
     }
-    
+
+}
+
+@media (width < 768px) {
+    .auth-alyout {
+        background-color: var(--card-background);
+    }
 }

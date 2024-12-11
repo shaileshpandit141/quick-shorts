@@ -1,7 +1,7 @@
 import React from 'react'
 import './RightHeader.css'
 import { NavLink } from 'react-router-dom'
-import ToggleThemeButton from '../../toggleThemeButton/ToggleThemeButton'
+import ToggleThemeButton from 'components/common/toggleThemeButton/ToggleThemeButton'
 
 const RightHeader: React.FC = (props) => {
   return (
