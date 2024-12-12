@@ -1,5 +1,9 @@
 import React from 'react'
 import './AppLogo.css'
+import { lazyModuleImport, LazyModuleLoader } from 'lazyUtils/lazyModuleImport'
+import { CircularProgress } from '@mui/material';
+
+const AppLogoImage = lazyModuleImport(() => import('./AppLogoImage'))
 
 interface LogoProps {
   size?: number
@@ -19,10 +23,13 @@ const AppLogo: React.FC<LogoProps> = (props) => {
       className='logo-container'
       style={styles}
     >
-      <img
-        src='logo512.png'
-        alt='logo-image'
-        style={styles}
+      <LazyModuleLoader
+        element={
+          <AppLogoImage styles={styles} />
+        }
+        fallback={
+          <CircularProgress />
+        }
       />
     </figure>
   )

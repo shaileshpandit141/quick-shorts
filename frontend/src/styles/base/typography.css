@@ -111,6 +111,12 @@ a:active {
     text-decoration: none;
     letter-spacing: 0.04em;
     font-weight: 600;
+    color: var(--link-color);
+    transition: color 0.3s;
+    
+    &&:hover {
+        color: var(--link-hover-color);
+    }
 }
 
 a::first-letter {

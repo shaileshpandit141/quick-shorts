@@ -43,8 +43,8 @@
     --scrollbar-track: #E0E0E0;
 
     /* Link Colors */
-    --link-color: #651FFF;
-    --link-hover-color: #7C4DFF;
+    --link-color: #0066CC;
+    --link-hover-color: #004C99;
     transition: all 0.3s;
 }
 
@@ -79,6 +79,6 @@
     --scrollbar-track: #424242;
 
     /* Link Colors - Dark Theme */
-    --link-color: #B388FF;
-    --link-hover-color: #7C4DFF;
+    --link-color: #66B3FF;
+    --link-hover-color: #99CCFF;
 }

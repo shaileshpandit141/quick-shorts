@@ -1,12 +1,12 @@
 import React from 'react'
 import './Signin.css'
 import { Link } from 'react-router-dom'
-import AppLogo from 'components/common/appLogo/AppLogo'
 import { LazyIconImport } from 'lazyUtils/lazyIconImport'
 import Input from 'components/common/input/Input'
 import useFormDataChange from 'hooks/useFormDataChange'
+import SigninWrapper from './SigninWrapper'
 
-const Signin: React.FC = () => {
+const Signin: React.FC = (props) => {
 
   const [formData, handleFormDataChange] = useFormDataChange({
     email: '',
@@ -19,24 +19,8 @@ const Signin: React.FC = () => {
   }
 
   return (
-    <div className='signin-page'>
-      <section className='left-section'>
-        <AppLogo size={60} />
-        <h3 className='signin-label'>Sign in</h3>
-        <p className='discription'>
-          use your existing account
-        </p>
-        <Link to='../' className='link back-link'>
-          <span className='icon'>
-            <LazyIconImport icon='arrowBack' />
-          </span>
-          <span className='label'>Back</span>
-        </Link>
-      </section>
-      <form
-        className='right-section'
-        onSubmit={handleFormSubmit}
-      >
+    <SigninWrapper>
+      <form onSubmit={handleFormSubmit}>
         <Input
           name='email'
           type='text'
@@ -49,11 +33,11 @@ const Signin: React.FC = () => {
           value={formData.password}
           onChange={handleFormDataChange}
         />
-        <div className='right-section-row'>
-          <Link to='/forgot-password' className='forgot-password-link'>forgot password</Link>
+        <div className='right-section-row for-right-links'>
+          <Link to='/forgot-password' >forgot password</Link>
         </div>
         <div className='right-section-row'>
-          <Link to='/signup' className='link signup-link'>
+          <Link to='/signup' className='link'>
             <span className='icon'>
               <LazyIconImport icon='signup' />
             </span>
@@ -67,7 +51,7 @@ const Signin: React.FC = () => {
           </button>
         </div>
       </form>
-    </div>
+    </SigninWrapper>
   )
 }
 

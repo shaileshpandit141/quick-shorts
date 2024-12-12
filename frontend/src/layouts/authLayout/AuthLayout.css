@@ -38,13 +38,18 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        transition: background-color 0.3s;
+        transition: background-color 0.3s, max-width 0.3s;
     }
-
 }
+
 
 @media (width < 768px) {
     .auth-alyout {
         background-color: var(--card-background);
+
+        .form-wrapper {
+            max-width: calc(480/16 * 1em);
+        }
     }
+
 }

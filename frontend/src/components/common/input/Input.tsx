@@ -40,7 +40,7 @@ const Input: React.FC<InputProps> = ({
             autoComplete="off"
           />
           <label htmlFor={name + type} className='label'>
-            <span>{name}</span>
+            <span>{name.split('_').join(' ')}</span>
           </label>
         </div>
         {type === 'password' && (
@@ -49,6 +49,7 @@ const Input: React.FC<InputProps> = ({
               className='button button-as-icon'
               onClick={handlePasswordShowButtonClick}
               aria-label={isPasswordShow ? 'Hide password' : 'Show password'}
+              type='button'
             >
               <span className='icon'>
                 {isPasswordShow ? <LazyIconImport icon='eyeOpen' /> : <LazyIconImport icon='eyeClose' />}
