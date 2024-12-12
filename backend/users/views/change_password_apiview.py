@@ -79,7 +79,7 @@ class ChangePasswordAPIView(APIView):
         SendEmail({
             'subject': 'Password Change Notification',
             'emails': {
-                'to_emails': user.email
+                'to_emails': [user.email]
             },
             'context': {
                 'user': user

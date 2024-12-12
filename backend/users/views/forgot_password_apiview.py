@@ -120,7 +120,7 @@ class ForgotPasswordAPIView(APIView):
                 "message": "Please verify your email to continue.",
                 "errors": {
                     "detail": [
-                        "You must verify your email address to access this resource."
+                        "You must verify your account to access this resource."
                     ]
                 }
             }, status.HTTP_400_BAD_REQUEST)

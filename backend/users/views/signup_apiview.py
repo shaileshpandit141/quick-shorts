@@ -108,15 +108,15 @@ class SignupAPIView(APIView):
             SendEmail({
                 'subject': 'For email verification',
                 'emails': {
-                    'to_emails': user.email # type: ignore
+                    'to_emails': [user.email] # type: ignore
                 },
                 'context': {
                     'user': user,
                     'activate_url': activate_url
                 },
                 'templates': {
-                    'txt': 'users/verify_email/confirm_message.txt',
-                    'html': 'users/verify_email/confirm_message.html'
+                    'txt': 'users/verify_account/confirm_message.txt',
+                    'html': 'users/verify_account/confirm_message.html'
                 }
             })
 

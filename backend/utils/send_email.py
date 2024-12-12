@@ -33,6 +33,10 @@ class SendEmail:
             'from_email',
             settings.DEFAULT_FROM_EMAIL
         )
+
+        if not isinstance(emailCredential['emails']['to_emails'], list):
+            raise Exception("Invalid to_email data type")
+
         self.to_emails = emailCredential['emails']['to_emails']
         self.context = emailCredential['context']
         self.text_template = emailCredential['templates']['txt']

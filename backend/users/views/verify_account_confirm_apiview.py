@@ -59,9 +59,9 @@ class VerifyAccountConfirmAPIView(APIView):
             # Check if already verified
             if user.is_verified:
                 return Response.success({
-                    'message': 'Email already verified',
+                    'message': 'Account already verified',
                     'data': {
-                        'detail': 'Email already verified.'
+                        'detail': 'Account already verified.'
                     }
                 }, status.HTTP_200_OK)
 
@@ -69,9 +69,9 @@ class VerifyAccountConfirmAPIView(APIView):
             user.is_verified = True
             user.save()
             return Response.success({
-                'message': 'Email verified successfully',
+                'message': 'Account verified successfully',
                 'data': {
-                    'detail': 'Email verified successfully'
+                    'detail': 'Account verified successfully'
                 }
             }, status.HTTP_200_OK)
 
