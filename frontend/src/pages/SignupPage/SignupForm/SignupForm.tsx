@@ -13,29 +13,22 @@ const SignupForm: React.FC = (props) => {
     console.log(formData)
   }
 
-  const Fields = (): JSX.Element[] => (
-    formFields.map((field, index) => (
-      <Input
-        key={index}
-        // {...field}
-        name={field.name}
-        type={field.type}
-        value={field.value}
-        onChange={field.onChange}
-      />
-    ))
-  )
-  
+  const fields = formFields.map((field, index) => (
+    <Input
+      key={index}
+      {...field}
+    />
+  ))
+
   return (
     <form
       className='signup-form'
       onSubmit={handleFormSubmit}
     >
-      <Fields />
+      {fields}
       <SignupActions />
     </form>
   )
 }
 
 export default SignupForm
-

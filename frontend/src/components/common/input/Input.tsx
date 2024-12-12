@@ -8,6 +8,8 @@ interface InputProps {
   value: string | number;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   isRequired?: boolean;
+  isDisabled?: boolean,
+  readOnly?: boolean
 }
 
 const Input: React.FC<InputProps> = ({
@@ -15,7 +17,9 @@ const Input: React.FC<InputProps> = ({
   type,
   value,
   onChange,
-  isRequired = false
+  isRequired = false,
+  isDisabled = false,
+  readOnly = false
 }) => {
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
 
@@ -34,6 +38,8 @@ const Input: React.FC<InputProps> = ({
             value={value}
             onChange={onChange}
             required={isRequired}
+            disabled={isDisabled}
+            readOnly={readOnly}
             className='input'
             placeholder=''
             autoComplete="off"
