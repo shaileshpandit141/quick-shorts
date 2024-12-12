@@ -36,8 +36,15 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         hashed_password = self.context.get('hashed_password', None)
 
+        email = validated_data.get('email')
+        username = email.split('@')[0]
+
         if hashed_password is None:
             raise ValidationError('Invalid password')
 
         # Handle the single record.
-        return User.objects.create(password=hashed_password, **validated_data)
+        return User.objects.create(
+            password=hashed_password,
+            username=username,
+            **validated_data
+        )
