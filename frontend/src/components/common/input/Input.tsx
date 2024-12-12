@@ -4,8 +4,22 @@ import { LazyIconImport } from 'lazyUtils/lazyIconImport';
 
 interface InputProps {
   name: string;
-  type: string;
-  value: string | number;
+  type: (
+    'text'
+    | 'password'
+    | 'email'
+    | 'url'
+    | 'search'
+    | 'tel'
+    | 'number'
+    | 'date'
+    | 'datetime-local'
+    | 'month'
+    | 'week'
+    | 'time'
+    | 'checkbox'
+  );
+  value: string | number | boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   isRequired?: boolean;
   isDisabled?: boolean,
@@ -17,7 +31,7 @@ const Input: React.FC<InputProps> = ({
   type,
   value,
   onChange,
-  isRequired = false,
+  isRequired = true,
   isDisabled = false,
   readOnly = false
 }) => {
@@ -27,6 +41,31 @@ const Input: React.FC<InputProps> = ({
     setIsPasswordShow((prevState) => !prevState);
   };
 
+  if (type === 'checkbox') {
+    return (
+      <div className='input-checkbox-component'>
+        <div className='input-element-wrapper'>
+          <div className='input-element'>
+            <input
+              name={name}
+              type={type}
+              id={name + type}
+              checked={value === true ? true : false}
+              onChange={onChange}
+              required={isRequired}
+              disabled={isDisabled}
+              readOnly={readOnly}
+              className='input'
+            />
+            <label htmlFor={name + type} className='label'>
+              <span>{name.split('_').join(' ')}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className='input-component'>
       <div className='input-element-wrapper'>
@@ -35,7 +74,7 @@ const Input: React.FC<InputProps> = ({
             name={name}
             type={type === 'password' ? (isPasswordShow ? 'text' : 'password') : type}
             id={name + type}
-            value={value}
+            value={typeof value !== 'boolean' ? value : String(value)}
             onChange={onChange}
             required={isRequired}
             disabled={isDisabled}

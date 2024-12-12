@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from "react";
 
 type FormData = {
-  [key: string]: any; // Adjust the type as per your form data structure
+  [key: string]: any;
 };
 
 export default function useFormDataChange<T extends FormData>(initialFormData: T) {

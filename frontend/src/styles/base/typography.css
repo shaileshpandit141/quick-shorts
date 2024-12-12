@@ -1,6 +1,6 @@
 /**
  * Typography Styles
- * 
+ *
  * Core typography styles that define text appearance across the application
  */
 
@@ -78,7 +78,7 @@ details {
     transition: color 0.3s;
 }
 
-/* Form Typography 
+/* Form Typography
  * - 16px base size for better mobile usability
  * - Consistent letter spacing and colors
  * - Matching placeholder styles
@@ -113,7 +113,7 @@ a:active {
     font-weight: 600;
     color: var(--link-color);
     transition: color 0.3s;
-    
+
     &&:hover {
         color: var(--link-hover-color);
     }
@@ -147,10 +147,14 @@ button::first-letter {
  * - Only applies to devices with fine pointer control
  */
 @media (pointer: fine) {
+
     a,
-    button {
-        cursor: pointer;
-    }
+    button,
+    input[type:checked],
+    input[type:radio],
+    {
+    cursor: pointer;
+}
 }
 
 p {

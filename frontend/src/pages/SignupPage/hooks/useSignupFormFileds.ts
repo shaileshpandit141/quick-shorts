@@ -8,21 +8,19 @@ interface FormData {
 
 interface FormField {
   name: string;
-  type: string;
-  value: string;
+  type: 'email' | 'password' | 'checkbox';
+  value: string | boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 type FormFields = FormField[];
 
 const useSignupFormFields = (): [FormFields, FormData] => {
-
   const [formData, handleFormDataChange] = useFormDataChange<FormData>({
     email: '',
     password: '',
     confirm_password: ''
   })
-
 
   const formFields: FormFields = [
     {
@@ -44,7 +42,7 @@ const useSignupFormFields = (): [FormFields, FormData] => {
       onChange: handleFormDataChange
     }
   ]
-
+  
   return [formFields, formData]
 }
 

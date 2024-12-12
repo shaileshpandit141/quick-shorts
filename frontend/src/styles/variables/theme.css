@@ -1,15 +1,5 @@
 /* CSS Custom Properties - Theme Variables
  * Light theme (default) and dark theme color scheme
- *
- * Color Palette:
- * - Primary: Purple shades for main UI elements
- * - Secondary: Teal shades for complementary UI elements
- * - Background: Light/dark variants for different surface levels
- * - Text: Various shades for different text hierarchies
- * - Borders: Light/dark variants for separation
- * - Buttons: Uses primary/secondary colors with hover states
- * - Links: Custom colors for hyperlinks
- * - Scrollbar: Custom scrollbar styling
  */
 
 :root {
@@ -21,10 +11,9 @@
     --footer-background: #EEEEEE;
 
     /* Text Colors */
-    --text-primary: #212121;
-    --text-secondary: #757575;
-    --text-light: #FFFFFF;
-    --text-accent: #FF4081;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --text-accent: #666666;
     --error-text-primary: #D32F2F;
 
     /* Border Colors */
@@ -57,10 +46,9 @@
     --footer-background: #1A1A1A;
 
     /* Text Colors - Dark Theme */
-    --text-primary: #EEEEEE;
-    --text-secondary: #BDBDBD;
-    --text-light: #FFFFFF;
-    --text-accent: #FF80AB;
+    --text-primary: #FFFFFF;
+    --text-secondary: #CCCCCC;
+    --text-accent: #999999;
     --error-text-primary: #EF5350;
 
     /* Border Colors - Dark Theme */
