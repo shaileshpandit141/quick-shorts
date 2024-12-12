@@ -4,11 +4,10 @@ import { LazyIconImport } from 'lazyUtils/lazyIconImport';
 
 interface InputProps {
   name: string;
-  type: 'text' | 'password' | 'email' | 'number' | 'checkbox';
+  type: string;
   value: string | number;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   isRequired?: boolean;
-  placeholder?: string; // Optional placeholder
 }
 
 const Input: React.FC<InputProps> = ({

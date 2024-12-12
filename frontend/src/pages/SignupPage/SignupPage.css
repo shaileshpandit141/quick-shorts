@@ -1,0 +1,15 @@
+.signup-page {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 16px;
+
+    @media (width < 768px) {
+        grid-template-columns: repeat(1, 1fr);
+
+        .left-section {
+            padding-right: none;
+        }
+    }
+}

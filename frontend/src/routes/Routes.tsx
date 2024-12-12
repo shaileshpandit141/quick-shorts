@@ -18,7 +18,7 @@ import AuthLayout from 'layouts/authLayout/AuthLayout'
 const Index = lazyModuleImport(() => import('pages/index/Index'))
 const Home = lazyModuleImport(() => import('pages/home/Home'))
 const Signin = lazyModuleImport(() => import('pages/signin/Signin'))
-const Signup = lazyModuleImport(() => import('pages/signup/Signup'))
+const SignupPage = lazyModuleImport(() => import('pages/SignupPage/SignupPage'))
 const NotFound = lazyModuleImport(() => import('pages/NotFound/NotFound'))
 
 const AppRoutes: React.FC = () => {
@@ -47,7 +47,7 @@ const AppRoutes: React.FC = () => {
             <LazyModuleLoader element={<Signin />} fallback={<Loader />} />
           } />
           <Route path='/signup' element={
-            <LazyModuleLoader element={<Signup />} fallback={<Loader />} />
+            <LazyModuleLoader element={<SignupPage />} fallback={<Loader />} />
           } />
         </Route>
         {/* Catch-all route for 404 Not Found */}
