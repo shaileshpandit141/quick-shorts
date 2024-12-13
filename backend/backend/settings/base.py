@@ -1,13 +1,13 @@
 from pathlib import Path
 from datetime import timedelta
-from decouple import config
+from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Core Settings
 SECRET_KEY = config("SECRET_KEY", cast=str)
 DEBUG = False
-ALLOWED_HOSTS = [config("HOST", cast=str)]
+ALLOWED_HOSTS = config("HOST", cast=Csv())
 APPEND_SLASH = False
 FRONTEND_URL = config("FRONTEND_URL", cast=str)
 

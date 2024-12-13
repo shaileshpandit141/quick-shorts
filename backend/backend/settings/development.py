@@ -1,11 +1,13 @@
 # Import all settings from base configuration
 from .base import *
+from .base import BASE_DIR
+from decouple import config, Csv
 
 # Enable debug mode for development purposes only
 DEBUG = True
 
 # List of host/domain names that Django can serve
-ALLOWED_HOSTS = [config("HOST", cast=str)]
+ALLOWED_HOSTS = config("HOST", cast=Csv())
 
 # Cross-Origin Resource Sharing (CORS) Settings
 # -----------------------

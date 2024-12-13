@@ -1,5 +1,6 @@
 # Import all settings from base configuration
 from .base import *
+from .base import BASE_DIR
 
 # Enable debug mode for development environment
 DEBUG = True
