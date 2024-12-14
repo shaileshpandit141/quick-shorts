@@ -1,3 +1,8 @@
+export interface SigninCredentials {
+  email: string
+  password: string
+}
+
 export interface SigninIntitlState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
   message: string

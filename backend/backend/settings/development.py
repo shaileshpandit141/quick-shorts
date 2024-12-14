@@ -8,11 +8,7 @@ DEBUG = True
 
 # List of host/domain names that Django can serve
 ALLOWED_HOSTS = config("HOST", cast=Csv())
-
-# Cross-Origin Resource Sharing (CORS) Settings
-# -----------------------
-# Allows requests from any origin - only for development
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = config("FRONTEND_URL", cast=Csv())
 
 # Database Configuration
 # -----------------------

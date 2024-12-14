@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import API from 'API'
-import { SigninCredentials } from 'APICredentials'
-import { ErrorResponse, CatchErrorResponse } from './signin.types'
 import {
   SigninIntitlState,
   SigninSuccessResponse,
-  RefreshTokenSuccessResponse
+  RefreshTokenSuccessResponse,
+  ErrorResponse,
+  CatchErrorResponse,
+  SigninCredentials
 } from './signin.types'
 
 // Error handling helper

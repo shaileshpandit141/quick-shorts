@@ -20,7 +20,8 @@ const API = {
     return axios.post(`${BASE_API_URL}api/auth/signout/`, credentials)
   },
   signinApi: (credentials: SigninCredentials) => {
-    return axios.post(`${BASE_API_URL}api/auth/signin/token/`, credentials)
+    console.log(credentials, BASE_API_URL)
+    return axios.post(`${BASE_API_URL}api/v1/auth/signin/token/`, credentials)
   },
   refreshTokenApi: (credentials: RefreshTokenCredentials) => {
     return axios.post(`${BASE_API_URL}api/auth/signin/token/refresh/`, credentials)
