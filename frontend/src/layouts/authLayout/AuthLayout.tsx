@@ -1,7 +1,7 @@
 import React from 'react'
 import './AuthLayout.css'
 import { Outlet } from 'react-router-dom'
-import ToggleThemeButton from 'components/common/toggleThemeButton/ToggleThemeButton'
+import { ToggleThemeButton } from 'components'
 
 const AuthLayout: React.FC = (props) => {
   return (

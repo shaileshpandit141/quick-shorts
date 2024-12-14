@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './LeftHeader.css'
-import AppLogo from 'components/common/appLogo/AppLogo'
+import { AppLogo } from 'components'
 
 const LeftHeader: React.FC = (props) => {
   return (

@@ -6,10 +6,10 @@ import {
   Route
 } from 'react-router-dom'
 import { lazyModuleImport, LazyModuleLoader } from 'lazyUtils/lazyModuleImport'
-import PageLoader from 'components/common/PageLoader/PageLoader'
+import { PageLoader } from 'components'
 import IndexSkeleton from 'pages/index/IndexSkeleton'
 
-// Default Imports (user-defined components).
+// Default Imports (user-defined layout and pages).
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
 import MainLayout from 'layouts//mainLayout/MainLayout'

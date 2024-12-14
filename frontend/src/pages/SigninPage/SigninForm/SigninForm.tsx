@@ -1,6 +1,6 @@
 import React from 'react'
 import './SigninForm.css'
-import Input from 'components/common/input/Input'
+import { Input } from 'components'
 import useSigninFormFields from './hooks/useSigninFormFileds'
 import ForgotPasswordLink from './Actions/ForgotPasswordLink/ForgotPasswordLink'
 import SignupLink from './Actions/SignupLink/SignupLink'

@@ -1,8 +1,8 @@
 import React from 'react'
 import './Header.css'
-import LeftHeader from './subHeader/leftHeader/LeftHeader'
-import CenterHeader from './subHeader/centerHeader/CenterHeader'
-import RightHeader from './subHeader/rightHeader/RightHeader'
+import LeftHeader from './SubHeader/LeftHeader/LeftHeader'
+import CenterHeader from './SubHeader/CenterHeader/CenterHeader'
+import RightHeader from './SubHeader/RightHeader/RightHeader'
 
 const Header: React.FC = (props) => {
   return (

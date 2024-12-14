@@ -1,7 +1,7 @@
 import React from 'react'
 import './SigninHeader.css'
 import { Link } from 'react-router-dom'
-import AppLogo from 'components/common/appLogo/AppLogo'
+import { AppLogo } from 'components'
 import { LazyIconImport } from 'lazyUtils/lazyIconImport'
 
 const SigninHeader: React.FC = (props) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import './SignupForm.css'
-import Input from 'components/common/input/Input'
+import { Input } from 'components'
 import useSignupFormFields from './hooks/useSignupFormFileds'
 import SigninLink from './Actions/SigninLink/SigninLink'
 import SignupButton from './Actions/SignupButton/SignupButton'
