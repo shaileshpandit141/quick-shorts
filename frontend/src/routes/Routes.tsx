@@ -17,7 +17,7 @@ import AuthLayout from 'layouts/authLayout/AuthLayout'
 
 const Index = lazyModuleImport(() => import('pages/index/Index'))
 const Home = lazyModuleImport(() => import('pages/home/Home'))
-const Signin = lazyModuleImport(() => import('pages/signin/Signin'))
+const SigninPage = lazyModuleImport(() => import('pages/SigninPage/SigninPage'))
 const SignupPage = lazyModuleImport(() => import('pages/SignupPage/SignupPage'))
 const NotFound = lazyModuleImport(() => import('pages/NotFound/NotFound'))
 
@@ -44,7 +44,7 @@ const AppRoutes: React.FC = () => {
 
         <Route element={<AuthLayout />}>
           <Route path='/signin' element={
-            <LazyModuleLoader element={<Signin />} fallback={<Loader />} />
+            <LazyModuleLoader element={<SigninPage />} fallback={<Loader />} />
           } />
           <Route path='/signup' element={
             <LazyModuleLoader element={<SignupPage />} fallback={<Loader />} />

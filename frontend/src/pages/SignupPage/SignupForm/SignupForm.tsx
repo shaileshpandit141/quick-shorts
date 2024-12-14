@@ -9,7 +9,7 @@ const SignupForm: React.FC = (props) => {
 
   const [formFields, formData] = useSignupFormFields()
 
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     console.log(formData)
   }
@@ -24,7 +24,7 @@ const SignupForm: React.FC = (props) => {
   return (
     <form
       className='signup-form'
-      onSubmit={handleFormSubmit}
+      onSubmit={handleSubmit}
     >
       {fields}
       <div className='actions'>

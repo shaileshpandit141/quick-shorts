@@ -1,0 +1,29 @@
+.signin-header {
+    height: 100%;
+    width: 100%;
+
+    @media (width < 768px) {
+        padding-right: none;
+    }
+
+    .form-label {
+        margin-top: 16px;
+    }
+
+    .form-discription {
+        &::first-letter {
+            text-transform: capitalize;
+        }
+    }
+
+    .back-link {
+        width: fit-content;
+        margin-top: 8px;
+        padding-left: 0;
+        background-color: transparent;
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+}
