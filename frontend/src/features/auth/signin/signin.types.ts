@@ -2,10 +2,10 @@ export interface SigninIntitlState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
   message: string
   data: {
-    access_token: string
-    refresh_token: string
-  } | null
-  error: {} | null
+    access_token: string | null
+    refresh_token: string | null
+  }
+  errors: {} | null
   meta: {} | null
 }
 
@@ -26,4 +26,19 @@ export interface RefreshTokenSuccessResponse {
     access_token: string
   }
   meta: {} | null
+}
+
+export interface ErrorResponse {
+  status: 'failed';
+  message: string;
+  errors: {
+    [key: string]: string[];
+  };
+}
+
+export interface CatchErrorResponse {
+  response?: {
+    data: ErrorResponse
+  }
+  message?: ErrorResponse
 }

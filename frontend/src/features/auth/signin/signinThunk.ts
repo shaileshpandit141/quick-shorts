@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import API from 'API'
 import { SigninCredentials } from 'APICredentials'
-import { ErrorResponse, CatchErrorResponse } from 'ErrorResponse.d'
+import { ErrorResponse, CatchErrorResponse } from './signin.types'
 import {
   SigninIntitlState,
   SigninSuccessResponse,
@@ -16,7 +16,7 @@ const createErrorResponse = (error: CatchErrorResponse): ErrorResponse => {
     return {
       status: 'failed',
       message: error.message ?? 'An unknown error occurred',
-      error: {
+      errors: {
         non_field_errors: [error.message ?? 'An unknown error occurred']
       }
     } as ErrorResponse
@@ -49,14 +49,14 @@ export const refreshTokenThunk = createAsyncThunk(
       return thunkAPI.rejectWithValue({
         status: 'failed',
         message: 'No refresh token available',
-        error: {
+        errors: {
           non_field_errors: ['No refresh token available']
         }
       })
     }
 
     try {
-      const response = await API.refreshAccessTokenApi({
+      const response = await API.refreshTokenApi({
         refresh_token: refresh_token
       })
       return response.data as RefreshTokenSuccessResponse
