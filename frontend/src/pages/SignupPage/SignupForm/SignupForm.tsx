@@ -1,8 +1,9 @@
 import React from 'react'
 import './SignupForm.css'
 import Input from 'components/common/input/Input'
-import useSignupFormFields from '../hooks/useSignupFormFileds'
-import SignupActions from './SignupActions/SignupActions'
+import useSignupFormFields from './hooks/useSignupFormFileds'
+import SigninLink from './Actions/SigninLink/SigninLink'
+import SignupButton from './Actions/SignupButton/SignupButton'
 
 const SignupForm: React.FC = (props) => {
 
@@ -26,7 +27,10 @@ const SignupForm: React.FC = (props) => {
       onSubmit={handleFormSubmit}
     >
       {fields}
-      <SignupActions />
+      <div className='actions'>
+        <SigninLink />
+        <SignupButton />
+      </div>
     </form>
   )
 }
