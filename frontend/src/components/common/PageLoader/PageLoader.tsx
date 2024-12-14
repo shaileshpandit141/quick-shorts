@@ -1,8 +1,8 @@
 import React from 'react'
-import './Loader.css'
+import './PageLoader.css'
 import { CircularProgress } from '@mui/material';
 
-const Loader: React.FC = () => {
+const PageLoader: React.FC = () => {
   return (
     <div className='loader'>
       <div className='icon-container'>
@@ -15,4 +15,4 @@ const Loader: React.FC = () => {
   )
 }
 
-export default Loader
+export default PageLoader

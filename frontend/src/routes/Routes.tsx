@@ -6,7 +6,7 @@ import {
   Route
 } from 'react-router-dom'
 import { lazyModuleImport, LazyModuleLoader } from 'lazyUtils/lazyModuleImport'
-import Loader from 'components/common/loader/Loader'
+import PageLoader from 'components/common/PageLoader/PageLoader'
 import IndexSkeleton from 'pages/index/IndexSkeleton'
 
 // Default Imports (user-defined components).
@@ -37,22 +37,22 @@ const AppRoutes: React.FC = () => {
           {/* Private Routes */}
           <Route element={<PrivateRoute />}>
             <Route path='/home' element={
-              <LazyModuleLoader element={<Home />} fallback={<Loader />} />
+              <LazyModuleLoader element={<Home />} fallback={<PageLoader />} />
             } />
           </Route>
         </Route>
 
         <Route element={<AuthLayout />}>
           <Route path='/signin' element={
-            <LazyModuleLoader element={<SigninPage />} fallback={<Loader />} />
+            <LazyModuleLoader element={<SigninPage />} fallback={<PageLoader />} />
           } />
           <Route path='/signup' element={
-            <LazyModuleLoader element={<SignupPage />} fallback={<Loader />} />
+            <LazyModuleLoader element={<SignupPage />} fallback={<PageLoader />} />
           } />
         </Route>
         {/* Catch-all route for 404 Not Found */}
         <Route path="*" element={
-          <LazyModuleLoader element={<NotFound />} fallback={<Loader />} />
+          <LazyModuleLoader element={<NotFound />} fallback={<PageLoader />} />
         } />
       </Routes>
     </Router>

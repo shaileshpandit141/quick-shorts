@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { SigninCredentials, RefreshTokenCredentials } from 'APICredentials';
+import {
+  SigninCredentials,
+  RefreshTokenCredentials
+} from './API.types';
+
 
 const BASE_API_URL = process.env.REACT_APP_BASE_API_URL
 
@@ -16,10 +20,10 @@ const API = {
     return axios.post(`${BASE_API_URL}api/auth/signout/`, credentials)
   },
   signinApi: (credentials: SigninCredentials) => {
-    return axios.post(`${BASE_API_URL}api/auth/token/`, credentials)
+    return axios.post(`${BASE_API_URL}api/auth/signin/token/`, credentials)
   },
   refreshTokenApi: (credentials: RefreshTokenCredentials) => {
-    return axios.post(`${BASE_API_URL}api/auth/token/refresh/`, credentials)
+    return axios.post(`${BASE_API_URL}api/auth/signin/token/refresh/`, credentials)
   },
   verifyEmailApi: (credentials: Credentials) => {
     return axios.post(`${BASE_API_URL}api/auth/signup/verify-email/`, credentials)

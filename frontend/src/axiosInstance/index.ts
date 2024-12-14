@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = store.getState().signin.data?.refresh_token;
+    const token = store.getState().signin.data.access_token;
     if (token) {
       config.headers = config.headers || {};
       config.headers['Authorization'] = `Bearer ${token}`;
@@ -26,7 +26,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !request._retry) {
       request._retry = true;
       await store.dispatch(authActions.refreshTokenThunk());
-      const token = store.getState().signin.data?.access_token;
+      const token = store.getState().signin.data.access_token;
       request.headers = request.headers || {};
       request.headers['Authorization'] = `Bearer ${token}`;
       return axiosInstance(request);
