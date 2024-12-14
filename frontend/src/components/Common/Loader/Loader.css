@@ -1,0 +1,8 @@
+.loader-container {
+    background-color: transparent;
+    height: 24px;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
