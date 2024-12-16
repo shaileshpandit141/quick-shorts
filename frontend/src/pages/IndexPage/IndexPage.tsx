@@ -1,9 +1,15 @@
 import React from 'react'
-import './Index.css'
-import { Link } from 'react-router-dom'
+import './IndexPage.css'
+import { Link, Navigate } from 'react-router-dom'
+import { isAuthenticated } from 'utils/isAuthenticted'
 import { LazyIconImport } from 'lazyUtils/lazyIconImport'
 
-const Index: React.FC = (props) => {
+const IndexPage: React.FC = (props) => {
+
+  if (isAuthenticated()) {
+    return <Navigate to={'/home'} />
+  }
+
   return (
     <div className='inner-grid-1-1 grid-12 index'>
       <div className="inner-grid-2-2 index-page">
@@ -45,4 +51,4 @@ const Index: React.FC = (props) => {
   )
 }
 
-export default Index
+export default IndexPage

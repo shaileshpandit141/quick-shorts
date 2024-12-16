@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 import { lazyModuleImport, LazyModuleLoader } from 'lazyUtils/lazyModuleImport'
 import { PageLoader } from 'components'
-import IndexSkeleton from 'pages/index/IndexSkeleton'
+import IndexPageSkeleton from 'pages/IndexPage/IndexPageSkeleton'
 
 // Default Imports (user-defined layout and pages).
 import PrivateRoute from './PrivateRoute'
@@ -15,7 +15,7 @@ import PublicRoute from './PublicRoute'
 import MainLayout from 'layouts//mainLayout/MainLayout'
 import AuthLayout from 'layouts/authLayout/AuthLayout'
 
-const Index = lazyModuleImport(() => import('pages/index/Index'))
+const IndexPage = lazyModuleImport(() => import('pages/IndexPage/IndexPage'))
 const Home = lazyModuleImport(() => import('pages/home/Home'))
 const SigninPage = lazyModuleImport(() => import('pages/SigninPage/SigninPage'))
 const SignupPage = lazyModuleImport(() => import('pages/SignupPage/SignupPage'))
@@ -30,7 +30,7 @@ const AppRoutes: React.FC = () => {
           {/* Public Routes */}
           <Route element={<PublicRoute />}>
             <Route index element={
-              <LazyModuleLoader element={<Index />} fallback={<IndexSkeleton />} />
+              <LazyModuleLoader element={<IndexPage />} fallback={<IndexPageSkeleton />} />
             } />
           </Route>
 
@@ -42,6 +42,7 @@ const AppRoutes: React.FC = () => {
           </Route>
         </Route>
 
+        {/* Auth Routes without header */}
         <Route element={<AuthLayout />}>
           <Route path='/signin' element={
             <LazyModuleLoader element={<SigninPage />} fallback={<PageLoader />} />
@@ -50,6 +51,7 @@ const AppRoutes: React.FC = () => {
             <LazyModuleLoader element={<SignupPage />} fallback={<PageLoader />} />
           } />
         </Route>
+
         {/* Catch-all route for 404 Not Found */}
         <Route path="*" element={
           <LazyModuleLoader element={<NotFound />} fallback={<PageLoader />} />

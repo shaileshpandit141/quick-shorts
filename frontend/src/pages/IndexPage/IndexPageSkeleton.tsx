@@ -1,9 +1,9 @@
 import React from 'react'
-import './Index.css'
+import './IndexPage.css'
 import { isAuthenticated } from 'utils/isAuthenticted'
 import { Navigate } from 'react-router-dom'
 
-const IndexSkeleton: React.FC = () => {
+const IndexPageSkeleton: React.FC = () => {
   if (isAuthenticated()) {
     return <Navigate to={'/home'} />
   }
@@ -32,4 +32,4 @@ const IndexSkeleton: React.FC = () => {
   )
 }
 
-export default IndexSkeleton
+export default IndexPageSkeleton
