@@ -12,8 +12,8 @@ import IndexPageSkeleton from 'pages/IndexPage/IndexPageSkeleton'
 // Default Imports (user-defined layout and pages).
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
-import MainLayout from 'layouts//mainLayout/MainLayout'
-import AuthLayout from 'layouts/authLayout/AuthLayout'
+import MainLayout from 'layouts//MainLayout/MainLayout'
+import AuthLayout from 'layouts/AuthLayout/AuthLayout'
 
 const IndexPage = lazyModuleImport(() => import('pages/IndexPage/IndexPage'))
 const Home = lazyModuleImport(() => import('pages/home/Home'))
