@@ -4,25 +4,11 @@ import {
   SigninIntitlState,
   SigninSuccessResponse,
   RefreshTokenSuccessResponse,
-  ErrorResponse,
-  CatchErrorResponse,
-  SigninCredentials
+  SigninErrorResponse,
+  RefreshTokenErrorResponse
 } from './signin.types'
-
-// Error handling helper
-const createErrorResponse = (error: CatchErrorResponse): ErrorResponse => {
-  if (error.response) {
-    return error.response.data as ErrorResponse
-  } else {
-    return {
-      status: 'failed',
-      message: error.message ?? 'An unknown error occurred',
-      errors: {
-        non_field_errors: [error.message ?? 'An unknown error occurred']
-      }
-    } as ErrorResponse
-  }
-}
+import { SigninCredentials } from 'API/API.types'
+import { CatchAxiosError } from 'FeatureTypes'
 
 // Sign in thunk
 export const signinThunk = createAsyncThunk(
@@ -32,8 +18,19 @@ export const signinThunk = createAsyncThunk(
       const response = await API.signinApi(credentials)
       return response.data as SigninSuccessResponse
     } catch (error: unknown) {
-      const err = error as CatchErrorResponse
-      const errorResponse = createErrorResponse(err)
+      const err = error as CatchAxiosError
+      let errorResponse: SigninErrorResponse
+      if (err.response) {
+        errorResponse = err.response.data
+      } else {
+        errorResponse = {
+          status: 'failed',
+          message: err.message ?? 'An unknown error occurred',
+          errors: {
+            non_field_errors: [err.message ?? 'An unknown error occurred']
+          }
+        }
+      }
       return thunkAPI.rejectWithValue(errorResponse)
     }
   }
@@ -62,8 +59,19 @@ export const refreshTokenThunk = createAsyncThunk(
       })
       return response.data as RefreshTokenSuccessResponse
     } catch (error: unknown) {
-      const err = error as CatchErrorResponse
-      const errorResponse = createErrorResponse(err)
+      const err = error as CatchAxiosError
+      let errorResponse: RefreshTokenErrorResponse
+      if (err.response) {
+        errorResponse = err.response.data
+      } else {
+        errorResponse = {
+          status: 'failed',
+          message: err.message ?? 'An unknown error occurred',
+          errors: {
+            non_field_errors: [err.message ?? 'An unknown error occurred']
+          }
+        }
+      }
       return thunkAPI.rejectWithValue(errorResponse)
     }
   }

@@ -1,15 +1,22 @@
 // Imports
 import { createSlice } from "@reduxjs/toolkit"
-import { SigninIntitlState, ErrorResponse } from "./signin.types"
-import { signinThunk, refreshTokenThunk } from './signinThunk'
+import {
+  SigninIntitlState,
+  SigninErrorResponse,
+  RefreshTokenErrorResponse
+} from "./signin.types"
+import {
+  signinThunk,
+  refreshTokenThunk
+} from './signinThunk'
 
 // Initial state
 const signinIntitlState: SigninIntitlState = {
   status: 'idle',
   message: '',
   data: {
-    access_token: localStorage.getItem('access_token') || null,
-    refresh_token: localStorage.getItem('refresh_token') || null
+    access_token: localStorage.getItem('access_token'),
+    refresh_token: localStorage.getItem('refresh_token')
   },
   errors: null,
   meta: null
@@ -44,13 +51,14 @@ const signinSlice = createSlice({
         state.status = status
         state.message = message
         state.data.access_token = data.access_token
+        state.data.access_token = data.access_token
         state.data.refresh_token = data.refresh_token
         state.meta = meta
         localStorage.setItem('access_token', data.access_token)
         localStorage.setItem('refresh_token', data.refresh_token)
       })
       .addCase(signinThunk.rejected, (state, action) => {
-        const { status, message, errors } = action.payload as ErrorResponse
+        const { status, message, errors } = action.payload as SigninErrorResponse
         state.status = status
         state.message = message
         state.errors = errors
@@ -69,7 +77,7 @@ const signinSlice = createSlice({
         localStorage.setItem('access_token', data.access_token)
       })
       .addCase(refreshTokenThunk.rejected, (state, action) => {
-        const { status, message, errors } = action.payload as ErrorResponse
+        const { status, message, errors } = action.payload as RefreshTokenErrorResponse
         state.status = status
         state.message = message
         state.errors = errors

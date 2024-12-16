@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import './Input.css';
 import { LazyIconImport } from 'lazyUtils/lazyIconImport';
+import DisplayErrors from '../DisplayErrors/DisplayErrors';
 
 interface InputProps {
   name: string;
@@ -22,8 +23,9 @@ interface InputProps {
   value: string | number | boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   isRequired?: boolean;
-  isDisabled?: boolean,
-  readOnly?: boolean
+  isDisabled?: boolean;
+  readOnly?: boolean;
+  errorMessage?: string | string[]
 }
 
 const Input: React.FC<InputProps> = ({
@@ -33,7 +35,8 @@ const Input: React.FC<InputProps> = ({
   onChange,
   isRequired = true,
   isDisabled = false,
-  readOnly = false
+  readOnly = false,
+  errorMessage = undefined
 }) => {
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
 
@@ -62,6 +65,11 @@ const Input: React.FC<InputProps> = ({
             </label>
           </div>
         </div>
+        {
+          errorMessage && (
+            <DisplayErrors message={errorMessage} />
+          )
+        }
       </div>
     )
   }
@@ -102,6 +110,11 @@ const Input: React.FC<InputProps> = ({
           </div>
         )}
       </div>
+      {
+        errorMessage && (
+          <DisplayErrors message={errorMessage} />
+        )
+      }
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import React from 'react'
 import './SigninForm.css'
+import { Navigate } from 'react-router-dom'
 import { Input } from 'components'
+import { isAuthenticated } from 'utils/isAuthenticted'
 import useSigninFormFields from './hooks/useSigninFormFileds'
 import ForgotPasswordLink from './Actions/ForgotPasswordLink/ForgotPasswordLink'
 import SignupLink from './Actions/SignupLink/SignupLink'
@@ -13,7 +15,11 @@ const SigninForm: React.FC = (props) => {
 
   const [formFields, formData] = useSigninFormFields()
   const dispatch = useDispatch()
-  const { status, message, errors, data } = authActions.useSigninSelector()
+  const { status, message, errors } = authActions.useSigninSelector()
+
+  if (status === 'succeeded' || isAuthenticated()) {
+    return <Navigate to='/home' />
+  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -23,13 +29,17 @@ const SigninForm: React.FC = (props) => {
   }
 
   const fields = formFields.map((field, index) => (
-    <>
+    <div key={index} className='fields-container'>
       <Input
         key={index}
         {...field}
         isDisabled={status === 'loading'}
+        errorMessage={
+          (status === 'failed' && errors?.email) && errors.email
+            (status === 'failed' && errors?.password) && errors.password
+        }
       />
-    </>
+    </div>
   ))
 
   return (
@@ -38,6 +48,9 @@ const SigninForm: React.FC = (props) => {
       onSubmit={handleSubmit}
     >
       {fields}
+      {(status === 'failed' && errors?.non_field_errors)
+        && <DisplayErrors message={errors.non_field_errors} />
+      }
       <div className='actions'>
         <span></span>
         <ForgotPasswordLink />

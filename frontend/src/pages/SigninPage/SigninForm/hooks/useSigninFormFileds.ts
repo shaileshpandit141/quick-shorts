@@ -7,7 +7,7 @@ interface FormData {
 
 interface FormField {
   name: string;
-  type: 'email' | 'password' | 'checkbox';
+  type: 'text' | 'password' | 'checkbox';
   value: string | boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -23,7 +23,7 @@ const useSigninFormFields = (): [FormFields, FormData] => {
   const formFields: FormFields = [
     {
       name: 'email',
-      type: 'email',
+      type: 'text',
       value: formData.email,
       onChange: handleFormDataChange
     },

@@ -24,4 +24,6 @@
     overflow: hidden;
     overflow-y: auto;
     position: relative;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+    transition: scrollbar-color 0.3s;
 }

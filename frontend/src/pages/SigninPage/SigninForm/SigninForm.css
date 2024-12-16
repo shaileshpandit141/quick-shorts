@@ -5,6 +5,12 @@
     justify-content: center;
     height: 100%;
     width: 100%;
+    
+    .fields-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
 
     .actions {
         width: 100%;

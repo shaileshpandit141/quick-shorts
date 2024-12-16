@@ -2,7 +2,10 @@
   "compilerOptions": {
     "target": "es5",
     "baseUrl": "src",
-    "typeRoots": ["./types", "./node_modules/@types"],
+    "typeRoots": [
+      "./src/@types",
+      "./node_modules/@types"
+    ],
     "lib": [
       "dom",
       "dom.iterable",

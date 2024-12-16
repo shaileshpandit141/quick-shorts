@@ -1,49 +1,28 @@
-export interface SigninCredentials {
-  email: string
-  password: string
-}
+import {
+  InitialState,
+  SuccessResponse,
+  ErrorResponse
+} from 'FeatureTypes';
 
-export interface SigninIntitlState {
-  status: 'idle' | 'loading' | 'succeeded' | 'failed'
-  message: string
-  data: {
-    access_token: string | null
-    refresh_token: string | null
-  }
-  errors: {} | null
-  meta: {} | null
-}
+export interface SigninIntitlState extends InitialState<{
+  access_token: string | null;
+  refresh_token: string | null;
+}> { }
 
-export interface SigninSuccessResponse {
-  status: 'succeeded'
-  message: string
-  data: {
-    access_token: string
-    refresh_token: string
-  }
-  meta: {} | null
-}
+export interface SigninSuccessResponse extends SuccessResponse<{
+  access_token: string;
+  refresh_token: string;
+}> { }
 
-export interface RefreshTokenSuccessResponse {
-  status: 'succeeded'
-  message: string
-  data: {
-    access_token: string
-  }
-  meta: {} | null
-}
+export interface RefreshTokenSuccessResponse extends SuccessResponse<{
+  access_token: string;
+}> { }
 
-export interface ErrorResponse {
-  status: 'failed';
-  message: string;
-  errors: {
-    [key: string]: string[];
-  };
-}
+export interface SigninErrorResponse extends ErrorResponse<{
+  email?: string[];
+  password?: string[];
+}> { }
 
-export interface CatchErrorResponse {
-  response?: {
-    data: ErrorResponse
-  }
-  message?: ErrorResponse
-}
+export interface RefreshTokenErrorResponse extends ErrorResponse<{
+  access_token?: string[];
+}> { }

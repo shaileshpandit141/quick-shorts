@@ -6,18 +6,24 @@ interface DisplayErrorsProps {
 }
 
 const DisplayErrors: React.FC<DisplayErrorsProps> = (props) => {
-  
+
   const { message } = props
 
   if (typeof message === 'string') {
     return (
-      <p className='error-text'>{message}</p>
+      <div className='error-message-continer'>
+        <p className='error-text-message'>{message}</p>
+      </div>
     )
   } else if (Array.isArray(message)) {
     return (
-      message.map((msg, index) => (
-        <p className='error-text' key={index}>{msg}</p>
-      ))
+      <div className='error-message-continer'>
+        {
+          message.map((msg, index) => (
+            <p className='error-text-message' key={index}>{msg}</p>
+          ))
+        }
+      </div>
     )
   } else {
     throw new Error('message prop only supported string and array of stying type')
