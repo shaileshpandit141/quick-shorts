@@ -4,7 +4,6 @@ import {
   RefreshTokenCredentials
 } from './API.types';
 
-
 const BASE_API_URL = process.env.REACT_APP_BASE_API_URL
 
 interface Credentials {

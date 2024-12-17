@@ -18,7 +18,11 @@ const signinIntitlState: SigninIntitlState = {
     access_token: localStorage.getItem('access_token'),
     refresh_token: localStorage.getItem('refresh_token')
   },
-  errors: null,
+  errors: {
+    email: undefined,
+    non_field_errors: undefined,
+    password: undefined
+  },
   meta: null
 }
 
@@ -34,7 +38,9 @@ const signinSlice = createSlice({
         access_token: null,
         refresh_token: null
       }
-      state.errors = null
+      state.errors.email = undefined
+      state.errors.non_field_errors = undefined
+      state.errors.password = undefined
       state.meta = null
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
@@ -61,7 +67,9 @@ const signinSlice = createSlice({
         const { status, message, errors } = action.payload as SigninErrorResponse
         state.status = status
         state.message = message
-        state.errors = errors
+        state.errors.email = errors?.email
+        state.errors.non_field_errors = errors?.non_field_errors
+        state.errors.password = errors?.password
       })
 
       // Refresh token cases
@@ -80,7 +88,7 @@ const signinSlice = createSlice({
         const { status, message, errors } = action.payload as RefreshTokenErrorResponse
         state.status = status
         state.message = message
-        state.errors = errors
+        console.error(errors)
       })
   }
 })

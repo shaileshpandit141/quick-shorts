@@ -21,10 +21,10 @@
     --border-color-dark: #424242;
 
     /* Button Colors */
-    --button-primary-background: #FFE4B5;
-    --button-primary-hover: #FFDEAD;
-    --button-secondary-background: #FFE4B5;
-    --button-secondary-hover: #FFDEAD;
+    --button-primary-background: #FFFFFF;
+    --button-primary-hover: #F6F6F6;
+    --button-secondary-background: #FFFFFF;
+    --button-secondary-hover: #E6E6E6;
     --button-text-color: #000000;
 
     /* Scrollbar Colors */
@@ -56,10 +56,10 @@
     --border-color-dark: #616161;
 
     /* Button Colors - Dark Theme */
-    --button-primary-background: #B8860B;
-    --button-primary-hover: #8B6508;
-    --button-secondary-background: #B8860B;
-    --button-secondary-hover: #8B6508;
+    --button-primary-background: #4D4D4D;
+    --button-primary-hover: #3D3D3D;
+    --button-secondary-background: #4D4D4D;
+    --button-secondary-hover: #3D3D3D;
     --button-text-color: #FFFFFF;
 
     /* Scrollbar Colors - Dark Theme */

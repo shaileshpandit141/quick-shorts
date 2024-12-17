@@ -1,15 +1,22 @@
 export declare module 'FeatureTypes' {
   // Generic structure for state initialization
-  export interface InitialState<DATA = Record<string, any>, MATA = Record<string, any>> {
+  export interface InitialState<
+    DATA = Record<string, any>,
+    ERRORS = Record<string, string[]>,
+    MATA = Record<string, any>
+  > {
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     message: string;
     data: DATA;
-    errors: Record<string, any> | null;
+    errors: ERRORS;
     meta: MATA | null;
   }
 
   // Success response type
-  export interface SuccessResponse<DATA = Record<string, any>, META = Record<string, any>> {
+  export interface SuccessResponse<
+    DATA = Record<string, any>,
+    META = Record<string, any>
+  > {
     status: 'succeeded';
     message: string;
     data: DATA;
@@ -17,14 +24,13 @@ export declare module 'FeatureTypes' {
   }
 
   // Error response type
-  export interface ErrorResponse<FIELDS = Record<string, string[]>> {
+  export interface ErrorResponse<
+    ERRORS = Record<string, string[]>
+  > {
     status: 'failed';
     message: string;
-    errors: ?FIELDS & {
-      non_field_errors?: string[];
-    };
+    errors: ERRORS | null;
   }
-
 
   // Axios catch error structure
   export interface CatchAxiosError {

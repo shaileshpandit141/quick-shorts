@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { store } from 'store';
+import store from 'store/store';
 import authActions from 'features/auth';
 
 const axiosInstance = axios.create({
