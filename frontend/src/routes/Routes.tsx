@@ -6,14 +6,16 @@ import {
   Route
 } from 'react-router-dom'
 import { lazyModuleImport, LazyModuleLoader } from 'lazyUtils/lazyModuleImport'
-import { PageLoader } from 'components'
-import IndexPageSkeleton from 'pages/IndexPage/IndexPageSkeleton'
 
 // Default Imports (user-defined layout and pages).
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
 import MainLayout from 'layouts//MainLayout/MainLayout'
 import AuthLayout from 'layouts/AuthLayout/AuthLayout'
+
+// Default Page loader Imports
+import { PageLoader } from 'components'
+import IndexPageSkeleton from 'pages/IndexPage/IndexPageSkeleton'
 
 const IndexPage = lazyModuleImport(() => import('pages/IndexPage/IndexPage'))
 const Home = lazyModuleImport(() => import('pages/home/Home'))
