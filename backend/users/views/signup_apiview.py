@@ -9,6 +9,9 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.exceptions import ValidationError
 
+# Import the DNSSMTPEmailValidator
+from dns_smtp_email_validator import DNSSMTPEmailValidator
+
 # Local imports
 from permissions import AllowAny
 from throttles import AnonRateThrottle
@@ -62,6 +65,7 @@ class SignupAPIView(APIView):
                 'errors': clean_data.get_errors()
             }, status=status.HTTP_400_BAD_REQUEST)
 
+        email = clean_data.get('email')
         password = clean_data.get('password')
         confirm_password = clean_data.get('confirm_password')
 
@@ -82,6 +86,16 @@ class SignupAPIView(APIView):
                 'message': 'Validation error',
                 'errors': {
                     'confirm_password': ['Confirm password is not equal to password']
+                }
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        # Validate the email is exist in the internet or not
+        validator = DNSSMTPEmailValidator(email)
+        if not validator.is_valid():
+            return Response.error({
+                'message': 'Email Validation Failed',
+                'errors': {
+                    'email': validator.errors
                 }
             }, status=status.HTTP_400_BAD_REQUEST)
 
