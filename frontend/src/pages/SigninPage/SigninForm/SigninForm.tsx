@@ -2,7 +2,6 @@ import React from 'react'
 import './SigninForm.css'
 import { Navigate } from 'react-router-dom'
 import { Input } from 'components'
-import { isAuthenticated } from 'utils/isAuthenticted'
 import ForgotPasswordLink from './Actions/ForgotPasswordLink/ForgotPasswordLink'
 import SignupLink from './Actions/SignupLink/SignupLink'
 import authActions from 'features/auth'
@@ -21,7 +20,7 @@ const SigninForm: React.FC = (props) => {
     password: ''
   })
 
-  if (status === 'succeeded' || isAuthenticated()) {
+  if (status === 'succeeded') {
     return <Navigate to='/home' />
   }
 

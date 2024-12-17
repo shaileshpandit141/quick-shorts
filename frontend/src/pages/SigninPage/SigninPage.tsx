@@ -1,9 +1,16 @@
 import React from 'react'
 import './SigninPage.css'
+import { Navigate } from 'react-router-dom'
+import { isAuthenticated } from 'utils/isAuthenticted'
 import SigninHeader from './SigninHeader/SigninHeader'
 import SigninForm from './SigninForm/SigninForm'
 
 const SigninPage: React.FC = (props) => {
+  if (isAuthenticated()) {
+    return (
+      <Navigate to={'/home'} />
+    )
+  }
   return (
     <div className='signin-page'>
       <SigninHeader />
