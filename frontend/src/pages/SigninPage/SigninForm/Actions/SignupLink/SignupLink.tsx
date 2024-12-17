@@ -1,7 +1,7 @@
 import React from 'react'
 import './SignupLink.css'
 import { Link } from 'react-router-dom'
-import { LazyIconImport } from 'lazyUtils/lazyIconImport'
+import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
 
 const SignupLink: React.FC = (props) => {
   return (

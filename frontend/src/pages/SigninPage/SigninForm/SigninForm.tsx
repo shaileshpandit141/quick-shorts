@@ -3,19 +3,23 @@ import './SigninForm.css'
 import { Navigate } from 'react-router-dom'
 import { Input } from 'components'
 import { isAuthenticated } from 'utils/isAuthenticted'
-import useSigninFormFields from './hooks/useSigninFormFileds'
 import ForgotPasswordLink from './Actions/ForgotPasswordLink/ForgotPasswordLink'
 import SignupLink from './Actions/SignupLink/SignupLink'
-import SigninButton from './Actions/SigninButton/SigninButton'
 import authActions from 'features/auth'
 import { useDispatch } from 'react-redux'
 import { DisplayErrors } from 'components'
+import useFormDataChange from 'hooks/useFormDataChange'
+import { SigninCredentials } from 'API/API.types'
+import { ActionButton } from 'components'
 
 const SigninForm: React.FC = (props) => {
 
-  const [formFields, formData] = useSigninFormFields()
   const dispatch = useDispatch()
   const { status, message, errors } = authActions.useSigninSelector()
+  const [formData, handleFormDataChange] = useFormDataChange<SigninCredentials>({
+    email: '',
+    password: ''
+  })
 
   if (status === 'succeeded' || isAuthenticated()) {
     return <Navigate to='/home' />
@@ -28,27 +32,32 @@ const SigninForm: React.FC = (props) => {
     )
   }
 
-  const fields = formFields.map((field, index) => (
-    <div key={index} className='fields-container'>
-      <Input
-        key={index}
-        {...field}
-        isDisabled={status === 'loading'}
-        errorMessage={
-          (status === 'failed' && errors?.email) && errors.email
-            (status === 'failed' && errors?.password) && errors.password
-        }
-      />
-    </div>
-  ))
-
   return (
     <form
       className='signin-form'
       onSubmit={handleSubmit}
     >
-      {fields}
-      {(status === 'failed' && errors?.non_field_errors)
+      <Input
+        name='email'
+        type='text'
+        value={formData.email}
+        onChange={handleFormDataChange}
+        isDisabled={status === 'loading'}
+        errorMessage={
+          (errors.email === undefined) ? undefined : errors.email
+        }
+      />
+      <Input
+        name='password'
+        type='password'
+        value={formData.password}
+        onChange={handleFormDataChange}
+        isDisabled={status === 'loading'}
+        errorMessage={
+          (errors.password === undefined) ? undefined : errors.password
+        }
+      />
+      {(errors.non_field_errors !== undefined)
         && <DisplayErrors message={errors.non_field_errors} />
       }
       <div className='actions'>
@@ -57,7 +66,12 @@ const SigninForm: React.FC = (props) => {
       </div>
       <div className='actions'>
         <SignupLink />
-        <SigninButton status={status} />
+        <ActionButton
+          icon='signin'
+          isLoaderOn={status === 'loading'}
+        >
+          Sign in
+        </ActionButton>
       </div>
     </form>
   )

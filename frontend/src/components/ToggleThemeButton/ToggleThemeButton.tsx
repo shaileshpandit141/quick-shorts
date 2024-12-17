@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './ToggleThemeButton.css'
-import { LazyIconImport } from 'lazyUtils/lazyIconImport'
+import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
 
 type Theme = 'light' | 'dark'
 

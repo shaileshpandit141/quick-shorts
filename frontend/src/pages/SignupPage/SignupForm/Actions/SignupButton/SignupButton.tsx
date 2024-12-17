@@ -1,6 +1,6 @@
 import React from 'react'
 import './SignupButton.css'
-import { LazyIconImport } from 'lazyUtils/lazyIconImport'
+import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
 
 const SignupButton: React.FC = (props) => {
   return (

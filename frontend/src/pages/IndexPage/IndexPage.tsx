@@ -2,7 +2,7 @@ import React from 'react'
 import './IndexPage.css'
 import { Link, Navigate } from 'react-router-dom'
 import { isAuthenticated } from 'utils/isAuthenticted'
-import { LazyIconImport } from 'lazyUtils/lazyIconImport'
+import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
 
 const IndexPage: React.FC = (props) => {
 

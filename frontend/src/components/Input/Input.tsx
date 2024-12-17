@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import './Input.css';
-import { LazyIconImport } from 'lazyUtils/lazyIconImport';
+import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
 import DisplayErrors from '../DisplayErrors/DisplayErrors';
 
 interface InputProps {

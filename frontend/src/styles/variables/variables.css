@@ -13,6 +13,7 @@
     --border: 1px solid var(--border-color-light);
     --header-height: calc(64/16 * 1em);
     --screen-height: calc(100dvh - var(--header-height));
+    --transition: background-color 0.3s, color 0.3s, border 0.3s;
     
     /* Define CSS Breakpoints as Variables */
     --breakpoint-xs: 480px;  /* Small Devices Start (Mobile Phones) */

@@ -2,7 +2,7 @@ import React from 'react'
 import './SignupHeader.css'
 import { Link } from 'react-router-dom'
 import { AppLogo } from 'components'
-import { LazyIconImport } from 'lazyUtils/lazyIconImport'
+import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
 
 const SignupHeader: React.FC = (props) => {
   return (
