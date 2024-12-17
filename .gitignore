@@ -1,5 +1,8 @@
-# Ignore the backend dependency
+# Ignore the . dependency
 venv
+.ropeproject
+
+# Ignore the backend dependency
 backend/.env
 backend/*/__pycache__
 backend/*/*/__pycache__
