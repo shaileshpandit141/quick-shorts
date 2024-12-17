@@ -13,7 +13,8 @@ export interface SigninIntitlState extends InitialState<
     email?: string[];
     non_field_errors?: string[]
     password?: string[];
-  }
+  },
+  {} | null
 > { }
 
 export interface SigninSuccessResponse extends SuccessResponse<{

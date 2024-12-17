@@ -9,7 +9,7 @@ export declare module 'FeatureTypes' {
     message: string;
     data: DATA;
     errors: ERRORS;
-    meta: MATA | null;
+    meta: MATA;
   }
 
   // Success response type
