@@ -1,8 +1,8 @@
 import React from 'react'
 import './IndexPage.css'
-import { Link, Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { isAuthenticated } from 'utils/isAuthenticted'
-import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
+import { ButtonLink } from 'components'
 
 const IndexPage: React.FC = (props) => {
   if (isAuthenticated()) {
@@ -21,28 +21,20 @@ const IndexPage: React.FC = (props) => {
           using React With Django and Django Rest Framework.
         </p>
         <div className="buttons-conatiner">
-          <Link
-            to="/signin"
-            className='link'
+          <ButtonLink
+            to='/signin'
+            type='link'
+            icon='signin'
           >
-            <span className='icon'>
-              <LazyIconImport icon='signin' />
-            </span>
-            <span className='label'>
-              sign in
-            </span>
-          </Link>
-          <Link
-            to="/signup"
-            className='link'
+            Sign in
+          </ButtonLink>
+          <ButtonLink
+            to='/signup'
+            type='link'
+            icon='signup'
           >
-            <span className="icon">
-              <LazyIconImport icon='signup' />
-            </span>
-            <span className='label'>
-              sign up
-            </span>
-          </Link>
+            Sign up
+          </ButtonLink>
         </div>
       </div>
     </div>

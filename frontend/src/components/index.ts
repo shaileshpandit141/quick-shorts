@@ -1,5 +1,7 @@
 import ActionButton from "./ActionButton/ActionButton";
 import AppLogo from "./AppLogo/AppLogo";
+import Button from "./Button/Button";
+import ButtonLink from "./ButtonLink/ButtonLink";
 import DisplayErrors from "./DisplayErrors/DisplayErrors";
 import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
 import Footer from "./Footer/Footer";
@@ -14,6 +16,8 @@ import ToggleThemeButton from "./ToggleThemeButton/ToggleThemeButton";
 export {
   ActionButton,
   AppLogo,
+  Button,
+  ButtonLink,
   DisplayErrors,
   ErrorBoundary,
   Footer,
