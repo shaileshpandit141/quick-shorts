@@ -18,6 +18,7 @@ const iconsMap: IconsMapType = {
   circleAppIcon: lazy(() => import('@mui/icons-material/Brightness1Rounded')),
   reTry: lazy(() => import('@mui/icons-material/ReplayRounded')),
   search: lazy(() => import('@mui/icons-material/SearchRounded')),
+  info: lazy(() => import('@mui/icons-material/InfoRounded')),
 }
 
 interface LazyIconImportProps extends SvgIconProps {

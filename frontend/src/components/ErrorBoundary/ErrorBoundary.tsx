@@ -8,27 +8,24 @@ import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
 
 const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => (
   <div className='inner-grid-2-2 error-boundary' role="alert">
-    <div className="inner-error-boundary">
-      <h4>Something went wrong</h4>
-      <p>
-        {
-          error?.message && (
-            <>
-              <span>Message:</span>
-              {error.message}
-            </>
-          )
-        }
-      </p>
+    <div className='error-boundary-component'>
+      <button
+        className='button'
+        title={error?.message}
+      >
+        <span className='icon'>
+          <LazyIconImport icon='info' />
+        </span>
+        <span className='label'>
+          Something went wrong
+        </span>
+      </button>
       <button
         className='button'
         onClick={resetErrorBoundary}
       >
         <span className='icon'>
           <LazyIconImport icon='reTry' />
-        </span>
-        <span className='label'>
-          Try again
         </span>
       </button>
     </div>

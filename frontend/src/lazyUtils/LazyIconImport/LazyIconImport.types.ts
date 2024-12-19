@@ -16,4 +16,5 @@ export default interface IconsMapType {
   circleAppIcon: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   reTry: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   search: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
+  info: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
 }

@@ -1,43 +1,38 @@
 .error-boundary {
-    height: 100%;
+    min-height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: gray;
+    background-color: var(--background-light);
+    transition: background-color 0.3s;
 
-    .inner-error-boundary {
-        height: 100%;
-        width: 100%;
-        padding: calc(8/16 * 3em);
-        box-shadow: var(--box-shadow);
+    .error-boundary-component {
         background-color: var(--card-background);
-        overflow: hidden;
-        overflow-x: auto;
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        row-gap: 8px;
+        padding: 12px;
+        border-radius: 24px;
+        border: var(--border);
+        transition: background-color 0.3s, border 0.3s;
 
-        h4,
-        p {
-            padding-inline: calc(3/16 * 3em);
-            color: var(--error-text-primary);
-
-            span {
-                font-weight: 600;
-            }
-        }
-
-        p {
-            margin-top: calc(8/16 * 3em);
-        }
-
-        button {
-            max-width: fit-content;
-            background-color: transparent;
-            box-shadow: var(--box-shadow);
-            margin-top: calc(8/16 * 3em);
-
-            &:hover {
+        .button {
+            &:first-child {
+                width: fit-content;
                 background-color: transparent;
+                padding-inline-start: 0;
+                cursor: default;
+
+                .label {
+                    color: var(--error-text-color);
+                }
+
+                &:hover {
+                    background-color: transparent;
+                }
             }
         }
     }

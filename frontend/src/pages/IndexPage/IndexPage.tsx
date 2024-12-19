@@ -5,11 +5,9 @@ import { isAuthenticated } from 'utils/isAuthenticted'
 import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
 
 const IndexPage: React.FC = (props) => {
-
   if (isAuthenticated()) {
     return <Navigate to={'/home'} />
   }
-
   return (
     <div className='inner-grid-1-1 grid-12 index'>
       <div className="inner-grid-2-2 index-page">
