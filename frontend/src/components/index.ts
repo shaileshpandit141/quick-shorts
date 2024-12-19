@@ -7,6 +7,8 @@ import Header from "./Header/Header";
 import Input from "./Input/Input";
 import Loader from "./Loader/Loader";
 import PageLoader from "./PageLoader/PageLoader";
+import SigninLink from "./SigninLink/SigninLink";
+import SignupLink from "./SignupLink/SignupLink";
 import ToggleThemeButton from "./ToggleThemeButton/ToggleThemeButton";
 
 export {
@@ -19,5 +21,7 @@ export {
   Input,
   Loader,
   PageLoader,
+  SigninLink,
+  SignupLink,
   ToggleThemeButton
 };

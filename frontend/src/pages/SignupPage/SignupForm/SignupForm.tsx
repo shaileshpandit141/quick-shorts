@@ -2,7 +2,7 @@ import React from 'react'
 import './SignupForm.css'
 import { Input } from 'components'
 import useSignupFormFields from './hooks/useSignupFormFileds'
-import SigninLink from './Actions/SigninLink/SigninLink'
+import { SigninLink } from 'components'
 import SignupButton from './Actions/SignupButton/SignupButton'
 
 const SignupForm: React.FC = (props) => {
