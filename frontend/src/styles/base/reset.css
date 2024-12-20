@@ -145,8 +145,5 @@ footer,
 input,
 main,
 button {
-    transition:
-        background-color 0.3s,
-        color 0.3s,
-        border 0.3s;
+    transition: var(--transition);
 }

@@ -34,7 +34,7 @@
     /* Link Colors */
     --link-color: #0066CC;
     --link-hover-color: #004C99;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
 }
 
 [data-theme="dark"] {

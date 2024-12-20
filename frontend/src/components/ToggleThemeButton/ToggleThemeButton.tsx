@@ -21,7 +21,9 @@ const ToggleThemeButton: React.FC = () => {
 
 
   const Icon = () => (
-    theme === 'light' ? <LazyIconImport icon='lightModeIcon' /> : <LazyIconImport icon='darkModeIcon' />
+    theme === 'light' 
+    ? <LazyIconImport icon='lightModeIcon' /> 
+    : <LazyIconImport icon='darkModeIcon' />
   )
 
   const handleToggleTheme = () => {
