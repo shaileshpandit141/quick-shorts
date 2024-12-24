@@ -1,11 +1,13 @@
 /* Reset.css
- *
- * A comprehensive CSS reset that normalizes default browser styles,
- * ensuring consistent rendering across different browsers.
+ * A comprehensive CSS reset stylesheet
+ * Purpose: Normalizes default browser styles for consistent cross-browser rendering
+ * Version: 1.0
+ * Author: Anonymous
  */
 
 /* Universal Reset
- * Applies to all elements including pseudo-elements
+ * Applies baseline reset to all elements including pseudo-elements
+ * Removes margins, padding, borders and sets consistent box model
  */
 *,
 *::before,
@@ -15,21 +17,25 @@
     border: 0;
     box-sizing: border-box;
     vertical-align: baseline;
+    -webkit-tap-highlight-color: transparent;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 /* HTML Root Element
- * Base font configuration and scroll behavior
+ * Sets foundational typography and scrolling behavior
+ * Ensures proper text sizing and overflow handling
  */
 html {
     font-size: 100%;
     line-height: 1.5;
     scroll-behavior: smooth;
-    overflow: hidden;
+    overflow-x: hidden;
     position: relative;
+    -webkit-text-size-adjust: 100%;
 }
 
 /* List Elements
- * Removes native list styling
+ * Removes default browser list styling for clean list implementation
  */
 ul,
 ol {
@@ -37,16 +43,19 @@ ol {
 }
 
 /* Fieldset Element
- * Removes native fieldset styles
+ * Removes default fieldset styling and spacing
+ * Ensures consistent form layout
  */
 fieldset {
     border: 0;
     padding: 0;
     margin: 0;
+    min-width: 0;
 }
 
 /* Table Element
- * Removes table borders and spacing
+ * Removes default table styling and spacing
+ * Provides clean base for custom table styling
  */
 table {
     border-collapse: collapse;
@@ -54,7 +63,8 @@ table {
 }
 
 /* Form Controls
- * Normalizes form elements and removes browser-specific styling
+ * Normalizes form element appearance across browsers
+ * Removes default styling and ensures consistent inheritance
  */
 input,
 button,
@@ -71,19 +81,23 @@ select {
     appearance: none;
     -webkit-appearance: none;
     user-select: none;
+    -webkit-user-select: none;
 }
 
 /* Anchor Element
- * Removes default link decoration
+ * Removes default link styling
+ * Sets consistent cursor and selection behavior
  */
 a {
     text-decoration: none;
     cursor: default;
     user-select: none;
+    -webkit-user-select: none;
 }
 
 /* Media Elements
- * Makes media elements responsive
+ * Makes media elements responsive by default
+ * Prevents unwanted selection of media content
  */
 img,
 video,
@@ -92,10 +106,12 @@ audio {
     max-width: 100%;
     height: auto;
     user-select: none;
+    -webkit-user-select: none;
 }
 
 /* Blockquote Element
- * Removes default quote spacing
+ * Removes default blockquote margins and padding
+ * Provides clean base for custom quote styling
  */
 blockquote {
     margin: 0;
@@ -103,7 +119,8 @@ blockquote {
 }
 
 /* Clearfix
- * Utility class for float clearing
+ * Utility class for clearing floated elements
+ * Prevents container collapse with floated children
  */
 .clearfix::after {
     content: "";
@@ -112,7 +129,8 @@ blockquote {
 }
 
 /* Text Formatting
- * Resets bold text weight
+ * Normalizes bold text elements
+ * Allows custom control of text weight
  */
 strong,
 b {
@@ -120,25 +138,33 @@ b {
 }
 
 /* Form Element
- * Prevents text selection
+ * Prevents text selection within forms
+ * Improves touch interaction on mobile
  */
 form {
     user-select: none;
+    -webkit-user-select: none;
 }
 
-/* Target only touch devices */
+/* Touch Device Optimizations
+ * Applies touch-specific improvements
+ * Enhances scrolling and removes scrollbars on mobile
+ */
 @media (hover: none) and (pointer: coarse) {
   * {
-    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling */
-    scrollbar-width: none; /* Hides scrollbar in Firefox */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
 
   *::-webkit-scrollbar {
-    display: none; /* Hides scrollbar in WebKit-based browsers */
+    display: none;
   }
 }
 
-/* Smooth transitions for theme switching */
+/* Theme Transitions
+ * Enables smooth theme switching
+ * Applies to major layout elements
+ */
 body,
 header,
 footer,

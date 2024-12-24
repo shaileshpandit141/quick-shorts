@@ -1,37 +1,42 @@
-/*
- * CSS Import Structure Documentation
- * ================================
+/**
+ * CSS Import Structure
+ * ===================
  *
- * Variables
- * ---------
- * theme          - Theme-specific variables for consistent styling
- * variables      - General purpose variables used throughout the app
+ * Organized import structure for maintainable and scalable CSS architecture.
+ * Files are grouped by function and loaded in order of specificity.
  *
- * Base Styles
+ * 1. Variables
  * -----------
- * reset          - CSS reset/normalize to ensure cross-browser consistency
- * default_font_size  - Base font size configuration
- * layout         - Core layout structure and grid system
- * body          - Styles applied to the body element
- * root          - Global :root CSS variable declarations
+ * - theme.css: Design tokens & brand-specific variables (colors, spacing)
+ * - variables.css: Global variables (breakpoints, transitions, z-indices)
  *
- * Components & Utilities
- * ---------------------
- * button_and_link    - Styles for buttons, links and interactive elements
- * skeleton       - Loading state placeholder animations
- * success_and_error  - Messaging and alert styling components
+ * 2. Base Styles
+ * -------------
+ * - reset.css: Normalize browser defaults
+ * - typography.css: Font definitions & text styles
+ * - layout.css: Page structure & grid systems
+ * - body.css: Body element styles
+ * - root.css: Root-level custom properties
+ *
+ * 3. Components
+ * ------------
+ * - button_and_link.css: Interactive elements
+ * - skeleton.css: Loading states & animations
+ * - success_and_error_message.css: Status messages
  */
 
-/* Variables */
+/* Design System Variables */
 @import './variables/theme.css';
 @import './variables/variables.css';
 
-/* Base Styles */
+/* Core & Reset */
 @import './base/reset.css';
 @import './base/typography.css';
 @import './layouts/layout.css';
+@import './base/body.css';
+@import './base/root.css';
+
+/* UI Components */
 @import './custom_classes/button_and_link.css';
 @import './custom_classes/skeleton.css';
 @import './custom_classes/success_and_error_message.css';
-@import './base/body.css';
-@import './base/root.css';

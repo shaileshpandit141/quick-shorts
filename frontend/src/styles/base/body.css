@@ -1,19 +1,34 @@
 /**
- * Base styles for the entire webpage applied to the body element.
- * Sets up fundamental typography, layout, and visual rendering settings.
- * Uses system fonts, responsive sizing, and optimized text rendering.
- * Colors are defined through CSS variables for theme flexibility.
- * Controls overflow behavior for proper layout containment.
+ * Body Element Styles
+ * ------------------
+ * @description Base styles applied to the webpage's body element
+ *
+ * @property font-family - System font stack for cross-platform consistency
+ * @property font-size - Root font size set to browser default (typically 16px)
+ * @property width - Full viewport width
+ * @property min-height - Minimum full viewport height
+ * @property background-color - Light theme background via CSS variable
+ * @property color - Primary text color via CSS variable
+ * @property text-rendering - Optimizes text legibility
+ * @property *-font-smoothing - Enables anti-aliasing for smoother fonts
+ * @property overflow-x - Prevents horizontal scrolling
+ * @property position - Establishes positioning context
+ * @property margin/padding - Removes default spacing
+ * @property box-sizing - Border-box model for predictable sizing
  */
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     font-size: 1rem;
     width: 100%;
+    min-height: 100vh;
     background-color: var(--background-light);
     color: var(--text-primary);
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
+    overflow-x: hidden;
     position: relative;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }

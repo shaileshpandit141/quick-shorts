@@ -1,26 +1,37 @@
 /**
  * Skeleton Loading Styles
+ * ======================
+ * 
+ * Creates animated placeholder elements for loading states
  *
- * These classes provide skeleton loading animations for content placeholders
- * while actual content is being loaded.
+ * Base Component (.skeleton)
+ * -------------------------
+ * - Full-width animated loading placeholder
+ * - Light gray background (#e0e0e0)
+ * - Rounded corners (8px radius)
+ * - Centered content using flexbox
+ * - Pulsing opacity animation effect
  *
- * Base Skeleton Class:
- * .skeleton - Base class that provides the core skeleton loading animation
- *   - Full width with light gray background
- *   - Rounded corners
- *   - Centered flex container
- *   - Pulsing animation effect
+ * Heading Variants (.h1-skeleton to .h6-skeleton) 
+ * ---------------------------------------------
+ * - Responsive fluid heights using clamp()
+ * - Maintains semantic heading hierarchy
+ * - Consistent vertical margins (0.5em)
+ * - Inherits base skeleton styles
  *
- * Heading Skeleton Classes:
- * .h1-skeleton through .h6-skeleton - Skeleton loaders for different heading sizes
- *   - Responsive heights using clamp()
- *   - Maintains relative size hierarchy of headings
- *   - Standard vertical margins
+ * Text Block (.p-skeleton)
+ * -----------------------
+ * - Fixed height for paragraph blocks
+ * - Standard text margins
+ * - Full width container sizing
  *
- * Paragraph Skeleton:
- * .p-skeleton - Skeleton loader for paragraph text
- *   - Fixed height using em units
- *   - Consistent vertical margins
+ * Animation Details
+ * ---------------
+ * @keyframes pulse - Controls opacity transition
+ * - Duration: 1.5s
+ * - Timing: ease-in-out
+ * - Opacity: 1 -> 0.4 -> 1
+ * - Loops infinitely
  */
 .skeleton {
     width: 100%;
@@ -30,6 +41,7 @@
     align-items: center;
     justify-content: center;
     animation: pulse 1.5s ease-in-out infinite;
+    overflow: hidden;
 }
 
 @keyframes pulse {
@@ -59,6 +71,7 @@
     align-items: center;
     justify-content: center;
     animation: pulse 1.5s ease-in-out infinite;
+    overflow: hidden;
 
     @keyframes pulse {
         0% {
@@ -108,4 +121,5 @@
 .p-skeleton {
     height: calc(16/16 * 1em);
     margin-block: 0.5em;
+    width: 100%;
 }

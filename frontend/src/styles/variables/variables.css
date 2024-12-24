@@ -1,15 +1,31 @@
 /**
- * Global CSS Variables Documentation
+ * Global CSS Custom Properties (Variables)
+ * =====================================
+ * 
+ * Core layout and responsive design variables used throughout the application.
+ * 
+ * Layout Properties
+ * ----------------
+ * --opacity        Controls overall element transparency (1 = fully opaque)
+ * --box-shadow     Provides subtle depth with a light shadow effect
+ * --border         Standard border with light color variable
+ * --header-height  Fixed header height converted to em units (64px/16px = 4em)
+ * --screen-height  Calculates viewport height minus header
+ * --transition     Smooth animation timing for interactive elements
  *
- * @variable $opacity - Default opacity value (1 = fully opaque)
- * @variable $box-shadow - Standard box shadow with slight transparency
- * @variable $border - Default border style with light color
- * @variable $header-height - Fixed header height in em units
- * @variable $screen-height - Calculates viewport height minus header height
+ * Responsive Breakpoints 
+ * ---------------------
+ * Defines standard screen widths for responsive layouts:
+ * --breakpoint-xs  480px  - Extra small devices (mobile)
+ * --breakpoint-sm  768px  - Small devices (tablets) 
+ * --breakpoint-md  1024px - Medium devices (landscape tablets)
+ * --breakpoint-lg  1280px - Large devices (laptops/desktops)
+ * --breakpoint-xl  1600px - Extra large (4K displays)
  */
 :root {
+    /* Layout Properties */
     --opacity: 1;
-    --box-shadow: 0 0 1.5px #0000004d;
+    --box-shadow: 0 0 1.5px rgba(0, 0, 0, 0.3);
     --border: 1px solid var(--border-color-light);
     --header-height: calc(64/16 * 1em);
     --screen-height: calc(100dvh - var(--header-height));
@@ -18,15 +34,10 @@
         color 0.3s ease,
         border 0.3s ease;
 
-    /* Define CSS Breakpoints as Variables */
-    --breakpoint-xs: 480px;
-    /* Small Devices Start (Mobile Phones) */
-    --breakpoint-sm: 768px;
-    /* Medium Devices Start (Large Mobile Phones) */
-    --breakpoint-md: 1024px;
-    /* Large Devices Start (Tablets) */
-    --breakpoint-lg: 1280px;
-    /* Extra Large Devices Start (Small Laptops and Desktops) */
-    --breakpoint-xl: 1600px;
-    /* Ultra Large Devices Start (4K and Beyond) */
+    /* Responsive Breakpoint Definitions */
+    --breakpoint-xs: 480px;  /* Mobile */
+    --breakpoint-sm: 768px;  /* Tablet */
+    --breakpoint-md: 1024px; /* Landscape Tablet */
+    --breakpoint-lg: 1280px; /* Laptop/Desktop */
+    --breakpoint-xl: 1600px; /* 4K Displays */
 }

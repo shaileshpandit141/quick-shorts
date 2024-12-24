@@ -1,26 +1,31 @@
-/*
+/**
  * Grid System Classes
  * ------------------
- * A set of utility classes for creating responsive grid layouts
+ * A responsive 12-column grid system built with CSS Grid
+ * Provides flexible layouts with consistent spacing and alignment
+ * Uses rem-based side margins (1.5625rem = 25px at 16px base font size)
+ * Supports nested grids and full-width/contained layouts
  */
 
-/* Main 12-column grid container with fixed side margins */
+/* Base grid container with 12 equal columns and fixed side margins */
 .grid-12 {
     display: grid;
     grid-template-columns: calc(25/16 * 1rem) repeat(10, 1fr) calc(25/16 * 1rem);
     transition: background-color 0.3s ease;
 }
 
-/* Inner grid spanning full width (columns 1 to -1) */
-.inner-grid-1-1 {
+/* Full-bleed container spanning edge-to-edge */
+.inner-grid-1-1,
+.grid-start-1-end-1 {
     grid-column: 1/-1;
     width: 100%;
     height: fit-content;
     transition: background-color 0.3s ease;
 }
 
-/* Inner grid with side margins (columns 2 to -2) */
-.inner-grid-2-2 {
+/* Content container with side margins */
+.inner-grid-2-2,
+.grid-start-2-end-2 {
     grid-column: 2/-2;
     width: 100%;
     height: fit-content;

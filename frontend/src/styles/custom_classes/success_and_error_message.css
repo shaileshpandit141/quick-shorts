@@ -1,44 +1,47 @@
-/*
- * .succeeded-img
- * Container for success images with square aspect ratio
- * Applies width constraints and handles overflow
+/**
+ * Success Image Container
+ * Creates a responsive square container for success images
  */
 .succeeded-img {
+    /* Creates a 1:1 aspect ratio container */
     aspect-ratio: 1/1;
     width: 100%;
     max-width: 350px;
     overflow: hidden;
+    position: relative;
 
+    /* Image styling within container */
     img {
-        width: inherit;
-        height: inherit;
-        background-size: contain;
-        background-position: center;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 }
 
-/*
- * .succeeded-info
- * Container for success message information
- * Handles width constraints and text formatting
+/**
+ * Success Message Container
+ * Wrapper for success message content and title
  */
 .succeeded-info {
     width: 100%;
     max-width: calc(400/16 * 1em);
     overflow: hidden;
 
-    /* Title text styling */
+    /* Success message title */
     .title {
         text-align: center;
         margin-block: calc(8/16 * 1em);
         text-transform: lowercase;
 
         &::first-letter {
-            text-transform: capitalize
+            text-transform: capitalize;
         }
     }
 
-    /* Message text styling */
+    /* Success message text */
     .message {
         text-align: center;
         margin-bottom: calc(8/16 * 1em);
@@ -49,10 +52,9 @@
     }
 }
 
-/*
- * .error-text
- * Styling for error message text
- * Handles text color, alignment and capitalization
+/**
+ * Error Message Text
+ * Styles for displaying error messages
  */
 .error-text {
     width: 100%;
@@ -62,6 +64,6 @@
     text-transform: lowercase;
 
     &::first-letter {
-        text-transform: capitalize
+        text-transform: capitalize;
     }
 }

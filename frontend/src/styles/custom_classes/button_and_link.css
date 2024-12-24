@@ -1,16 +1,12 @@
 /**
  * Button Component
  * @class .button
- *
- * Primary button component with rounded corners and smooth hover transitions.
- * Supports both text and icon content.
- *
- * Properties:
- * - Pill-shaped with rounded corners
- * - Custom background and text colors via CSS variables
- * - Fluid width with minimum size
- * - Centered content with icon + label spacing
- * - Interactive hover state
+ * @description Primary button component with rounded corners and hover state
+ * @props {CSS Custom Properties}
+ * @prop --button-primary-background - Main background color
+ * @prop --button-text-color - Text and icon color
+ * @prop --button-primary-hover - Background color on hover/focus
+ * @prop --transition - Animation timing for state changes
  */
 .button {
     border: none;
@@ -24,21 +20,25 @@
     padding-block: calc(16/16 * 1em);
     padding-inline: calc(16/16 * 1em);
     display: flex;
-    align-items: center;
+    align-items: center; 
     justify-content: center;
     column-gap: calc(4/16 * 1em);
-    transition: background-color 0.3s, color 0.3s;
+    transition: var(--transition);
+    user-select: none;
 
     &:hover {
+        background-color: var(--button-primary-hover);
+    }
+
+    &:focus-visible {
         background-color: var(--button-primary-hover);
     }
 
     /**
      * Icon Container
      * @element .icon
-     *
-     * Square container for button icons.
-     * Centers icon content and maintains aspect ratio.
+     * @description Square container for button icons with centered content
+     * @layout Maintains 1:1 aspect ratio
      */
     .icon {
         aspect-ratio: 1/1;
@@ -61,12 +61,16 @@
         }
     }
 
-    /**
+    /** 
      * Text Label
-     * @element .label
-     *
-     * Button text content with consistent typography.
-     * Auto-capitalizes first letter while keeping rest lowercase.
+     * @element .label 
+     * @description Button text container with standardized typography
+     * @typography {
+     *   size: 16px (1em),
+     *   weight: 600,
+     *   lineHeight: 24px (1.5),
+     *   case: First letter capital
+     * }
      */
     .label {
         font-size: calc(16/16 * 1em);
@@ -88,11 +92,11 @@
 }
 
 /**
- * Icon-Only Button
+ * Icon Button Variant
  * @class .button-as-icon
+ * @description Square button for icon-only usage
  * @extends .button
- *
- * Square variant of primary button containing only an icon.
+ * @modifies {width, padding}
  */
 .button-as-icon {
     width: calc(40/16 * 1em);
@@ -102,14 +106,9 @@
 /**
  * Link Component
  * @class .link
- *
- * Button-styled anchor element with identical visual styling.
- * Maintains consistent appearance with button components.
- *
- * Properties:
- * - Identical styling to .button
- * - No text decoration
- * - Custom cursor behavior
+ * @description Button-styled anchor element
+ * @extends .button styles
+ * @inherits CSS custom properties from button
  */
 .link {
     text-decoration: none;
@@ -126,18 +125,21 @@
     justify-content: center;
     column-gap: calc(4/16 * 1em);
     cursor: default;
-    transition: background-color 0.3s, color 0.3s;
+    transition: var(--transition);
+    user-select: none;
 
     &:hover {
+        background-color: var(--button-primary-hover);
+    }
+
+    &:focus-visible {
         background-color: var(--button-primary-hover);
     }
 
     /**
      * Icon Container
      * @element .icon
-     *
-     * Square container for link icons.
-     * Identical styling to button icons.
+     * @description Matches button icon styling
      */
     .icon {
         aspect-ratio: 1/1;
@@ -161,10 +163,9 @@
     }
 
     /**
-     * Text Label
+     * Link Label
      * @element .label
-     *
-     * Link text content with styling matching button labels.
+     * @description Text styling matching button typography
      */
     .label {
         font-size: calc(16/16 * 1em);
@@ -187,11 +188,11 @@
 }
 
 /**
- * Icon-Only Link
+ * Icon Link Variant
  * @class .link-as-icon
+ * @description Square link for icon-only content
  * @extends .link
- *
- * Square variant of styled link containing only an icon.
+ * @modifies {width, padding}
  */
 .link-as-icon {
     width: calc(40/16 * 1em);
@@ -199,15 +200,15 @@
 }
 
 /**
- * Cursor Behavior
+ * Interactive States
  * @media (pointer: fine)
- *
- * Custom cursor styles for devices with precise pointing capability:
- * - Pointer cursor for interactive elements
- * - Not-allowed cursor for disabled states
+ * @description Cursor and opacity rules for pointer devices
+ * @states {
+ *   default: pointer cursor,
+ *   disabled: not-allowed cursor + 0.6 opacity
+ * }
  */
 @media (pointer: fine) {
-
     .button,
     .button-1-1 {
         cursor: pointer;
@@ -216,6 +217,7 @@
     .button:disabled,
     .button-as-icon:disabled {
         cursor: not-allowed;
+        opacity: 0.6;
     }
 
     .link,
