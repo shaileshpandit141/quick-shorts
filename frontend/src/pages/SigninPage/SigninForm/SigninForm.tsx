@@ -14,7 +14,7 @@ import { ActionButton } from 'components'
 const SigninForm: React.FC = (props) => {
 
   const dispatch = useDispatch()
-  const { status, message, errors } = authActions.useSigninSelector()
+  const { status, errors } = authActions.useSigninSelector()
   const [formData, handleFormDataChange] = useFormDataChange<SigninCredentials>({
     email: '',
     password: ''

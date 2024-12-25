@@ -8,7 +8,7 @@ const SigninLink: React.FC = (props) => {
     return null
   }
   return (
-    <Link to={'/signin'} className='link'>Sign in</Link>
+    <Link to={'/sign-in'} className='link'>Sign in</Link>
   )
 }
 

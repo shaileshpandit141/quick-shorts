@@ -1,5 +1,5 @@
 .header-wrapper {
-    position: sticky;
+    position: fixed;
     top: 0;
     display: flex;
     flex-direction: column;
@@ -10,5 +10,6 @@
 }
 
 .main-content {
-    min-height: var(--screen-height);
+    padding-top: var(--header-height);
+    min-height: 100dvh;
 }

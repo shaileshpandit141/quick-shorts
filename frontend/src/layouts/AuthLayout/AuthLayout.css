@@ -28,20 +28,23 @@
 
     .form-wrapper {
         background-color: var(--card-background);
-        /* height: 100%; */
-        height: calc(450/16 * 1em);
+        height: 100%;
+        min-height: calc(450/16 * 1em);
         width: 100%;
         max-width: calc(768/16 * 1em);
         padding: 32px;
+        border: var(--border);
         border-radius: 32px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        transition: background-color 0.3s, max-width 0.3s;
+        transition:
+            background-color 0.3s ease,
+            max-width 0.3s ease,
+            border 0.3s ease;
     }
 }
-
 
 @media (width < 768px) {
     .auth-alyout {
@@ -49,7 +52,7 @@
 
         .form-wrapper {
             max-width: calc(480/16 * 1em);
+            border-color: transparent;
         }
     }
-
 }

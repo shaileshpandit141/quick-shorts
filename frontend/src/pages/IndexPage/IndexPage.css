@@ -35,7 +35,6 @@
         }
 
         h1 {
-            padding-block: 16px;
             letter-spacing: 0.04em;
             text-align: center;
             max-width: 550px;
@@ -46,7 +45,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 100%;
+            width: 80%;
             margin-block: calc(24/16 * 1em);
             row-gap: calc(16/16 * 1em);
 

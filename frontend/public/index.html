@@ -25,120 +25,73 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
-    
+
     <!-- CSS Custom Properties - Theme Variables -->
     <style>
         /*******************************************************************************
-        * CSS Custom Properties - Theme Variables
-        * A comprehensive set of color variables for light (default) and dark themes
-        * Organized by component type for easy maintenance and consistency
-        * Last updated: 2024
+        * CSS Custom Properties - Updated Theme Variables
+        * Improvements for enhanced contrast, accessibility, and usability
         ******************************************************************************/
 
         :root {
-            /* Background Colors
-            * Core background colors used throughout the application
-            * Light theme defaults for main surfaces and components
-            * Use these variables for consistent theming
-            */
-            --background-light: #FAFAFA;    /* Main background color - Used for primary content areas */
-            --background-dark: #121212;     /* Darker variant for contrast - Used for emphasis */
-            --card-background: #EEEEEE;     /* Card and elevated surface color - Used for contained elements */
-            --header-background: #fafafaf2;  /* Semi-transparent header background - Allows for overlay effects */
-            --footer-background: #EEEEEE;    /* Footer background color - Matches design system */
+            /* Background Colors */
+            --background-light: #FAFAFA;    /* Main background color */
+            --background-dark: #121212;     /* Darker variant for contrast */
+            --card-background: #F5F5F5;     /* Slightly lighter for better differentiation */
+            --header-background: #FAFAFAF2;   /* Improved contrast for overlays */
+            --footer-background: #EEEEEE;   /* Matches card background for harmony */
 
-            /* Text Colors
-            * Typography color scale for different text hierarchies
-            * Ensures proper contrast and readability
-            */
-            --text-primary: #000000;         /* Main text color - Used for body content */
-            --text-secondary: #333333;       /* Secondary text - Used for supporting content */
-            --text-accent: #666666;          /* Subtle text - Used for metadata, captions */
-            --error-text-primary: #D32F2F;   /* Error and warning text - Used for validation messages */
+            /* Text Colors */
+            --text-primary: #000000;        /* Main text color */
+            --text-secondary: #222222;      /* Improved contrast for secondary text */
+            --text-accent: #555555;         /* Slightly darker for better readability */
+            --error-text-primary: #C62828;  /* Enhanced for better visibility in light mode */
 
-            /* Border Colors
-            * Border colors for separation and emphasis
-            * Provides visual structure to components
-            */
-            --border-color-light: #E0E0E0;   /* Light borders - Used for subtle divisions */
-            --border-color-dark: #424242;    /* Darker borders - Used for stronger visual separation */
+            /* Border Colors */
+            --border-color-light: #D6D6D6;  /* Slightly darker for better separation */
+            --border-color-dark: #404040;   /* Matches other dark colors for consistency */
 
-            /* Button Colors
-            * Colors for interactive button states
-            * Follow accessibility guidelines for interactive elements
-            */
-            --button-primary-background: #FFFFFF;   /* Primary button background - Default state */
-            --button-primary-hover: #F6F6F6;        /* Primary button hover - Interactive state */
-            --button-secondary-background: #FFFFFF;  /* Secondary button background - Alternative style */
-            --button-secondary-hover: #E6E6E6;      /* Secondary button hover - Alternative interaction */
-            --button-text-color: #000000;           /* Button text color - Ensures readability */
+            /* Button Colors */
+            --button-primary-background: #E5E5E5;  /* Slightly lighter for improved distinction */
+            --button-primary-hover: #DCDCDC;       /* Enhanced hover effect */
+            --button-secondary-background: #E5E5E5;  /* Matches primary button for consistency */
+            --button-secondary-hover: #DADADA;     /* Improved hover state */
+            --button-text-color: #000000;          /* Ensures readability */
 
-            /* Scrollbar Colors
-            * Custom scrollbar styling colors
-            * Enhances navigation experience
-            */
-            --scrollbar-thumb: #BDBDBD;      /* Scrollbar drag handle - Interactive element */
-            --scrollbar-track: #E0E0E0;      /* Scrollbar background track - Container element */
-
-            /* Link Colors
-            * Colors for hyperlinks and their states
-            * Must meet accessibility contrast requirements
-            */
-            --link-color: #0066CC;           /* Default link color - Standard interaction */
-            --link-hover-color: #004C99;     /* Link hover state color - Enhanced visibility */
-            transition: all 0.3s ease;        /* Smooth transition - Applies to theme changes */
+            /* Link Colors */
+            --link-color: #005BBB;           /* Slightly darker for contrast */
+            --link-hover-color: #003F88;     /* Enhanced hover state */
+            transition: background-color 0.3s ease, color 0.3s ease; /* More specific transitions */
         }
 
         [data-theme="dark"] {
-            /* Background Colors - Dark Theme
-            * Dark mode variants optimized for reduced light emission
-            * Maintains contrast while reducing eye strain
-            */
-            --background-light: #1E1E1E;     /* Main dark background - Primary surface */
-            --background-dark: #121212;      /* Darker variant - Maximum contrast */
-            --card-background: #2D2D2D;      /* Card surface - Elevated elements */
-            --header-background: #1e1e1ef2;  /* Semi-transparent header - Overlay effect */
-            --footer-background: #1A1A1A;    /* Footer dark variant - Ground element */
+            /* Background Colors - Dark Theme */
+            --background-light: #1E1E1E;    /* Main dark background */
+            --background-dark: #121212;     /* Darker variant */
+            --card-background: #2A2A2A;     /* Slightly lighter for better elevation */
+            --header-background: #1E1E1EF2; /* Improved semi-transparent overlay */
+            --footer-background: #1A1A1A;   /* Harmonized with other dark elements */
 
-            /* Text Colors - Dark Theme
-            * Light text colors optimized for dark backgrounds
-            * Ensures WCAG compliance in dark mode
-            */
-            --text-primary: #FFFFFF;         /* Primary text - Maximum visibility */
-            --text-secondary: #CCCCCC;       /* Secondary text - Reduced emphasis */
-            --text-accent: #999999;          /* Subtle text - Minimum contrast */
-            --error-text-primary: #EF5350;   /* Error text - Warning visibility */
+            /* Text Colors - Dark Theme */
+            --text-primary: #FFFFFF;        /* Maximum visibility */
+            --text-secondary: #BBBBBB;      /* Slightly improved for readability */
+            --text-accent: #AAAAAA;         /* Enhanced subtle text contrast */
+            --error-text-primary: #FF6F61;  /* Brightened for better visibility */
 
-            /* Border Colors - Dark Theme
-            * Darker border colors for separation
-            * Maintains visual hierarchy
-            */
-            --border-color-light: #424242;   /* Light borders - Subtle separation */
-            --border-color-dark: #616161;    /* Stronger borders - Visual structure */
+            /* Border Colors - Dark Theme */
+            --border-color-light: #494949;  /* Enhanced subtle borders */
+            --border-color-dark: #636363;   /* Improved visual separation */
 
-            /* Button Colors - Dark Theme
-            * Dark mode button states
-            * Optimized for dark backgrounds
-            */
-            --button-primary-background: #4D4D4D;   /* Dark primary button - Main action */
-            --button-primary-hover: #3D3D3D;        /* Dark primary hover - Interactive */
-            --button-secondary-background: #4D4D4D;  /* Dark secondary button - Alternative */
-            --button-secondary-hover: #3D3D3D;      /* Dark secondary hover - Alternative state */
-            --button-text-color: #FFFFFF;           /* Button text - Maximum contrast */
+            /* Button Colors - Dark Theme */
+            --button-primary-background: #4A4A4A;  /* Slightly lighter for distinctiveness */
+            --button-primary-hover: #3A3A3A;       /* Enhanced hover effect */
+            --button-secondary-background: #4A4A4A; /* Matches primary button */
+            --button-secondary-hover: #3A3A3A;     /* Enhanced hover effect */
+            --button-text-color: #FFFFFF;          /* Maximum contrast */
 
-            /* Scrollbar Colors - Dark Theme
-            * Dark mode scrollbar styling
-            * Reduced contrast for comfort
-            */
-            --scrollbar-thumb: #757575;      /* Dark scrollbar handle - Dragable element */
-            --scrollbar-track: #424242;      /* Dark scrollbar track - Track surface */
-
-            /* Link Colors - Dark Theme
-            * Light blue variants for dark mode links
-            * Enhanced visibility while maintaining theme
-            */
-            --link-color: #66B3FF;           /* Light blue links - Primary interaction */
-            --link-hover-color: #99CCFF;     /* Lighter blue hover - Enhanced state */
+            /* Link Colors - Dark Theme */
+            --link-color: #5CAFFF;          /* Enhanced link visibility */
+            --link-hover-color: #80C3FF;    /* Improved hover state */
         }
 
         body {
@@ -158,7 +111,7 @@
             box-sizing: border-box;
         }
     </style>
-    
+
     <!-- Prevent the theme refresh flicker -->
     <script>
       (() => {
@@ -166,7 +119,7 @@
         document.documentElement.setAttribute('data-theme', theme);
       })();
     </script>
-    
+
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

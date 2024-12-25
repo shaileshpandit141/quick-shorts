@@ -22,14 +22,14 @@ const IndexPage: React.FC = (props) => {
         </p>
         <div className="buttons-conatiner">
           <ButtonLink
-            to='/signin'
+            to='/sign-in'
             type='link'
             icon='signin'
           >
             Sign in
           </ButtonLink>
           <ButtonLink
-            to='/signup'
+            to='/sign-up'
             type='link'
             icon='signup'
           >

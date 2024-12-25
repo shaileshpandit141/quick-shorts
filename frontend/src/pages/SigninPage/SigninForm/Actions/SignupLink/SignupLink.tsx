@@ -5,7 +5,7 @@ import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
 
 const SignupLink: React.FC = (props) => {
   return (
-    <Link to='/signup' className='link signup-action-link'>
+    <Link to='/sign-up' className='link signup-action-link'>
       <span className='icon'>
         <LazyIconImport icon='signup' />
       </span>

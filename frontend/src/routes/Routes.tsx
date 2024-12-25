@@ -46,10 +46,10 @@ const AppRoutes: React.FC = () => {
 
         {/* Auth Routes without header */}
         <Route element={<AuthLayout />}>
-          <Route path='/signin' element={
+          <Route path='/sign-in' element={
             <LazyModuleLoader element={<SigninPage />} fallback={<PageLoader />} />
           } />
-          <Route path='/signup' element={
+          <Route path='/sign-up' element={
             <LazyModuleLoader element={<SignupPage />} fallback={<PageLoader />} />
           } />
         </Route>
