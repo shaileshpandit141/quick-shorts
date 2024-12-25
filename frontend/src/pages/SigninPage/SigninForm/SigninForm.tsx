@@ -1,9 +1,8 @@
 import React from 'react'
 import './SigninForm.css'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 import { Input } from 'components'
-import ForgotPasswordLink from './Actions/ForgotPasswordLink/ForgotPasswordLink'
-import SignupLink from './Actions/SignupLink/SignupLink'
+import { AnchorLink } from 'components'
 import authActions from 'features/auth'
 import { useDispatch } from 'react-redux'
 import { DisplayErrors } from 'components'
@@ -61,10 +60,22 @@ const SigninForm: React.FC = (props) => {
       }
       <div className='actions'>
         <span></span>
-        <ForgotPasswordLink />
+        <Link
+          to='/forgot-password'
+          className='forgot-password-link'
+        >
+          forgot password
+        </Link>
       </div>
       <div className='actions'>
-        <SignupLink />
+        <AnchorLink
+          to="/sign-up"
+          type="link"
+          icon='signin'
+          className='sign-link'
+        >
+          sign up
+        </AnchorLink>
         <ActionButton
           icon='signin'
           isLoaderOn={status === 'loading'}

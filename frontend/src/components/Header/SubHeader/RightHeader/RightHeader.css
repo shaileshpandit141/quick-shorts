@@ -8,8 +8,6 @@
     .link {
         width: fit-content;
         background-color: transparent;
-        /* &:hover {
-            background-color: var(--button-secondary-hover);
-        } */
+        color: var(--link-color);
     }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import './ButtonLink.css';
+import './AnchorLink.css';
 import { Link } from 'react-router-dom';
 import { ButtonLinkProps } from './ButtonLink.types';
 import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport';
 
-const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
+const AnchorLink: React.FC<ButtonLinkProps> = (props) => {
   const {
     to,
     type,
@@ -34,4 +34,4 @@ const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
   )
 }
 
-export default ButtonLink;
+export default AnchorLink;

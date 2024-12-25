@@ -13,5 +13,9 @@
         justify-content: space-between;
         column-gap: 8px;
         margin-block: 8px;
+        
+        .signin-link {
+            background-color: transparent;
+        }
     }
 }

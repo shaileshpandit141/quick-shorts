@@ -2,7 +2,7 @@ import React from 'react'
 import './SignupForm.css'
 import { Input } from 'components'
 import useSignupFormFields from './hooks/useSignupFormFileds'
-import { SigninLink } from 'components'
+import { AnchorLink } from 'components'
 import SignupButton from './Actions/SignupButton/SignupButton'
 
 const SignupForm: React.FC = (props) => {
@@ -28,7 +28,14 @@ const SignupForm: React.FC = (props) => {
     >
       {fields}
       <div className='actions'>
-        <SigninLink />
+        <AnchorLink 
+          to="/sign-in" 
+          type="link"
+          icon='signin'
+          className='signin-link'
+        >
+          sign in
+        </AnchorLink>
         <SignupButton />
       </div>
     </form>
