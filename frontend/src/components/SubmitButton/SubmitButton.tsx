@@ -1,10 +1,10 @@
 import React from 'react'
-import './ActionButton.css'
+import './SubmitButton.css'
 import IconsMapType from 'lazyUtils/LazyIconImport/LazyIconImport.types'
 import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
 import Loader from '../Loader/Loader'
 
-interface ActionButtonProps {
+interface SubmitButtonProps {
   children: string;
   icon: keyof IconsMapType;
   isLoaderOn: boolean;
@@ -12,7 +12,7 @@ interface ActionButtonProps {
   className?: string;
 }
 
-const ActionButton: React.FC<ActionButtonProps> = (props) => {
+const SubmitButton: React.FC<SubmitButtonProps> = (props) => {
   const { children, icon, isLoaderOn, isDisabled = false, className } = props
   return (
     <button
@@ -31,4 +31,4 @@ const ActionButton: React.FC<ActionButtonProps> = (props) => {
   )
 }
 
-export default ActionButton
+export default SubmitButton

@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import { DisplayErrors } from 'components'
 import { useFormDataChange } from 'hooks/useFormDataChange'
 import { SignupCredentials } from 'API/API.types'
-import { ActionButton } from 'components'
+import { SubmitButton } from 'components'
 
 const SignupForm: React.FC = (props) => {
 
@@ -86,13 +86,13 @@ const SignupForm: React.FC = (props) => {
         >
           sign in
         </AnchorLink>
-        <ActionButton
+        <SubmitButton
           icon='signup'
           isLoaderOn={status === 'loading'}
           isDisabled={status === 'succeeded'}
         >
           Sign up
-        </ActionButton>
+        </SubmitButton>
       </div>
     </form>
   )
