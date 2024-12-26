@@ -4,26 +4,27 @@ import {
   ErrorResponse
 } from 'FeatureTypes';
 
-export interface SignupInitialState extends InitialState<
-  {
-    detail: string | null;
-  },
-  {
-    email?: string[];
-    password?: string[];
-    confirm_password?: string[];
-    non_field_errors?: string[]
-  },
-  {} | null
-> { }
-
-export interface SignupSuccessResponse extends SuccessResponse<{
+type SignupData = {
   detail: string;
-}> { }
+}
 
-export interface SignupErrorResponse extends ErrorResponse<{
+type SignupErrors = {
   email?: string[];
   password?: string[];
   confirm_password?: string[];
   non_field_errors?: string[]
-}> { }
+}
+
+export interface SignupInitialState extends InitialState<
+  SignupData | null,
+  SignupErrors | null,
+  {} | null
+> { }
+
+export interface SignupSuccessResponse extends SuccessResponse<
+  SignupData
+> { }
+
+export interface SignupErrorResponse extends ErrorResponse<
+  SignupErrors
+> { }

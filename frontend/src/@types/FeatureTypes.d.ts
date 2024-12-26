@@ -20,7 +20,7 @@ export declare module 'FeatureTypes' {
     status: 'succeeded';
     message: string;
     data: DATA;
-    meta: META | null;
+    meta: META;
   }
 
   // Error response type
@@ -29,7 +29,7 @@ export declare module 'FeatureTypes' {
   > {
     status: 'failed';
     message: string;
-    errors: ERRORS | null;
+    errors: ERRORS;
   }
 
   // Axios catch error structure

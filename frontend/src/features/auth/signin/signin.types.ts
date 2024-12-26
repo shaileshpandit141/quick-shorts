@@ -4,31 +4,38 @@ import {
   ErrorResponse
 } from 'FeatureTypes';
 
+type SigninDataResponse = {
+  access_token: string | null;
+  refresh_token: string | null;
+}
+
+type SigninErrorsResponse = {
+  non_field_errors?: string[]
+}
+
+type RefreshTokenDataResponse = {
+  access_token: string;
+}
+
+type RefreshTokenErrorsResponse = {
+  access_token?: string[];
+  non_field_errors?: string[];
+}
+
 export interface SigninInitialState extends InitialState<
-  {
-    access_token: string | null;
-    refresh_token: string | null;
-  },
-  {
-    non_field_errors?: string[]
-  },
+  SigninDataResponse,
+  SigninErrorsResponse | null,
   {} | null
 > { }
 
-export interface SigninSuccessResponse extends SuccessResponse<{
-  access_token: string;
-  refresh_token: string;
-}> { }
+export interface SigninSuccessResponse extends SuccessResponse<SigninDataResponse> { }
 
-export interface RefreshTokenSuccessResponse extends SuccessResponse<{
-  access_token: string;
-}> { }
+export interface SigninErrorResponse extends ErrorResponse<
+  SigninErrorsResponse
+> { }
 
-export interface SigninErrorResponse extends ErrorResponse<{
-  non_field_errors?: string[];
-}> { }
+export interface RefreshTokenSuccessResponse extends SuccessResponse<RefreshTokenDataResponse> { }
 
-export interface RefreshTokenErrorResponse extends ErrorResponse<{
-  access_token?: string[];
-  non_field_errors?: string[];
-}> { }
+export interface RefreshTokenErrorResponse extends ErrorResponse<
+  RefreshTokenErrorsResponse
+> { }

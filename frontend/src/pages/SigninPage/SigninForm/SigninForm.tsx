@@ -49,7 +49,7 @@ const SigninForm: React.FC = (props) => {
         onChange={handleFormDataChange}
         isDisabled={status === 'loading'}
       />
-      {errors.non_field_errors
+      {errors?.non_field_errors
         && <DisplayErrors message={errors.non_field_errors} />
       }
       <div className='actions'>

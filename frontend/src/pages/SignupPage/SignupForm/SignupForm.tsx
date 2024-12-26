@@ -47,7 +47,7 @@ const SignupForm: React.FC = (props) => {
         value={formData.email}
         onChange={handleFormDataChange}
         isDisabled={status === 'loading' || status === 'succeeded'}
-        errorMessage={errors.email
+        errorMessage={errors?.email
           && errors.email
         }
       />
@@ -57,7 +57,7 @@ const SignupForm: React.FC = (props) => {
         value={formData.password}
         onChange={handleFormDataChange}
         isDisabled={status === 'loading' || status === 'succeeded'}
-        errorMessage={errors.password
+        errorMessage={errors?.password
           && errors.password
         }
       />
@@ -67,14 +67,14 @@ const SignupForm: React.FC = (props) => {
         value={formData.confirm_password}
         onChange={handleFormDataChange}
         isDisabled={status === 'loading' || status === 'succeeded'}
-        errorMessage={errors.confirm_password
+        errorMessage={errors?.confirm_password
           && errors.confirm_password
         }
       />
-      {errors.non_field_errors
+      {errors?.non_field_errors
         && <DisplayErrors message={errors.non_field_errors} />
       }
-      {data.detail && (
+      {data?.detail && (
         <p>{data.detail}</p>
       )}
       <div className='actions'>

@@ -11,15 +11,8 @@ import {
 const signupIntitlState: SignupInitialState = {
   status: 'idle',
   message: '',
-  data: {
-    detail: null
-  },
-  errors: {
-    email: undefined,
-    non_field_errors: undefined,
-    password: undefined,
-    confirm_password: undefined
-  },
+  data: null,
+  errors: null,
   meta: null
 }
 
@@ -31,11 +24,8 @@ const signupSlice = createSlice({
     resetSignupState: (state) => {
       state.status = 'idle'
       state.message = ''
-      state.data.detail = null
-      state.errors.email = undefined
-      state.errors.non_field_errors = undefined
-      state.errors.password = undefined
-      state.errors.confirm_password = undefined
+      state.data = null
+      state.errors = null
       state.meta = null
     }
   },
@@ -49,17 +39,14 @@ const signupSlice = createSlice({
         const { status, message, data, meta } = action.payload
         state.status = status
         state.message = message
-        state.data.detail = data.detail
+        state.data = data
         state.meta = meta
       })
       .addCase(signupThunk.rejected, (state, action) => {
         const { status, message, errors } = action.payload as SignupErrorResponse
         state.status = status
         state.message = message
-        state.errors.email = errors?.email
-        state.errors.non_field_errors = errors?.non_field_errors
-        state.errors.password = errors?.password
-        state.errors.confirm_password = errors?.confirm_password
+        state.errors = errors
       })
   }
 })
