@@ -1,9 +1,10 @@
+from typing import Literal
 from rest_framework.permissions import BasePermission
 from rest_framework.exceptions import PermissionDenied
 
 
 class IsVerified(BasePermission):
-    def has_permission(self, request, view) -> bool:
+    def has_permission(self, request, view) -> Literal[True]:
         if request.user.is_superuser:
             return True
 

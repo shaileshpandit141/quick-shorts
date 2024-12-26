@@ -21,17 +21,31 @@ class UserCreationForm(DjangoUserCreationForm):
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
         help_text="Enter the same password as above, for verification."
     )
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'form-control'})
+    )
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    first_name = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        required=False
+    )
+    last_name = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        required=False
+    )
+    avatar = forms.ImageField(
+        widget=forms.FileInput(attrs={'class': 'form-control'}),
+        required=False
+    )
+    is_active = forms.BooleanField(required=False)
+    is_verified = forms.BooleanField(required=False)
+    is_staff = forms.BooleanField(required=False)
 
-    class Meta:
+    class Meta(DjangoUserCreationForm.Meta):
         model = User
         fields = ('email', 'username', 'first_name', 'last_name', 'avatar', 'is_active', 'is_verified', 'is_staff')
-        widgets = {
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'avatar': forms.FileInput(attrs={'class': 'form-control'}),
-        }
 
     def clean_email(self):
         """
@@ -90,16 +104,19 @@ class UserChangeForm(DjangoUserChangeForm):
     Includes fields for email, first name, last name, active status, and staff status.
     Adds validation to ensure email is provided.
     """
-    class Meta:
+
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    avatar = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'form-control', 'style': 'margin-block: 8px;'}))
+    is_active = forms.BooleanField(required=False)
+    is_verified = forms.BooleanField(required=False) 
+    is_staff = forms.BooleanField(required=False)
+
+    class Meta(DjangoUserChangeForm.Meta):
         model = User
         fields = ('email', 'username', 'first_name', 'last_name', 'avatar', 'is_active', 'is_verified', 'is_staff')
-        widgets = {
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'avatar': forms.FileInput(attrs={'class': 'form-control', 'style': 'margin-block: 8px;'}),
-        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

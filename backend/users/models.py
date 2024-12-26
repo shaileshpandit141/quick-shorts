@@ -222,18 +222,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'  # Use email as the unique identifier
     REQUIRED_FIELDS = []  # Email & password are required by default
 
-    class Meta:
-        db_table = 'users'  # Custom database table name
+    class Meta(AbstractBaseUser.Meta, PermissionsMixin.Meta):
+        db_table = 'users'
         verbose_name = 'User'
         verbose_name_plural = 'Users'
-        ordering = ['-date_joined']  # Order users by join date (newest first)
+        ordering = ['-date_joined']
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Returns the string representation of the user (email)"""
-        return self.email
+        return str(self.email)
 
     def get_full_name(self):
         """Returns the user's full name, with a space between first and last name"""
-        if self.first_name is None or self.last_name:
+        if self.first_name is None or self.last_name is None:
             return None
         return f'{self.first_name} {self.last_name}'.strip()

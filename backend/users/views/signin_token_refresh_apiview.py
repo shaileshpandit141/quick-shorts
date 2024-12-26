@@ -1,3 +1,6 @@
+# Types imports
+from typing import NoReturn
+
 # Django REST framework imports
 from rest_framework import status
 from rest_framework import serializers
@@ -25,7 +28,7 @@ class SigninTokenRefreshAPIView(TokenRefreshView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
-    def get_serializer(self, *args, **kwargs) -> TokenRefreshView:
+    def get_serializer(self, *args, **kwargs) -> NoReturn:
         """
         Customize serializer to handle refresh token field name.
 

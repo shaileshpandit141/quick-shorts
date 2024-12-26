@@ -21,14 +21,16 @@ class CustomUserAdmin(UserAdmin):
     list_per_page = 25
 
     def full_name(self, obj):
+        """Get full name of user"""
         return f"{obj.first_name} {obj.last_name}"
-    full_name.short_description = 'Full Name'
+    full_name.short_description = 'Full Name'  # type: ignore
 
     def is_active_colored(self, obj):
+        """Get colored active status"""
         if obj.is_active:
             return format_html('<span style="color: green;">Active</span>')
         return format_html('<span style="color: red;">Inactive</span>')
-    is_active_colored.short_description = 'Status'
+    is_active_colored.short_description = 'Status'  # type: ignore
 
     # Define how fields are grouped and displayed when editing existing users
     fieldsets = (
@@ -66,18 +68,21 @@ class CustomUserAdmin(UserAdmin):
     actions = ['activate_users', 'deactivate_users', 'send_email_verification']
 
     def activate_users(self, request, queryset):
+        """Activate selected users"""
         queryset.update(is_active=True)
-    activate_users.short_description = "Activate selected users"
+    activate_users.short_description = "Activate selected users"  # type: ignore
 
     def deactivate_users(self, request, queryset):
+        """Deactivate selected users"""
         queryset.update(is_active=False)
-    deactivate_users.short_description = "Deactivate selected users"
+    deactivate_users.short_description = "Deactivate selected users"  # type: ignore
 
     def send_email_verification(self, request, queryset):
+        """Send verification emails"""
         for user in queryset:
             # Add your email verification logic here
             pass
-    send_email_verification.short_description = "Send email verification"
+    send_email_verification.short_description = "Send email verification"  # type: ignore
 
 # Register the custom admin interface
 admin.site.register(User, CustomUserAdmin)
