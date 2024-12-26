@@ -5,14 +5,12 @@ export interface SigninCredentials {
 
 export interface SignupCredentials {
   email: string
-  password1: string
-  password2: string
+  password: string
+  confirm_password: string
 }
 
 export interface SignoutCredentials {
-  email: string
-  password1: string
-  password2: string
+  refresh_token: string
 }
 
 export interface PasswordResetCredentials {

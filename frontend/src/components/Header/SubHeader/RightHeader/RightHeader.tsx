@@ -13,7 +13,7 @@ const RightHeader: React.FC = (props) => {
         <AnchorLink to="sign-in" type="link">sign in</AnchorLink>
       )}
       {isAuthenticated() ? null : (
-        <AnchorLink to="sign-up" type="link">sign-up</AnchorLink>
+        <AnchorLink to="sign-up" type="link">sign up</AnchorLink>
       )}
       <ToggleThemeButton />
     </div>

@@ -1,42 +1,98 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './SignupForm.css'
 import { Input } from 'components'
-import useSignupFormFields from './hooks/useSignupFormFileds'
 import { AnchorLink } from 'components'
-import SignupButton from './Actions/SignupButton/SignupButton'
+import {
+  signupThunk,
+  useSignupSelector,
+  resetSignupState
+} from 'features/auth'
+import { useDispatch } from 'react-redux'
+import { DisplayErrors } from 'components'
+import { useFormDataChange } from 'hooks/useFormDataChange'
+import { SignupCredentials } from 'API/API.types'
+import { ActionButton } from 'components'
 
 const SignupForm: React.FC = (props) => {
 
-  const [formFields, formData] = useSignupFormFields()
+  const dispatch = useDispatch()
+  const { status, errors, data } = useSignupSelector()
+  const [formData, handleFormDataChange] = useFormDataChange<SignupCredentials>({
+    email: '',
+    password: '',
+    confirm_password: '',
+  })
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log(formData)
+    dispatch(
+      signupThunk(formData) as any
+    )
   }
 
-  const fields = formFields.map((field, index) => (
-    <Input
-      key={index}
-      {...field}
-    />
-  ))
+  useEffect(() => {
+    dispatch(
+      resetSignupState()
+    )
+  }, [dispatch]);
 
   return (
     <form
       className='signup-form'
       onSubmit={handleSubmit}
     >
-      {fields}
+      <Input
+        name='email'
+        type='email'
+        value={formData.email}
+        onChange={handleFormDataChange}
+        isDisabled={status === 'loading' || status === 'succeeded'}
+        errorMessage={errors.email
+          && errors.email
+        }
+      />
+      <Input
+        name='password'
+        type='password'
+        value={formData.password}
+        onChange={handleFormDataChange}
+        isDisabled={status === 'loading' || status === 'succeeded'}
+        errorMessage={errors.password
+          && errors.password
+        }
+      />
+      <Input
+        name='confirm_password'
+        type='password'
+        value={formData.confirm_password}
+        onChange={handleFormDataChange}
+        isDisabled={status === 'loading' || status === 'succeeded'}
+        errorMessage={errors.confirm_password
+          && errors.confirm_password
+        }
+      />
+      {errors.non_field_errors
+        && <DisplayErrors message={errors.non_field_errors} />
+      }
+      {data.detail && (
+        <p>{data.detail}</p>
+      )}
       <div className='actions'>
-        <AnchorLink 
-          to="/sign-in" 
+        <AnchorLink
+          to="/sign-in"
           type="link"
           icon='signin'
           className='signin-link'
         >
           sign in
         </AnchorLink>
-        <SignupButton />
+        <ActionButton
+          icon='signup'
+          isLoaderOn={status === 'loading'}
+          isDisabled={status === 'succeeded'}
+        >
+          Sign up
+        </ActionButton>
       </div>
     </form>
   )

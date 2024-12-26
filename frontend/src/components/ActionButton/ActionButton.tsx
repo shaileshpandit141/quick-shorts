@@ -8,15 +8,16 @@ interface ActionButtonProps {
   children: string;
   icon: keyof IconsMapType;
   isLoaderOn: boolean;
+  isDisabled?: boolean;
   className?: string;
 }
 
 const ActionButton: React.FC<ActionButtonProps> = (props) => {
-  const { children, icon, isLoaderOn, className } = props
+  const { children, icon, isLoaderOn, isDisabled = false, className } = props
   return (
     <button
       className={`button ${className}`}
-      disabled={isLoaderOn}
+      disabled={isLoaderOn || isDisabled}
     >
       <span className='icon'>
         {

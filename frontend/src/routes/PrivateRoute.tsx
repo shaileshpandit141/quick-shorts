@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import authActions from "features/auth";
+import { useSigninSelector } from "features/auth";
 
 const PrivateRoute = (): JSX.Element => {
-  const { data } = authActions.useSigninSelector()
+  const { data } = useSigninSelector()
 
   if (!(data.refresh_token)) {
     return <Navigate to='/sign-in' replace={true} />

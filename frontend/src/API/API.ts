@@ -1,7 +1,8 @@
 import axios from 'axios'
 import {
   SigninCredentials,
-  RefreshTokenCredentials
+  RefreshTokenCredentials,
+  SignupCredentials
 } from './API.types';
 
 const BASE_API_URL = process.env.REACT_APP_BASE_API_URL
@@ -12,8 +13,8 @@ interface Credentials {
 
 const API = {
   // Request with axios without JWT Token.
-  signupApi: (credentials: Credentials) => {
-    return axios.post(`${BASE_API_URL}api/auth/signup/`, credentials)
+  signupApi: (credentials: SignupCredentials) => {
+    return axios.post(`${BASE_API_URL}api/v1/auth/signup/`, credentials)
   },
   signoutApi: (credentials: Credentials) => {
     return axios.post(`${BASE_API_URL}api/auth/signout/`, credentials)

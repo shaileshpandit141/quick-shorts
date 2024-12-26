@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux'
-import authActions from 'features/auth'
+import { signinReducer, signupReducer } from 'features/auth'
 
 const rootReducer = combineReducers({
-  signin: authActions.signinReducer,
+  signin: signinReducer,
+  signup: signupReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>

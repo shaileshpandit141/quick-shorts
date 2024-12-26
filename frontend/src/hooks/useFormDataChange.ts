@@ -4,7 +4,7 @@ type FormData = {
   [key: string]: any;
 };
 
-export default function useFormDataChange<T extends FormData>(initialFormData: T) {
+export function useFormDataChange<T extends FormData>(initialFormData: T) {
   if (typeof initialFormData !== "object" || initialFormData === null) {
     throw new Error("The useFormHook only accepts the initialData value as an object.");
   }
