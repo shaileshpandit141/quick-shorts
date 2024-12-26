@@ -1,7 +1,7 @@
 // Imports
 import { createSlice } from "@reduxjs/toolkit"
 import {
-  SigninIntitlState,
+  SigninInitialState,
   SigninErrorResponse,
   RefreshTokenErrorResponse
 } from "./signin.types"
@@ -11,7 +11,7 @@ import {
 } from './signinThunk'
 
 // Initial state
-const signinIntitlState: SigninIntitlState = {
+const signinIntitlState: SigninInitialState = {
   status: 'idle',
   message: '',
   data: {
@@ -19,9 +19,7 @@ const signinIntitlState: SigninIntitlState = {
     refresh_token: localStorage.getItem('refresh_token')
   },
   errors: {
-    email: undefined,
-    non_field_errors: undefined,
-    password: undefined
+    non_field_errors: undefined
   },
   meta: null
 }
@@ -38,9 +36,7 @@ const signinSlice = createSlice({
         access_token: null,
         refresh_token: null
       }
-      state.errors.email = undefined
       state.errors.non_field_errors = undefined
-      state.errors.password = undefined
       state.meta = null
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
@@ -67,9 +63,7 @@ const signinSlice = createSlice({
         const { status, message, errors } = action.payload as SigninErrorResponse
         state.status = status
         state.message = message
-        state.errors.email = errors?.email
         state.errors.non_field_errors = errors?.non_field_errors
-        state.errors.password = errors?.password
       })
 
       // Refresh token cases
@@ -94,5 +88,5 @@ const signinSlice = createSlice({
 })
 
 const signinReducer = signinSlice.reducer;
-export default signinReducer;
 export const { resetSigninState } = signinSlice.actions
+export default signinReducer;

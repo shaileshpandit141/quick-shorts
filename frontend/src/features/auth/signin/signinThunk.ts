@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import API from 'API'
 import {
-  SigninIntitlState,
+  SigninInitialState,
   SigninSuccessResponse,
   RefreshTokenSuccessResponse,
   SigninErrorResponse,
@@ -17,17 +17,17 @@ export const signinThunk = createAsyncThunk(
     try {
       const response = await API.signinApi(credentials)
       return response.data as SigninSuccessResponse
-    } catch (error: unknown) {
-      const err = error as CatchAxiosError
+    } catch (err: unknown) {
+      const error = err as CatchAxiosError
       let errorResponse: SigninErrorResponse
-      if (err.response) {
-        errorResponse = err.response.data
+      if (error.response) {
+        errorResponse = error.response.data
       } else {
         errorResponse = {
           status: 'failed',
-          message: err.message ?? 'An unknown error occurred',
+          message: error.message ?? 'An unknown error occurred',
           errors: {
-            non_field_errors: [err.message ?? 'An unknown error occurred']
+            non_field_errors: [error.message ?? 'An unknown error occurred']
           }
         }
       }
@@ -40,7 +40,7 @@ export const signinThunk = createAsyncThunk(
 export const refreshTokenThunk = createAsyncThunk(
   'signin/refreshTokenThunk',
   async (_: void, thunkAPI) => {
-    const state = thunkAPI.getState() as SigninIntitlState
+    const state = thunkAPI.getState() as SigninInitialState
     const refresh_token = state.data?.refresh_token
 
     if (!refresh_token) {
@@ -58,17 +58,17 @@ export const refreshTokenThunk = createAsyncThunk(
         refresh_token: refresh_token
       })
       return response.data as RefreshTokenSuccessResponse
-    } catch (error: unknown) {
-      const err = error as CatchAxiosError
+    } catch (err: unknown) {
+      const error = err as CatchAxiosError
       let errorResponse: RefreshTokenErrorResponse
-      if (err.response) {
-        errorResponse = err.response.data
+      if (error.response) {
+        errorResponse = error.response.data
       } else {
         errorResponse = {
           status: 'failed',
-          message: err.message ?? 'An unknown error occurred',
+          message: error.message ?? 'An unknown error occurred',
           errors: {
-            non_field_errors: [err.message ?? 'An unknown error occurred']
+            non_field_errors: [error.message ?? 'An unknown error occurred']
           }
         }
       }

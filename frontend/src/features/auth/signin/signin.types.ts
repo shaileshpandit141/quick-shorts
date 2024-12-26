@@ -4,15 +4,13 @@ import {
   ErrorResponse
 } from 'FeatureTypes';
 
-export interface SigninIntitlState extends InitialState<
+export interface SigninInitialState extends InitialState<
   {
     access_token: string | null;
     refresh_token: string | null;
   },
   {
-    email?: string[];
     non_field_errors?: string[]
-    password?: string[];
   },
   {} | null
 > { }
@@ -27,9 +25,7 @@ export interface RefreshTokenSuccessResponse extends SuccessResponse<{
 }> { }
 
 export interface SigninErrorResponse extends ErrorResponse<{
-  email?: string[];
   non_field_errors?: string[];
-  password?: string[];
 }> { }
 
 export interface RefreshTokenErrorResponse extends ErrorResponse<{
