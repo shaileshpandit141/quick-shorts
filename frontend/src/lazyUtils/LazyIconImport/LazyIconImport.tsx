@@ -19,6 +19,7 @@ const iconsMap: IconsMapType = {
   reTry: lazy(() => import('@mui/icons-material/ReplayRounded')),
   search: lazy(() => import('@mui/icons-material/SearchRounded')),
   info: lazy(() => import('@mui/icons-material/InfoRounded')),
+  InstallDesktop: lazy(() => import('@mui/icons-material/InstallDesktopRounded')),
 }
 
 interface LazyIconImportProps extends SvgIconProps {
