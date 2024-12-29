@@ -6,6 +6,7 @@ import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 import Input from "./Input/Input";
+import InstallAppButton from "./InstallAppButton/InstallAppButton";
 import Loader from "./Loader/Loader";
 import PageLoader from "./PageLoader/PageLoader";
 import SubmitButton from "./SubmitButton/SubmitButton";
@@ -20,6 +21,7 @@ export {
   Footer,
   Header,
   Input,
+  InstallAppButton,
   Loader,
   PageLoader,
   SubmitButton,

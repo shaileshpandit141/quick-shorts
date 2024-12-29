@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { isAuthenticated } from 'utils/isAuthenticted'
 import { ToggleThemeButton } from 'components'
 import { AnchorLink } from 'components'
+import { InstallAppButton } from 'components'
 
 const RightHeader: React.FC = (props) => {
   return (
@@ -16,6 +17,7 @@ const RightHeader: React.FC = (props) => {
         <AnchorLink to="sign-up" type="link">sign up</AnchorLink>
       )}
       <ToggleThemeButton />
+      <InstallAppButton />
     </div>
   )
 }
