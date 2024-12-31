@@ -32,7 +32,7 @@
         }
 
         .right-header {
-            height: fit-content;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: flex-end;
