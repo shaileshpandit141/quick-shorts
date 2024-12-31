@@ -3,7 +3,7 @@ import './CenterHeader.css'
 
 const CenterHeader: React.FC = (props) => {
   return (
-    <div>CenterHeader</div>
+    <section className='center-header'>Center Header</section>
   )
 }
 
