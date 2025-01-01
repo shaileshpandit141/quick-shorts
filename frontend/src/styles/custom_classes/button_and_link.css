@@ -20,16 +20,13 @@
     padding-block: calc(16/16 * 1em);
     padding-inline: calc(16/16 * 1em);
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
     column-gap: calc(4/16 * 1em);
     transition: var(--transition);
     user-select: none;
 
-    &:hover {
-        background-color: var(--button-primary-hover);
-    }
-
+    &:hover,
     &:focus-visible {
         background-color: var(--button-primary-hover);
     }
@@ -61,9 +58,9 @@
         }
     }
 
-    /** 
+    /**
      * Text Label
-     * @element .label 
+     * @element .label
      * @description Button text container with standardized typography
      * @typography {
      *   size: 16px (1em),
@@ -128,10 +125,7 @@
     transition: var(--transition);
     user-select: none;
 
-    &:hover {
-        background-color: var(--button-primary-hover);
-    }
-
+    &:hover,
     &:focus-visible {
         background-color: var(--button-primary-hover);
     }
@@ -209,6 +203,7 @@
  * }
  */
 @media (pointer: fine) {
+
     .button,
     .button-1-1 {
         cursor: pointer;

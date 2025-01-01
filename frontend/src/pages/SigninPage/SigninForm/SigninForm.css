@@ -5,7 +5,7 @@
     justify-content: center;
     height: 100%;
     width: 100%;
-    
+
     .fields-container {
         width: 100%;
         display: flex;
@@ -19,9 +19,15 @@
         justify-content: space-between;
         column-gap: 8px;
         margin-block: 8px;
-        
+
         .sign-link {
             background-color: transparent;
+            border: var(--border);
+
+            &:hover,
+            &:focus-visible {
+                background-color: var(--button-primary-hover);
+            }
         }
     }
 }
