@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import './Input.css';
-import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
+import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon';
 import DisplayErrors from '../DisplayErrors/DisplayErrors';
 
 interface InputProps {
@@ -104,7 +104,7 @@ const Input: React.FC<InputProps> = ({
               type='button'
             >
               <span className='icon'>
-                {isPasswordShow ? <LazyIconImport icon='eyeOpen' /> : <LazyIconImport icon='eyeClose' />}
+                {isPasswordShow ? <LazyIcon iconName='eyeOpen' /> : <LazyIcon iconName='eyeClose' />}
               </span>
             </button>
           </div>

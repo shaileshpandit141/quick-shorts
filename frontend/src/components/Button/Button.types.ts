@@ -1,8 +1,8 @@
-import IconsMapType from 'lazyUtils/LazyIconImport/LazyIconImport.types';
+import { LazyIconMapType } from "lazyUtils/LazyIcon/LazyIcon.types";
 
 export interface ButtonProps {
   type: 'button' | 'icon';
-  icon?: keyof IconsMapType;
+  iconName?: keyof LazyIconMapType;
   className?: string;
   children?: string;
   onClick?: () => void;

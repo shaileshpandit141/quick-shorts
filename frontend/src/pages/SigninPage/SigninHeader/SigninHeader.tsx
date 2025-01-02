@@ -2,7 +2,7 @@ import React from 'react'
 import './SigninHeader.css'
 import { Link } from 'react-router-dom'
 import { AppLogo } from 'components'
-import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
+import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon'
 
 const SigninHeader: React.FC = (props) => {
   return (
@@ -14,7 +14,7 @@ const SigninHeader: React.FC = (props) => {
       </p>
       <Link to='../' className='link back-link'>
         <span className='icon'>
-          <LazyIconImport icon='arrowBack' />
+          <LazyIcon iconName='arrowBack' />
         </span>
         <span className='label'>Back</span>
       </Link>

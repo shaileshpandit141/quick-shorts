@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './ToggleThemeButton.css'
-import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
+import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon'
 
 type Theme = 'light' | 'dark'
 
@@ -22,8 +22,8 @@ const ToggleThemeButton: React.FC = () => {
 
   const Icon = () => (
     theme === 'light' 
-    ? <LazyIconImport icon='lightModeIcon' /> 
-    : <LazyIconImport icon='darkModeIcon' />
+    ? <LazyIcon iconName='lightModeIcon' /> 
+    : <LazyIcon iconName='darkModeIcon' />
   )
 
   const handleToggleTheme = () => {

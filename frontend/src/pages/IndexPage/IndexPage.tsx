@@ -24,14 +24,14 @@ const IndexPage: React.FC = (props) => {
           <AnchorLink
             to='/sign-in'
             type='link'
-            icon='signin'
+            iconName='signin'
           >
             Sign in
           </AnchorLink>
           <AnchorLink
             to='/sign-up'
             type='link'
-            icon='signup'
+            iconName='signup'
           >
             Sign up
           </AnchorLink>

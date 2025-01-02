@@ -1,6 +1,6 @@
 import { SvgIconProps } from '@mui/material'
 
-export default interface IconsMapType {
+export interface LazyIconMapType {
   signin: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   signout: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   signup: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>

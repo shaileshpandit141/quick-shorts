@@ -2,13 +2,13 @@ import React from 'react';
 import './AnchorLink.css';
 import { Link } from 'react-router-dom';
 import { ButtonLinkProps } from './ButtonLink.types';
-import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport';
+import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon';
 
 const AnchorLink: React.FC<ButtonLinkProps> = (props) => {
   const {
     to,
     type,
-    icon,
+    iconName,
     className = '',
     children
   } = props
@@ -22,9 +22,9 @@ const AnchorLink: React.FC<ButtonLinkProps> = (props) => {
           : `link link-as-icon ${className}`
       }
     >
-      {icon && (
+      {iconName && (
         <span className='icon'>
-          <LazyIconImport icon={icon} />
+          <LazyIcon iconName={iconName} />
         </span>
       )}
       {children && (

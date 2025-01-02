@@ -1,12 +1,12 @@
 import React from 'react'
 import './SubmitButton.css'
-import IconsMapType from 'lazyUtils/LazyIconImport/LazyIconImport.types'
-import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport'
+import { LazyIconMapType } from 'lazyUtils/LazyIcon/LazyIcon.types'
+import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon'
 import Loader from '../Loader/Loader'
 
 interface SubmitButtonProps {
   children: string;
-  icon: keyof IconsMapType;
+  icon: keyof LazyIconMapType;
   isLoaderOn: boolean;
   isDisabled?: boolean;
   className?: string;
@@ -23,7 +23,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = (props) => {
         {
           isLoaderOn
             ? <Loader />
-            : <LazyIconImport icon={icon} />
+            : <LazyIcon iconName={icon} />
         }
       </span>
       <span className='label'>{children}</span>

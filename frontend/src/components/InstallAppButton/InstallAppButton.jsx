@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import './InstallAppButton.css';
-import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport';
+import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon';
 
 const InstallAppButton = memo(() => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -63,7 +63,7 @@ const InstallAppButton = memo(() => {
         onClick={handleInstallClick}
       >
         <span className='icon'>
-          <LazyIconImport icon="InstallDesktop" />
+          <LazyIcon iconName="InstallDesktop" />
         </span>
         <span className='label'>
           Install

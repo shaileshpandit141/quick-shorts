@@ -1,8 +1,8 @@
 import React, { lazy, ReactElement, Suspense } from 'react'
 import { SvgIconProps } from '@mui/material'
-import IconsMapType from './LazyIconImport.types'
+import { LazyIconMapType } from './LazyIcon.types'
 
-const iconsMap: IconsMapType = {
+const iconsMap: LazyIconMapType = {
   signin: lazy(() => import('@mui/icons-material/LoginRounded')),
   signout: lazy(() => import('@mui/icons-material/LogoutRounded')),
   signup: lazy(() => import('@mui/icons-material/AppRegistrationRounded')),
@@ -22,13 +22,13 @@ const iconsMap: IconsMapType = {
   InstallDesktop: lazy(() => import('@mui/icons-material/InstallDesktopRounded')),
 }
 
-interface LazyIconImportProps extends SvgIconProps {
-  icon: keyof IconsMapType
+interface LazyIconProps extends SvgIconProps {
+  iconName: keyof LazyIconMapType
   fallback?: ReactElement
 }
 
-const LazyIconImport = ({ icon, fallback = <span />, ...props }: LazyIconImportProps) => {
-  const IconComponent = iconsMap[icon]
+const LazyIcon = ({ iconName, fallback, ...props }: LazyIconProps) => {
+  const IconComponent = iconsMap[iconName]
 
   return (
     <Suspense fallback={fallback}>
@@ -37,4 +37,4 @@ const LazyIconImport = ({ icon, fallback = <span />, ...props }: LazyIconImportP
   )
 }
 
-export { LazyIconImport }
+export { LazyIcon }

@@ -1,10 +1,10 @@
 import React from 'react';
 import './Button.css';
 import { ButtonProps } from './Button.types'
-import { LazyIconImport } from 'lazyUtils/LazyIconImport/LazyIconImport';
+import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon';
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { type, icon, className = '', children, onClick } = props
+  const { type, iconName, className = '', children, onClick } = props
 
   return (
     <button
@@ -15,9 +15,9 @@ const Button: React.FC<ButtonProps> = (props) => {
       }
       onClick={onClick}
     >
-      {icon && (
+      {iconName && (
         <span className='icon'>
-          <LazyIconImport icon={icon} />
+          <LazyIcon iconName={iconName} />
         </span>
       )}
       {children && (
