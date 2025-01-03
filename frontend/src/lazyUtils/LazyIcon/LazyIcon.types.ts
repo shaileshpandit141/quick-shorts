@@ -17,5 +17,5 @@ export interface LazyIconMapType {
   reTry: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   search: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   info: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
-  InstallDesktop: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
+  installDesktop: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
 }

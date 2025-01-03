@@ -186,8 +186,9 @@
             justify-content: center;
             border-radius: 999rem;
 
-            .button.button-as-icon {
+            .password-show-hide-button {
                 background-color: transparent;
+                border: none;
 
                 &:hover {
                     background-color: transparent;

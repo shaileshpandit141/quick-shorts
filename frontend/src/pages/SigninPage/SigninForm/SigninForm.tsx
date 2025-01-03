@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { DisplayErrors } from 'components'
 import { useFormDataChange } from 'hooks/useFormDataChange'
 import { SigninCredentials } from 'API/API.types'
-import { SubmitButton } from 'components'
+import { Button } from 'components'
 
 const SigninForm: React.FC = (props) => {
 
@@ -65,17 +65,18 @@ const SigninForm: React.FC = (props) => {
         <AnchorLink
           to="/sign-up"
           type="link"
-          icon='signin'
+          iconName='signin'
           className='sign-link'
         >
           sign up
         </AnchorLink>
-        <SubmitButton
-          icon='signin'
+        <Button
+          type='submit'
+          iconName='signin'
+          label='Sign in'
+          className='signin-button'
           isLoaderOn={status === 'loading'}
-        >
-          Sign in
-        </SubmitButton>
+        />
       </div>
     </form>
   )

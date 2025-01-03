@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import './SignupForm.css'
 import { Input } from 'components'
-import { AnchorLink } from 'components'
+import { AnchorLink, Button } from 'components'
 import {
   signupThunk,
   useSignupSelector,
@@ -11,7 +11,6 @@ import { useDispatch } from 'react-redux'
 import { DisplayErrors } from 'components'
 import { useFormDataChange } from 'hooks/useFormDataChange'
 import { SignupCredentials } from 'API/API.types'
-import { SubmitButton } from 'components'
 
 const SignupForm: React.FC = (props) => {
 
@@ -81,18 +80,19 @@ const SignupForm: React.FC = (props) => {
         <AnchorLink
           to="/sign-in"
           type="link"
-          icon='signin'
+          iconName='signin'
           className='signin-link'
         >
           sign in
         </AnchorLink>
-        <SubmitButton
-          icon='signup'
+        <Button
+          type='submit'
+          iconName='signup'
+          label='Sign up'
+          className='signup-button'
           isLoaderOn={status === 'loading'}
           isDisabled={status === 'succeeded'}
-        >
-          Sign up
-        </SubmitButton>
+        />
       </div>
     </form>
   )

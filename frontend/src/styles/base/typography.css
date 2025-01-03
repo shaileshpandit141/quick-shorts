@@ -2,7 +2,7 @@
  * Typography Styles
  * ---------------
  * Core typography styles defining text appearance across the application.
- * Uses fluid typography with clamp() for responsive scaling and consistent 
+ * Uses fluid typography with clamp() for responsive scaling and consistent
  * letter spacing for improved readability.
  */
 
@@ -104,7 +104,7 @@ select {
     letter-spacing: 0.04em;
     color: var(--text-primary);
     font-size: calc(16/16 * 1rem);
-    transition: color 0.3s ease;
+    transition: var(--transition);
 
     &::placeholder {
         letter-spacing: 0.04em;
@@ -141,24 +141,6 @@ a::first-letter {
     text-transform: capitalize;
 }
 
-/* Button Typography
- * ---------------
- * Consistent button text styling:
- * - Inherits font size
- * - No borders or text decoration
- * - Semi-bold weight
- * - Auto-capitalization
- */
-button,
-button:visited,
-button:active {
-    border: none;
-    font-size: inherit;
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    font-weight: 600;
-}
-
 button::first-letter {
     text-transform: capitalize;
 }
@@ -170,6 +152,7 @@ button::first-letter {
  * - Affects links, buttons, and form controls
  */
 @media (pointer: fine) {
+
     a,
     button,
     input[type="checkbox"],

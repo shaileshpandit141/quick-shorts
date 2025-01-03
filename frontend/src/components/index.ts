@@ -9,7 +9,6 @@ import Input from "./Input/Input";
 import InstallAppButton from "./InstallAppButton/InstallAppButton";
 import Loader from "./Loader/Loader";
 import PageLoader from "./PageLoader/PageLoader";
-import SubmitButton from "./SubmitButton/SubmitButton";
 import ToggleThemeButton from "./ToggleThemeButton/ToggleThemeButton";
 
 export {
@@ -24,6 +23,5 @@ export {
   InstallAppButton,
   Loader,
   PageLoader,
-  SubmitButton,
   ToggleThemeButton
 };

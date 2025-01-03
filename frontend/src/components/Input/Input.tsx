@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import './Input.css';
-import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon';
+import Button from 'components/Button/Button';
 import DisplayErrors from '../DisplayErrors/DisplayErrors';
 
 interface InputProps {
@@ -97,16 +97,12 @@ const Input: React.FC<InputProps> = ({
         </div>
         {type === 'password' && (
           <div className='show-password-icon-container'>
-            <button
-              className='button button-as-icon'
-              onClick={handlePasswordShowButtonClick}
-              aria-label={isPasswordShow ? 'Hide password' : 'Show password'}
+            <Button
               type='button'
-            >
-              <span className='icon'>
-                {isPasswordShow ? <LazyIcon iconName='eyeOpen' /> : <LazyIcon iconName='eyeClose' />}
-              </span>
-            </button>
+              className='password-show-hide-button'
+              iconName={isPasswordShow ? "eyeOpen" : "eyeClose"}
+              onClick={handlePasswordShowButtonClick}
+            />
           </div>
         )}
       </div>

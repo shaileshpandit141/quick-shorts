@@ -23,5 +23,9 @@
                 background-color: var(--button-primary-hover);
             }
         }
+
+        .signup-button {
+            width: 100%;
+        }
     }
 }

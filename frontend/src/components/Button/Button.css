@@ -1,0 +1,89 @@
+button {
+    --button-height: calc(40/16 * 1em);
+    --button-padding: calc(4/16 * 1em);
+    --icon-height: calc(24/16 * 1em);
+    --icon-width: calc(24/16 * 1em);
+    border: var(--border);
+    outline: none;
+    border-radius: 999rem;
+    background-color: var(--button-primary-background);
+    color: var(--button-text-color);
+    height: var(--button-height);
+    width: 100%;
+    padding: var(--button-padding);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: var(--button-padding);
+    user-select: none;
+    overflow: hidden;
+    transition: var(--transition);
+
+    @media (pointer: fine) {
+        cursor: pointer;
+    }
+
+    &:is(:hover, :focus-visible) {
+        background-color: var(--button-primary-hover);
+    }
+
+    .button-icon-container {
+        margin: 0;
+        height: var(--icon-height);
+        width: var(--icon-width);
+        min-height: var(--icon-height);
+        min-width: var(--icon-width);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: inherit;
+        overflow: hidden;
+        padding: calc(2/16 * 1em);
+
+        &:is(span, svg, img) {
+            height: var(--icon-height);
+            width: var(--icon-width);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+    }
+
+    &.button {
+        width: fit-content;
+        min-width: fit-content;
+        padding-inline: calc(16/16 * 1em);
+        border: var(--border);
+        background-color: var(--button-primary-background);
+        transition: var(--transition);
+
+        &:is(:hover, :focus-visible) {
+            background-color: var(--button-primary-hover);
+        }
+
+        label {
+            font-size: 1em;
+            font-weight: 600;
+            white-space: nowrap;
+            text-transform: lowercase;
+            line-height: var(--icon-height);
+            cursor: inherit;
+
+            &::first-letter {
+                text-transform: capitalize;
+            }
+        }
+    }
+
+    &.button-as-icon {
+        width: var(--button-height);
+        border: var(--border);
+        background-color: var(--button-primary-background);
+        transition: var(--transition);
+
+        &:is(:hover, :focus-visible) {
+            background-color: var(--button-primary-hover);
+        }
+    }
+}
