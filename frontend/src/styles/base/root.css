@@ -25,8 +25,8 @@
     grid-template-columns: calc(25/16 * 1rem) repeat(10, 1fr) calc(25/16 * 1rem);
     height: 100%;
     min-height: 100dvh;
-    background-color: transparent;
     width: 100%;
+    background-color: transparent;
     overflow: hidden;
     overflow-y: auto;
     position: relative;

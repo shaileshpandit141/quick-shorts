@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
-import './InstallAppButton.css';
-import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon';
+import React, { useState, useEffect } from 'react';
+import Button from 'components/Button/Button';
 
-const InstallAppButton = memo(() => {
+const InstallAppButton = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstallable, setIsInstallable] = useState(false);
   const [isAppInstalled, setIsAppInstalled] = useState(false);
 
   useEffect(() => {
     // Check if the app is already installed
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+    const isStandalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
       window.navigator.standalone;
 
     if (isStandalone) {
@@ -19,9 +19,9 @@ const InstallAppButton = memo(() => {
 
     // Listen for the beforeinstallprompt event
     const handleBeforeInstallPrompt = (event) => {
-      event.preventDefault();
-      setDeferredPrompt(event);
-      setIsInstallable(true);
+      event.preventDefault(); // Prevent the default prompt from showing
+      setDeferredPrompt(event); // Save the event for later
+      setIsInstallable(true); // Show the install button
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -31,46 +31,41 @@ const InstallAppButton = memo(() => {
     };
   }, []);
 
-  const handleInstallClick = useCallback(() => {
-    if (!deferredPrompt) return;
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) {
+      console.warn('Deferred prompt is not available');
+      return;
+    }
 
-    // Show the install prompt
-    deferredPrompt.prompt();
+    deferredPrompt.prompt(); // Show the install prompt
 
-    deferredPrompt.userChoice
-      .then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        } else {
-          console.log('User dismissed the install prompt');
-        }
-        setDeferredPrompt(null);
-        setIsInstallable(false);
-      })
-      .catch((err) => {
-        console.error('Error during install prompt:', err);
-      });
-  }, [deferredPrompt]);
+    const { outcome } = await deferredPrompt.userChoice; // Wait for user choice
+    if (outcome === 'accepted') {
+      console.log('User accepted the install prompt');
+    } else {
+      console.log('User dismissed the install prompt');
+    }
 
+    setDeferredPrompt(null); // Reset the deferred prompt
+    setIsInstallable(false); // Hide the install button
+  };
+
+  // Don't render anything if the app is already installed
   if (isAppInstalled) {
     return null;
   }
 
   return (
     isInstallable && (
-      <button
-        className='button install-app-button'
+      <Button
+        type="button"
+        iconName='installDesktop'
+        label='Install'
+        className='install-app-button'
         onClick={handleInstallClick}
-      >
-        <span className='icon'>
-          <LazyIcon iconName="InstallDesktop" />
-        </span>
-        <span className='label'>
-          Install
-        </span>
-      </button>
+      />
     )
   );
-});
+};
 
 export default InstallAppButton;

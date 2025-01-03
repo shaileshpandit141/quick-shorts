@@ -77,7 +77,10 @@ button {
     }
 
     &.button-as-icon {
+        height: var(--button-height);
+        min-height: var(--button-height);
         width: var(--button-height);
+        min-width: var(--button-height);
         border: var(--border);
         background-color: var(--button-primary-background);
         transition: var(--transition);

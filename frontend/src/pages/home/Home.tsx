@@ -3,7 +3,7 @@ import './Home.css'
 
 const Home: React.FC = (props) => {
   return (
-    <div>Home</div>
+    <div className='grid-start-2-end-2'>Home</div>
   )
 }
 

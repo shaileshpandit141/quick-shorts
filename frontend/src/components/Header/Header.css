@@ -6,8 +6,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* border-bottom: var(--border); */
-    transition: background-color 0.3s ease;
+    transition: var(--transition);
 
     .sub-headers {
         width: 100%;
@@ -32,10 +31,21 @@
         }
 
         .right-header {
-            height: 40px;
-            display: flex;
+            height: fit-content;
+            display: grid;
+            grid-template-columns: 1fr auto;
             align-items: center;
-            justify-content: flex-end;
+            column-gap: 8px;
+
+            .other-links {
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                column-gap: 8px;
+                overflow: hidden;
+                flex-wrap: wrap;
+            }
         }
     }
 }

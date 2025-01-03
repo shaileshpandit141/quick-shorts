@@ -151,14 +151,14 @@ form {
  * Enhances scrolling and removes scrollbars on mobile
  */
 @media (hover: none) and (pointer: coarse) {
-  * {
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
+    * {
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
 
-  *::-webkit-scrollbar {
-    display: none;
-  }
+    *::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 /* Theme Transitions

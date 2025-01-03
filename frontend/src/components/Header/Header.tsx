@@ -3,6 +3,8 @@ import './Header.css'
 import LeftHeader from './SubHeader/LeftHeader/LeftHeader'
 import CenterHeader from './SubHeader/CenterHeader/CenterHeader'
 import RightHeader from './SubHeader/RightHeader/RightHeader'
+import ToggleThemeButton from 'components/ToggleThemeButton/ToggleThemeButton'
+import InstallAppButton from 'components/InstallAppButton/InstallAppButton'
 
 const Header: React.FC = (props) => {
   return (
@@ -16,6 +18,10 @@ const Header: React.FC = (props) => {
         </div>
         <div className='right-header'>
           <RightHeader />
+          <div className='other-links'>
+            <InstallAppButton />
+            <ToggleThemeButton />
+          </div>
         </div>
       </div>
     </header>

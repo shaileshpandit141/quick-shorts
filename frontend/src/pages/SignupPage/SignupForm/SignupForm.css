@@ -14,6 +14,13 @@
         column-gap: 8px;
         margin-block: 8px;
 
+        &:last-child {
+            @media (width <=480px) {
+                flex-direction: column;
+                row-gap: 8px;
+            }
+        }
+
         .signin-link {
             background-color: transparent;
             border: var(--border);

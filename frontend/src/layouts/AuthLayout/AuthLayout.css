@@ -45,15 +45,15 @@
             max-width 0.3s ease,
             border 0.3s ease;
     }
-}
 
-@media (width < 768px) {
-    .auth-alyout {
-        background-color: var(--card-background);
+    @media (width < 768px) {
+        & {
+            background-color: var(--card-background);
 
-        .form-wrapper {
-            max-width: calc(480/16 * 1em);
-            border-color: transparent;
+            .form-wrapper {
+                max-width: calc(480/16 * 1em);
+                border-color: transparent;
+            }
         }
     }
 }

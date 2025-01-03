@@ -3,14 +3,13 @@
  * ------------------
  * A responsive 12-column grid system built with CSS Grid
  * Provides flexible layouts with consistent spacing and alignment
- * Uses rem-based side margins (1.5625rem = 25px at 16px base font size)
  * Supports nested grids and full-width/contained layouts
  */
 
 /* Base grid container with 12 equal columns and fixed side margins */
 .grid-12 {
     display: grid;
-    grid-template-columns: calc(25/16 * 1rem) repeat(10, 1fr) calc(25/16 * 1rem);
+    grid-template-columns: calc(16/16 * 1rem) repeat(10, 1fr) calc(16/16 * 1rem);
     transition: background-color 0.3s ease;
 }
 
