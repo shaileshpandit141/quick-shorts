@@ -1,6 +1,7 @@
 # Django REST framework imports
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework.views import APIView
 
 # Local imports
@@ -43,16 +44,25 @@ class SignoutAPIView(APIView):
                 'errors': clean_data.get_errors()
             })
 
-        # Get and blacklist the refresh token
-        token = RefreshToken(clean_data.get('refresh_token'))
-        token.blacklist()
+        try:
+            # Get and blacklist the refresh token
+            token = RefreshToken(clean_data.get('refresh_token'))
+            token.blacklist()
 
-        return Response.success({
-            'message': 'Sign out successful',
-            'data': {
-                'detail': 'Token successfully blacklisted.'
-            }
-        }, status.HTTP_200_OK)
+            return Response.success({
+                'message': 'Sign out successful',
+                'data': {
+                    'detail': 'Token successfully blacklisted.'
+                }
+            }, status.HTTP_200_OK)
+
+        except TokenError:
+            return Response.error({
+                'message': 'Invalid token',
+                'errors': {
+                    'non_field_errors': ['Token is invalid or expired']
+                }
+            }, status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, *args, **kwargs) -> Response.type:
         """PUT method not supported for sign out."""
