@@ -1,6 +1,10 @@
 import { useSelector } from "react-redux";
 import { SignupInitialState } from "./signup.types";
 
-export const useSignupSelector = () => {
-  return useSelector((state: {signup: SignupInitialState}) => state.signup)
+/**
+ * Custom hook to select signup state from Redux store
+ * @returns {SignupInitialState} Current signup state
+ */
+export const useSignupSelector = (): SignupInitialState => {
+  return useSelector((state: { signup: SignupInitialState }) => state.signup)
 }

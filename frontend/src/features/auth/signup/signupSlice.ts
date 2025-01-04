@@ -1,3 +1,8 @@
+/**
+ * Redux slice for managing signup state and operations
+ * @module signupSlice
+ */
+
 import { createSlice } from "@reduxjs/toolkit";
 import {
   SignupInitialState,
@@ -7,7 +12,10 @@ import {
   signupThunk
 } from './signupThunk'
 
-// Initial state
+/**
+ * Initial state for signup slice
+ * Contains status, message, data, errors and meta information
+ */
 const signupIntitlState: SignupInitialState = {
   status: 'idle',
   message: '',
@@ -16,11 +24,14 @@ const signupIntitlState: SignupInitialState = {
   meta: null
 }
 
-// Slice definition
+/**
+ * Redux slice containing signup state logic and reducers
+ */
 const signupSlice = createSlice({
   name: 'signup',
   initialState: signupIntitlState,
   reducers: {
+    // Reset signup state to initial values
     resetSignupState: (state) => {
       state.status = 'idle'
       state.message = ''
@@ -31,7 +42,7 @@ const signupSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Sign up cases
+      // Handle signup async states
       .addCase(signupThunk.pending, (state) => {
         state.status = 'loading'
       })
@@ -51,6 +62,7 @@ const signupSlice = createSlice({
   }
 })
 
+// Extract reducer and actions
 const signupReducer = signupSlice.reducer
-export const { resetSignupState } = signupSlice.actions
 export default signupReducer
+export const { resetSignupState } = signupSlice.actions
