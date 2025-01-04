@@ -16,14 +16,14 @@ const API = {
   signupApi: (credentials: SignupCredentials) => {
     return axios.post(`${BASE_API_URL}api/v1/auth/signup/`, credentials)
   },
-  signoutApi: (credentials: Credentials) => {
-    return axios.post(`${BASE_API_URL}api/auth/signout/`, credentials)
-  },
   signinApi: (credentials: SigninCredentials) => {
     return axios.post(`${BASE_API_URL}api/v1/auth/signin/token/`, credentials)
   },
   refreshTokenApi: (credentials: RefreshTokenCredentials) => {
     return axios.post(`${BASE_API_URL}api/auth/signin/token/refresh/`, credentials)
+  },
+  signoutApi: (credentials: Credentials) => {
+    return axios.post(`${BASE_API_URL}api/api/signout/`, credentials)
   },
   verifyEmailApi: (credentials: Credentials) => {
     return axios.post(`${BASE_API_URL}api/auth/signup/verify-email/`, credentials)
