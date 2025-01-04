@@ -10,7 +10,7 @@ class IsAuthenticated(DRFIsAuthenticated):
                 "status": "failed",
                 "message": "Please sign in to continue.",
                 "errors": {
-                    'detail': [
+                    'non_field_errors': [
                         "You must be authenticated to access this resource."
                     ]
                 }

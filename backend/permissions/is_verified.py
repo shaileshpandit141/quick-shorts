@@ -14,7 +14,7 @@ class IsVerified(BasePermission):
                 "status": "failed",
                 "message": "Please verify your account to continue.",
                 "errors": {
-                    'detail': [
+                    'non_field_errors': [
                         "You must verify your account to access this resource."
                     ]
                 }
