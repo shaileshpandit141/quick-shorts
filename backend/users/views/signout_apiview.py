@@ -4,8 +4,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 
 # Local imports
-from permissions import IsAuthenticated
-from throttles import UserRateThrottle
+from permissions import AllowAny
+from throttles import AnonRateThrottle
 from utils import Response, FieldValidator
 
 
@@ -16,8 +16,8 @@ class SignoutAPIView(APIView):
     Only POST method is supported. All other HTTP methods return 405 Method Not Allowed.
     Requires user authentication and implements rate limiting.
     """
-    permission_classes = [IsAuthenticated]
-    throttle_classes = [UserRateThrottle]
+    permission_classes = [AllowAny]
+    throttle_classes = [AnonRateThrottle]
 
     def get(self, request, *args, **kwargs) -> Response.type:
         """GET method not supported for sign out."""
