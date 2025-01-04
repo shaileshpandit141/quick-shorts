@@ -9,7 +9,7 @@ interface ButtonProps {
   iconName?: keyof LazyIconMapType;
   label?: string;
   type: "button" | "submit";
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
   isDisabled?: boolean;
   isLoaderOn?: boolean;

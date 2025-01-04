@@ -1,6 +1,6 @@
 import axios from 'axios';
 import store from 'store/store';
-import authActions from 'features/auth';
+import { refreshTokenThunk } from 'features/auth';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_API_URL,
@@ -24,12 +24,19 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const request = error.config;
     if (error.response?.status === 401 && !request._retry) {
-      request._retry = true;
-      await store.dispatch(authActions.refreshTokenThunk());
-      const token = store.getState().signin.data.access_token;
-      request.headers = request.headers || {};
-      request.headers['Authorization'] = `Bearer ${token}`;
-      return axiosInstance(request);
+      try {
+        request._retry = true;
+        await store.dispatch(refreshTokenThunk());
+        const token = store.getState().signin.data.access_token;
+        if (!token) {
+          return Promise.reject(error);
+        }
+        request.headers = request.headers || {};
+        request.headers['Authorization'] = `Bearer ${token}`;
+        return axiosInstance(request);
+      } catch (refreshError) {
+        return Promise.reject(refreshError);
+      }
     }
     return Promise.reject(error);
   }

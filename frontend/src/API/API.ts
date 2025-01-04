@@ -1,42 +1,32 @@
 import axios from 'axios'
+// import axiosInstance from 'axiosInstance';
 import {
   SigninCredentials,
   RefreshTokenCredentials,
+  SignoutCredentials,
   SignupCredentials
 } from './API.types';
 
 const BASE_API_URL = process.env.REACT_APP_BASE_API_URL
 
-interface Credentials {
-  [key: string]: any;
-}
-
-const API = {
-  // Request with axios without JWT Token.
+const AxiosAPIs = {
   signupApi: (credentials: SignupCredentials) => {
-    return axios.post(`${BASE_API_URL}api/v1/auth/signup/`, credentials)
+    return axios.post(`${BASE_API_URL}/api/v1/auth/signup/`, credentials)
   },
   signinApi: (credentials: SigninCredentials) => {
-    return axios.post(`${BASE_API_URL}api/v1/auth/signin/token/`, credentials)
+    return axios.post(`${BASE_API_URL}/api/v1/auth/signin/token/`, credentials)
   },
   refreshTokenApi: (credentials: RefreshTokenCredentials) => {
-    return axios.post(`${BASE_API_URL}api/auth/signin/token/refresh/`, credentials)
+    return axios.post(`${BASE_API_URL}/api/v1/auth/signin/token/refresh/`, credentials)
   },
-  signoutApi: (credentials: Credentials) => {
-    return axios.post(`${BASE_API_URL}api/api/signout/`, credentials)
-  },
-  verifyEmailApi: (credentials: Credentials) => {
-    return axios.post(`${BASE_API_URL}api/auth/signup/verify-email/`, credentials)
-  },
-  resendVerificationEmailApi: (credentials: Credentials) => {
-    return axios.post(`${BASE_API_URL}api/auth/signup/resend-verification-email/`, credentials)
-  },
-  resetPasswordApi: (credentials: Credentials) => {
-    return axios.post(`${BASE_API_URL}api/auth/password/reset/`, credentials)
-  },
-  resetPasswordConfirmApi: (credentials: Credentials) => {
-    return axios.post(`${BASE_API_URL}api/auth/password/reset/confirm/`, credentials)
+  signoutApi: (credentials: SignoutCredentials) => {
+    return axios.post(`${BASE_API_URL}/api/v1/auth/signout/`, credentials)
   },
 }
 
-export default API
+const AxiosInstanceAPIs = {
+
+}
+
+const APIs = { ...AxiosAPIs, ...AxiosInstanceAPIs }
+export default APIs

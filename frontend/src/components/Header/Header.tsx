@@ -5,6 +5,7 @@ import CenterHeader from './SubHeader/CenterHeader/CenterHeader'
 import RightHeader from './SubHeader/RightHeader/RightHeader'
 import ToggleThemeButton from 'components/ToggleThemeButton/ToggleThemeButton'
 import InstallAppButton from 'components/InstallAppButton/InstallAppButton'
+import SignoutButton from 'components/SignoutButton/SignoutButton'
 
 const Header: React.FC = (props) => {
   return (
@@ -19,6 +20,7 @@ const Header: React.FC = (props) => {
         <div className='right-header'>
           <RightHeader />
           <div className='other-links'>
+            <SignoutButton />
             <InstallAppButton />
             <ToggleThemeButton />
           </div>
