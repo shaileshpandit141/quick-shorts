@@ -1,4 +1,9 @@
-// Imports
+/**
+ * Redux slice for handling authentication state management
+ * Manages signin process and token refresh functionality
+ */
+
+// Required imports for authentication slice
 import { createSlice } from "@reduxjs/toolkit"
 import {
   SigninInitialState,
@@ -10,7 +15,7 @@ import {
   refreshTokenThunk
 } from './signinThunk'
 
-// Initial state
+// Initial authentication state with tokens from localStorage
 const signinIntitlState: SigninInitialState = {
   status: 'idle',
   message: '',
@@ -22,11 +27,12 @@ const signinIntitlState: SigninInitialState = {
   meta: null
 }
 
-// Slice definition
+// Authentication slice definition with reducers and async thunks
 const signinSlice = createSlice({
   name: 'signin',
   initialState: signinIntitlState,
   reducers: {
+    // Reset auth state and clear stored tokens
     resetSigninState: (state) => {
       state.status = 'idle'
       state.message = ''
@@ -40,7 +46,7 @@ const signinSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Sign in cases
+      // Handle signin process states
       .addCase(signinThunk.pending, (state) => {
         state.status = 'loading'
       })
@@ -64,7 +70,7 @@ const signinSlice = createSlice({
         state.errors = errors
       })
 
-      // Refresh token cases
+      // Handle token refresh states
       .addCase(refreshTokenThunk.pending, (state) => {
         state.status = 'loading'
       })

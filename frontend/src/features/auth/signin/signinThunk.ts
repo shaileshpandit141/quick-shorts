@@ -10,7 +10,10 @@ import {
 import { SigninCredentials } from 'API/API.types'
 import { CatchAxiosError } from 'FeatureTypes'
 
-// Sign in thunk
+/**
+ * Redux thunk to handle user sign in
+ * Makes API call with credentials and returns success/error response
+ */
 export const signinThunk = createAsyncThunk(
   'signin/signinThunk',
   async (credentials: SigninCredentials, thunkAPI) => {
@@ -36,7 +39,11 @@ export const signinThunk = createAsyncThunk(
   }
 )
 
-// Refresh token thunk
+/**
+ * Redux thunk to refresh authentication token
+ * Gets refresh token from state and requests new access token
+ * Returns error if no refresh token exists
+ */
 export const refreshTokenThunk = createAsyncThunk(
   'signin/refreshTokenThunk',
   async (_: void, thunkAPI) => {
