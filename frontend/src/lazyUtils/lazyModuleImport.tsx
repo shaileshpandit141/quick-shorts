@@ -1,6 +1,20 @@
 import React, { Suspense } from 'react';
 import { ErrorBoundary } from 'components';
 
+/**
+ * Props interface for LazyModuleLoader component
+ */
+interface LazyModuleLoaderProps {
+  element: React.ReactNode;
+  fallback: React.ReactNode;
+}
+
+/**
+ * Helper function that wraps dynamic imports with retry logic
+ * @param importFunction - Dynamic import function to be called
+ * @param retries - Number of retries on failure (default: 3)
+ * @param delay - Delay between retries in ms (default: 1000)
+ */
 export const lazyModuleImport = (
   importFunction: () => Promise<any>,
   retries: number = 3,
@@ -25,13 +39,17 @@ export const lazyModuleImport = (
   })
 );
 
-export const LazyModuleLoader: React.FC<{
-  element: React.ReactNode;
-  fallback: React.ReactNode;
-}> = ({ element, fallback }) => (
-  <ErrorBoundary>
-    <Suspense fallback={fallback}>
-      {element}
-    </Suspense>
-  </ErrorBoundary>
-);
+/**
+ * Component that handles lazy loading with error boundaries and loading states
+ */
+export const LazyModuleLoader = (
+  { element, fallback }: LazyModuleLoaderProps
+): JSX.Element => {
+  return (
+    <ErrorBoundary>
+      <Suspense fallback={fallback}>
+        {element}
+      </Suspense>
+    </ErrorBoundary>
+  );
+};
