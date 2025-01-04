@@ -1,3 +1,8 @@
+/**
+ * Axios instance configuration with authentication interceptors
+ * Handles automatic token injection and refresh functionality
+ */
+
 import axios from 'axios';
 import store from 'store/store';
 import { refreshTokenThunk } from 'features/auth';
@@ -7,6 +12,7 @@ const axiosInstance = axios.create({
   timeout: 1000,
 });
 
+// Request interceptor - adds auth token to requests if available
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = store.getState().signin.data.access_token;
@@ -19,6 +25,7 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// Response interceptor - handles 401 errors by refreshing token
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {

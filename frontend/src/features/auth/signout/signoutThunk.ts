@@ -7,8 +7,15 @@ import {
 import { CatchAxiosError } from 'FeatureTypes';
 import { SignoutCredentials } from 'API/API.types';
 
-// Sign out thunk
-// This thunk is used to sign out the user by blocking the refresh token from the server
+/**
+ * Redux thunk for handling user signout
+ * - Makes API call to block the refresh token on the server
+ * - Returns success response with status on successful signout 
+ * - Returns error response with details on failure
+ *
+ * @param credentials - User signout credentials required by the API
+ * @returns SignoutSuccessResponse on success, SignoutErrorResponse on failure
+ */
 export const signoutThunk = createAsyncThunk(
   "signout/signoutThunk",
   async (credentials: SignoutCredentials, thunkAPI) => {
