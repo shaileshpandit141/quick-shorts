@@ -13,9 +13,12 @@ export interface LazyIconMapType {
   darkModeIcon: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   eyeClose: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   eyeOpen: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
-  circleAppIcon: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   reTry: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   search: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
-  info: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   installDesktop: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
+  close: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
+  success: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
+  info: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
+  error: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
+  warning: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
 }

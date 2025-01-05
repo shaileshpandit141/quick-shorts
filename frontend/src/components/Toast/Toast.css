@@ -1,0 +1,118 @@
+.toast {
+    &.toast-success {
+        --color: #4caf50;
+    }
+
+    &.toast-error {
+        --color: #f44336;
+    }
+
+    &.toast-info {
+        --color: #2196f3;
+    }
+
+    &.toast-warning {
+        --color: #ff9800;
+    }
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    justify-content: center;
+    padding: calc(8/16 * 1em);
+    border-radius: calc(16/16 * 1em);
+    column-gap: 4px;
+    user-select: none;
+    border: var(--border);
+    background-color: var(--card-background);
+    animation: fadeIn 0.5s ease;
+    transition: var(--transition);
+
+    .toast-icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .icon-container {
+            color: var(--color);
+            width: 24px;
+            height: 24px;
+            transition: var(--transition);
+        }
+    }
+
+    .message-container {
+        background-color: transparent;
+        padding-right: 4px;
+        border-right: var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        transition: var(--transition);
+
+        .error-message {
+            margin: 0;
+            color: var(--color);
+            transition: var(--transition);
+
+            &::first-letter {
+                text-transform: capitalize;
+            }
+        }
+    }
+
+    .button-container {
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .toast-close-button {
+            color: var(--text-primary);
+            height: fit-content;
+            transition: var(--transition);
+
+            .icon-container {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+}
+
+/* .toast-success {
+    background-color: #4caf50;
+}
+
+.toast-error {
+    background-color: #f44336;
+}
+
+.toast-info {
+    background-color: #2196f3;
+}
+
+.toast-warning {
+    background-color: #ff9800;
+} */
+
+.toast button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-100%) scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

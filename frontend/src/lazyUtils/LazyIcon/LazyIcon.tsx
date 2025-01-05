@@ -15,11 +15,14 @@ const iconsMap: LazyIconMapType = {
   darkModeIcon: lazy(() => import('@mui/icons-material/DarkModeRounded')),
   eyeClose: lazy(() => import('@mui/icons-material/RemoveRedEyeRounded')),
   eyeOpen: lazy(() => import('@mui/icons-material/RemoveRedEyeOutlined')),
-  circleAppIcon: lazy(() => import('@mui/icons-material/Brightness1Rounded')),
   reTry: lazy(() => import('@mui/icons-material/ReplayRounded')),
   search: lazy(() => import('@mui/icons-material/SearchRounded')),
+  installDesktop: lazy(() => import('@mui/icons-material/InstallDesktopRounded')),
+  close: lazy(() => import('@mui/icons-material/CloseRounded')),
+  success: lazy(() => import('@mui/icons-material/DoneAllRounded')),
   info: lazy(() => import('@mui/icons-material/InfoRounded')),
-  installDesktop: lazy(() => import('@mui/icons-material/InstallDesktopRounded'))
+  error: lazy(() => import('@mui/icons-material/ErrorRounded')),
+  warning: lazy(() => import('@mui/icons-material/WarningAmberRounded'))
 }
 
 interface LazyIconProps extends SvgIconProps {

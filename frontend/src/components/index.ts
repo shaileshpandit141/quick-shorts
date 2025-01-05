@@ -1,29 +1,14 @@
-import AppLogo from "./AppLogo/AppLogo";
-import Button from "./Button/Button";
-import AnchorLink from "./AnchorLink/AnchorLink";
-import DisplayErrors from "./DisplayErrors/DisplayErrors";
-import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
-import Footer from "./Footer/Footer";
-import Header from "./Header/Header";
-import Input from "./Input/Input";
-import InstallAppButton from "./InstallAppButton/InstallAppButton";
-import Loader from "./Loader/Loader";
-import PageLoader from "./PageLoader/PageLoader";
-import SignoutButton from "./SignoutButton/SignoutButton";
-import ToggleThemeButton from "./ToggleThemeButton/ToggleThemeButton";
-
-export {
-  AppLogo,
-  Button,
-  AnchorLink,
-  DisplayErrors,
-  ErrorBoundary,
-  Footer,
-  Header,
-  Input,
-  InstallAppButton,
-  Loader,
-  PageLoader,
-  SignoutButton,
-  ToggleThemeButton
-};
+export { default as AppLogo } from "./AppLogo/AppLogo";
+export { default as Button } from "./Button/Button";
+export { default as AnchorLink } from "./AnchorLink/AnchorLink";
+export { default as DisplayErrors } from "./DisplayErrors/DisplayErrors";
+export { default as ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
+export { default as Footer } from "./Footer/Footer";
+export { default as Header } from "./Header/Header";
+export { default as Input } from "./Input/Input";
+export { default as InstallAppButton } from "./InstallAppButton/InstallAppButton";
+export { default as Loader } from "./Loader/Loader";
+export { default as PageLoader } from "./PageLoader/PageLoader";
+export { default as SignoutButton } from "./SignoutButton/SignoutButton";
+export { default as ToggleThemeButton } from "./ToggleThemeButton/ToggleThemeButton";
+export { default as ToastContainer } from "./ToastContainer/ToastContainer";
