@@ -8,10 +8,11 @@ import { useDispatch } from 'react-redux';
 import { signoutThunk } from 'features/auth';
 import { useSignoutSelector } from 'features/auth';
 import { useSigninSelector } from 'features/auth';
+import { triggerToast } from 'utils/toast';
 
 const SignoutButton: React.FC = () => {
   const dispatch = useDispatch();
-  const { status } = useSignoutSelector();
+  const { status, message } = useSignoutSelector();
   const signinState = useSigninSelector();
 
   const handleSignout = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -23,8 +24,11 @@ const SignoutButton: React.FC = () => {
   useEffect(() => {
     if (status === 'succeeded') {
       dispatch(resetSigninState());
+      triggerToast(dispatch, "success", message)
+    } else if (status === 'failed') {
+      triggerToast(dispatch, "error", message)
     }
-  }, [status, dispatch]);
+  }, [status, dispatch, message]);
 
   if (!isAuthenticated()) {
     return null

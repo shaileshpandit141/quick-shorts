@@ -1,23 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './SigninForm.css'
 import { Navigate, Link } from 'react-router-dom'
 import { Input } from 'components'
 import { AnchorLink } from 'components'
-import { signinThunk, useSigninSelector } from 'features/auth'
+import { signinThunk, useSigninSelector, resetSignoutState } from 'features/auth'
 import { useDispatch } from 'react-redux'
 import { DisplayErrors } from 'components'
 import { useFormDataChange } from 'hooks/useFormDataChange'
 import { SigninCredentials } from 'API/API.types'
 import { Button } from 'components'
+import { triggerToast } from 'utils/toast'
 
-const SigninForm: React.FC = (props) => {
+const SigninForm: React.FC = () => {
 
   const dispatch = useDispatch()
-  const { status, errors } = useSigninSelector()
+  const { status, message, errors } = useSigninSelector()
   const [formData, handleFormDataChange] = useFormDataChange<SigninCredentials>({
     email: '',
     password: ''
   })
+
+  useEffect(() => {
+    dispatch(resetSignoutState())
+    if (status === "succeeded") {
+      triggerToast(dispatch, "success", message)
+    } else if (status === "failed") {
+      triggerToast(dispatch, "error", message)
+    }
+  }, [dispatch, message, status])
 
   if (status === 'succeeded') {
     return <Navigate to='/home' />
