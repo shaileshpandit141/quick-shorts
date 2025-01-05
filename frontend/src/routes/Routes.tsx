@@ -10,7 +10,8 @@ import { lazyModuleImport, LazyModuleLoader } from 'lazyUtils/lazyModuleImport'
 // Default Imports (user-defined layout and pages).
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
-import MainLayout from 'layouts//MainLayout/MainLayout'
+import RootLayout from 'layouts/RootLayout/RootLayout'
+import MainLayout from 'layouts/MainLayout/MainLayout'
 import AuthLayout from 'layouts/AuthLayout/AuthLayout'
 
 // Default Page loader Imports
@@ -27,37 +28,39 @@ const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route element={<MainLayout />}>
+        <Route element={<RootLayout />}>
+          <Route element={<MainLayout />}>
 
-          {/* Public Routes */}
-          <Route element={<PublicRoute />}>
-            <Route index element={
-              <LazyModuleLoader element={<IndexPage />} fallback={<IndexPageSkeleton />} />
+            {/* Public Routes */}
+            <Route element={<PublicRoute />}>
+              <Route index element={
+                <LazyModuleLoader element={<IndexPage />} fallback={<IndexPageSkeleton />} />
+              } />
+            </Route>
+
+            {/* Private Routes */}
+            <Route element={<PrivateRoute />}>
+              <Route path='/home' element={
+                <LazyModuleLoader element={<Home />} fallback={<PageLoader />} />
+              } />
+            </Route>
+          </Route>
+
+          {/* Auth Routes without header */}
+          <Route element={<AuthLayout />}>
+            <Route path='/sign-in' element={
+              <LazyModuleLoader element={<SigninPage />} fallback={<PageLoader />} />
+            } />
+            <Route path='/sign-up' element={
+              <LazyModuleLoader element={<SignupPage />} fallback={<PageLoader />} />
             } />
           </Route>
 
-          {/* Private Routes */}
-          <Route element={<PrivateRoute />}>
-            <Route path='/home' element={
-              <LazyModuleLoader element={<Home />} fallback={<PageLoader />} />
-            } />
-          </Route>
-        </Route>
-
-        {/* Auth Routes without header */}
-        <Route element={<AuthLayout />}>
-          <Route path='/sign-in' element={
-            <LazyModuleLoader element={<SigninPage />} fallback={<PageLoader />} />
-          } />
-          <Route path='/sign-up' element={
-            <LazyModuleLoader element={<SignupPage />} fallback={<PageLoader />} />
+          {/* Catch-all route for 404 Not Found */}
+          <Route path="*" element={
+            <LazyModuleLoader element={<NotFound />} fallback={<PageLoader />} />
           } />
         </Route>
-
-        {/* Catch-all route for 404 Not Found */}
-        <Route path="*" element={
-          <LazyModuleLoader element={<NotFound />} fallback={<PageLoader />} />
-        } />
       </Routes>
     </Router>
   )
