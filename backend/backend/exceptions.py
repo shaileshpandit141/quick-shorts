@@ -1,48 +1,114 @@
 from rest_framework.views import exception_handler
-from rest_framework.exceptions import NotAuthenticated, AuthenticationFailed
+from rest_framework.exceptions import (
+    ValidationError,
+    MethodNotAllowed,
+    NotFound,
+    NotAuthenticated,
+    AuthenticationFailed
+)
+from quick_api_view import response as api_response
 from rest_framework import status
-from utils import Response
+
 
 def custom_exception_handler(exc, context):
     """
-    Custom exception handler for Django REST framework that provides formatted error responses.
-
-    This handler extends the default DRF exception handler to provide more detailed and
-    consistent error messages for authentication-related exceptions.
-
-    Args:
-        exc (Exception): The caught exception
-        context (dict): Additional context information about the exception
-
-    Returns:
-        Response: A REST framework Response object with formatted error details
+    A custom exception handler that returns the exception details in a custom format.
     """
-    # Get the standard error response from DRF's default handler
+    # Call the default exception handler first to get the standard DRF response
     response = exception_handler(exc, context)
 
-    # Handle NotAuthenticated exceptions
-    if isinstance(exc, NotAuthenticated):
-        # Format custom error response for missing authentication
-        return Response.error({
-            'message': 'Authentication Failed',
-            'errors': {
-                'non_field_errors': [
-                    'Authentication credentials were not provided or invalid.'
-                ]
-            }
-        }, status.HTTP_401_UNAUTHORIZED)
+    # Handle specific exceptions
 
-    # Handle AuthenticationFailed exceptions
-    if isinstance(exc, AuthenticationFailed):
-        # Format custom error response for invalid authentication
-        return Response.error({
-            'message': 'Access Denied',
-            'errors': {
-                'non_field_errors': [
-                    'Please provide valid authentication credentials.'
-                ]
-            }
-        }, status.HTTP_401_UNAUTHORIZED)
+    # ValidationError
+    if isinstance(exc, ValidationError):
+        error_details = []
+        if isinstance(exc.detail, dict):
+            for field, messages in exc.detail.items():
+                if isinstance(messages, list):
+                    for message in messages:
+                        error_details.append({
+                            "field": field,
+                            "code": getattr(message, "code", "validation_error"),
+                            "message": str(message),
+                            "details": None
+                        })
+                else:
+                    error_details.append({
+                        "field": field,
+                        "code": getattr(messages, "code", "validation_error"),
+                        "message": str(messages),
+                        "details": None
+                    })
+        else:
+            error_details.append({
+                "field": "none",
+                "code": "validation_error",
+                "message": str(exc.detail),
+                "details": None
+            })
 
-    # Return default response for any other exceptions
+        return api_response({
+            "status": "failed",
+            "message": "Validation error",
+            "data": None,
+            "errors": error_details
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    # MethodNotAllowed
+    elif isinstance(exc, MethodNotAllowed):
+        return api_response({
+            "status": "failed",
+            "message": "Method Not Allowed",
+            "data": None,
+            "errors": [{
+                "field": "none",
+                "code": "method_not_allowed",
+                "message": "This method is not allowed for this endpoint",
+                "details": None
+            }]
+        }, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    # NotFound
+    elif isinstance(exc, NotFound):
+        return api_response({
+            "status": "failed",
+            "message": "Resource Not Found",
+            "data": None,
+            "errors": [{
+                "field": "none",
+                "code": "not_found",
+                "message": "The requested resource was not found",
+                "details": None
+            }]
+        }, status=status.HTTP_404_NOT_FOUND)
+
+    # NotAuthenticated
+    elif isinstance(exc, NotAuthenticated):
+        return api_response({
+            "status": "failed",
+            "message": "Authentication Required",
+            "data": None,
+            "errors": [{
+                "field": "none",
+                "code": "authentication_required",
+                "message": "Authentication credentials were not provided",
+                "details": None
+            }]
+        }, status=status.HTTP_401_UNAUTHORIZED)
+
+    # AuthenticationFailed
+    elif isinstance(exc, AuthenticationFailed):
+        return api_response({
+            "status": "failed",
+            "message": "Authentication Failed",
+            "data": None,
+            "errors": [{
+                "field": "none",
+                "code": "authentication_failed",
+                "message": "Authentication credentials are incorrect",
+                "details": None
+            }]
+        }, status=status.HTTP_401_UNAUTHORIZED)
+
+    # Return the default response if no specific handler is found
     return response
