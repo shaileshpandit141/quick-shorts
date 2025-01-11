@@ -1,5 +1,6 @@
 from rest_framework.permissions import BasePermission
 from rest_framework.exceptions import PermissionDenied
+from quick_utils.as_api_response_format import as_api_response_format
 
 class AllowAny(BasePermission):
     def has_permission(self, request, view):
@@ -8,12 +9,14 @@ class AllowAny(BasePermission):
 
     def deny(self, request, message=None):
         # Custom deny method for AllowAny-like behavior
-        raise PermissionDenied({
-            "status": "error",
+        raise PermissionDenied(as_api_response_format({
+            "status": "failed",
             "message": message or "Permission denied.",
-            "errors": {
-                'non_field_errors': [
-                    (message or "This action is not allowed.")
-                ]
-            }
-        })
+            "data": None,
+            "errors": [{
+                "field": "request",
+                "code": "permission_denied",
+                "message": message or "This action is not allowed.",
+                "details": None
+            }]
+        }))

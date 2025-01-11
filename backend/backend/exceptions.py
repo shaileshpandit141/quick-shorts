@@ -6,7 +6,7 @@ from rest_framework.exceptions import (
     NotAuthenticated,
     AuthenticationFailed
 )
-from quick_api_view import response as api_response
+from quick_utils.response import response as api_response
 from rest_framework import status
 
 

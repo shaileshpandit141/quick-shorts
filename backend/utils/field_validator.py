@@ -34,7 +34,7 @@ class FieldValidator:
         """
         self.data = data
         self.fields = fields
-        self.errors = {}
+        self.errors = []
         self.custom_validators = custom_validators or {}
         self.case_sensitive = case_sensitive
         self.validate()
@@ -60,21 +60,46 @@ class FieldValidator:
             if custom_validator := self.custom_validators.get(key):
                 error = custom_validator(value)
                 if error:
-                    self.errors[key] = [error]
+                    self.errors.append({
+                        "field": key,
+                        "code": "code_" + key,
+                        "message": error,
+                        "details": None
+                    })
                 continue
 
             # Check for valid type
             if not isinstance(value, (str, type(None))):
-                self.errors[key] = [self.__get_error_message('invalid_type', key)]
+                self.errors.append({
+                    "field": key,
+                    "code": "invalid_type",
+                    "message": self.__get_error_message('invalid_type', key),
+                    "details": None
+                })
             # Check for empty values
             elif value is None or value.strip() == '':
-                self.errors[key] = [self.__get_error_message('blank', key)]
+                self.errors.append({
+                    "field": key,
+                    "code": "blank",
+                    "message": self.__get_error_message('blank', key),
+                    "details": None
+                })
             elif isinstance(value, str):
                 # Check if value matches field name
                 if (value.lower() == key.lower()) if not self.case_sensitive else (value == key):
-                    self.errors[key] = [self.__get_error_message('invalid_match', key)]
+                    self.errors.append({
+                        "field": key,
+                        "code": "invalid_match",
+                        "message": self.__get_error_message('invalid_match', key),
+                        "details": None
+                    })
                 elif ''.join(key.split('_')).lower() == ''.join(value.split(' ')).lower():
-                    self.errors[key] = [self.__get_error_message('same_as_field_name', key, value)]
+                    self.errors.append({
+                        "field": key,
+                        "code": "same_as_field_name",
+                        "message": self.__get_error_message('same_as_field_name', key, value),
+                        "details": None
+                    })
 
     def is_valid(self) -> bool:
         """Return True if no validation errors were found."""
@@ -96,6 +121,6 @@ class FieldValidator:
             return self.data[field]
         raise KeyError(f'Field "{field}" does not exist in the data')
 
-    def get_errors(self) -> Dict[str, Any]:
-        """Return the dictionary of validation errors."""
+    def get_errors(self) -> List[Dict[str, Any]]:
+        """Return the list of validation errors."""
         return self.errors
