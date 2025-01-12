@@ -52,29 +52,23 @@ def get_throttle_details(self) -> list[ThrottleRateLimitType]:
     throttle_details = []
 
     for throttle_class in self.throttle_classes:
-        print(f"Processing throttle class: {throttle_class.__name__}")
 
         # Instantiate the throttle class
         throttle: BaseThrottle = throttle_class()
 
         # Get throttle rate from settings using the class name
         throttle_name = upper_camel_to_snake_case(throttle_class.__name__)
-        print(f"Throttle name (snake_case): {throttle_name}")
 
         # Match throttle name to the correct setting in DEFAULT_THROTTLE_RATES
         throttle_rate = settings.REST_FRAMEWORK.get("DEFAULT_THROTTLE_RATES", {}).get(throttle_name)
-        print(f"Throttle rate from settings: {throttle_rate}")
 
         if not throttle_rate:
-            print(f"Throttle rate not found for {throttle_name}. Skipping.")
             continue  # Skip this throttle class if no rate is found in settings
 
         # Parse the throttle rate
         parsed_rate = parse_throttle_rate(throttle_rate)
-        print(f"Parsed rate: {parsed_rate}")
 
         if not parsed_rate:
-            print(f"Failed to parse throttle rate for {throttle_name}. Skipping.")
             continue  # Skip this throttle class if the rate is invalid or missing
 
         limit, duration = parsed_rate
