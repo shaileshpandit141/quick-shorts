@@ -6,7 +6,7 @@ from rest_framework.exceptions import (
     NotAuthenticated,
     AuthenticationFailed
 )
-from quick_utils.response import response as api_response
+from quick_utils.response import Response
 from rest_framework import status
 
 
@@ -47,7 +47,7 @@ def custom_exception_handler(exc, context):
                 "details": None
             })
 
-        return api_response({
+        return Response({
             "status": "failed",
             "message": "Validation error",
             "data": None,
@@ -56,7 +56,7 @@ def custom_exception_handler(exc, context):
 
     # MethodNotAllowed
     elif isinstance(exc, MethodNotAllowed):
-        return api_response({
+        return Response({
             "status": "failed",
             "message": "Method Not Allowed",
             "data": None,
@@ -70,7 +70,7 @@ def custom_exception_handler(exc, context):
 
     # NotFound
     elif isinstance(exc, NotFound):
-        return api_response({
+        return Response({
             "status": "failed",
             "message": "Resource Not Found",
             "data": None,
@@ -84,7 +84,7 @@ def custom_exception_handler(exc, context):
 
     # NotAuthenticated
     elif isinstance(exc, NotAuthenticated):
-        return api_response({
+        return Response({
             "status": "failed",
             "message": "Authentication Required",
             "data": None,
@@ -98,7 +98,7 @@ def custom_exception_handler(exc, context):
 
     # AuthenticationFailed
     elif isinstance(exc, AuthenticationFailed):
-        return api_response({
+        return Response({
             "status": "failed",
             "message": "Authentication Failed",
             "data": None,
@@ -109,6 +109,20 @@ def custom_exception_handler(exc, context):
                 "details": None
             }]
         }, status=status.HTTP_401_UNAUTHORIZED)
+
+    # General Exception
+    elif isinstance(exc, Exception):
+        return Response({
+            "status": "failed",
+            "message": "Internal Server Error",
+            "data": None,
+            "errors": [{
+                "field": "none",
+                "code": "server_error",
+                "message": str(exc),
+                "details": None
+            }]
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     # Return the default response if no specific handler is found
     return response

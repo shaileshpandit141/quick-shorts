@@ -112,7 +112,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ["rest_framework_simplejwt.authentication.JWTAuthentication"],
     "DEFAULT_PERMISSION_CLASSES": ["permissions.IsAuthenticated"],
     "EXCEPTION_HANDLER": "backend.exceptions.custom_exception_handler",
-    "DEFAULT_THROTTLE_CLASSES": ["throttles.AnonRateThrottle", "throttles.UserRateThrottle"],
+    "DEFAULT_THROTTLE_CLASSES": ["throttling.AnonRateThrottle", "throttling.UserRateThrottle"],
     "DEFAULT_THROTTLE_RATES": {"anon": "100/day", "user": "1000/day"},
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
 }
