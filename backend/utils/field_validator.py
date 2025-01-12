@@ -121,6 +121,3 @@ class FieldValidator:
             return self.data[field]
         raise KeyError(f'Field "{field}" does not exist in the data')
 
-    def get_errors(self) -> List[Dict[str, Any]]:
-        """Return the list of validation errors."""
-        return self.errors
