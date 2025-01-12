@@ -8,7 +8,7 @@ from typing import (
     Union,
     List
 )
-from ..throttling import (
+from backend.throttling import (
     AnonRateThrottle,
     UserRateThrottle
 )

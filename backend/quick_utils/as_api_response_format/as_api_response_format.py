@@ -7,7 +7,7 @@ def as_api_response_format(data: ResponseDataType) -> ResponseDataType:
         "status": data["status"],
         "message": data["message"],
         "data": data.get("data", None),
-        "errors": data.get("errors", None),
+        "errors": data.get("errors", []),
         "meta": None
     }
 

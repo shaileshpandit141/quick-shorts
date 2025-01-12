@@ -31,7 +31,7 @@ def response(
         "status": data["status"],
         "message": data["message"],
         "data": data.get("data", None),
-        "errors": data.get("errors", None),
+        "errors": data.get("errors", []),
         "meta": None
     }
 

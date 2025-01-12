@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import MethodNotAllowed
 from rest_framework import status
 from .views_types import ResponseDataType
-from ..throttling import AnonRateThrottle
+from backend.throttling import AnonRateThrottle
 from ..get_throttle_details import get_throttle_details
 
 
@@ -39,7 +39,7 @@ class QuickAPIView(APIView):
             "status": data["status"],
             "message": data["message"],
             "data": data.get("data", None),
-            "errors": data.get("errors", None),
+            "errors": data.get("errors", []),
             "meta": None
         }
 
