@@ -1,71 +1,26 @@
 from typing import Any, Dict, Optional
-from datetime import datetime
-import uuid
 from django.db.models import QuerySet
 from django.core.paginator import Paginator
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.exceptions import MethodNotAllowed
 from rest_framework import status
-from .views_types import ResponseDataType
-from backend.throttling import AnonRateThrottle
+from ..types import (
+    ResponseDataType,
+    SuccessResponseDataType,
+    ErrorResponseDataType,
+    MetaType
+)
+from ..response import Response
 from ..get_throttle_details import get_throttle_details
 
 
 class QuickAPIView(APIView):
     """Base API view with helper methods for quick API development"""
 
-    throttle_classes = [AnonRateThrottle]
-
     def __init__(self, *args, **kwargs) -> None:
         """Initialize view with status attribute"""
         self.status = status
+        self.get_throttle_details = get_throttle_details
         super().__init__(*args, **kwargs)
-
-    def response(
-        self,
-        data: ResponseDataType,
-        status=None,
-        template_name: Optional[str] = None,
-        headers: Optional[Dict[str, str]] = None,
-        exception: bool = False,
-        content_type: Optional[str] = None
-    ) -> Response:
-        """
-        Create standardized API response with status, message, data, errors and meta info.
-        Optionally includes pagination data if provided.
-        """
-        payload: ResponseDataType = {
-            "status": data["status"],
-            "message": data["message"],
-            "data": data.get("data", None),
-            "errors": data.get("errors", []),
-            "meta": None
-        }
-
-        pagination = data.get("pagination", None)
-        if pagination is not None:
-            payload["pagination"] = pagination
-
-        payload["meta"] = {
-            "request_id": str(uuid.uuid4()),
-            "timestamp": datetime.utcnow().isoformat(),
-            "documentation_url": "https://api.example.com/docs",
-            "rate_limit": get_throttle_details(
-                QuickAPIView.throttle_classes,
-                self.request,
-                self
-            )
-        }
-
-        return Response(
-            data=payload,
-            status=status,
-            template_name=template_name,
-            headers=headers,
-            exception=exception,
-            content_type=content_type
-        )
 
     def get_query(self, model, *args, **kwargs) -> Dict[str, Any] | None:
         """Get single model instance or None if not found"""
@@ -115,20 +70,89 @@ class QuickAPIView(APIView):
         }
         return paginated_data
 
-    def handle_exception(self, exc: Exception) -> Response:
-        """Handle API exceptions, providing standardized error responses"""
-        if isinstance(exc, MethodNotAllowed):
-            return self.response({
-                "status": "failed",
-                "message": "Method not allowed",
-                "data": None,
-                "errors": [
-                    {
-                        "field": "none",
-                        "code": "method_not_allowed",
-                        "message": "The requested HTTP method is not allowed for this endpoint",
-                        "details": None
-                    }
-                ]
-            }, self.status.HTTP_405_METHOD_NOT_ALLOWED)
-        return super().handle_exception(exc)
+    def __get_meta(self, meta: MetaType | None) -> MetaType:
+        if meta is None:
+            return {
+                "rate_limit": get_throttle_details(self)
+            }
+        else:
+            return {
+                **meta,
+                "rate_limit": get_throttle_details(self)
+            }
+
+    def response(
+        self,
+        data: ResponseDataType,
+        status: Optional[int] = None,
+        template_name: Optional[str] = None,
+        headers: Optional[Dict[str, str]] = None,
+        exception: bool = False,
+        content_type: Optional[str] = None
+    ) -> Response:
+        meta = data.get("meta", None)
+        data.update({
+            "meta": self.__get_meta(meta)}
+        )
+        return Response(
+            data=data,
+            status=status,
+            template_name=template_name,
+            headers=headers,
+            exception=exception,
+            content_type=content_type
+        )
+
+    def success_response(
+        self,
+        data: SuccessResponseDataType,
+        status: Optional[int] = None,
+        template_name: Optional[str] = None,
+        headers: Optional[Dict[str, str]] = None,
+        exception: bool = False,
+        content_type: Optional[str] = None
+    ) -> Response:
+        meta = data.get("meta", None)
+        payload: ResponseDataType = {
+            "status": "succeeded",
+            "message": data["message"],
+            "data": data["data"],
+            "errors": None,
+            "meta": self.__get_meta(meta)
+        }
+
+        return Response(
+            data=payload,
+            status=status,
+            template_name=template_name,
+            headers=headers,
+            exception=exception,
+            content_type=content_type
+        )
+
+    def error_response(
+        self,
+        data: ErrorResponseDataType,
+        status: Optional[int] = None,
+        template_name: Optional[str] = None,
+        headers: Optional[Dict[str, str]] = None,
+        exception: bool = False,
+        content_type: Optional[str] = None
+    ) -> Response:
+        meta = data.get("meta", None)
+        payload: ResponseDataType = {
+            "status": "failed",
+            "message": data["message"],
+            "data": None,
+            "errors": data["errors"],
+            "meta": self.__get_meta(meta)
+        }
+
+        return Response(
+            data=payload,
+            status=status,
+            template_name=template_name,
+            headers=headers,
+            exception=exception,
+            content_type=content_type
+        )

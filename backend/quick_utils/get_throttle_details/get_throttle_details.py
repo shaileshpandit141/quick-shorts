@@ -3,7 +3,7 @@ import pytz
 import re
 from rest_framework.throttling import BaseThrottle
 from django.conf import settings
-from .get_throttle_details_types import ThrottleRateLimitType
+from ..types import ThrottleRateLimitType
 
 
 def upper_camel_to_snake_case(string: str) -> str:
@@ -36,21 +36,22 @@ def parse_throttle_rate(rate: str) -> tuple[int, int] | None:
     return None
 
 
-def get_throttle_details(throttle_classes: list, request, view) -> dict[str, ThrottleRateLimitType]:
+def get_throttle_details(self) -> list[ThrottleRateLimitType]:
     """
     Retrieve throttle details for all specified throttle classes.
-
-    Args:
-        throttle_classes (list): A list of throttle classes to evaluate.
-        request: The current HTTP request object.
-        view: The current view instance.
 
     Returns:
         dict[str, ThrottleRateLimitType]: A dictionary mapping throttle class names to their details.
     """
-    throttle_details = {}
+    if not hasattr(self, 'throttle_classes'):
+        raise AttributeError(f"throttle_classes not found on class {type(self).__name__}")
 
-    for throttle_class in throttle_classes:
+    if not hasattr(self, 'request'):
+        raise AttributeError(f"request not found on class {type(self).__name__}")
+
+    throttle_details = []
+
+    for throttle_class in self.throttle_classes:
         print(f"Processing throttle class: {throttle_class.__name__}")
 
         # Instantiate the throttle class
@@ -79,7 +80,7 @@ def get_throttle_details(throttle_classes: list, request, view) -> dict[str, Thr
         limit, duration = parsed_rate
 
         # Retrieve the cache key
-        cache_key = throttle.get_cache_key(request, view)  # type: ignore
+        cache_key = throttle.get_cache_key(self.request, self)  # type: ignore
         if cache_key:
             # Access the backend to count requests made
             history = throttle.cache.get(cache_key, [])  # type: ignore
@@ -98,10 +99,11 @@ def get_throttle_details(throttle_classes: list, request, view) -> dict[str, Thr
             reset_time = datetime.now(pytz.UTC) + timedelta(seconds=duration)
 
         # Add throttle details to the dictionary
-        throttle_details[throttle_name] = {
+        throttle_details.append({
+            "type": throttle_name,
             "limit": limit,
             "remaining": remaining,
             "reset_time": reset_time.isoformat(),
-        }
+        })
 
     return throttle_details

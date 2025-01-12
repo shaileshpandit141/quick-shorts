@@ -1,6 +1,6 @@
 from datetime import datetime
 import uuid
-from .as_api_response_format_types import ResponseDataType
+from ..types import ResponseDataType
 
 def as_api_response_format(data: ResponseDataType) -> ResponseDataType:
     payload: ResponseDataType = {
