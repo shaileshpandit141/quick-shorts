@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 class TokenGeneratorResponse(TypedDict):
     token: str
     token_salt: str
+    message: str
 
 
 class TokenGenerator:
@@ -45,7 +46,8 @@ class TokenGenerator:
         logger.debug("Token generated successfully")
         return {
             'token': generated_token,
-            'token_salt': token_salt
+            'token_salt': token_salt,
+            'message': 'Token generated successfully'
         }
 
     @staticmethod
@@ -67,9 +69,10 @@ class TokenGenerator:
 
             if token_expiry_time < datetime.utcnow():
                 logger.warning("Token has expired")
-                raise ValueError("The token has expired.")
+                raise ValueError("The token has expired. Please request a new token.")
             logger.debug("Token decoded successfully")
+            decoded_payload['message'] = 'Token decoded successfully'
             return decoded_payload
         except (SignatureExpired, BadSignature) as validation_error:
             logger.error(f"Token validation failed: {str(validation_error)}")
-            raise ValueError(f"Invalid or expired token: {str(validation_error)}")
+            raise ValueError(f"Invalid or expired token. Please request a new token.")
