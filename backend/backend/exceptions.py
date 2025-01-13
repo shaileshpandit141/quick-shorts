@@ -119,7 +119,7 @@ def custom_exception_handler(exc, context):
             "errors": [{
                 "field": "none",
                 "code": "server_error",
-                "message": str(exc),
+                "message": exc[0] if isinstance(exc, list) else str(exc),
                 "details": None
             }]
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
