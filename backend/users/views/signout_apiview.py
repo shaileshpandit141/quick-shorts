@@ -1,81 +1,50 @@
 # Django REST framework imports
-from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
-from rest_framework.views import APIView
 
 # Local imports
+from quick_utils.views import QuickAPIView, Response
 from permissions import AllowAny
-from throttles import AnonRateThrottle
-from utils import Response, FieldValidator
+from throttling import AnonRateThrottle
+from utils import FieldValidator
 
 
-class SignoutAPIView(APIView):
-    """API view for user sign out functionality.
+class SignoutAPIView(QuickAPIView):
+    """API view for user sign out functionality."""
 
-    This view handles user sign out by blacklisting their JWT refresh token.
-    Only POST method is supported. All other HTTP methods return 405 Method Not Allowed.
-    Requires user authentication and implements rate limiting.
-    """
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
-    def get(self, request, *args, **kwargs) -> Response.type:
-        """GET method not supported for sign out."""
-        return Response.method_not_allowed('GET')
+    def post(self, request, *args, **kwargs) -> Response:
+        """Handle user sign out by blacklisting their refresh token."""
 
-    def post(self, request, *args, **kwargs) -> Response.type:
-        """Handle user sign out by blacklisting their refresh token.
-
-        Args:
-            request: HTTP request object containing refresh_token in request.data
-
-        Returns:
-            Response object with success/error message
-
-        Raises:
-            ValidationError: If refresh_token is missing or invalid
-        """
         # Validate the refresh token is present in request data
-        clean_data = FieldValidator(request.data, ['refresh_token'])
+        clean_data = FieldValidator(request.data, ["refresh_token"])
         if not clean_data.is_valid():
-            return Response.error({
-                'message': 'Invalid Request',
-                'errors': clean_data.get_errors()
-            })
+            return self.error_response({
+                "message": "Please provide a valid refresh token",
+                "errors": clean_data.errors
+            }, self.status.HTTP_400_BAD_REQUEST)
 
         try:
             # Get and blacklist the refresh token
-            token = RefreshToken(clean_data.get('refresh_token'))
+            token = RefreshToken(clean_data.get("refresh_token"))
             token.blacklist()
 
-            return Response.success({
-                'message': 'Sign out successful',
-                'data': {
-                    'detail': 'Token successfully blacklisted.'
+            return self.success_response({
+                "message": "You have been successfully signed out",
+                "data": {
+                    "detail": "Your session has been terminated"
                 }
-            }, status.HTTP_200_OK)
+            }, self.status.HTTP_200_OK)
 
         except TokenError:
-            return Response.error({
-                'message': 'Invalid token',
-                'errors': {
-                    'non_field_errors': ['Token is invalid or expired']
-                }
-            }, status.HTTP_400_BAD_REQUEST)
-
-    def put(self, request, *args, **kwargs) -> Response.type:
-        """PUT method not supported for sign out."""
-        return Response.method_not_allowed('PUT')
-
-    def patch(self, request, *args, **kwargs) -> Response.type:
-        """PATCH method not supported for sign out."""
-        return Response.method_not_allowed('PATCH')
-
-    def delete(self, request, *args, **kwargs) -> Response.type:
-        """DELETE method not supported for sign out."""
-        return Response.method_not_allowed('DELETE')
-
-    def options(self, request, *args, **kwargs) -> Response.type:
-        """Return allowed HTTP methods for this endpoint."""
-        return Response.options(['POST'])
+            return self.error_response({
+                "message": "Unable to process token",
+                "errors": [{
+                    "field": "none",
+                    "code": "invalid_token",
+                    "message": "The provided token is invalid or has already expired",
+                    "details": None
+                }]
+            }, self.status.HTTP_400_BAD_REQUEST)

@@ -3,20 +3,16 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.hashers import make_password
-
-# Django REST framework imports
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.exceptions import ValidationError
+from django.core.exceptions import ValidationError
 
 # Import the DNSSMTPEmailValidator
 from dns_smtp_email_validator import DNSSMTPEmailValidator
 
 # Local imports
+from quick_utils.views import QuickAPIView, Response
 from permissions import AllowAny
-from throttles import AnonRateThrottle
+from throttling import AnonRateThrottle
 from utils import (
-    Response,
     SendEmail,
     TokenGenerator,
     add_query_params,
@@ -27,77 +23,65 @@ from users.serializers import UserSerializer
 User = get_user_model()
 
 
-class SignupAPIView(APIView):
-    """
-    API view for handling user signup functionality.
-    Allows new users to register and sends email verification.
-    """
+class SignupAPIView(QuickAPIView):
+    """API view for handling user signup functionality"""
 
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
-    def get(self, request, *args, **kwargs) -> Response.type:
-        """Disallow GET method"""
-        return Response.method_not_allowed('GET')
+    def post(self, request, *args, **kwargs) -> Response:
+        """Handle user registration"""
 
-    def post(self, request, *args, **kwargs) -> Response.type:
-        """
-        Handle user registration:
-        1. Validate required fields (email, password, confirm_password)
-        2. Validate and hash password
-        3. Create new user
-        4. Send verification email
-
-        Returns:
-            Success response with verification email status or
-            Error response with validation errors
-        """
         # Validate required fields
         clean_data = FieldValidator(request.data, [
-            'email',
-            'password',
-            'confirm_password'
+            "email",
+            "password",
+            "confirm_password"
         ])
 
         if not clean_data.is_valid():
-            return Response.error({
-                'message': 'Validation error',
-                'errors': clean_data.get_errors()
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return self.error_response({
+                "message": "Validation error",
+                "errors": clean_data.errors
+            }, self.status.HTTP_400_BAD_REQUEST)
 
-        email = clean_data.get('email')
-        password = clean_data.get('password')
-        confirm_password = clean_data.get('confirm_password')
+        email = clean_data.get("email")
+        password = clean_data.get("password")
+        confirm_password = clean_data.get("confirm_password")
 
         # Validate password meets requirements
         try:
             validate_password(password)
         except ValidationError as error:
-            return Response.error({
-                'message': 'Invalid password',
-                'errors': {
-                    'password': [str(error)]
-                }
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return self.error_response({
+                "message": "Validation error",
+                "errors": [{
+                    "field": "password",
+                    "code": "invalid_password",
+                    "message": error[0] if isinstance(error, list) else str(error),
+                    "details": None
+                }]
+            }, self.status.HTTP_400_BAD_REQUEST)
 
         # Check password confirmation matches
         if password != confirm_password:
-            return Response.error({
-                'message': 'Validation error',
-                'errors': {
-                    'confirm_password': ['Confirm password is not equal to password']
-                }
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return self.error_response({
+                "message": "Validation error",
+                "errors": [{
+                    "field": "none",
+                    "code": "confirm_password_not_metch",
+                    "message": "Confirm password is not equal to password",
+                    "details": None
+                }]
+            }, self.status.HTTP_400_BAD_REQUEST)
 
         # Validate the email is exist in the internet or not
         validator = DNSSMTPEmailValidator(email)
         if not validator.is_valid():
-            return Response.error({
-                'message': 'Email Validation Failed',
-                'errors': {
-                    'email': validator.errors
-                }
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return self.error_response({
+                "message": "Email Validation Failed",
+                "errors": validator.errors
+            }, self.status.HTTP_400_BAD_REQUEST)
 
         # Hash the password for secure storage
         hashed_password = make_password(password)
@@ -134,30 +118,14 @@ class SignupAPIView(APIView):
                 }
             })
 
-            return Response.success({
-                'message': 'Verification email sent',
-                'data': {
-                    'detail': 'Please check your inbox for the email verification'
+            return self.success_response({
+                "message": "Sign up Successful",
+                "data": {
+                    "detail": "Please check your inbox for the email verification"
                 }
-            }, status=status.HTTP_200_OK)
+            }, self.status.HTTP_200_OK)
 
-        return Response.error({
+        return self.error_response({
             'message': 'Invalid data provided',
-            'errors': serializer.errors  # type: ignore
-        }, status=status.HTTP_400_BAD_REQUEST)
-
-    def put(self, request, *args, **kwargs) -> Response.type:
-        """Disallow PUT method"""
-        return Response.method_not_allowed('PUT')
-
-    def patch(self, request, *args, **kwargs) -> Response.type:
-        """Disallow PATCH method"""
-        return Response.method_not_allowed('PATCH')
-
-    def delete(self, request, *args, **kwargs) -> Response.type:
-        """Disallow DELETE method"""
-        return Response.method_not_allowed('DELETE')
-
-    def options(self, request, *args, **kwargs) -> Response.type:
-        """Return allowed HTTP methods for this endpoint."""
-        return Response.options(['POST'])
+            'errors': self.format_serializer_errors(serializer.errors)
+        }, self.status.HTTP_400_BAD_REQUEST)

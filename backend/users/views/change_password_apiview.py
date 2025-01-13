@@ -2,78 +2,65 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 
-# Django REST framework imports
-from rest_framework import status
-from rest_framework.views import APIView
-
 # Local imports
+from quick_utils.views import QuickAPIView, Response
 from permissions import IsAuthenticated
-from throttles import UserRateThrottle
-from utils import Response, SendEmail, FieldValidator
+from throttling import UserRateThrottle
+from utils import SendEmail, FieldValidator
 
 User = get_user_model()
 
 
-class ChangePasswordAPIView(APIView):
-    """API view for changing user password.
-
-    Supports only POST method for changing password.
-    Requires authentication and implements rate limiting.
-    """
+class ChangePasswordAPIView(QuickAPIView):
+    """Changes authenticated user's password."""
+    
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
 
-    def get(self, request, *args, **kwargs) -> Response.type:
-        """GET method not supported for password change."""
-        return Response.method_not_allowed('GET')
+    def post(self, request, *args, **kwargs) -> Response:
+        """Changes user password after validation."""
 
-    def post(self, request, *args, **kwargs) -> Response.type:
-        """Change user password.
-
-        Args:
-            request: HTTP request containing old_password and new_password
-
-        Returns:
-            Response with success/error message
-
-        Raises:
-            400 Bad Request: If validation fails or old password is incorrect
-        """
         user = request.user
 
         # Validate required fields
         clean_data = FieldValidator(request.data, [
-            'old_password',
-            'new_password'
+            "old_password",
+            "new_password"
         ])
 
         if not clean_data.is_valid():
-            return Response.error({
-                'message': 'Validation error',
-                'errors': clean_data.get_errors()
-            }, status.HTTP_400_BAD_REQUEST)
+            return self.error_response({
+                "message": "Please provide both old and new passwords",
+                "errors": clean_data.errors
+            }, self.status.HTTP_400_BAD_REQUEST)
 
-        # Verify current password is correct
+        # Check if old password is correct
         if not user.check_password(clean_data.get('old_password')):
-            return Response.error({
-                'message': 'Old password is incorrect',
-                'errors': {
-                    'old_password': 'Old password is incorrect'
-                }
-            }, status.HTTP_400_BAD_REQUEST)
+            return self.error_response({
+                "message": "The old password you entered is incorrect",
+                "errors": [{
+                    "field": "old_password",
+                    "code": "old_password_incorrect",
+                    "message": "Please enter your current password correctly",
+                    "details": None
+                }]
+            }, self.status.HTTP_400_BAD_REQUEST)
 
-        # Validate new password meets requirements
+        # Validate new password complexity
         try:
             validate_password(clean_data.get('new_password'))
         except Exception as error:
-            return Response.error({
-                'message': 'New password Invalid',
-                'errors': {
-                    'password': error  # type: ignore
-                }
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return self.error_response({
+                "message": "Your new password does not meet the requirements",
+                "errors": [{
+                    "field": "new_password",
+                    "code": "invalid_password",
+                    "message": str(error),
+                    "details": None
+                }]
+            }, self.status.HTTP_400_BAD_REQUEST)
 
-        # Update password and notify user
+        # Set new password and notify user via email
         user.set_password(clean_data.get('new_password'))
         user.save()
         SendEmail({
@@ -89,25 +76,9 @@ class ChangePasswordAPIView(APIView):
                 'html': 'users/change_password/success_message.html'
             }
         })
-        return Response.success({
-            'message': 'Your password has been changed',
+        return self.success_response({
+            'message': 'Password updated successfully',
             'data': {
-                'detail': 'Your new password has been changed successfully'
+                'detail': 'Your password has been changed. Please use your new password for future signin.'
             }
-        }, status.HTTP_200_OK)
-
-    def put(self, request, *args, **kwargs) -> Response.type:
-        """PUT method not supported for password change."""
-        return Response.method_not_allowed('PUT')
-
-    def patch(self, request, *args, **kwargs) -> Response.type:
-        """PATCH method not supported for password change."""
-        return Response.method_not_allowed('PATCH')
-
-    def delete(self, request, *args, **kwargs) -> Response.type:
-        """DELETE method not supported for password change."""
-        return Response.method_not_allowed('DELETE')
-
-    def options(self, request, *args, **kwargs) -> Response.type:
-        """Return allowed HTTP methods for this endpoint."""
-        return Response.options(['POST'])
+        }, self.status.HTTP_200_OK)
