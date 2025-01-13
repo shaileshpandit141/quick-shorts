@@ -58,6 +58,7 @@ class ResponseDataType(TypedDict):
 class SuccessResponseDataType(TypedDict):
     message: str
     data: Dict[str, Any] | List[Dict[str, Any]]
+    pagination: NotRequired[PaginationType]
     meta: NotRequired[MetaType | None]
 
 
