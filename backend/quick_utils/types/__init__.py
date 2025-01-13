@@ -3,7 +3,8 @@ from .types import (
     ResponseDataType,
     SuccessResponseDataType,
     ErrorResponseDataType,
-    ThrottleRateLimitType
+    ThrottleRateLimitType,
+    ErrorsType
 )
 
 __all__ = [
@@ -11,5 +12,6 @@ __all__ = [
     "MetaType",
     "SuccessResponseDataType",
     "ErrorResponseDataType",
-    "ThrottleRateLimitType"
+    "ThrottleRateLimitType",
+    "ErrorsType"
 ]

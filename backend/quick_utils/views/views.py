@@ -11,6 +11,7 @@ from ..types import (
 )
 from ..response import Response
 from ..get_throttle_details import get_throttle_details
+from ..format_serializer_errors import format_serializer_errors
 
 
 class QuickAPIView(APIView):
@@ -20,6 +21,7 @@ class QuickAPIView(APIView):
         """Initialize view with status attribute"""
         self.status = status
         self.get_throttle_details = get_throttle_details
+        self.format_serializer_errors = format_serializer_errors
         super().__init__(*args, **kwargs)
 
     def get_query(self, model, *args, **kwargs) -> Dict[str, Any] | None:

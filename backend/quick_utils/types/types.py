@@ -34,27 +34,15 @@ class MetaType(TypedDict):
     rate_limit: NotRequired[List[ThrottleRateLimitType]]
 
 
-class DetailType(TypedDict):
-    """Type for error detail information"""
-    requirements: NotRequired[List[str]]
-    limit: NotRequired[int]
-    remaining: NotRequired[int]
-    reset_time: NotRequired[int]
-    min_length: NotRequired[int]
-    max_length: NotRequired[int]
-    pattern: NotRequired[str]
-    retry_after: NotRequired[str]
-    field_type: NotRequired[str]
-    expected_format: NotRequired[str]
-    example_value: NotRequired[str]
-
-
-class ErrorsType(TypedDict):
+class ErrorsFieldType(TypedDict):
     """Type for API error responses"""
     field: str
     code: str
     message: str
-    details: Optional[DetailType | Dict[str, Any]]
+    details: Optional[Dict[str, Any]]
+
+
+ErrorsType = List[ErrorsFieldType]
 
 
 class ResponseDataType(TypedDict):
@@ -63,7 +51,7 @@ class ResponseDataType(TypedDict):
     message: str
     data: Optional[Dict[str, Any] | List[Dict[str, Any]]]
     pagination: NotRequired[PaginationType]
-    errors: Optional[List[ErrorsType]]
+    errors: Optional[ErrorsType]
     meta: NotRequired[MetaType | None]
 
 
@@ -75,5 +63,5 @@ class SuccessResponseDataType(TypedDict):
 
 class ErrorResponseDataType(TypedDict):
     message: str
-    errors: List[ErrorsType]
+    errors: ErrorsType
     meta: NotRequired[MetaType | None]
