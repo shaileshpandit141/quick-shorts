@@ -19,12 +19,13 @@ class Response(DRFResponse):
         exception: bool = False,
         content_type: Optional[str] = None,
     ):
+        errors = data.get("errors", None)
         # Standardized response payload structure
         payload = {
             "status": data.get("status", "success"),
             "message": data.get("message", "Request processed successfully."),
             "data": data.get("data", None),
-            "errors": data.get("errors", []),
+            "errors": [] if errors is None else errors,
             "meta": self._generate_meta(data.get("meta", None)),
         }
 

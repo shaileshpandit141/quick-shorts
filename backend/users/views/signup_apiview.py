@@ -53,14 +53,17 @@ class SignupAPIView(QuickAPIView):
         try:
             validate_password(password)
         except ValidationError as error:
-            return self.error_response({
-                "message": "Validation error",
-                "errors": [{
+            errors = [] 
+            for message in error:
+                errors.append({
                     "field": "password",
                     "code": "invalid_password",
-                    "message": error[0] if isinstance(error, list) else str(error),
+                    "message": message,
                     "details": None
-                }]
+                })
+            return self.error_response({
+                "message": "Validation error",
+                "errors": errors
             }, self.status.HTTP_400_BAD_REQUEST)
 
         # Check password confirmation matches
@@ -121,7 +124,7 @@ class SignupAPIView(QuickAPIView):
             return self.success_response({
                 "message": "Sign up Successful",
                 "data": {
-                    "detail": "Please check your inbox for the email verification"
+                    "detail": "Please check your inbox for the account verification"
                 }
             }, self.status.HTTP_200_OK)
 

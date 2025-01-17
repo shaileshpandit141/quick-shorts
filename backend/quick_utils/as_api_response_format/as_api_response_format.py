@@ -3,11 +3,13 @@ import uuid
 from ..types import ResponseDataType
 
 def as_api_response_format(data: ResponseDataType) -> ResponseDataType:
+    errors = data.get("errors", None)
+
     payload: ResponseDataType = {
         "status": data["status"],
         "message": data["message"],
         "data": data.get("data", None),
-        "errors": data.get("errors", []),
+        "errors": [] if errors is None else errors,
         "meta": None
     }
 
