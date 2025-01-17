@@ -220,7 +220,6 @@ class User(AbstractBaseUser, PermissionsMixin):
             'is_superuser': False,
             'is_verified': False
         }
-
         for field, value in default_values.items():
             self.add_default_value(field, value)
 
