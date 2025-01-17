@@ -3,18 +3,21 @@ import API from 'API'
 import {
   SigninInitialState,
   SigninSuccessResponse,
-  RefreshTokenSuccessResponse,
-  SigninErrorResponse,
-  RefreshTokenErrorResponse
+  RefreshTokenSuccessResponse
 } from './signin.types'
 import { SigninCredentials } from 'API/API.types'
-import { CatchAxiosError } from 'FeatureTypes'
+import { CatchAxiosError, ErrorResponse } from 'FeatureTypes'
+import { formatCatchAxiosError } from 'utils/formatCatchAxiosError'
 
 /**
  * Redux thunk to handle user sign in
  * Makes API call with credentials and returns success/error response
  */
-export const signinThunk = createAsyncThunk(
+export const signinThunk = createAsyncThunk<
+  SigninSuccessResponse,
+  SigninCredentials,
+  { rejectValue: ErrorResponse }
+>(
   'signin/signinThunk',
   async (credentials: SigninCredentials, thunkAPI) => {
     try {
@@ -22,18 +25,7 @@ export const signinThunk = createAsyncThunk(
       return response.data as SigninSuccessResponse
     } catch (err: unknown) {
       const error = err as CatchAxiosError
-      let errorResponse: SigninErrorResponse
-      if (error.response) {
-        errorResponse = error.response.data
-      } else {
-        errorResponse = {
-          status: 'failed',
-          message: error.message ?? 'An unknown error occurred',
-          errors: {
-            non_field_errors: [error.message ?? 'An unknown error occurred']
-          }
-        }
-      }
+      let errorResponse = formatCatchAxiosError(error)
       return thunkAPI.rejectWithValue(errorResponse)
     }
   }
@@ -49,36 +41,14 @@ export const refreshTokenThunk = createAsyncThunk(
   async (_: void, thunkAPI) => {
     const state = thunkAPI.getState() as SigninInitialState
     const refresh_token = state.data?.refresh_token
-
-    if (!refresh_token) {
-      return thunkAPI.rejectWithValue({
-        status: 'failed',
-        message: 'No refresh token available',
-        errors: {
-          non_field_errors: ['No refresh token available']
-        }
-      })
-    }
-
     try {
       const response = await API.refreshTokenApi({
-        refresh_token: refresh_token
+        refresh_token: refresh_token || ""
       })
       return response.data as RefreshTokenSuccessResponse
     } catch (err: unknown) {
       const error = err as CatchAxiosError
-      let errorResponse: RefreshTokenErrorResponse
-      if (error.response) {
-        errorResponse = error.response.data
-      } else {
-        errorResponse = {
-          status: 'failed',
-          message: error.message ?? 'An unknown error occurred',
-          errors: {
-            non_field_errors: [error.message ?? 'An unknown error occurred']
-          }
-        }
-      }
+      let errorResponse = formatCatchAxiosError(error)
       return thunkAPI.rejectWithValue(errorResponse)
     }
   }

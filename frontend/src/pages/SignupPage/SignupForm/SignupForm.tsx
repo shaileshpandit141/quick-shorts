@@ -8,7 +8,7 @@ import {
   resetSignupState
 } from 'features/auth'
 import { useDispatch } from 'react-redux'
-import { DisplayErrors } from 'components'
+import { DisplayFormErrors } from 'components'
 import { useFormDataChange } from 'hooks/useFormDataChange'
 import { SignupCredentials } from 'API/API.types'
 
@@ -46,9 +46,7 @@ const SignupForm: React.FC = (props) => {
         value={formData.email}
         onChange={handleFormDataChange}
         isDisabled={status === 'loading' || status === 'succeeded'}
-        errorMessage={errors?.email
-          && errors.email
-        }
+        errors={errors}
       />
       <Input
         name='password'
@@ -56,9 +54,7 @@ const SignupForm: React.FC = (props) => {
         value={formData.password}
         onChange={handleFormDataChange}
         isDisabled={status === 'loading' || status === 'succeeded'}
-        errorMessage={errors?.password
-          && errors.password
-        }
+        errors={errors}
       />
       <Input
         name='confirm_password'
@@ -66,13 +62,9 @@ const SignupForm: React.FC = (props) => {
         value={formData.confirm_password}
         onChange={handleFormDataChange}
         isDisabled={status === 'loading' || status === 'succeeded'}
-        errorMessage={errors?.confirm_password
-          && errors.confirm_password
-        }
+        errors={errors}
       />
-      {errors?.non_field_errors
-        && <DisplayErrors message={errors.non_field_errors} />
-      }
+      <DisplayFormErrors field={'none'} errors={errors} />
       {data?.detail && (
         <p>{data.detail}</p>
       )}

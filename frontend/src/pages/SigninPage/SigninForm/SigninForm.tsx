@@ -5,7 +5,7 @@ import { Input } from 'components'
 import { AnchorLink } from 'components'
 import { signinThunk, useSigninSelector, resetSignoutState } from 'features/auth'
 import { useDispatch } from 'react-redux'
-import { DisplayErrors } from 'components'
+import { DisplayFormErrors } from 'components'
 import { useFormDataChange } from 'hooks/useFormDataChange'
 import { SigninCredentials } from 'API/API.types'
 import { Button } from 'components'
@@ -59,9 +59,7 @@ const SigninForm: React.FC = () => {
         onChange={handleFormDataChange}
         isDisabled={status === 'loading'}
       />
-      {errors?.non_field_errors
-        && <DisplayErrors message={errors.non_field_errors} />
-      }
+      <DisplayFormErrors field={'none'} errors={errors} />
       <div className='actions'>
         <span></span>
         <Link

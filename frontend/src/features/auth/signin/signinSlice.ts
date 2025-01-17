@@ -6,10 +6,9 @@
 // Required imports for authentication slice
 import { createSlice } from "@reduxjs/toolkit"
 import {
-  SigninInitialState,
-  SigninErrorResponse,
-  RefreshTokenErrorResponse
+  SigninInitialState
 } from "./signin.types"
+import { ErrorResponse } from 'FeatureTypes';
 import {
   signinThunk,
   refreshTokenThunk
@@ -23,8 +22,13 @@ const signinIntitlState: SigninInitialState = {
     access_token: localStorage.getItem('access_token'),
     refresh_token: localStorage.getItem('refresh_token')
   },
-  errors: null,
-  meta: null
+  errors: [],
+  meta: {
+    request_id: "",
+    timestamp: "",
+    documentation_url: "",
+    rate_limit: []
+  }
 }
 
 // Authentication slice definition with reducers and async thunks
@@ -38,8 +42,7 @@ const signinSlice = createSlice({
       state.message = ''
       state.data.access_token = null
       state.data.refresh_token = null
-      state.errors = null
-      state.meta = null
+      state.errors = []
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
     }
@@ -56,15 +59,11 @@ const signinSlice = createSlice({
         state.message = message
         state.data = data
         state.meta = meta
-        if (data?.access_token) {
-          localStorage.setItem("access_token", data.access_token)
-        }
-        if (data?.refresh_token) {
-          localStorage.setItem('refresh_token', data.refresh_token)
-        }
+        localStorage.setItem("access_token", data.access_token)
+        localStorage.setItem('refresh_token', data.refresh_token)
       })
       .addCase(signinThunk.rejected, (state, action) => {
-        const { status, message, errors } = action.payload as SigninErrorResponse
+        const { status, message, errors } = action.payload as ErrorResponse
         state.status = status
         state.message = message
         state.errors = errors
@@ -78,17 +77,12 @@ const signinSlice = createSlice({
         const { status, message, data, meta } = action.payload
         state.status = status
         state.message = message
-        if (data?.access_token) {
-          localStorage.setItem('access_token', data.access_token)
-          state.data = {
-            ...state.data,
-            access_token: data.access_token
-          }
-        }
+        state.data.access_token = data.access_token
+        localStorage.setItem('access_token', data.access_token)
         state.meta = meta
       })
       .addCase(refreshTokenThunk.rejected, (state, action) => {
-        const { status, message, errors } = action.payload as RefreshTokenErrorResponse
+        const { status, message, errors } = action.payload as ErrorResponse
         state.status = status
         state.message = message
         console.error(errors)

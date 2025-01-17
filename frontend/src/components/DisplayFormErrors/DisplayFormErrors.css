@@ -1,0 +1,27 @@
+.display-form-errors {
+    background-color: var(--background-light);
+    background-color: transparent;
+    width: 100%;
+    padding-inline: 14px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+
+    .error-message {
+        color: var(--error-text-primary);
+        width: 100%;
+        padding-inline: 0;
+        line-height: 1.2;
+        margin-block: 0;
+
+        &:first-child {
+            padding-top: 6px;
+        }
+
+        &:last-child {
+            padding-bottom: 6px;
+        }
+    }
+}

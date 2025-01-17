@@ -4,13 +4,9 @@
  */
 
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  SignupInitialState,
-  SignupErrorResponse
-} from "./signup.types";
-import {
-  signupThunk
-} from './signupThunk'
+import { SignupInitialState } from "./signup.types";
+import { ErrorResponse } from "FeatureTypes";
+import { signupThunk } from './signupThunk'
 
 /**
  * Initial state for signup slice
@@ -20,8 +16,13 @@ const signupIntitlState: SignupInitialState = {
   status: 'idle',
   message: '',
   data: null,
-  errors: null,
-  meta: null
+  errors: [],
+  meta: {
+    request_id: "",
+    timestamp: "",
+    documentation_url: "",
+    rate_limit: []
+  }
 }
 
 /**
@@ -36,8 +37,6 @@ const signupSlice = createSlice({
       state.status = 'idle'
       state.message = ''
       state.data = null
-      state.errors = null
-      state.meta = null
     }
   },
   extraReducers: (builder) => {
@@ -47,17 +46,10 @@ const signupSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(signupThunk.fulfilled, (state, action) => {
-        const { status, message, data, meta } = action.payload
-        state.status = status
-        state.message = message
-        state.data = data
-        state.meta = meta
+        Object.assign(state, action.payload)
       })
       .addCase(signupThunk.rejected, (state, action) => {
-        const { status, message, errors } = action.payload as SignupErrorResponse
-        state.status = status
-        state.message = message
-        state.errors = errors
+        Object.assign(state, action.payload as ErrorResponse)
       })
   }
 })

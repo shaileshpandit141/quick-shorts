@@ -4,10 +4,8 @@
  */
 
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  SignoutInitialState,
-  SignoutErrorResponse
-} from "./signout.types";
+import { SignoutInitialState } from "./signout.types";
+import { ErrorResponse } from "FeatureTypes";
 import {
   signoutThunk
 } from './signoutThunk'
@@ -21,8 +19,13 @@ const signoutIntitlState: SignoutInitialState = {
   status: 'idle',
   message: '',
   data: null,
-  errors: null,
-  meta: null
+  errors: [],
+  meta: {
+    request_id: "",
+    timestamp: "",
+    documentation_url: "",
+    rate_limit: []
+  }
 }
 
 /**
@@ -38,8 +41,6 @@ const signoutSlice = createSlice({
       state.status = 'idle'
       state.message = ''
       state.data = null
-      state.errors = null
-      state.meta = null
     }
   },
   extraReducers: (builder) => {
@@ -49,17 +50,10 @@ const signoutSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(signoutThunk.fulfilled, (state, action) => {
-        const { status, message, data, meta } = action.payload
-        state.status = status
-        state.message = message
-        state.data = data
-        state.meta = meta
+        Object.assign(state, action.payload)
       })
       .addCase(signoutThunk.rejected, (state, action) => {
-        const { status, message, errors } = action.payload as SignoutErrorResponse
-        state.status = status
-        state.message = message
-        state.errors = errors
+        Object.assign(state, action.payload as ErrorResponse)
       })
   }
 })

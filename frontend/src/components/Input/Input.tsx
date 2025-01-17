@@ -1,7 +1,8 @@
 import React, { useState, ChangeEvent } from 'react';
 import './Input.css';
 import Button from 'components/Button/Button';
-import DisplayErrors from '../DisplayErrors/DisplayErrors';
+import DisplayFormErrors from '../DisplayFormErrors/DisplayFormErrors';
+import { Errors } from 'FeatureTypes';
 
 interface InputProps {
   name: string;
@@ -21,11 +22,11 @@ interface InputProps {
     | 'checkbox'
   );
   value: string | number | boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  readOnly?: boolean;
+  errors?: Errors[]
   isRequired?: boolean;
   isDisabled?: boolean;
-  readOnly?: boolean;
-  errorMessage?: string | string[]
 }
 
 const Input: React.FC<InputProps> = ({
@@ -36,12 +37,21 @@ const Input: React.FC<InputProps> = ({
   isRequired = true,
   isDisabled = false,
   readOnly = false,
-  errorMessage = undefined
+  errors = []
 }) => {
-  const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
+  const [isPasswordShow, setIsPasswordShow] = useState(false);
+  const id = name + type;
+  const formattedLabel = name.split('_').join(' ');
 
-  const handlePasswordShowButtonClick = (): void => {
-    setIsPasswordShow((prevState) => !prevState);
+  const commonInputProps = {
+    name,
+    type,
+    id,
+    onChange,
+    required: isRequired,
+    disabled: isDisabled,
+    readOnly,
+    className: 'input'
   };
 
   if (type === 'checkbox') {
@@ -50,26 +60,15 @@ const Input: React.FC<InputProps> = ({
         <div className='input-element-wrapper'>
           <div className='input-element'>
             <input
-              name={name}
-              type={type}
-              id={name + type}
-              checked={value === true ? true : false}
-              onChange={onChange}
-              required={isRequired}
-              disabled={isDisabled}
-              readOnly={readOnly}
-              className='input'
+              {...commonInputProps}
+              checked={Boolean(value)}
             />
-            <label htmlFor={name + type} className='label'>
-              <span>{name.split('_').join(' ')}</span>
+            <label htmlFor={id} className='label'>
+              <span>{formattedLabel}</span>
             </label>
           </div>
         </div>
-        {
-          errorMessage && (
-            <DisplayErrors message={errorMessage} />
-          )
-        }
+        <DisplayFormErrors field={name} errors={errors} />
       </div>
     )
   }
@@ -79,20 +78,14 @@ const Input: React.FC<InputProps> = ({
       <div className='input-element-wrapper'>
         <div className='input-element'>
           <input
-            name={name}
+            {...commonInputProps}
             type={type === 'password' ? (isPasswordShow ? 'text' : 'password') : type}
-            id={name + type}
             value={typeof value !== 'boolean' ? value : String(value)}
-            onChange={onChange}
-            required={isRequired}
-            disabled={isDisabled}
-            readOnly={readOnly}
-            className='input'
             placeholder=''
             autoComplete="off"
           />
-          <label htmlFor={name + type} className='label'>
-            <span>{name.split('_').join(' ')}</span>
+          <label htmlFor={id} className='label'>
+            <span>{formattedLabel}</span>
           </label>
         </div>
         {type === 'password' && (
@@ -101,16 +94,12 @@ const Input: React.FC<InputProps> = ({
               type='button'
               className='password-show-hide-button'
               iconName={isPasswordShow ? "eyeOpen" : "eyeClose"}
-              onClick={handlePasswordShowButtonClick}
+              onClick={() => setIsPasswordShow(prev => !prev)}
             />
           </div>
         )}
       </div>
-      {
-        errorMessage && (
-          <DisplayErrors message={errorMessage} />
-        )
-      }
+      <DisplayFormErrors field={name} errors={errors} />
     </div>
   );
 };

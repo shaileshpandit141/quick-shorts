@@ -1,7 +1,7 @@
 export { default as AppLogo } from "./AppLogo/AppLogo";
 export { default as Button } from "./Button/Button";
 export { default as AnchorLink } from "./AnchorLink/AnchorLink";
-export { default as DisplayErrors } from "./DisplayErrors/DisplayErrors";
+export { default as DisplayFormErrors } from "./DisplayFormErrors/DisplayFormErrors";
 export { default as ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
 export { default as Footer } from "./Footer/Footer";
 export { default as Header } from "./Header/Header";

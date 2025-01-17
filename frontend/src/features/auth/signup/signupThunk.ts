@@ -1,10 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import API from 'API';
-import {
-  SignupSuccessResponse,
-  SignupErrorResponse
-} from "./signup.types";
+import { SignupSuccessResponse } from "./signup.types";
 import { SignupCredentials } from 'API/API.types';
+import { formatCatchAxiosError } from "utils/formatCatchAxiosError";
 import { CatchAxiosError } from 'FeatureTypes';
 
 /**
@@ -23,20 +21,7 @@ export const signupThunk = createAsyncThunk(
       return response.data as SignupSuccessResponse;
     } catch (err: unknown) {
       const error = err as CatchAxiosError;
-      let errorResponse: SignupErrorResponse;
-
-      // Handle API error response or create generic error
-      if (error.response) {
-        errorResponse = error.response.data;
-      } else {
-        errorResponse = {
-          status: "failed",
-          message: error.message ?? "An unknown error occurred",
-          errors: {
-            non_field_errors: [error.message ?? "An unknown error occurred"],
-          },
-        };
-      }
+      let errorResponse = formatCatchAxiosError(error)
       return thunkAPI.rejectWithValue(errorResponse);
     }
   }

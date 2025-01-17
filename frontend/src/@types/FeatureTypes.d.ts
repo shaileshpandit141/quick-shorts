@@ -1,20 +1,47 @@
 export declare module 'FeatureTypes' {
+
+  export interface Pagination {
+    current_page: number;
+    total_pages: number;
+    total_items: number;
+    items_per_page: number;
+    has_next: boolean;
+    has_previous: boolean;
+  }
+
+  export interface Errors {
+    field: string;
+    code: string;
+    message: string;
+    details: Record<string, any> | null
+  }
+
+  export interface RateLimit {
+    limit: number;
+    remaining: number;
+    reset_time: string;
+  }
+
+  export interface Meta {
+    request_id: string;
+    timestamp: string;
+    documentation_url: string;
+    rate_limit: RateLimit[]
+  }
+
   /**
    * Generic state structure with customizable data types
    * @template DATA - Type for the data property (defaults to Record<string,any>)
    * @template ERRORS - Type for the errors property (defaults to Record<string,string[]>)
    * @template META - Type for the meta property (defaults to Record<string,any>)
    */
-  export interface InitialState<
-    DATA = Record<string, any>,
-    ERRORS = Record<string, string[]>,
-    META = Record<string, any>
-  > {
+  export interface InitialState<DATA = Record<string, any>> {
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     message: string;
     data: DATA;
-    errors: ERRORS;
-    meta: META;
+    pagination?: Pagination;
+    errors: Errors[];
+    meta: Meta;
   }
 
   /**
@@ -22,26 +49,24 @@ export declare module 'FeatureTypes' {
    * @template DATA - Type for returned data (defaults to Record<string,any>)
    * @template META - Type for metadata (defaults to Record<string,any>)
    */
-  export interface SuccessResponse<
-    DATA = Record<string, any>,
-    META = Record<string, any>
-  > {
+  export interface SuccessResponse<DATA = Record<string, any>> {
     status: 'succeeded';
     message: string;
     data: DATA;
-    meta: META;
+    meta: Meta;
+    errors: Errors[];
   }
 
   /**
    * Error response interface for failed API calls
    * @template ERRORS - Type for error details (defaults to Record<string,string[]>)
    */
-  export interface ErrorResponse<
-    ERRORS = Record<string, string[]>
-  > {
+  export interface ErrorResponse {
     status: 'failed';
     message: string;
-    errors: ERRORS;
+    data: null;
+    meta: Meta;
+    errors: Errors[];
   }
 
   /**
