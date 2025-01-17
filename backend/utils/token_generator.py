@@ -1,5 +1,5 @@
 from typing import TypedDict, Dict, Any, NoReturn
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta  # type: ignore
 from django.conf import settings
 import logging
 from itsdangerous import (

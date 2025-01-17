@@ -23,7 +23,7 @@ from users.serializers import UserSerializer
 User = get_user_model()
 
 
-class SignupAPIView(QuickAPIView):
+class SignupView(QuickAPIView):
     """API view for handling user signup functionality"""
 
     permission_classes = [AllowAny]
@@ -40,7 +40,7 @@ class SignupAPIView(QuickAPIView):
         ])
 
         if not clean_data.is_valid():
-            return self.error_response({
+            return self.response({
                 "message": "Validation error",
                 "errors": clean_data.errors
             }, self.status.HTTP_400_BAD_REQUEST)
@@ -61,17 +61,17 @@ class SignupAPIView(QuickAPIView):
                     "message": message,
                     "details": None
                 })
-            return self.error_response({
+            return self.response({
                 "message": "Validation error",
                 "errors": errors
             }, self.status.HTTP_400_BAD_REQUEST)
 
         # Check password confirmation matches
         if password != confirm_password:
-            return self.error_response({
-                "message": "Validation error",
+            return self.response({
+                "message": "Password validation error",
                 "errors": [{
-                    "field": "none",
+                    "field": "confirm_password",
                     "code": "confirm_password_not_metch",
                     "message": "Confirm password is not equal to password",
                     "details": None
@@ -81,7 +81,7 @@ class SignupAPIView(QuickAPIView):
         # Validate the email is exist in the internet or not
         validator = DNSSMTPEmailValidator(email)
         if not validator.is_valid():
-            return self.error_response({
+            return self.response({
                 "message": "Email Validation Failed",
                 "errors": validator.errors
             }, self.status.HTTP_400_BAD_REQUEST)
@@ -121,14 +121,14 @@ class SignupAPIView(QuickAPIView):
                 }
             })
 
-            return self.success_response({
-                "message": "Sign up Successful",
+            return self.response({
+                "message": "Sign up successful",
                 "data": {
                     "detail": "Please check your inbox for the account verification"
                 }
             }, self.status.HTTP_200_OK)
 
-        return self.error_response({
+        return self.response({
             'message': 'Invalid data provided',
             'errors': self.format_serializer_errors(serializer.errors)
         }, self.status.HTTP_400_BAD_REQUEST)

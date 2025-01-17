@@ -1,4 +1,14 @@
-from typing import Dict, List, Callable, Any
+from typing import Dict, List, Callable, Any, TypedDict, Optional
+
+class ErrorsFieldType(TypedDict):
+    """Type for API error responses"""
+    field: str
+    code: str
+    message: str
+    details: Optional[Dict[str, Any]]
+
+ErrorsType = List[ErrorsFieldType]
+
 
 class FieldValidator:
     """
@@ -11,8 +21,8 @@ class FieldValidator:
     # Default error messages for different validation scenarios
     DEFAULT_MESSAGES = {
         'blank': 'The {field} field cannot be blank or empty.',
-        'invalid_match': 'Please provide a valid {field}.',
-        'same_as_field_name': 'Value "{value}" cannot be the same as field name "{field}".',
+        'invalid': 'Please provide a valid {field}.',
+        'same_as_field': 'Value "{value}" cannot be the same as field name "{field}".',
         'invalid_type': 'Invalid data type for {field}. Expected a string.'
     }
 
@@ -34,7 +44,7 @@ class FieldValidator:
         """
         self.data = data
         self.fields = fields
-        self.errors = []
+        self.errors: ErrorsType = []
         self.custom_validators = custom_validators or {}
         self.case_sensitive = case_sensitive
         self.validate()
@@ -89,15 +99,15 @@ class FieldValidator:
                 if (value.lower() == key.lower()) if not self.case_sensitive else (value == key):
                     self.errors.append({
                         "field": key,
-                        "code": "invalid_match",
-                        "message": self.__get_error_message('invalid_match', key),
+                        "code": "invalid",
+                        "message": self.__get_error_message('invalid', key),
                         "details": None
                     })
                 elif ''.join(key.split('_')).lower() == ''.join(value.split(' ')).lower():
                     self.errors.append({
                         "field": key,
-                        "code": "same_as_field_name",
-                        "message": self.__get_error_message('same_as_field_name', key, value),
+                        "code": "same_as_field",
+                        "message": self.__get_error_message('same_as_field', key, value),
                         "details": None
                     })
 
@@ -120,4 +130,3 @@ class FieldValidator:
         if field in self.data:
             return self.data[field]
         raise KeyError(f'Field "{field}" does not exist in the data')
-

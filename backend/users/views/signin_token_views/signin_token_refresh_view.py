@@ -8,13 +8,12 @@ from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.views import TokenRefreshView
 
 # Local imports
-from quick_utils.response import Response
-from quick_utils.get_throttle_details import get_throttle_details
+from quick_utils.views import QuickAPIView, Response
 from permissions import AllowAny
 from throttling import AnonRateThrottle
 
 
-class SigninTokenRefreshAPIView(TokenRefreshView):
+class SigninTokenRefreshView(TokenRefreshView, QuickAPIView):
     """Custom token refresh view for handling JWT token refresh operations."""
 
     permission_classes = [AllowAny]
@@ -43,64 +42,44 @@ class SigninTokenRefreshAPIView(TokenRefreshView):
         try:
             response = super().post(request, *args, **kwargs)
             if response.status_code == status.HTTP_200_OK:
-                return Response({
-                    "status": "succeeded",
+                return self.response({
                     "message": "Token refreshed successfully",
                     "data": {
                         "access_token": response.data.get("access", None)  # type: ignore
-                    },
-                    "errors": None,
-                    "meta": {
-                        "rate_limit": get_throttle_details(self)
                     }
                 }, status.HTTP_200_OK)
 
             # Invalid or expired refresh token
-            return Response({
-                "status": "failed",
+            return self.response({
                 'message': 'Failed to refresh token',
-                "data": None,
                 'errors': [{
                     "field": "refresh_token",
                     "code": "invalid_refresh_token",
                     "message": "Invalid or expired refresh token",
                     "details": None
-                }],
-                "meta": {
-                    "rate_limit": get_throttle_details(self)
-                }
+                }]
             }, status.HTTP_400_BAD_REQUEST)
 
         except ValidationError as error:
             # Handle case where no refresh token is provided
             if 'refresh_token' in str(error):
-                return Response({
-                    "status": "failed",
+                return self.response({
                     'message': 'Refresh token is required',
-                    "data": None,
                     'errors': [{
                         "field": "refresh_token",
                         "code": "invalid_refresh_token",
                         "message": "This field is required.",
                         "details": None
-                    }],
-                    "meta": {
-                        "rate_limit": get_throttle_details(self)
-                    }
+                    }]
                 }, status.HTTP_400_BAD_REQUEST)
 
             # Catch other validation errors
-            return Response({
-                "status": "failed",
+            return self.response({
                 'message': 'Invalid refresh token provided',
-                "data": None,
                 'errors': [{
                     "field": "refresh_token",
                     "code": "invalid_refresh_token",
                     "message": "The refresh token provided is invalid or expired.",
                     "details": None
-                }],
-                "meta": {
-                    "rate_limit": get_throttle_details(self)
-                }
+                }]
             }, status.HTTP_400_BAD_REQUEST)

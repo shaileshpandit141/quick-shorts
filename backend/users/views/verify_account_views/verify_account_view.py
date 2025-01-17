@@ -16,7 +16,7 @@ from utils import (
 User = get_user_model()
 
 
-class VerifyAccountAPIView(QuickAPIView):
+class VerifyAccountView(QuickAPIView):
     """API View for handling account verification."""
 
     permission_classes = [AllowAny]
@@ -29,7 +29,7 @@ class VerifyAccountAPIView(QuickAPIView):
         clean_data = FieldValidator(request.data, ["email"])
 
         if not clean_data.is_valid():
-            return self.error_response({
+            return self.response({
                 "message": "Please provide a valid email address",
                 "errors": clean_data.errors
             }, self.status.HTTP_400_BAD_REQUEST)
@@ -37,7 +37,7 @@ class VerifyAccountAPIView(QuickAPIView):
         try:
             user = User.objects.get(email=clean_data.get("email"))
         except User.DoesNotExist:
-            return self.error_response({
+            return self.response({
                 "message": "User account not found",
                 "errors": [{
                     "field": "email",
@@ -70,7 +70,7 @@ class VerifyAccountAPIView(QuickAPIView):
                     "html": "users/verify_account/confirm_message.html"
                 }
             })
-            return self.success_response({
+            return self.response({
                 "message": "Account Verification email sent successfully",
                 "data": {
                     "detail": """We have sent a Account verification link to your email.
@@ -78,7 +78,7 @@ class VerifyAccountAPIView(QuickAPIView):
                 }
             }, self.status.HTTP_200_OK)
         else:
-            return self.success_response({
+            return self.response({
                 "message": "Account already verified",
                 "data": {
                     "detail": "This Account has already been verified. You can proceed to sign in."

@@ -3,16 +3,6 @@ URL Configuration for Django Backend Project
 
 This module defines the URL patterns and routing configuration for the core Django application.
 It maps URLs to their corresponding views and configures static file serving and error handling.
-
-URLs:
-    / : Root route serving the frontend application via IndexTemplateView
-    /admin/ : Django's built-in admin interface for site administration
-    /api/v1/auth/ : Authentication API endpoints for user management
-
-Configuration Details:
-    - Includes custom 404 error handling through custom_404_view
-    - Configures serving of static media files using Django's static file handler
-    - API endpoints are versioned under api/v1/ prefix for future compatibility
 """
 
 from django.contrib import admin
@@ -26,8 +16,7 @@ from users import urls
 
 # Main URL patterns defining route-to-view mappings
 urlpatterns = [
-    # path('accounts/', include('allauth.urls')),
-    # Frontend application served at root URL
+    # Served the index page
     path("", IndexTemplateView.as_view(), name='index'),
 
     # Django admin interface accessible at /admin

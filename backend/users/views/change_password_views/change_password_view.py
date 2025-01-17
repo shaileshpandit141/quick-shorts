@@ -11,7 +11,7 @@ from utils import SendEmail, FieldValidator
 User = get_user_model()
 
 
-class ChangePasswordAPIView(QuickAPIView):
+class ChangePasswordView(QuickAPIView):
     """Changes authenticated user's password."""
     
     permission_classes = [IsAuthenticated]
@@ -29,14 +29,14 @@ class ChangePasswordAPIView(QuickAPIView):
         ])
 
         if not clean_data.is_valid():
-            return self.error_response({
+            return self.response({
                 "message": "Please provide both old and new passwords",
                 "errors": clean_data.errors
             }, self.status.HTTP_400_BAD_REQUEST)
 
         # Check if old password is correct
         if not user.check_password(clean_data.get('old_password')):
-            return self.error_response({
+            return self.response({
                 "message": "The old password you entered is incorrect",
                 "errors": [{
                     "field": "old_password",
@@ -50,7 +50,7 @@ class ChangePasswordAPIView(QuickAPIView):
         try:
             validate_password(clean_data.get('new_password'))
         except Exception as error:
-            return self.error_response({
+            return self.response({
                 "message": "Your new password does not meet the requirements",
                 "errors": [{
                     "field": "new_password",
@@ -76,7 +76,7 @@ class ChangePasswordAPIView(QuickAPIView):
                 'html': 'users/change_password/success_message.html'
             }
         })
-        return self.success_response({
+        return self.response({
             'message': 'Password updated successfully',
             'data': {
                 'detail': 'Your password has been changed. Please use your new password for future signin.'

@@ -8,12 +8,6 @@ The main purposes of this file are:
 1. Setting up the ASGI application variable for the web server
 2. Configuring Django settings module path
 3. Creating the ASGI application instance
-
-The resulting application object is used by ASGI servers (like Daphne or Uvicorn)
-to communicate with the Django application.
-
-For detailed deployment information, see:
-https://docs.djangoproject.com/en/5.0/howto/deployment/asgi/
 """
 
 import os

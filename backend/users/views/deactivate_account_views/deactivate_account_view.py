@@ -5,7 +5,7 @@ from throttling import UserRateThrottle
 from utils import FieldValidator, SendEmail
 
 
-class DeactivateAccountAPIView(QuickAPIView):
+class DeactivateAccountView(QuickAPIView):
     """API view for deactivating user accounts."""
 
     permission_classes = [IsAuthenticated]
@@ -21,14 +21,14 @@ class DeactivateAccountAPIView(QuickAPIView):
         # Validate the request data
         validator = FieldValidator(request.data, ['password'])
         if not validator.is_valid():
-            return self.error_response({
+            return self.response({
                 "message": "Invalid Password",
                 "errors": validator.errors
             }, self.status.HTTP_400_BAD_REQUEST)
 
         # Verify password matches
         if not user.check_password(password):
-            return self.error_response({
+            return self.response({
                 "message": "Invalid Password",
                 "errors": [{
                     "field": "password",
@@ -57,7 +57,7 @@ class DeactivateAccountAPIView(QuickAPIView):
             }
         })
 
-        return self.success_response({
+        return self.response({
             "message": "Deactivation was successful.",
             "data": {
                 "detail": "Your account has been deactivated successfully."

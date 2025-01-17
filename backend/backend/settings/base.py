@@ -1,5 +1,5 @@
 from pathlib import Path
-from datetime import timedelta
+from datetime import timedelta  # type: ignore
 from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -49,7 +49,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'middleware.ResponseTimeMiddleware',
+    "middlewares.ResponseMiddleware"
 ]
 
 # URL AND TEMPLATE CONFIGURATION
@@ -111,7 +111,7 @@ MEDIA_URL = "/media/"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ["rest_framework_simplejwt.authentication.JWTAuthentication"],
     "DEFAULT_PERMISSION_CLASSES": ["permissions.IsAuthenticated"],
-    "EXCEPTION_HANDLER": "backend.exceptions.custom_exception_handler",
+    "EXCEPTION_HANDLER": "backend.exceptions.exception_handler",
     "DEFAULT_THROTTLE_CLASSES": ["throttling.AnonRateThrottle", "throttling.UserRateThrottle"],
     "DEFAULT_THROTTLE_RATES": {"anon": "100/day", "user": "1000/day"},
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],

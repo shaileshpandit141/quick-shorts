@@ -1,17 +1,11 @@
 from .types import (
-    MetaType,
+    ErrorsType,
     ResponseDataType,
-    SuccessResponseDataType,
-    ErrorResponseDataType,
-    ThrottleRateLimitType,
-    ErrorsType
+    ThrottleRateLimitType
 )
 
 __all__ = [
+    "ErrorsType",
     "ResponseDataType",
-    "MetaType",
-    "SuccessResponseDataType",
-    "ErrorResponseDataType",
-    "ThrottleRateLimitType",
-    "ErrorsType"
+    "ThrottleRateLimitType"
 ]

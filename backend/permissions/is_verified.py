@@ -1,7 +1,6 @@
 from typing import Literal
 from rest_framework.permissions import BasePermission
 from rest_framework.exceptions import PermissionDenied
-from quick_utils.as_api_response_format import as_api_response_format
 
 
 class IsVerified(BasePermission):
@@ -11,18 +10,13 @@ class IsVerified(BasePermission):
 
         # Check if the user is
         if not request.user.is_verified:
-            raise PermissionDenied(as_api_response_format({
-                "status": "failed",
-                "message": "Please verify your account to continue.",
-                "data": None,
-                "errors": [{
-                    "field": "account",
-                    "code": "unverified_account",
-                    "message": "You must verify your account to access this resource.",
-                    "details": {
-                        "verification_status": False
-                    }
-                }]
-            }))
+            raise PermissionDenied([{
+                "field": "account",
+                "code": "unverified_account",
+                "message": "You must verify your account to access this resource.",
+                "details": {
+                    "verification_status": False
+                }
+            }])
 
         return True

@@ -1,4 +1,4 @@
-from rest_framework.views import exception_handler
+from rest_framework.views import exception_handler as dj_exception_handler
 from rest_framework.exceptions import (
     ValidationError,
     MethodNotAllowed,
@@ -6,22 +6,22 @@ from rest_framework.exceptions import (
     NotAuthenticated,
     AuthenticationFailed
 )
+from quick_utils.types import ErrorsType
 from quick_utils.response import Response
 from rest_framework import status
 
 
-def custom_exception_handler(exc, context):
-    """
-    A custom exception handler that returns the exception details in a custom format.
-    """
+def exception_handler(exc, context):
+    """A custom exception handler that returns the exception details in a custom format."""
+    
     # Call the default exception handler first to get the standard DRF response
-    response = exception_handler(exc, context)
+    response = dj_exception_handler(exc, context)
 
     # Handle specific exceptions
 
     # ValidationError
     if isinstance(exc, ValidationError):
-        error_details = []
+        error_details: ErrorsType = []
         if isinstance(exc.detail, dict):
             for field, messages in exc.detail.items():
                 if isinstance(messages, list):
@@ -48,18 +48,14 @@ def custom_exception_handler(exc, context):
             })
 
         return Response({
-            "status": "failed",
             "message": "Validation error",
-            "data": None,
             "errors": error_details
         }, status=status.HTTP_400_BAD_REQUEST)
 
     # MethodNotAllowed
     elif isinstance(exc, MethodNotAllowed):
         return Response({
-            "status": "failed",
             "message": "Method Not Allowed",
-            "data": None,
             "errors": [{
                 "field": "none",
                 "code": "method_not_allowed",
@@ -71,9 +67,7 @@ def custom_exception_handler(exc, context):
     # NotFound
     elif isinstance(exc, NotFound):
         return Response({
-            "status": "failed",
             "message": "Resource Not Found",
-            "data": None,
             "errors": [{
                 "field": "none",
                 "code": "not_found",
@@ -85,9 +79,7 @@ def custom_exception_handler(exc, context):
     # NotAuthenticated
     elif isinstance(exc, NotAuthenticated):
         return Response({
-            "status": "failed",
             "message": "Authentication Required",
-            "data": None,
             "errors": [{
                 "field": "none",
                 "code": "authentication_required",
@@ -99,9 +91,7 @@ def custom_exception_handler(exc, context):
     # AuthenticationFailed
     elif isinstance(exc, AuthenticationFailed):
         return Response({
-            "status": "failed",
             "message": "Authentication Failed",
-            "data": None,
             "errors": [{
                 "field": "none",
                 "code": "authentication_failed",
@@ -113,9 +103,7 @@ def custom_exception_handler(exc, context):
     # General Exception
     elif isinstance(exc, Exception):
         return Response({
-            "status": "failed",
             "message": "Internal Server Error",
-            "data": None,
             "errors": [{
                 "field": "none",
                 "code": "server_error",

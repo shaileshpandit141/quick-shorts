@@ -9,7 +9,7 @@ from throttling import AnonRateThrottle
 from utils import FieldValidator
 
 
-class SignoutAPIView(QuickAPIView):
+class SignoutView(QuickAPIView):
     """API view for user sign out functionality."""
 
     permission_classes = [AllowAny]
@@ -21,7 +21,7 @@ class SignoutAPIView(QuickAPIView):
         # Validate the refresh token is present in request data
         clean_data = FieldValidator(request.data, ["refresh_token"])
         if not clean_data.is_valid():
-            return self.error_response({
+            return self.response({
                 "message": "Please provide a valid refresh token",
                 "errors": clean_data.errors
             }, self.status.HTTP_400_BAD_REQUEST)
@@ -31,7 +31,7 @@ class SignoutAPIView(QuickAPIView):
             token = RefreshToken(clean_data.get("refresh_token"))
             token.blacklist()
 
-            return self.success_response({
+            return self.response({
                 "message": "You have been successfully signed out",
                 "data": {
                     "detail": "Your session has been terminated"
@@ -39,7 +39,7 @@ class SignoutAPIView(QuickAPIView):
             }, self.status.HTTP_200_OK)
 
         except TokenError:
-            return self.error_response({
+            return self.response({
                 "message": "Unable to process token",
                 "errors": [{
                     "field": "none",

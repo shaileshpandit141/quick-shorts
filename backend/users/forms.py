@@ -5,12 +5,8 @@ from django.contrib.auth.forms import UserChangeForm as DjangoUserChangeForm
 from django.core.validators import validate_email
 
 class UserCreationForm(DjangoUserCreationForm):
-    """
-    A form for creating new users. Extends Django's built-in UserCreationForm.
+    """A form for creating new users. Extends Django's built-in UserCreationForm."""
 
-    Includes fields for email, first name, last name, active status, and staff status.
-    Adds custom validation for unique email addresses.
-    """
     password1 = forms.CharField(
         label='Password',
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
@@ -48,15 +44,8 @@ class UserCreationForm(DjangoUserCreationForm):
         fields = ('email', 'username', 'first_name', 'last_name', 'avatar', 'is_active', 'is_verified', 'is_staff')
 
     def clean_email(self):
-        """
-        Custom validation for email field.
+        """Custom validation for email field."""
 
-        Returns:
-            str: The validated email address
-
-        Raises:
-            ValidationError: If a user with this email already exists or email is invalid
-        """
         email = self.cleaned_data.get('email')
         if not email:
             raise forms.ValidationError("Email is required.")
@@ -72,9 +61,8 @@ class UserCreationForm(DjangoUserCreationForm):
         return email.lower()
 
     def clean_password2(self):
-            """
-            Verify that both passwords match and meet minimum requirements.
-            """
+            """Verify that both passwords match and meet minimum requirements."""
+
             password1 = self.cleaned_data.get("password1")
             password2 = self.cleaned_data.get("password2")
 
@@ -98,12 +86,7 @@ class UserCreationForm(DjangoUserCreationForm):
 
 
 class UserChangeForm(DjangoUserChangeForm):
-    """
-    A form for updating users. Extends Django's built-in UserChangeForm.
-
-    Includes fields for email, first name, last name, active status, and staff status.
-    Adds validation to ensure email is provided.
-    """
+    """A form for updating users. Extends Django's built-in UserChangeForm."""
 
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control'}))
     username = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -111,7 +94,7 @@ class UserChangeForm(DjangoUserChangeForm):
     last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     avatar = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'form-control', 'style': 'margin-block: 8px;'}))
     is_active = forms.BooleanField(required=False)
-    is_verified = forms.BooleanField(required=False) 
+    is_verified = forms.BooleanField(required=False)
     is_staff = forms.BooleanField(required=False)
 
     class Meta(DjangoUserChangeForm.Meta):
@@ -126,15 +109,8 @@ class UserChangeForm(DjangoUserChangeForm):
             )
 
     def clean_email(self):
-        """
-        Validation for email field.
+        """Validation for email field."""
 
-        Returns:
-            str: The validated email address
-
-        Raises:
-            ValidationError: If email field is empty or invalid
-        """
         email = self.cleaned_data.get('email')
         if not email:
             raise forms.ValidationError("Email is required.")

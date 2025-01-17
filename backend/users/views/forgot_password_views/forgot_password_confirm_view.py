@@ -11,7 +11,7 @@ from quick_utils.views import QuickAPIView, Response
 User = get_user_model()
 
 
-class ForgotPasswordConfirmAPIView(QuickAPIView):
+class ForgotPasswordConfirmView(QuickAPIView):
     """API view for confirming and resetting a forgotten password."""
 
     permission_classes = [AllowAny]
@@ -27,7 +27,7 @@ class ForgotPasswordConfirmAPIView(QuickAPIView):
             "new_password"
         ])
         if not clean_data.is_valid():
-            return self.error_response({
+            return self.response({
                 "message": "Invalid request",
                 "errors": clean_data.errors
             }, self.status.HTTP_400_BAD_REQUEST)
@@ -45,7 +45,7 @@ class ForgotPasswordConfirmAPIView(QuickAPIView):
             user.set_password(clean_data.get("new_password"))
             user.save()
 
-            return self.success_response({
+            return self.response({
                 "message": "Password changed successfully",
                 "data": {
                     "detail": "Your password has been successfully updated"
@@ -53,7 +53,7 @@ class ForgotPasswordConfirmAPIView(QuickAPIView):
             }, self.status.HTTP_200_OK)
 
         except Exception as error:
-            return self.error_response({
+            return self.response({
                 "message": "Invalid request",
                 "errors": [{
                     "field": "none",

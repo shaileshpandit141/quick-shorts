@@ -10,7 +10,7 @@ from utils import TokenGenerator, FieldValidator
 User = get_user_model()
 
 
-class VerifyAccountConfirmAPIView(QuickAPIView):
+class VerifyAccountConfirmView(QuickAPIView):
     """API View for verifying user accounts via email confirmation."""
 
     permission_classes = [AllowAny]
@@ -22,7 +22,7 @@ class VerifyAccountConfirmAPIView(QuickAPIView):
         # Validate required fields
         clean_data = FieldValidator(request.data, ['token', 'token_salt'])
         if not clean_data.is_valid:
-            return self.error_response({
+            return self.response({
                 'message': 'Invalid request',
                 'errors': clean_data.errors
             }, self.status.HTTP_400_BAD_REQUEST)
@@ -37,7 +37,7 @@ class VerifyAccountConfirmAPIView(QuickAPIView):
 
             # Check if already verified
             if user.is_verified:
-                return self.success_response({
+                return self.response({
                     'message': 'Account already verified',
                     'data': {
                         'detail': 'Account already verified.'
@@ -47,7 +47,7 @@ class VerifyAccountConfirmAPIView(QuickAPIView):
             # Update verification status
             user.is_verified = True
             user.save()
-            return self.success_response({
+            return self.response({
                 'message': 'Account verified successfully',
                 'data': {
                     'detail': 'Account verified successfully'
@@ -55,12 +55,12 @@ class VerifyAccountConfirmAPIView(QuickAPIView):
             }, self.status.HTTP_200_OK)
 
         except ValueError as error:
-            return self.error_response({
+            return self.response({
                 'message': 'Invalid token',
                 'errors': [{
                     "field": "token",
                     "code": "invalid",
-                    "message": error[0] if isinstance(error, list) else str(error),
+                    "message": str(error),
                     "details": None
                 }]
             }, self.status.HTTP_400_BAD_REQUEST)

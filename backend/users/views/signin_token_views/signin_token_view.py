@@ -11,13 +11,13 @@ from permissions import AllowAny
 from utils import FieldValidator
 from users.serializers import SigninTokenSerializer
 from throttling import AnonRateThrottle
-from quick_utils.response import Response
-from quick_utils.get_throttle_details import get_throttle_details
+from quick_utils.views import QuickAPIView, Response
+from quick_utils.format_serializer_errors import format_serializer_errors
 
 User = get_user_model()
 
 
-class SigninTokenAPIView(TokenObtainPairView):
+class SigninTokenView(TokenObtainPairView, QuickAPIView):
     """Custom JWT token view that handles user authentication using email/username and password."""
 
     permission_classes = [AllowAny]
@@ -30,14 +30,9 @@ class SigninTokenAPIView(TokenObtainPairView):
         # Validate required fields
         clean_data = FieldValidator(request.data, ['email', 'password'])  # type: ignore
         if not clean_data.is_valid():
-            return Response({
-                "status": "failed",
+            return self.response({
                 "message": "Sign in failed",
-                "data": None,
                 "errors": clean_data.errors,
-                "meta": {
-                    "rate_limit": get_throttle_details(self)
-                }
             }, status.HTTP_400_BAD_REQUEST)
 
         # Handle username-based login by fetching associated email
@@ -47,32 +42,22 @@ class SigninTokenAPIView(TokenObtainPairView):
                 user = User.objects.get(username=clean_data.get('email'))
                 data['email'] = user.email
             except User.DoesNotExist:
-                return Response({
-                    "status": "failed",
+                return self.response({
                     "message": "Sign in failed",
-                    "data": None,
                     'errors': [{
                         "field": "none",
                         "code": "signin_failed",
                         "message": "Please provide valid authentication credentials.",
                         "details": None
-                    }],
-                    "meta": {
-                        "rate_limit": get_throttle_details(self)
-                    }
+                    }]
                 }, status.HTTP_400_BAD_REQUEST)
 
         # Validate credentials with serializer
         serializer = self.get_serializer(data=data)
         if not serializer.is_valid():
-            return Response({
-                "status": "failed",
+            return self.response({
                 "message": "Sign in failed",
-                "data": None,
-                'errors': serializer.errors,
-                "meta": {
-                    "rate_limit": get_throttle_details(self)
-                }
+                'errors': format_serializer_errors(serializer.errors),
             }, status.HTTP_400_BAD_REQUEST)
 
         # Get the authenticated user from the serializer
@@ -80,19 +65,14 @@ class SigninTokenAPIView(TokenObtainPairView):
 
         # Check email verification status for non-superusers
         if user and not user.is_superuser and not user.is_verified:
-            return Response({
-                "status": "failed",
+            return self.response({
                 "message": "Sign in failed - account not verified",
-                "data": None,
                 'errors': [{
                     "field": "none",
                     "code": "signin_failed",
                     "message": "Please verify your account before signing in",
                     "details": None
-                }],
-                "meta": {
-                    "rate_limit": get_throttle_details(self)
-                }
+                }]
             }, status.HTTP_401_UNAUTHORIZED)
 
         # Update last login timestamp
@@ -101,15 +81,10 @@ class SigninTokenAPIView(TokenObtainPairView):
             user.save(update_fields=['last_login'])
 
         # Return successful response with JWT tokens
-        return Response({
-            "status": "succeeded",
+        return self.response({
             "message": "Welcome back! Sign in successful",
             "data": {
                 "access_token": serializer.validated_data["access"],
                 "refresh_token": serializer.validated_data["refresh"],
-            },
-            "errors": None,
-            "meta": {
-                "rate_limit": get_throttle_details(self)
             }
         }, status.HTTP_200_OK)

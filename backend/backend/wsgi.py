@@ -8,13 +8,6 @@ to communicate with the Django application.
 Key components:
 - Sets up the Django settings module in environment variables
 - Creates the WSGI application object using Django's get_wsgi_application()
-
-This is the entry point for WSGI servers like Gunicorn or uWSGI to serve
-the Django application. The application object handles the WSGI protocol
-implementation.
-
-For detailed WSGI deployment documentation, see:
-https://docs.djangoproject.com/en/5.0/howto/deployment/wsgi/
 """
 
 import os

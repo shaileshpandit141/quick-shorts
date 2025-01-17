@@ -16,9 +16,8 @@ from utils import (
 User = get_user_model()
 
 
-class ForgotPasswordAPIView(QuickAPIView):
-    """
-    API endpoint for handling forgot password functionality."""
+class ForgotPasswordView(QuickAPIView):
+    """API endpoint for handling forgot password functionality."""
 
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
@@ -30,7 +29,7 @@ class ForgotPasswordAPIView(QuickAPIView):
         validator = FieldValidator(request.data, ['email'])
 
         if not validator.is_valid():
-            return self.error_response({
+            return self.response({
                 "message": "Missing email address",
                 "errors": validator.errors
             }, self.status.HTTP_400_BAD_REQUEST)
@@ -38,7 +37,7 @@ class ForgotPasswordAPIView(QuickAPIView):
         try:
             user = User.objects.get(email=validator.get('email'))
         except User.DoesNotExist:
-            return self.error_response({
+            return self.response({
                 "message": "Account not found",
                 "errors": [{
                     "field": "email",
@@ -72,14 +71,14 @@ class ForgotPasswordAPIView(QuickAPIView):
                     "html": "users/forgot_password/confirm_message.html"
                 }
             })
-            return self.success_response({
+            return self.response({
                 "message": "Forgot password email sent",
                 "data": {
                     "detail": "Please check your inbox for the Forgot password"
                 },
-            })
+            }, self.status.HTTP_200_OK)
         else:
-            return self.error_response({
+            return self.response({
                 "message": "Please verify your email to continue.",
                 "errors": [{
                     "field": "none",

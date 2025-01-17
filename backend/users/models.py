@@ -12,20 +12,8 @@ class UserManager(BaseUserManager):
     Provides methods for creating regular users and superusers.
     """
     def create_user(self, email, password=None, **extra_fields):
-        """
-        Creates and saves a User with the given email and password.
+        """Creates and saves a User with the given email and password."""
 
-        Args:
-            email: The user's email address
-            password: The user's password (optional)
-            extra_fields: Additional fields to be saved on the user model
-
-        Returns:
-            The created user instance
-
-        Raises:
-            ValueError: If email is not provided or invalid
-        """
         if not email:
             raise ValueError('The Email field must be set')
 
@@ -47,18 +35,8 @@ class UserManager(BaseUserManager):
         """
         Creates and saves a superuser with the given email and password.
         Sets is_staff, is_superuser and is_active to True by default.
-
-        Args:
-            email: The superuser's email address
-            password: The superuser's password (optional)
-            extra_fields: Additional fields to be saved on the user model
-
-        Returns:
-            The created superuser instance
-
-        Raises:
-            ValueError: If is_staff or is_superuser is not True
         """
+
         extra_fields.setdefault('is_active', True)
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
@@ -77,6 +55,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     Custom user model that uses email as the username field instead of a username.
     Extends Django's AbstractBaseUser and PermissionsMixin.
     """
+
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'  # Use email as the unique identifier
+    REQUIRED_FIELDS = []  # Email & password are required by default
+
+    class Meta(AbstractBaseUser.Meta, PermissionsMixin.Meta):
+        db_table = 'users'
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+        ordering = ['-date_joined']
+
     email = models.EmailField(
         max_length=254,
         unique=True,
@@ -177,7 +167,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         }
     )
     is_active = models.BooleanField(
-        default=True,  # type: ignore
+        default=models.NOT_PROVIDED,
         null=False,
         db_index=False,
         error_messages={
@@ -187,7 +177,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         }
     )
     is_staff = models.BooleanField(
-        default=False,  # type: ignore
+        default=models.NOT_PROVIDED,
         null=False,
         db_index=False,
         error_messages={
@@ -197,7 +187,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         }
     )
     is_superuser = models.BooleanField(
-        default=False,  # type: ignore
+        default=models.NOT_PROVIDED,
         null=False,
         db_index=False,
         error_messages={
@@ -207,7 +197,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         }
     )
     is_verified = models.BooleanField(
-        default=False,  # type: ignore
+        default=models.NOT_PROVIDED,
         null=False,
         db_index=False,
         error_messages={
@@ -217,23 +207,34 @@ class User(AbstractBaseUser, PermissionsMixin):
         }
     )
 
-    objects = UserManager()
+    def add_default_value(self, field: str, value: bool) -> None:
+        """Helper method to set default value for a field if it's None"""
+        if getattr(self, field) is None:
+            setattr(self, field, value)
 
-    USERNAME_FIELD = 'email'  # Use email as the unique identifier
-    REQUIRED_FIELDS = []  # Email & password are required by default
+    def save(self, *args, **kwargs):
+        """Save the user object and set default values for boolean fields"""
+        default_values = {
+            'is_active': True,
+            'is_staff': False,
+            'is_superuser': False,
+            'is_verified': False
+        }
 
-    class Meta(AbstractBaseUser.Meta, PermissionsMixin.Meta):
-        db_table = 'users'
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
-        ordering = ['-date_joined']
+        for field, value in default_values.items():
+            self.add_default_value(field, value)
+
+        super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         """Returns the string representation of the user (email)"""
         return str(self.email)
 
     def get_full_name(self):
-        """Returns the user's full name, with a space between first and last name"""
+        """
+        Returns the user's full name, with a space between first and last name.
+        If exist otherwise None
+        """
         if self.first_name is None or self.last_name is None:
             return None
         return f'{self.first_name} {self.last_name}'.strip()

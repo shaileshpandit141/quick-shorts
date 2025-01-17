@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta  # type: ignore
 import pytz
 import re
 from rest_framework.throttling import BaseThrottle

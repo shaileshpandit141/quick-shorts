@@ -1,25 +1,22 @@
-from .change_password_apiview import ChangePasswordAPIView
-from .verify_account_apiview import VerifyAccountAPIView
-from .verify_account_confirm_apiview import VerifyAccountConfirmAPIView
-from .signin_token_apiview import SigninTokenAPIView
-from .signin_token_refresh_apiview import SigninTokenRefreshAPIView
-from .signup_apiview import SignupAPIView
-from .user_info_apiview import UserInfoAPIView
-from .forgot_password_apiview import ForgotPasswordAPIView
-from .forgot_password_confirm_apiview import ForgotPasswordConfirmAPIView
-from .deactivate_account_apiview import DeactivateAccountAPIView
-from .signout_apiview import SignoutAPIView
+from .change_password_views import ChangePasswordView
+from .deactivate_account_views import DeactivateAccountView
+from .forgot_password_views import ForgotPasswordView, ForgotPasswordConfirmView
+from .signin_token_views import SigninTokenView, SigninTokenRefreshView
+from .signout_views import SignoutView
+from .signup_views import SignupView
+from .user_info_views import UserInfoView
+from .verify_account_views import VerifyAccountView, VerifyAccountConfirmView
 
 __all__ = [
-    'ChangePasswordAPIView',
-    'ForgotPasswordAPIView',
-    'VerifyAccountAPIView',
-    'ForgotPasswordConfirmAPIView',
-    'VerifyAccountConfirmAPIView',
-    'SigninTokenAPIView',
-    'SigninTokenRefreshAPIView',
-    'SignupAPIView',
-    'UserInfoAPIView',
-    'DeactivateAccountAPIView',
-    'SignoutAPIView'
+    'ChangePasswordView',
+    'DeactivateAccountView',
+    'ForgotPasswordView',
+    'ForgotPasswordConfirmView',
+    'SigninTokenView',
+    'SigninTokenRefreshView',
+    'SignoutView',
+    'SignupView',
+    'UserInfoView',
+    'VerifyAccountView',
+    'VerifyAccountConfirmView'
 ]
