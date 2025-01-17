@@ -1,5 +1,5 @@
 # Ignore the . dependency
-venv
+.venv
 .ropeproject
 
 # Ignore the backend dependency
