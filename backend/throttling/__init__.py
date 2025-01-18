@@ -1,7 +1,8 @@
-from .anon_rate_throttle import AnonRateThrottle
-from .user_rate_throttle import UserRateThrottle
+from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
+from .auth_rate_throttle import AuthRateThrottle
 
 __all__ = [
-    'AnonRateThrottle',
-    'UserRateThrottle'
+    "AnonRateThrottle",
+    "AuthRateThrottle",
+    "UserRateThrottle"
 ]
