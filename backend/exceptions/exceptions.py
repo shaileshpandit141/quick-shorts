@@ -4,7 +4,8 @@ from rest_framework.exceptions import (
     MethodNotAllowed,
     NotFound,
     NotAuthenticated,
-    AuthenticationFailed
+    AuthenticationFailed,
+    Throttled
 )
 from quick_utils.types import ErrorsType
 from quick_utils.response import Response
@@ -13,7 +14,7 @@ from rest_framework import status
 
 def exception_handler(exc, context):
     """A custom exception handler that returns the exception details in a custom format."""
-    
+
     # Call the default exception handler first to get the standard DRF response
     response = dj_exception_handler(exc, context)
 
@@ -99,6 +100,21 @@ def exception_handler(exc, context):
                 "details": None
             }]
         }, status=status.HTTP_401_UNAUTHORIZED)
+
+    # Throttled 
+    elif isinstance(exc, Throttled):
+        retry_after = exc.wait
+        return Response({
+            "message": str(exc.detail) or "Request Limit Exceeded",
+            "errors": [{
+                "field": "none",
+                "code": "throttled",
+                "message": "Too many requests. Please try again later.",
+                "details": {
+                    "retry_after": f"{retry_after} seconds"
+                }
+            }]
+        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
 
     # General Exception
     elif isinstance(exc, Exception):
