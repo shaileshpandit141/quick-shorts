@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 # Local imports
 from quick_utils.views import QuickAPIView, Response
 from permissions import AllowAny
-from throttling import AnonRateThrottle
+from throttling import AuthRateThrottle
 from utils import TokenGenerator, FieldValidator
 
 User = get_user_model()
@@ -14,7 +14,7 @@ class VerifyAccountConfirmView(QuickAPIView):
     """API View for verifying user accounts via email confirmation."""
 
     permission_classes = [AllowAny]
-    throttle_classes = [AnonRateThrottle]
+    throttle_classes = [AuthRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Handle POST request for email verification"""

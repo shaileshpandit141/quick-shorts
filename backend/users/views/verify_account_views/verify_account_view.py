@@ -5,7 +5,7 @@ from django.conf import settings
 # Local imports
 from quick_utils.views import QuickAPIView, Response
 from permissions import AllowAny
-from throttling import AnonRateThrottle
+from throttling import AuthRateThrottle
 from utils import (
     SendEmail,
     TokenGenerator,
@@ -20,7 +20,7 @@ class VerifyAccountView(QuickAPIView):
     """API View for handling account verification."""
 
     permission_classes = [AllowAny]
-    throttle_classes = [AnonRateThrottle]
+    throttle_classes = [AuthRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Process a request to resend an account verification email."""

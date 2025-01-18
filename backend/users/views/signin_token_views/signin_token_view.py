@@ -10,7 +10,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from permissions import AllowAny
 from utils import FieldValidator
 from users.serializers import SigninTokenSerializer
-from throttling import AnonRateThrottle
+from throttling import AuthRateThrottle
 from quick_utils.views import QuickAPIView, Response
 from quick_utils.format_serializer_errors import format_serializer_errors
 
@@ -21,7 +21,7 @@ class SigninTokenView(TokenObtainPairView, QuickAPIView):
     """Custom JWT token view that handles user authentication using email/username and password."""
 
     permission_classes = [AllowAny]
-    throttle_classes = [AnonRateThrottle]
+    throttle_classes = [AuthRateThrottle]
     serializer_class = SigninTokenSerializer
 
     def post(self, request, *args, **kwargs) -> Response:

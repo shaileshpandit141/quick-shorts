@@ -4,7 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 
 # Local imports
 from permissions import AllowAny
-from throttling import AnonRateThrottle
+from throttling import AuthRateThrottle
 from utils import TokenGenerator, FieldValidator
 from quick_utils.views import QuickAPIView, Response
 
@@ -15,7 +15,7 @@ class ForgotPasswordConfirmView(QuickAPIView):
     """API view for confirming and resetting a forgotten password."""
 
     permission_classes = [AllowAny]
-    throttle_classes = [AnonRateThrottle]
+    throttle_classes = [AuthRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Handle POST request to confirm and reset password."""

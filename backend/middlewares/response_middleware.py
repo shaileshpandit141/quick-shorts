@@ -19,9 +19,7 @@ class InvalidDataFormatError(Exception):
             "field": field,
             "code": code,
             "message": message,
-            "details": {
-                "help": details
-            }
+            "details": {"help": details}
         }
         super().__init__(str(self.error_dict))
 
@@ -41,23 +39,59 @@ class ResponseMiddleware:
         custom_meta: Optional[Dict[str, Any]] = None,
         response_time: str = "N/A"
     ) -> Dict[str, Any]:
-        """Generate the meta field with default values and merge custom meta if provided."""
-        default_meta = {
+        meta = {
             "request_id": str(uuid.uuid4()),
             "timestamp": datetime.utcnow().isoformat(),
             "response_time": response_time,
             "documentation_url": "N/A",
         }
-        if custom_meta is not None:
-            default_meta.update(custom_meta)
-        return default_meta
+        if custom_meta:
+            meta.update(custom_meta)
+        return meta
 
-    def is_data_valid(
+    def create_response_dict(
+        self,
+        success: bool,
+        validate_data: DataType,
+        throttles: list,
+        response_time: str
+    ) -> dict:
+        return {
+            "status": "succeeded" if success else "failed",
+            "message": validate_data["message"],
+            "data": validate_data.get("data") if success else None,
+            "errors": validate_data.get("errors", []) if not success else [],
+            "meta": self.get_meta({"rate_limit": throttles}, response_time)
+        }
+
+    def handle_response(
         self,
         data: DataType | None,
-        expected_keys: List[str]
-    ) -> DataType:
-        """Check if the response data format matches expected keys"""
+        response: Any,
+        throttles: list,
+        response_time: str
+    ) -> JsonResponse:
+        try:
+            success = response.status_code < 400
+            expected_keys = ["message", "data"] if success else ["message", "errors"]
+            validate_data = self.is_data_valid(data, expected_keys)
+            custom_response = self.create_response_dict(
+                success,
+                validate_data,
+                throttles,
+                response_time
+            )
+            return JsonResponse(custom_response, status=response.status_code)
+        except InvalidDataFormatError as error:
+            return JsonResponse({
+                "status": "failed",
+                "message": "Invalid response format",
+                "data": None,
+                "errors": [error.error_dict],
+                "meta": self.get_meta({"rate_limit": throttles}, response_time)
+            }, status=500)
+
+    def is_data_valid(self, data: DataType | None, expected_keys: List[str]) -> DataType:
         if not data or not isinstance(data, dict):
             raise InvalidDataFormatError(
                 message="Response data must be a valid dictionary format.",
@@ -65,14 +99,12 @@ class ResponseMiddleware:
                 details="The response data is either missing or not in dictionary format"
             )
 
-        data_keys = sorted(data.keys())
-        expected_keys.sort()
-
-        if data_keys != expected_keys:
+        if sorted(data.keys()) != sorted(expected_keys):
             raise InvalidDataFormatError(
                 message="Response data is missing required fields or contains invalid fields.",
                 code="invalid_keys",
-                details=f"Expected fields: {', '.join(expected_keys)}. Received fields: {', '.join(data_keys)}"
+                details=f"Expected fields: {
+                    ', '.join(expected_keys)}. Received fields: {', '.join(data.keys())}"
             )
 
         return data
@@ -80,90 +112,20 @@ class ResponseMiddleware:
     def __call__(self, request):
         start_time = time.perf_counter()
         response = self.get_response(request)
-        response_time = round((time.perf_counter() - start_time), 5)
-        response_time = f"{response_time} seconds"
+        response_time = f"{round(time.perf_counter() - start_time, 5)} seconds"
+        throttles = getattr(response, "throttles", [])
 
-        # Add response time to headers
         if isinstance(response, (JsonResponse, Response)):
             response["X-Response-Time"] = response_time
         elif hasattr(response, 'headers'):
             response.headers["X-Response-Time"] = response_time
 
         if isinstance(response, JsonResponse):
-            # Byte string
-            data = response.content
-
-            # Decode the byte string to a regular string
-            decoded_data = data.decode('utf-8')
-
-            # Convert the JSON string to a Python dictionary
-            data_as_dict = json.loads(decoded_data)
-
-            # Define the empty custom response data
-            custom_response = {}
-
-            try:
-                if response.status_code >= 400:
-                    validate_data = self.is_data_valid(data_as_dict, ["message", "errors"])
-                    custom_response = {
-                        "status": "failed",
-                        "message": validate_data["message"],
-                        "data": None,
-                        "errors": validate_data.get("errors", []),
-                        "meta": self.get_meta(None, response_time)
-                    }
-                else:
-                    validate_data = self.is_data_valid(data_as_dict, ["message", "data"])
-                    custom_response = {
-                        "status": "succeeded",
-                        "message": validate_data["message"],
-                        "data": validate_data.get("data"),
-                        "errors": [],
-                        "meta": self.get_meta(None, response_time)
-                    }
-                return JsonResponse(custom_response, status=response.status_code)
-            except InvalidDataFormatError as error:
-                return JsonResponse({
-                    "status": "failed",
-                    "message": "Invalid response format",
-                    "data": None,
-                    "errors": [error.error_dict],
-                    "meta": self.get_meta(None, response_time)
-                }, status=500)
+            data = json.loads(response.content.decode('utf-8'))
+            return self.handle_response(data, response, throttles, response_time)
 
         if isinstance(response, Response):
-            throttles = getattr(response, "throttles", [])
-            data = response.data
-            custom_response = {}
-
-            try:
-                if response.status_code >= 400:
-                    validate_data = self.is_data_valid(data, ["message", "errors"])
-                    custom_response = {
-                        "status": "failed",
-                        "message": validate_data["message"],
-                        "data": None,
-                        "errors": validate_data.get("errors", []),
-                        "meta": self.get_meta({"rate_limit": throttles}, response_time)
-                    }
-                else:
-                    validate_data = self.is_data_valid(data, ["message", "data"])
-                    custom_response = {
-                        "status": "succeeded",
-                        "message": validate_data["message"],
-                        "data": validate_data.get("data"),
-                        "errors": [],
-                        "meta": self.get_meta({"rate_limit": throttles}, response_time)
-                    }
-                return JsonResponse(custom_response, status=response.status_code)
-            except InvalidDataFormatError as error:
-                return JsonResponse({
-                    "status": "failed",
-                    "message": "Invalid response format",
-                    "data": None,
-                    "errors": [error.error_dict],
-                    "meta": self.get_meta({"rate_limit": throttles}, response_time)
-                }, status=500)
+            return self.handle_response(response.data, response, throttles, response_time)
 
         if response.status_code == 429:
             return JsonResponse({
@@ -176,7 +138,7 @@ class ResponseMiddleware:
                     "message": response.headers.get("Retry-After", "N/A"),
                     "details": None
                 }],
-                "meta": self.get_meta(None, response_time)
+                "meta": self.get_meta({"rate_limit": throttles}, response_time)
             }, status=response.status_code)
 
         return response

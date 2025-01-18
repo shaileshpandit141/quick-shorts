@@ -111,9 +111,17 @@ MEDIA_URL = "/media/"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ["rest_framework_simplejwt.authentication.JWTAuthentication"],
     "DEFAULT_PERMISSION_CLASSES": ["permissions.IsAuthenticated"],
-    "EXCEPTION_HANDLER": "backend.exceptions.exception_handler",
-    "DEFAULT_THROTTLE_CLASSES": ["throttling.AnonRateThrottle", "throttling.UserRateThrottle"],
-    "DEFAULT_THROTTLE_RATES": {"anon": "100/day", "user": "1000/day"},
+    "EXCEPTION_HANDLER": "exceptions.exception_handler",
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+        "throttling.AuthRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "5/day",
+        "auth": "5/hour",
+        "user": "1000/day"
+    },
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
 }
 

@@ -5,7 +5,7 @@ from django.contrib.auth.password_validation import validate_password
 # Local imports
 from quick_utils.views import QuickAPIView, Response
 from permissions import IsAuthenticated
-from throttling import UserRateThrottle
+from throttling import AuthRateThrottle
 from utils import SendEmail, FieldValidator
 
 User = get_user_model()
@@ -15,7 +15,7 @@ class ChangePasswordView(QuickAPIView):
     """Changes authenticated user's password."""
     
     permission_classes = [IsAuthenticated]
-    throttle_classes = [UserRateThrottle]
+    throttle_classes = [AuthRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Changes user password after validation."""
