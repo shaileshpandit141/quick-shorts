@@ -6,14 +6,14 @@ class AuthRateThrottle(SimpleRateThrottle):
 
     def get_cache_key(self, request, view):
         """
-        Generate a unique cache key based on the user type.
+        Generate a unique cache key based on the user type and the view type.
         """
         if request.user.is_authenticated:
             # Use the user ID for authenticated users
-            return f"throttle_user_{request.user.id}"
+            return f"throttle_user_{request.user.id}_{view.__class__.__name__}"
         else:
             # Use the IP address for anonymous users
-            return self.get_ident(request)
+            return self.get_ident(request) + f"_{view.__class__.__name__}"
 
     def get_rate(self):
         """

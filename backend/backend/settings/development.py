@@ -6,6 +6,9 @@ from decouple import config, Csv
 # Enable debug mode for development purposes only
 DEBUG = True
 
+# Configure Logging for development
+LOGGING['loggers']['django']['level'] = 'DEBUG'
+
 # List of host/domain names that Django can serve
 ALLOWED_HOSTS = config("HOST", cast=Csv())
 CORS_ALLOWED_ORIGINS = config("FRONTEND_URL", cast=Csv())
@@ -17,6 +20,16 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
+
+# Caches Configuration
+# -----------------------
+# Memcached configuration for local development
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": "127.0.0.1:11211",
     }
 }
 

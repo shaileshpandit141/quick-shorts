@@ -6,6 +6,9 @@ from decouple import config, Csv
 # DEBUG = False
 DEBUG = True
 
+# Configure Logging for production
+LOGGING['loggers']['django']['level'] = 'INFO'
+
 # Configure allowed hosts and CORS origins from environment variables
 # -----------------------
 # These should be comma-separated lists in the environment configuration
@@ -24,6 +27,20 @@ DATABASES = {
         "PORT": config("DB_PORT", cast=str),
     }
 }
+
+# Caches Configuration
+# -----------------------
+# Redis configuration for local production
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': config("REDIS_CACHE_LOCATION", cast=str),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
 
 # Security settings for production environment
 # -----------------------
