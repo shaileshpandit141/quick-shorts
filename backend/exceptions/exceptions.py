@@ -7,126 +7,119 @@ from rest_framework.exceptions import (
     AuthenticationFailed,
     Throttled
 )
-from quick_utils.types import ErrorsType
 from quick_utils.response import Response
 from rest_framework import status
 
 
-def exception_handler(exc, context):
-    """A custom exception handler that returns the exception details in a custom format."""
+def create_error_response(message, code, field="none", error_message=None, details=None):
+    """Helper function to create error response"""
+    return Response({
+        "message": message,
+        "errors": [{
+            "field": field,
+            "code": code,
+            "message": error_message or message,
+            "details": details
+        }]
+    })
 
-    # Call the default exception handler first to get the standard DRF response
-    response = dj_exception_handler(exc, context)
 
-    # Handle specific exceptions
-
-    # ValidationError
-    if isinstance(exc, ValidationError):
-        error_details: ErrorsType = []
-        if isinstance(exc.detail, dict):
-            for field, messages in exc.detail.items():
-                if isinstance(messages, list):
-                    for message in messages:
-                        error_details.append({
-                            "field": field,
-                            "code": getattr(message, "code", "validation_error"),
-                            "message": str(message),
-                            "details": None
-                        })
-                else:
+def format_validation_errors(detail):
+    """Helper function to format validation errors"""
+    error_details = []
+    if isinstance(detail, dict):
+        for field, messages in detail.items():
+            if isinstance(messages, list):
+                for message in messages:
                     error_details.append({
                         "field": field,
-                        "code": getattr(messages, "code", "validation_error"),
-                        "message": str(messages),
+                        "code": getattr(message, "code", "validation_error"),
+                        "message": str(message),
                         "details": None
                     })
-        else:
-            error_details.append({
-                "field": "none",
-                "code": "validation_error",
-                "message": str(exc.detail),
-                "details": None
-            })
+            else:
+                error_details.append({
+                    "field": field,
+                    "code": getattr(messages, "code", "validation_error"),
+                    "message": str(messages),
+                    "details": None
+                })
+    else:
+        error_details.append({
+            "field": "none",
+            "code": "validation_error",
+            "message": str(detail),
+            "details": None
+        })
+    return error_details
 
-        return Response({
+
+def exception_handler(exc, context):
+    """A custom exception handler that returns the exception details in a custom format."""
+    response = dj_exception_handler(exc, context)
+
+    error_handlers = {
+        ValidationError: lambda error: Response({
             "message": "Validation error",
-            "errors": error_details
-        }, status=status.HTTP_400_BAD_REQUEST)
+            "errors": format_validation_errors(error.detail)
+        }, status=status.HTTP_400_BAD_REQUEST),
 
-    # MethodNotAllowed
-    elif isinstance(exc, MethodNotAllowed):
-        return Response({
-            "message": "Method Not Allowed",
-            "errors": [{
-                "field": "none",
-                "code": "method_not_allowed",
-                "message": "This method is not allowed for this endpoint",
-                "details": None
-            }]
-        }, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        MethodNotAllowed: lambda error: create_error_response(
+            "Method Not Allowed",
+            "method_not_allowed",
+            error_message="This method is not allowed for this endpoint",
+            details=None
+        ),
 
-    # NotFound
-    elif isinstance(exc, NotFound):
-        return Response({
-            "message": "Resource Not Found",
-            "errors": [{
-                "field": "none",
-                "code": "not_found",
-                "message": "The requested resource was not found",
-                "details": None
-            }]
-        }, status=status.HTTP_404_NOT_FOUND)
+        NotFound: lambda error: create_error_response(
+            "Resource Not Found",
+            "not_found",
+            error_message="The requested resource was not found",
+            details=None
+        ),
 
-    # NotAuthenticated
-    elif isinstance(exc, NotAuthenticated):
-        return Response({
-            "message": "Authentication Required",
-            "errors": [{
-                "field": "none",
-                "code": "authentication_required",
-                "message": "Authentication credentials were not provided",
-                "details": None
-            }]
-        }, status=status.HTTP_401_UNAUTHORIZED)
+        NotAuthenticated: lambda error: create_error_response(
+            "Authentication Required",
+            "authentication_required",
+            error_message="Authentication credentials were not provided",
+            details=None
+        ),
 
-    # AuthenticationFailed
-    elif isinstance(exc, AuthenticationFailed):
-        return Response({
-            "message": "Authentication Failed",
-            "errors": [{
-                "field": "none",
-                "code": "authentication_failed",
-                "message": "Authentication credentials are incorrect",
-                "details": None
-            }]
-        }, status=status.HTTP_401_UNAUTHORIZED)
+        AuthenticationFailed: lambda error: create_error_response(
+            "Authentication Failed",
+            "authentication_failed",
+            error_message="Authentication credentials are incorrect",
+            details=None
+        ),
 
-    # Throttled 
-    elif isinstance(exc, Throttled):
-        retry_after = exc.wait
-        return Response({
-            "message": str(exc.detail) or "Request Limit Exceeded",
-            "errors": [{
-                "field": "none",
-                "code": "throttled",
-                "message": "Too many requests. Please try again later.",
-                "details": {
-                    "retry_after": f"{retry_after} seconds"
-                }
-            }]
-        }, status=status.HTTP_429_TOO_MANY_REQUESTS)
+        Throttled: lambda error: create_error_response(
+            str(error.detail) or "Request Limit Exceeded",
+            "throttled",
+            error_message="Allowed limit requests exceeded. Please try again later.",
+            details={"retry_after": f"{error.wait} seconds"}
+        ),
 
-    # General Exception
-    elif isinstance(exc, Exception):
-        return Response({
-            "message": "Internal Server Error",
-            "errors": [{
-                "field": "none",
-                "code": "server_error",
-                "message": exc[0] if isinstance(exc, list) else str(exc),
-                "details": None
-            }]
-        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        Exception: lambda error: create_error_response(
+            "Internal Server Error",
+            "server_error",
+            error_message=error[0] if isinstance(error, list) else str(error),
+            details=None
+        )
+    }
 
-    # Return the default response if no specific handler is found
+    for exception_class, handler in error_handlers.items():
+        if isinstance(exc, exception_class):
+            response = handler(exc)
+            if isinstance(exc, MethodNotAllowed):
+                response.status_code = status.HTTP_405_METHOD_NOT_ALLOWED
+            elif isinstance(exc, NotFound):
+                response.status_code = status.HTTP_404_NOT_FOUND
+            elif isinstance(exc, (NotAuthenticated, AuthenticationFailed)):
+                response.status_code = status.HTTP_401_UNAUTHORIZED
+            elif isinstance(exc, Throttled):
+                response.status_code = status.HTTP_429_TOO_MANY_REQUESTS
+            elif isinstance(exc, Exception):
+                response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            return response
+
     return response
