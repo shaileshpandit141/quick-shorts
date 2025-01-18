@@ -80,8 +80,8 @@ class ResponseMiddleware:
     def __call__(self, request):
         start_time = time.perf_counter()
         response = self.get_response(request)
-        response_time = round((time.perf_counter() - start_time) * 1000, 2)
-        response_time = f"{response_time} milliseconds"
+        response_time = round((time.perf_counter() - start_time), 5)
+        response_time = f"{response_time} seconds"
 
         # Add response time to headers
         if isinstance(response, (JsonResponse, Response)):

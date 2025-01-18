@@ -49,7 +49,7 @@ def get_throttle_details(self) -> list[ThrottleRateLimitType]:
     if not hasattr(self, 'request'):
         raise AttributeError(f"request not found on class {type(self).__name__}")
 
-    throttle_details = []
+    throttle_details: list[ThrottleRateLimitType] = []
 
     for throttle_class in self.throttle_classes:
 
@@ -92,12 +92,16 @@ def get_throttle_details(self) -> list[ThrottleRateLimitType]:
         else:
             reset_time = datetime.now(pytz.UTC) + timedelta(seconds=duration)
 
+        # Calculate retry after in seconds
+        retry_after = max(0, int((reset_time - datetime.now(pytz.UTC)).total_seconds()))
+
         # Add throttle details to the dictionary
         throttle_details.append({
             "type": throttle_name,
             "limit": limit,
             "remaining": remaining,
             "reset_time": reset_time.isoformat(),
+            "retry_after": f"{retry_after} seconds"
         })
 
     return throttle_details
