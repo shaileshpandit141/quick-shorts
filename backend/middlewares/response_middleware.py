@@ -1,12 +1,12 @@
-from typing import Any, Dict, List, TypedDict, NotRequired, Optional
+from typing import Any, Dict, List, NotRequired, Optional, TypedDict
+import json
 import time
-from datetime import datetime  # type: ignore
 import uuid
+from datetime import datetime  # type: ignore
 from django.http import JsonResponse
 from rest_framework.response import Response
-import json
 from last_request_log.models import LastRequestLog
-from utils.get_client_ip import get_client_ip
+from utils import get_client_ip
 
 
 class InvalidDataFormatError(Exception):

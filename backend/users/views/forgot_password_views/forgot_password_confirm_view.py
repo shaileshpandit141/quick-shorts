@@ -5,7 +5,8 @@ from django.contrib.auth.password_validation import validate_password
 # Local imports
 from permissions import AllowAny
 from throttling import AuthRateThrottle
-from utils import TokenGenerator, FieldValidator
+from utils import FieldValidator
+from quick_utils.token_generator import TokenGenerator
 from quick_utils.views import QuickAPIView, Response
 
 User = get_user_model()

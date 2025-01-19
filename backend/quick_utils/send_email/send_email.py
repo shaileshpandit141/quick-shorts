@@ -1,29 +1,14 @@
-from typing import TypedDict, Dict, List, NotRequired
+from typing import List
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.conf import settings
 import logging
+from .send_email_types import EmailCredentialType
 
 # Set up a logger
 logger = logging.getLogger(__name__)
-
-class EmailsType(TypedDict):
-    from_email: NotRequired[str]
-    to_emails: List[str]
-
-
-class TemplatesType(TypedDict):
-    txt: str
-    html: str
-
-
-class EmailCredentialType(TypedDict):
-    subject: str
-    emails: EmailsType
-    context: Dict
-    templates: TemplatesType
 
 
 class SendEmail:

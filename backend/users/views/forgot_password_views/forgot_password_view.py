@@ -6,12 +6,9 @@ from django.conf import settings
 from quick_utils.views import QuickAPIView, Response
 from permissions import AllowAny
 from throttling import AuthRateThrottle
-from utils import (
-    SendEmail,
-    TokenGenerator,
-    FieldValidator,
-    add_query_params
-)
+from utils import FieldValidator, add_query_params
+from quick_utils.send_email import SendEmail
+from quick_utils.token_generator import TokenGenerator
 
 User = get_user_model()
 

@@ -1,4 +1,4 @@
-from typing import TypedDict, Dict, Any, NoReturn
+from typing import Dict, Any, NoReturn
 from datetime import datetime, timedelta  # type: ignore
 from django.conf import settings
 import logging
@@ -8,13 +8,9 @@ from itsdangerous import (
     SignatureExpired
 )
 import secrets
+from .token_generator_types import TokenGeneratorResponse
 
 logger = logging.getLogger(__name__)
-
-class TokenGeneratorResponse(TypedDict):
-    token: str
-    token_salt: str
-    message: str
 
 
 class TokenGenerator:
@@ -35,11 +31,11 @@ class TokenGenerator:
         :param salt: A unique salt for added security.
         :param token_expiry_seconds: The expiration time for the token in seconds.
         """
-        # logger.debug(f"Generating token with salt: {salt} and expiry: {token_expiry_seconds}s")
         token_expiry_time = datetime.utcnow() + timedelta(seconds=token_expiry_seconds)
         payload["expiry_time"] = token_expiry_time.isoformat()
 
         token_salt = TokenGenerator.generate_one_time_token()
+        logger.debug(f"Generating token with salt: {token_salt} and expiry: {token_expiry_seconds}s")
 
         token_serializer = URLSafeTimedSerializer(settings.SECRET_KEY, salt=token_salt)
         generated_token = token_serializer.dumps(payload)
@@ -75,4 +71,4 @@ class TokenGenerator:
             return decoded_payload
         except (SignatureExpired, BadSignature) as validation_error:
             logger.error(f"Token validation failed: {str(validation_error)}")
-            raise ValueError(f"Invalid or expired token. Please request a new token.")
+            raise ValueError("Invalid or expired token. Please request a new token.")

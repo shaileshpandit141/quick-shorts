@@ -12,12 +12,9 @@ from dns_smtp_email_validator import DNSSMTPEmailValidator
 from quick_utils.views import QuickAPIView, Response
 from permissions import AllowAny
 from throttling import AuthRateThrottle
-from utils import (
-    SendEmail,
-    TokenGenerator,
-    add_query_params,
-    FieldValidator
-)
+from utils import add_query_params, FieldValidator
+from quick_utils.send_email import SendEmail
+from quick_utils.token_generator import TokenGenerator
 from users.serializers import UserSerializer
 
 User = get_user_model()

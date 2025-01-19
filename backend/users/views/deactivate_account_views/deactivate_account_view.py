@@ -2,7 +2,8 @@
 from quick_utils.views import QuickAPIView, Response
 from permissions import IsAuthenticated
 from throttling import UserRateThrottle
-from utils import FieldValidator, SendEmail
+from utils import FieldValidator
+from quick_utils.send_email import SendEmail
 
 
 class DeactivateAccountView(QuickAPIView):
