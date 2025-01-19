@@ -1,7 +1,6 @@
 from typing import Any, Dict, List, NotRequired, Optional, TypedDict
 import json
 import time
-import uuid
 from datetime import datetime  # type: ignore
 from django.http import JsonResponse
 from rest_framework.response import Response
