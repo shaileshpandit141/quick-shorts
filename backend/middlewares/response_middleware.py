@@ -42,7 +42,6 @@ class ResponseMiddleware:
         response_time: str = "N/A"
     ) -> Dict[str, Any]:
         meta = {
-            "request_id": str(uuid.uuid4()),
             "timestamp": datetime.utcnow().isoformat(),
             "response_time": response_time,
             "documentation_url": "N/A",
