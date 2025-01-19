@@ -5,6 +5,8 @@ import uuid
 from django.http import JsonResponse
 from rest_framework.response import Response
 import json
+from last_request_log.models import LastRequestLog
+from utils.get_client_ip import get_client_ip
 
 
 class InvalidDataFormatError(Exception):
@@ -64,12 +66,41 @@ class ResponseMiddleware:
             "meta": self.get_meta({"rate_limit": throttles}, response_time)
         }
 
+    def log_request(self, request: Any, response_time: str, success: bool, is_api_request: bool):
+        objects = getattr(LastRequestLog, "objects", None)
+        if objects is not None:
+            client_ip = get_client_ip(request)
+            log_entry = objects.filter(ip=client_ip).first()
+            if log_entry:
+                log_entry.user = request.user.email if request.user.is_authenticated else None
+                log_entry.path = request.path
+                log_entry.method = request.method
+                log_entry.timestamp = datetime.utcnow()
+                log_entry.response_time = response_time
+                log_entry.is_authenticated = request.user.is_authenticated
+                log_entry.is_api_request = is_api_request
+                log_entry.is_request_success = success
+                log_entry.save()
+            else:
+                objects.create(
+                    user=request.user.email if request.user.is_authenticated else None,
+                    path=request.path,
+                    method=request.method,
+                    ip=client_ip,
+                    timestamp=datetime.utcnow(),
+                    response_time=response_time,
+                    is_authenticated=request.user.is_authenticated,
+                    is_api_request=is_api_request,
+                    is_request_success=success
+                )
+
     def handle_response(
         self,
         data: DataType | None,
         response: Any,
         throttles: list,
-        response_time: str
+        response_time: str,
+        request: Any
     ) -> JsonResponse:
         try:
             success = response.status_code < 400
@@ -81,6 +112,8 @@ class ResponseMiddleware:
                 throttles,
                 response_time
             )
+
+            self.log_request(request, response_time, success, True)
             return JsonResponse(custom_response, status=response.status_code)
         except InvalidDataFormatError as error:
             return JsonResponse({
@@ -122,10 +155,10 @@ class ResponseMiddleware:
 
         if isinstance(response, JsonResponse):
             data = json.loads(response.content.decode('utf-8'))
-            return self.handle_response(data, response, throttles, response_time)
+            return self.handle_response(data, response, throttles, response_time, request)
 
         if isinstance(response, Response):
-            return self.handle_response(response.data, response, throttles, response_time)
+            return self.handle_response(response.data, response, throttles, response_time, request)
 
         if response.status_code == 429:
             return JsonResponse({
@@ -141,4 +174,7 @@ class ResponseMiddleware:
                 "meta": self.get_meta({"rate_limit": throttles}, response_time)
             }, status=response.status_code)
 
+        # Log non-API requests before returning response
+        success = response.status_code < 400
+        self.log_request(request, response_time, success, False)
         return response

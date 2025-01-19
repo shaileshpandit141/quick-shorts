@@ -37,6 +37,7 @@ INSTALLED_APPS += [
 # User Define applications
 INSTALLED_APPS += [
     "users.apps.UsersConfig",
+    "last_request_log.apps.LastRequestLogConfig"
 ]
 
 # MIDDLEWARE CONFIGURATION
