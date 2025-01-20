@@ -1,3 +1,4 @@
+import hashlib
 from rest_framework.throttling import SimpleRateThrottle
 from django.conf import settings
 
@@ -7,15 +8,19 @@ class AuthRateThrottle(SimpleRateThrottle):
     def get_cache_key(self, request, view):
         """
         Generate a cache key unique to each device on the same network.
-        Use a combination of router IP and a device-specific identifier.
+        Use a combination of router IP and a sanitized device identifier.
         """
         router_ip = self.get_ident(request)  # Identifies the network's public IP
-        # Use user ID for authenticated users, or fall back to user-agent for anonymous users
+
         if request.user.is_authenticated:
+            # Use the user ID for authenticated users
             device_id = f"user_{request.user.id}"
         else:
-            device_id = request.headers.get("User-Agent", "unknown_device")
+            # Use a hashed version of the User-Agent header for anonymous users
+            user_agent = request.headers.get("User-Agent", "unknown_device")
+            device_id = hashlib.md5(user_agent.encode("utf-8")).hexdigest()
 
+        # Generate the cache key
         return f"throttle_{router_ip}_{device_id}_{view.__class__.__name__}"
 
     def get_rate(self):
