@@ -7,12 +7,13 @@ from permissions import AllowAny
 from throttling import AuthRateThrottle
 from utils import FieldValidator
 from quick_utils.token_generator import TokenGenerator
-from quick_utils.views import QuickAPIView, Response
+from quick_utils.views import APIView, Response
+
 
 User = get_user_model()
 
 
-class ForgotPasswordConfirmView(QuickAPIView):
+class ForgotPasswordConfirmView(APIView):
     """API view for confirming and resetting a forgotten password."""
 
     permission_classes = [AllowAny]

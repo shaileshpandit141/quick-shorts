@@ -11,13 +11,14 @@ from permissions import AllowAny
 from utils import FieldValidator
 from users.serializers import SigninTokenSerializer
 from throttling import AuthRateThrottle
-from quick_utils.views import QuickAPIView, Response
+from quick_utils.views import APIView, Response
 from quick_utils.format_serializer_errors import format_serializer_errors
+
 
 User = get_user_model()
 
 
-class SigninTokenView(TokenObtainPairView, QuickAPIView):
+class SigninTokenView(TokenObtainPairView, APIView):
     """Custom JWT token view that handles user authentication using email/username and password."""
 
     permission_classes = [AllowAny]

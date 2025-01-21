@@ -2,16 +2,17 @@
 from django.contrib.auth import get_user_model
 
 # Local imports
-from quick_utils.views import QuickAPIView, Response
+from quick_utils.views import APIView, Response
 from permissions import IsAuthenticated, IsVerified
 from throttling import UserRateThrottle
 from utils import FieldValidator
 from users.serializers import UserSerializer
 
+
 User = get_user_model()
 
 
-class UserInfoView(QuickAPIView):
+class UserInfoView(APIView):
     """API View for managing authenticated user information."""
 
     permission_classes = [IsAuthenticated, IsVerified]

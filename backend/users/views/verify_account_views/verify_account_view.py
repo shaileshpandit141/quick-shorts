@@ -3,17 +3,18 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 
 # Local imports
-from quick_utils.views import QuickAPIView, Response
+from quick_utils.views import APIView, Response
 from permissions import AllowAny
 from throttling import AuthRateThrottle
 from utils import add_query_params, FieldValidator
 from quick_utils.send_email import SendEmail
 from quick_utils.token_generator import TokenGenerator
 
+
 User = get_user_model()
 
 
-class VerifyAccountView(QuickAPIView):
+class VerifyAccountView(APIView):
     """API View for handling account verification."""
 
     permission_classes = [AllowAny]

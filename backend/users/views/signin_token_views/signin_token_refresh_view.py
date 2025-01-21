@@ -8,12 +8,12 @@ from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.views import TokenRefreshView
 
 # Local imports
-from quick_utils.views import QuickAPIView, Response
+from quick_utils.views import APIView, Response
 from permissions import AllowAny
 from throttling import AuthRateThrottle
 
 
-class SigninTokenRefreshView(TokenRefreshView, QuickAPIView):
+class SigninTokenRefreshView(TokenRefreshView, APIView):
     """Custom token refresh view for handling JWT token refresh operations."""
 
     permission_classes = [AllowAny]

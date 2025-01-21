@@ -10,6 +10,7 @@ from itsdangerous import (
 import secrets
 from .token_generator_types import TokenGeneratorResponse
 
+
 logger = logging.getLogger(__name__)
 
 

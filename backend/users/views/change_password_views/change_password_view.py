@@ -3,16 +3,17 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 
 # Local imports
-from quick_utils.views import QuickAPIView, Response
+from quick_utils.views import APIView, Response
 from permissions import IsAuthenticated
 from throttling import AuthRateThrottle
 from utils import FieldValidator
 from quick_utils.send_email import SendEmail
 
+
 User = get_user_model()
 
 
-class ChangePasswordView(QuickAPIView):
+class ChangePasswordView(APIView):
     """Changes authenticated user's password."""
     
     permission_classes = [IsAuthenticated]

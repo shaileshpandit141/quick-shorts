@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from dns_smtp_email_validator import DNSSMTPEmailValidator
 
 # Local imports
-from quick_utils.views import QuickAPIView, Response
+from quick_utils.views import APIView, Response
 from permissions import AllowAny
 from throttling import AuthRateThrottle
 from utils import add_query_params, FieldValidator
@@ -17,10 +17,11 @@ from quick_utils.send_email import SendEmail
 from quick_utils.token_generator import TokenGenerator
 from users.serializers import UserSerializer
 
+
 User = get_user_model()
 
 
-class SignupView(QuickAPIView):
+class SignupView(APIView):
     """API view for handling user signup functionality"""
 
     permission_classes = [AllowAny]

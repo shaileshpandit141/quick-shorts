@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional, List, Type
 import logging
 from django.db.models import QuerySet
-from rest_framework.views import APIView
+from rest_framework import views
 from rest_framework import status
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.permissions import BasePermission
@@ -22,7 +22,7 @@ from ..page_number_pagination import PageNumberPagination
 logger = logging.getLogger(__name__)
 
 
-class QuickAPIView(APIView):
+class APIView(views.APIView):
     """Base API view with helper methods for quick API development"""
     authentication_classes: List[Type[BaseAuthentication]] = []
     permission_classes: List[Type[BasePermission]] = []

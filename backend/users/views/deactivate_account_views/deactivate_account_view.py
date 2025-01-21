@@ -1,12 +1,12 @@
 # Local imports
-from quick_utils.views import QuickAPIView, Response
+from quick_utils.views import APIView, Response
 from permissions import IsAuthenticated
 from throttling import UserRateThrottle
 from utils import FieldValidator
 from quick_utils.send_email import SendEmail
 
 
-class DeactivateAccountView(QuickAPIView):
+class DeactivateAccountView(APIView):
     """API view for deactivating user accounts."""
 
     permission_classes = [IsAuthenticated]

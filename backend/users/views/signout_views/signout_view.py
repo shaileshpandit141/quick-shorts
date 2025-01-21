@@ -3,13 +3,13 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 
 # Local imports
-from quick_utils.views import QuickAPIView, Response
+from quick_utils.views import APIView, Response
 from permissions import AllowAny
 from throttling import AuthRateThrottle
 from utils import FieldValidator
 
 
-class SignoutView(QuickAPIView):
+class SignoutView(APIView):
     """API view for user sign out functionality."""
 
     permission_classes = [AllowAny]
