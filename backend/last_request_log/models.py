@@ -3,6 +3,9 @@ from django.db import models
 
 class LastRequestLog(models.Model):
     """Model to log HTTP request details and responses."""
+
+    objects = models.Manager()
+
     class Meta:
         db_table = "last request log"
         verbose_name = "last request log"
