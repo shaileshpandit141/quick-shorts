@@ -16,7 +16,7 @@ import os
 from django.core.asgi import get_asgi_application
 
 # Configure Django settings module path
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 
 # Create ASGI application instance
 application = get_asgi_application()

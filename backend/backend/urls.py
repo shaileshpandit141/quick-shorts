@@ -17,13 +17,13 @@ from users import urls
 # Main URL patterns defining route-to-view mappings
 urlpatterns = [
     # Served the index page
-    path("", IndexTemplateView.as_view(), name='index'),
+    path("", IndexTemplateView.as_view(), name="index"),
 
     # Django admin interface accessible at /admin
-    path("admin/", admin.site.urls, name='admin'),
+    path("admin/", admin.site.urls, name="admin"),
 
     # User authentication URLs under /api/v1/auth
-    path("api/v1/auth/", include((urls, 'auth'), namespace='auth')),
+    path("api/v1/auth/", include((urls, "auth"), namespace="auth")),
 ]
 
 # Configure custom error handling

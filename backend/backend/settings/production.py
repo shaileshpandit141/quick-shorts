@@ -7,7 +7,7 @@ from decouple import config, Csv
 DEBUG = True
 
 # Configure Logging for production
-LOGGING['loggers']['django']['level'] = 'INFO'
+LOGGING["loggers"]["django"]["level"] = "INFO"
 
 # Configure allowed hosts and CORS origins from environment variables
 # -----------------------
@@ -32,11 +32,11 @@ DATABASES = {
 # -----------------------
 # Redis configuration for local production
 CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': config("REDIS_CACHE_LOCATION", cast=str),
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": config("REDIS_CACHE_LOCATION", cast=str),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     }
 }
@@ -55,9 +55,9 @@ SECURE_SSL_REDIRECT = True  # Force all connections to use HTTPS
 # -----------------------
 # Using multiple algorithms provides additional security layers
 PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.Argon2PasswordHasher',    # Recommended primary hasher
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',    # Strong fallback option
-    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher', # Additional fallback
-    'django.contrib.auth.hashers.ScryptPasswordHasher',    # Final fallback option
-    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher'
+    "django.contrib.auth.hashers.Argon2PasswordHasher",    # Recommended primary hasher
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",    # Strong fallback option
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher", # Additional fallback
+    "django.contrib.auth.hashers.ScryptPasswordHasher",    # Final fallback option
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher"
 ]

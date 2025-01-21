@@ -6,7 +6,7 @@ from .base import BASE_DIR
 DEBUG = True
 
 # Configure Logging for development
-LOGGING['loggers']['django']['level'] = 'DEBUG'
+LOGGING["loggers"]["django"]["level"] = "DEBUG"
 
 # Allow all hosts to access the application
 ALLOWED_HOSTS = ["*"]

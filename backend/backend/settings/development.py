@@ -7,7 +7,7 @@ from decouple import config, Csv
 DEBUG = True
 
 # Configure Logging for development
-LOGGING['loggers']['django']['level'] = 'DEBUG'
+LOGGING["loggers"]["django"]["level"] = "DEBUG"
 
 # List of host/domain names that Django can serve
 ALLOWED_HOSTS = config("HOST", cast=Csv())
@@ -37,9 +37,9 @@ CACHES = {
 # -----------------------
 # Using multiple algorithms provides additional security layers
 PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.Argon2PasswordHasher',    # Recommended primary hasher
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',    # Strong fallback option
-    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher', # Additional fallback
-    'django.contrib.auth.hashers.ScryptPasswordHasher',    # Final fallback option
-    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher'
+    "django.contrib.auth.hashers.Argon2PasswordHasher",    # Recommended primary hasher
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",    # Strong fallback option
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher", # Additional fallback
+    "django.contrib.auth.hashers.ScryptPasswordHasher",    # Final fallback option
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher"
 ]
