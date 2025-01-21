@@ -1,16 +1,35 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List, Type
 from django.db.models import QuerySet
-from django.core.paginator import Paginator
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.authentication import BaseAuthentication
+from rest_framework.permissions import BasePermission
+from rest_framework.throttling import BaseThrottle
+from rest_framework.renderers import BaseRenderer
+from rest_framework.parsers import BaseParser
+from rest_framework.negotiation import BaseContentNegotiation
+from rest_framework.metadata import BaseMetadata
+from rest_framework.versioning import BaseVersioning
+from rest_framework.schemas.openapi import AutoSchema
 from ..types import ResponseDataType
 from ..response import Response
 from ..get_throttle_details import get_throttle_details
 from ..format_serializer_errors import format_serializer_errors
+from ..page_number_pagination import PageNumberPagination
 
 
 class QuickAPIView(APIView):
     """Base API view with helper methods for quick API development"""
+    authentication_classes: List[Type[BaseAuthentication]] = []
+    permission_classes: List[Type[BasePermission]] = []
+    throttle_classes: List[Type[BaseThrottle]] = []
+    renderer_classes: List[Type[BaseRenderer]] = []
+    parser_classes: List[Type[BaseParser]] = []
+    content_negotiation_class: Optional[Type[BaseContentNegotiation]] = None
+    metadata_class: Optional[Type[BaseMetadata]] = None
+    versioning_class: Optional[Type[BaseVersioning]] = None 
+    schema: Optional[AutoSchema] = None
+    pagination_class: Type[PageNumberPagination] = PageNumberPagination
 
     def __init__(self, *args, **kwargs) -> None:
         """Initialize view with status attribute"""
@@ -39,47 +58,25 @@ class QuickAPIView(APIView):
 
     def get_paginator(
         self,
-        queryset: QuerySet,
-        page_number: Optional[int] = None,
-        items_per_page: Optional[int] = None
-    ) -> Dict[str, Any]:
+        queryset: QuerySet
+    ) -> Response:
         """
         Returns pagination data for the given queryset.
         Uses page and items-per-page query params if not explicitly provided.
         Default page is 1, default items per page is 10.
         """
-        param_page = self.get_query_params("page", "1")
-        param_items = self.get_query_params("items-per-page", "10")
+        paginator = self.pagination_class()
 
-        try:
-            page_number = page_number or int(param_page) if param_page is not None else 1
-            items_per_page = items_per_page or int(param_items) if param_items is not None else 10
-        except ValueError:
-            page_number = 1
-            items_per_page = 10
+        # Paginate the queryset
+        page = paginator.paginate_queryset(queryset, self.request)
+        if page is not None:
+            return paginator.get_paginated_response(page)
 
-        paginator = Paginator(queryset, items_per_page)
-
-        # Handle out of range page numbers gracefully
-        try:
-            page = paginator.page(page_number)
-        except:
-            page = paginator.page(1)
-
-        paginated_data = {
-            "results": list(page.object_list),
-            "paginations": {
-                "current_page": page.number,
-                "total_pages": paginator.num_pages,
-                "total_items": paginator.count,
-                "items_per_page": items_per_page,
-                "has_next": page.has_next(),
-                "has_previous": page.has_previous(),
-                "next_page_number": page.next_page_number() if page.has_next() else None,
-                "previous_page_number": page.previous_page_number() if page.has_previous() else None
-            }
-        }
-        return paginated_data
+        # If no pagination is required
+        return self.response({
+            "message": "Request was successful",
+            "data": queryset  # type: ignore
+        }, status=self.status.HTTP_200_OK)
 
     def response(
         self,
