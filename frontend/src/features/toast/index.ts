@@ -5,3 +5,4 @@
  * @exports removeToast - Action creator to remove an existing toast
  */
 export { toastReducer, addToast, removeToast } from "./toastSlice";
+export { triggerToast } from "./triggerToast";

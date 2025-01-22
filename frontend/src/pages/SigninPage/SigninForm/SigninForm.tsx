@@ -9,7 +9,7 @@ import { DisplayFormErrors } from 'components'
 import { useFormDataChange } from 'hooks/useFormDataChange'
 import { SigninCredentials } from 'API/API.types'
 import { Button } from 'components'
-import { triggerToast } from 'utils/toast'
+import { triggerToast } from 'features/toast'
 
 const SigninForm: React.FC = () => {
 

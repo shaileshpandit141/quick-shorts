@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import './SignoutButton.css';
 import { Navigate } from 'react-router-dom';
 import Button from 'components/Button/Button';
-import { isAuthenticated } from 'utils/isAuthenticted';
-import { resetSigninState } from 'features/auth';
+import { resetSigninState, isAuthenticated } from 'features/auth';
+import { triggerToast } from 'features/toast';
 import { useDispatch } from 'react-redux';
 import { signoutThunk } from 'features/auth';
 import { useSignoutSelector } from 'features/auth';
 import { useSigninSelector } from 'features/auth';
-import { triggerToast } from 'utils/toast';
 
 const SignoutButton: React.FC = () => {
   const dispatch = useDispatch();

@@ -90,6 +90,7 @@ const signinSlice = createSlice({
   }
 })
 
-const signinReducer = signinSlice.reducer;
-export const { resetSigninState } = signinSlice.actions
-export default signinReducer;
+export const {
+  reducer: signinReducer,
+  actions: { resetSigninState }
+} = signinSlice

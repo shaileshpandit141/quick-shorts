@@ -59,6 +59,7 @@ const signoutSlice = createSlice({
 })
 
 // Export signout slice actions
-const signoutReducer = signoutSlice.reducer
-export default signoutReducer
-export const { resetSignoutState } = signoutSlice.actions
+export const {
+  reducer: signoutReducer,
+  actions: { resetSignoutState }
+} = signoutSlice

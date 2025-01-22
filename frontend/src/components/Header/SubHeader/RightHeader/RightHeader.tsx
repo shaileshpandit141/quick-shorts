@@ -1,7 +1,7 @@
 import React from 'react'
 import './RightHeader.css'
 import { NavLink } from 'react-router-dom'
-import { isAuthenticated } from 'utils/isAuthenticted'
+import { isAuthenticated } from 'features/auth'
 import AnchorLink from 'components/AnchorLink/AnchorLink'
 
 const RightHeader: React.FC = (props) => {

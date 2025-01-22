@@ -55,6 +55,7 @@ const signupSlice = createSlice({
 })
 
 // Extract reducer and actions
-const signupReducer = signupSlice.reducer
-export default signupReducer
-export const { resetSignupState } = signupSlice.actions
+export const {
+  reducer: signupReducer,
+  actions: { resetSignupState }
+} = signupSlice

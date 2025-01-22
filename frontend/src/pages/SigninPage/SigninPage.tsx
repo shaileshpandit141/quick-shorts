@@ -1,7 +1,7 @@
 import React from 'react'
 import './SigninPage.css'
 import { Navigate } from 'react-router-dom'
-import { isAuthenticated } from 'utils/isAuthenticted'
+import { isAuthenticated } from 'features/auth'
 import SigninHeader from './SigninHeader/SigninHeader'
 import SigninForm from './SigninForm/SigninForm'
 
