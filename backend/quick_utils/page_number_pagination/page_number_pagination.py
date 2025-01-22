@@ -49,6 +49,8 @@ class PageNumberPagination(pagination.PageNumberPagination):
                 "has_previous": page.has_previous(),
                 "next_page_number": page.next_page_number() if page.has_next() else None,
                 "previous_page_number": page.previous_page_number() if page.has_previous() else None,
+                "next": self.get_next_link(),
+                "previous": self.get_previous_link(),
                 "results": data
             },
         })

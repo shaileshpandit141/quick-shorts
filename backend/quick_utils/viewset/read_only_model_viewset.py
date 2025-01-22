@@ -1,4 +1,4 @@
-from typing import Dict, Any, List, Type, Optional, Sequence
+from typing import Dict, Any, List, Type, Optional, Sequence, Union
 import logging
 from rest_framework.request import Request
 from django.http import HttpResponseBase
@@ -10,10 +10,10 @@ from rest_framework.throttling import BaseThrottle
 from rest_framework.filters import BaseFilterBackend
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.permissions import BasePermission, AllowAny
-from rest_framework.renderers import BaseRenderer
+from rest_framework.renderers import BaseRenderer, JSONRenderer
 from ..get_throttle_details import get_throttle_details
 from ..page_number_pagination import PageNumberPagination
-
+from django.db.models.query import QuerySet
 
 logger = logging.getLogger(__name__)
 
@@ -21,85 +21,111 @@ logger = logging.getLogger(__name__)
 class ReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
     """Read-only viewset that standardizes API response formatting and error handling."""
 
+    # Response messages
+    DEFAULT_ERROR_CODE = "error"
+    DEFAULT_ERROR_MESSAGE = "A validation error occurred"
+    DEFAULT_SUCCESS_MESSAGE = "Request processed successfully"
+    DEFAULT_FAILURE_MESSAGE = "An unexpected error occurred"
+    DEFAULT_DELETE_MESSAGE = "Resource deleted successfully"
+
+    # Default configurations
     authentication_classes: List[Type[BaseAuthentication]] = []
     filter_backends: List[Type[BaseFilterBackend]] = []
     lookup_field: str = 'pk'
     lookup_url_kwarg: Optional[str] = None
-    pagination_class: Type[pagination.PageNumberPagination] = PageNumberPagination
+    pagination_class: Optional[Type[pagination.PageNumberPagination]] = PageNumberPagination
     permission_classes: List[Type[BasePermission]] = [AllowAny]
-    renderer_classes: Optional[List[Type[BaseRenderer]]] = None
-    search_fields: Optional[Sequence[str]] = None
+    queryset: QuerySet = QuerySet()
+    renderer_classes: Optional[List[Type[BaseRenderer]]] = [JSONRenderer]
+    search_fields: Optional[Sequence[str]] = ()
     throttle_classes: List[Type[BaseThrottle]] = [AnonRateThrottle]
 
-    def _create_error_dict(self, field: str, error: Any, code: str = "error") -> Dict[str, Any]:
-        """Formats an error into a standardized dictionary format."""
-        logger.debug(f"Creating error dict for field {field}: {error}")
+    def _create_error_dict(self, field: str, error: Any, code: str = DEFAULT_ERROR_CODE) -> Dict[str, Any]:
+        """Creates standardized error dictionary with field, code, message and details."""
+        if isinstance(error, dict):
+            return {
+                "field": error.get('field', field),
+                "code": error.get('code', code),
+                "message": error.get('message', str(error)),
+                "details": error.get('details', None)
+            }
         return {
             "field": field,
-            "code": getattr(error, "code", code),
+            "code": code,
             "message": str(error),
-            "details": getattr(error, "details", None)
+            "details": None
         }
 
     def _process_field_errors(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Converts validation errors into list of standardized error dictionaries."""
-        logger.debug(f"Processing field errors: {data}")
+        """Converts API validation errors to standard format."""
         errors = []
         for field, error_list in data.items():
-            if field == "detail":
+            if field in ("detail", "message"):
                 continue
 
             field = "none" if field == "non_field_errors" else field
+
             if isinstance(error_list, list):
-                errors.extend(
-                    [self._create_error_dict(field, error) for error in error_list]
-                )
+                errors.extend([self._create_error_dict(field, error) for error in error_list])
             else:
                 errors.append(self._create_error_dict(field, error_list))
 
         return errors
 
-    def _build_error_response(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Creates standardized error response with message and error details."""
-        logger.error(f"Building error response for data: {data}")
-        errors = self._process_field_errors(data)
-        if "detail" in data:
-            errors.append(self._create_error_dict("none", data["detail"]))
+    def _get_validation_message(self, data: Dict[str, Any]) -> str:
+        """Extracts validation message from error data."""
+        return data.get("message") or data.get("detail") or self.DEFAULT_ERROR_MESSAGE
 
-        return {
-            "message": data.get("detail", "An error occurred"),
+    def _build_error_response(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        """Formats error response with message and error details."""
+        errors = self._process_field_errors(data)
+        error_response = {
+            "message": self._get_validation_message(data),
             "errors": errors
         }
+        logger.error(f"Error Response: {error_response}")
+        return error_response
 
     def _build_success_response(self, data: Any) -> Dict[str, Any]:
-        """Creates standardized success response with data payload."""
-        logger.info("Building success response")
+        """Formats successful response with message and data."""
+        logger.info("Request completed successfully")
+
+        if isinstance(data, dict):
+            message = data.get("message")
+            return {
+                "message": message or self.DEFAULT_SUCCESS_MESSAGE,
+                "data": data if message is None else data.get("data")
+            }
+
         return {
-            "message": "Request completed successfully",
+            "message": self.DEFAULT_SUCCESS_MESSAGE,
             "data": data
         }
 
     def finalize_response(
         self,
         request: Request,
-        response: Response | HttpResponseBase,
+        response: Union[Response, HttpResponseBase],
         *args,
         **kwargs
-    ) -> Response | HttpResponseBase:
-        """
-        Processes response before returning to client.
-        Adds standard formatting and throttling information.
-        """
+    ) -> Union[Response, HttpResponseBase]:
+        """Finalizes API response format with standard structure and throttling info."""
         data = getattr(response, "data", None)
 
-        if response.status_code >= 400:
-            logger.warning(f"Error response with status {response.status_code}")
-            custom_response = self._build_error_response(data) if isinstance(data, dict) else {
-                "message": "An error occurred",
-                "errors": []
+        if request.method == 'DELETE' and response.status_code == 204:
+            custom_response = {
+                "message": self.DEFAULT_DELETE_MESSAGE,
+                "data": None
             }
+            response.status_code = 200
+        elif response.status_code >= 400:
+            logger.error(f"Request failed with status code {response.status_code}")
+            custom_response = (
+                self._build_error_response(data) if isinstance(data, dict)
+                else {"message": self.DEFAULT_FAILURE_MESSAGE, "errors": []}
+            )
         else:
-            logger.info(f"Success response with status {response.status_code}")
+            logger.info(f"Request succeeded with status code {response.status_code}")
             custom_response = self._build_success_response(data)
 
         setattr(response, "throttles", get_throttle_details(self))

@@ -7,11 +7,7 @@ from rest_framework.authentication import BaseAuthentication
 from rest_framework.permissions import BasePermission
 from rest_framework.throttling import BaseThrottle
 from rest_framework.renderers import BaseRenderer
-from rest_framework.parsers import BaseParser
-from rest_framework.negotiation import BaseContentNegotiation
-from rest_framework.metadata import BaseMetadata
-from rest_framework.versioning import BaseVersioning
-from rest_framework.schemas.openapi import AutoSchema
+from rest_framework.renderers import JSONRenderer
 from ..types import ResponseDataType
 from ..response import Response
 from ..get_throttle_details import get_throttle_details
@@ -27,12 +23,7 @@ class APIView(views.APIView):
     authentication_classes: List[Type[BaseAuthentication]] = []
     permission_classes: List[Type[BasePermission]] = []
     throttle_classes: List[Type[BaseThrottle]] = []
-    renderer_classes: List[Type[BaseRenderer]] = []
-    parser_classes: List[Type[BaseParser]] = []
-    content_negotiation_class: Optional[Type[BaseContentNegotiation]] = None
-    metadata_class: Optional[Type[BaseMetadata]] = None
-    versioning_class: Optional[Type[BaseVersioning]] = None
-    schema: Optional[AutoSchema] = None
+    renderer_classes: List[Type[BaseRenderer]] = [JSONRenderer]
     pagination_class: Type[PageNumberPagination] = PageNumberPagination
 
     def __init__(self, *args, **kwargs) -> None:
