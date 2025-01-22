@@ -120,7 +120,7 @@ REST_FRAMEWORK = {
         "throttling.AuthRateThrottle",
     ],
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "5/day",
+        "anon": "100/day",
         "auth": "5/hour",
         "user": "1000/day"
     },

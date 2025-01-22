@@ -29,6 +29,8 @@ def format_validation_errors(detail):
     error_details = []
     if isinstance(detail, dict):
         for field, messages in detail.items():
+            if field == "non_field_errors":
+                field = "none"
             if isinstance(messages, list):
                 for message in messages:
                     error_details.append({
@@ -97,13 +99,6 @@ def exception_handler(exc, context):
             "throttled",
             error_message="Allowed limit requests exceeded. Please try again later.",
             details={"retry_after": f"{error.wait} seconds"}
-        ),
-
-        Exception: lambda error: create_error_response(
-            "Internal Server Error",
-            "server_error",
-            error_message=error[0] if isinstance(error, list) else str(error),
-            details=None
         )
     }
 
