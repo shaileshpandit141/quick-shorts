@@ -28,8 +28,8 @@ class CustomUserAdmin(UserAdmin):
     def is_active_colored(self, obj):
         """Get colored active status"""
         if obj.is_active:
-            return format_html("""<span style="color: green;">Active</span>""")
-        return format_html("""<span style="color: red;">Inactive</span>""")
+            return format_html('<span style="color: green;">Active</span>')
+        return format_html('<span style="color: red;">Inactive</span>')
     is_active_colored.short_description = "Status"  # type: ignore
 
     # Define how fields are grouped and displayed when editing existing users

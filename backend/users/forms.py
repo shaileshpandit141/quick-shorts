@@ -105,7 +105,7 @@ class UserChangeForm(DjangoUserChangeForm):
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.avatar:
             self.fields["avatar"].help_text = (
-                f"""<a href='{self.instance.avatar.url}" target="_blank" style="padding-inline: 4px;">View Current Avatar</a>"""
+                f'<a href="{self.instance.avatar.url}" target="_blank" style="padding-inline: 4px;">View Current Avatar</a>'
             )
 
     def clean_email(self):
