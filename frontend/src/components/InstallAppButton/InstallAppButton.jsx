@@ -58,9 +58,8 @@ const InstallAppButton = () => {
   return (
     isInstallable && (
       <Button
-        type="button"
+        type="icon"
         iconName='installDesktop'
-        label='Install'
         className='install-app-button'
         onClick={handleInstallClick}
       />

@@ -1,28 +1,5 @@
 /**
  * CSS Import Structure
- * ===================
- *
- * Organized import structure for maintainable and scalable CSS architecture.
- * Files are grouped by function and loaded in order of specificity.
- *
- * 1. Variables
- * -----------
- * - theme.css: Design tokens & brand-specific variables (colors, spacing)
- * - variables.css: Global variables (breakpoints, transitions, z-indices)
- *
- * 2. Base Styles
- * -------------
- * - reset.css: Normalize browser defaults
- * - typography.css: Font definitions & text styles
- * - layout.css: Page structure & grid systems
- * - body.css: Body element styles
- * - root.css: Root-level custom properties
- *
- * 3. Components
- * ------------
- * - button_and_link.css: Interactive elements
- * - skeleton.css: Loading states & animations
- * - success_and_error_message.css: Status messages
  */
 
 /* Design System Variables */
@@ -39,4 +16,3 @@
 /* UI Components */
 @import './custom_classes/button_and_link.css';
 @import './custom_classes/skeleton.css';
-@import './custom_classes/success_and_error_message.css';

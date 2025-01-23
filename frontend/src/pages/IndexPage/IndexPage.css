@@ -8,8 +8,8 @@
     .index-page {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        align-items: center !important;
+        justify-content: center !important;
         padding-bottom: calc(32/16 * 1em);
         max-width: calc(550/16 * 1em);
 
@@ -43,8 +43,8 @@
         .heading-skeleton {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            align-items: center !important;
+            justify-content: center !important;
             width: 80%;
             margin-block: calc(24/16 * 1em);
             row-gap: calc(16/16 * 1em);

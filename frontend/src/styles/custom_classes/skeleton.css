@@ -1,37 +1,5 @@
 /**
  * Skeleton Loading Styles
- * ======================
- * 
- * Creates animated placeholder elements for loading states
- *
- * Base Component (.skeleton)
- * -------------------------
- * - Full-width animated loading placeholder
- * - Light gray background (#e0e0e0)
- * - Rounded corners (8px radius)
- * - Centered content using flexbox
- * - Pulsing opacity animation effect
- *
- * Heading Variants (.h1-skeleton to .h6-skeleton) 
- * ---------------------------------------------
- * - Responsive fluid heights using clamp()
- * - Maintains semantic heading hierarchy
- * - Consistent vertical margins (0.5em)
- * - Inherits base skeleton styles
- *
- * Text Block (.p-skeleton)
- * -----------------------
- * - Fixed height for paragraph blocks
- * - Standard text margins
- * - Full width container sizing
- *
- * Animation Details
- * ---------------
- * @keyframes pulse - Controls opacity transition
- * - Duration: 1.5s
- * - Timing: ease-in-out
- * - Opacity: 1 -> 0.4 -> 1
- * - Loops infinitely
  */
 .skeleton {
     width: 100%;
