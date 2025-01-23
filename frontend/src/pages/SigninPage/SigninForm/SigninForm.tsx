@@ -75,16 +75,13 @@ const SigninForm: React.FC = () => {
           type="link"
           iconName='signin'
           className='sign-link'
-        >
-          sign up
-        </AnchorLink>
+        >sign up</AnchorLink>
         <Button
           type='submit'
           iconName='signin'
-          label='Sign in'
           className='signin-button'
           isLoaderOn={status === 'loading'}
-        />
+        >sign in</Button>
       </div>
     </form>
   )

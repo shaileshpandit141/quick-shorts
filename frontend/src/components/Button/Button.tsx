@@ -6,9 +6,9 @@ import Loader from 'components/Loader/Loader';
 
 
 interface ButtonProps {
+  type?: "button" | "submit" | "reset" | "icon";
   iconName?: keyof LazyIconMapType;
-  label?: string;
-  type: "button" | "submit";
+  children?: string | React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
   isDisabled?: boolean;
@@ -18,34 +18,36 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = (props) => {
   const {
     iconName,
-    label,
-    type,
+    type='button',
+    children='',
     onClick,
-    className = '',
-    isDisabled = false,
-    isLoaderOn = false
+    className='',
+    isDisabled=false,
+    isLoaderOn=false
   } = props;
+
+  const buttonClasses = type === 'icon' ? 'button-as-icon' : 'button';
+
+  const renderIcon = () => (
+    <div className='button-icon-container'>
+      {isLoaderOn ? (
+        <Loader />
+      ) : (
+        iconName && <LazyIcon iconName={iconName} fallback={<Loader />} />
+      )}
+    </div>
+  );
 
   return (
     <button
-      className={`${(iconName && !label) ? 'button-as-icon' : 'button'} ${className}`}
+      className={`${buttonClasses} ${className}`}
       onClick={onClick}
       disabled={isLoaderOn || isDisabled}
-      type={type}
+      type={type === 'icon' ? 'button' : type}
+      style={{cursor: isLoaderOn ? 'progress' : 'pointer'}}
     >
-      {iconName && (
-        <div className='button-icon-container'>
-          {(iconName && isLoaderOn)
-            ? <Loader />
-            : (
-              <LazyIcon iconName={iconName} fallback={<Loader />} />
-            )
-          }
-        </div>
-      )}
-      {label && (
-        <label>{label}</label>
-      )}
+      {(type === 'icon' || iconName) && renderIcon()}
+      {type !== 'icon' && children}
     </button>
   )
 }

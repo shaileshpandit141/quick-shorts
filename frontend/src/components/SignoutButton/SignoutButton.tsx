@@ -41,11 +41,10 @@ const SignoutButton: React.FC = () => {
     <Button
       type='button'
       iconName='signout'
-      label='sign out'
       className='signout-button'
       onClick={handleSignout}
       isLoaderOn={status === 'loading'}
-    />
+    >sign in</Button>
   )
 }
 

@@ -27,6 +27,7 @@ const ToggleThemeButton: React.FC = () => {
 
   return (
     <Button
+      type='icon'
       iconName={theme === 'light' ? 'lightModeIcon' : 'darkModeIcon'}
       onClick={handleToggleTheme}
       className='toggle-theme-button'

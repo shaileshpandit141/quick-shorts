@@ -79,17 +79,14 @@ const SignupForm: React.FC = (props) => {
           type="link"
           iconName='signin'
           className='signin-link'
-        >
-          sign in
-        </AnchorLink>
+        >sign in</AnchorLink>
         <Button
           type='submit'
           iconName='signup'
-          label='Sign up'
           className='signup-button'
           isLoaderOn={status === 'loading'}
           isDisabled={status === 'succeeded'}
-        />
+        >sign up</Button>
       </div>
     </form>
   )
