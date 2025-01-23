@@ -15,6 +15,7 @@ interface ButtonProps {
   isLoaderOn?: boolean;
   testID?: string;
   accessibilityLabel?: string;
+  title?: string;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
@@ -27,7 +28,8 @@ const Button: React.FC<ButtonProps> = (props) => {
     isDisabled=false,
     isLoaderOn=false,
     testID,
-    accessibilityLabel
+    accessibilityLabel,
+    title
   } = props;
 
   const buttonClasses = type === 'icon' ? 'button-as-icon' : 'button';
@@ -51,7 +53,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       style={{cursor: isLoaderOn ? 'progress' : 'pointer'}}
       data-testid={testID}
       aria-label={accessibilityLabel}
-      title="mango"
+      title={title}
     >
       {(type === 'icon' || iconName) && renderIcon()}
       {type !== 'icon' && children}
