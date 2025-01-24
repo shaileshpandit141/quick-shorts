@@ -1,0 +1,24 @@
+.drawer {
+    --background: var(--header-background);
+    position: fixed;
+    inset: 0;
+    background-color: var(--background);
+    user-select: none;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    transition: background-color 0.3s ease-in-out,
+        opacity 0.3s ease-in-out,
+        visibility 0.3s ease-in-out;
+
+    &.drawer--active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &.drawer--inactive {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
