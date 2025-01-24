@@ -21,12 +21,12 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = (props) => {
   const {
     iconName,
-    type='button',
-    children='',
+    type = 'button',
+    children = '',
     onClick,
-    className='',
-    isDisabled=false,
-    isLoaderOn=false,
+    className = '',
+    isDisabled = false,
+    isLoaderOn = false,
     testID,
     accessibilityLabel,
     title
@@ -50,13 +50,13 @@ const Button: React.FC<ButtonProps> = (props) => {
       onClick={onClick}
       disabled={isLoaderOn || isDisabled}
       type={type === 'icon' ? 'button' : type}
-      style={{cursor: isLoaderOn ? 'progress' : 'pointer'}}
+      style={{ cursor: isLoaderOn ? 'progress' : 'pointer' }}
       data-testid={testID}
       aria-label={accessibilityLabel}
       title={title}
     >
       {(type === 'icon' || iconName) && renderIcon()}
-      {type !== 'icon' && children}
+      {type !== 'icon' && <label>{children}</label>}
     </button>
   )
 }

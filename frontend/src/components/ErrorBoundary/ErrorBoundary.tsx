@@ -4,30 +4,23 @@ import {
   FallbackProps
 } from 'react-error-boundary'
 import './ErrorBoundary.css'
+import Button from 'components/Button/Button'
 import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon'
 
 const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => (
   <div className='inner-grid-2-2 error-boundary' role="alert">
     <div className='error-boundary-component'>
-      <button
-        className='button'
+      <Button
+        type='button'
+        iconName='info'
         title={error?.message}
-      >
-        <span className='icon'>
-          <LazyIcon iconName='info' />
-        </span>
-        <span className='label'>
-          Something went wrong
-        </span>
-      </button>
-      <button
-        className='button'
+      >Something went wrong</Button>
+      <Button
+        type='icon'
+        iconName='reTry'
         onClick={resetErrorBoundary}
-      >
-        <span className='icon'>
-          <LazyIcon iconName='reTry' />
-        </span>
-      </button>
+        title='re try'
+      />
     </div>
   </div>
 )
