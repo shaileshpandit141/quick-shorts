@@ -19,6 +19,10 @@
     vertical-align: baseline;
     -webkit-tap-highlight-color: transparent;
     scrollbar-color: gray transparent;
+
+    &:is(:hover, :focus, :focus-visible) {
+        outline: none;
+    }
 }
 
 /* HTML Root Element

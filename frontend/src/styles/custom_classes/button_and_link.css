@@ -23,9 +23,15 @@
     transition: var(--transition);
     user-select: none;
 
-    &:hover,
+    &:hover {
+        background-color: var(--button-primary-hover);
+    }
+    
+    &:focus,
     &:focus-visible {
         background-color: var(--button-primary-hover);
+        outline: 2px solid var(--button-primary-hover);
+        outline-offset: 2px;
     }
 
     /**

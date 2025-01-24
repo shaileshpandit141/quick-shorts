@@ -6,8 +6,6 @@ button {
     border: var(--border);
     outline: none;
     border-radius: 999rem;
-    background-color: var(--button-primary-background);
-    color: var(--button-text-color);
     height: var(--button-height);
     width: 100%;
     padding: var(--button-padding);
@@ -21,10 +19,6 @@ button {
 
     @media (pointer: fine) {
         cursor: pointer;
-    }
-
-    &:is(:hover, :focus-visible) {
-        background-color: var(--button-primary-hover);
     }
 
     .button-icon-container {
@@ -56,10 +50,17 @@ button {
         padding-inline-start: 8px;
         border: var(--border);
         background-color: var(--button-primary-background);
+        color: var(--button-text-color);
         transition: var(--transition);
 
-        &:is(:hover, :focus-visible) {
+        &:is(:hover) {
             background-color: var(--button-primary-hover);
+        }
+
+        &:is(:focus, :focus-visible) {
+            background-color: var(--button-primary-hover);
+            outline: 2px solid var(--button-primary-hover);
+            outline-offset: 2px;
         }
 
         label {
@@ -87,10 +88,15 @@ button {
         min-width: var(--button-height);
         border: var(--border);
         background-color: var(--button-primary-background);
+        color: var(--button-text-color);
         transition: var(--transition);
 
-        &:is(:hover, :focus-visible) {
+        &:is(:hover) {
             background-color: var(--button-primary-hover);
+        }
+
+        &:is(:focus, :focus-visible) {
+            background-color: var(--button-primary-hover) !important;
         }
     }
 }
