@@ -1,8 +1,8 @@
 import React from 'react'
 import './Header.css'
-import LeftHeader from './SubHeader/LeftHeader/LeftHeader'
-import CenterHeader from './SubHeader/CenterHeader/CenterHeader'
-import RightHeader from './SubHeader/RightHeader/RightHeader'
+import { Link } from 'react-router-dom'
+import { AppLogo } from 'components'
+import NavBar from 'components/NavBar/NavBar'
 import ToggleThemeButton from 'components/ToggleThemeButton/ToggleThemeButton'
 import InstallAppButton from 'components/InstallAppButton/InstallAppButton'
 import SignoutButton from 'components/SignoutButton/SignoutButton'
@@ -12,13 +12,16 @@ const Header: React.FC = (props) => {
     <header className='inner-grid-1-1 grid-12 header'>
       <div className='inner-grid-2-2 sub-headers'>
         <div className='left-header'>
-          <LeftHeader />
+          <Link to='/' className='left-header-link'>
+            <AppLogo />
+            <h4>React</h4>
+          </Link>
         </div>
         <div className='center-header'>
-          <CenterHeader />
+          {/* Center TSX goes here */}
         </div>
         <div className='right-header'>
-          <RightHeader />
+          <NavBar />
           <div className='other-links'>
             <SignoutButton />
             <InstallAppButton />

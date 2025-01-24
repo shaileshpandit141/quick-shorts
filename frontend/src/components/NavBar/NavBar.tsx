@@ -1,10 +1,10 @@
-import React from 'react'
-import './RightHeader.css'
+import React from 'react';
+import './NavBar.css';
 import { NavLink } from 'react-router-dom'
 import { isAuthenticated } from 'features/auth'
 import AnchorLink from 'components/AnchorLink/AnchorLink'
 
-const RightHeader: React.FC = (props) => {
+const NavBar: React.FC = () => {
   return (
     <nav className='nav-links'>
       <NavLink to='/home' className='link'>Home</NavLink>
@@ -18,4 +18,4 @@ const RightHeader: React.FC = (props) => {
   )
 }
 
-export default RightHeader
+export default NavBar;

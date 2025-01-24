@@ -21,6 +21,15 @@
             height: fit-content;
             display: flex;
             align-items: center;
+
+            .left-header-link {
+                width: fit-content;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                column-gap: 8px;
+                overflow: hidden;
+            }
         }
 
         .center-header {
