@@ -1,11 +1,10 @@
-import React from 'react'
+import React from 'react';
 import {
   ErrorBoundary as ReactErrorBoundary,
   FallbackProps
-} from 'react-error-boundary'
-import './ErrorBoundary.css'
-import Button from 'components/Button/Button'
-import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon'
+} from 'react-error-boundary';
+import './ErrorBoundary.css';
+import Button from 'components/Button/Button';
 
 const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => (
   <div className='inner-grid-2-2 error-boundary' role="alert">
