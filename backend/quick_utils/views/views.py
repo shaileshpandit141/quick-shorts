@@ -8,6 +8,7 @@ from rest_framework.permissions import BasePermission
 from rest_framework.throttling import BaseThrottle
 from rest_framework.renderers import BaseRenderer
 from rest_framework.renderers import JSONRenderer
+from rest_framework import response
 from ..types import ResponseDataType
 from ..response import Response
 from ..get_throttle_details import get_throttle_details
@@ -57,7 +58,7 @@ class APIView(views.APIView):
     def get_paginator(
         self,
         queryset: QuerySet
-    ) -> Response:
+    ) -> response.Response:
         """
         Returns pagination data for the given queryset.
         Uses page and items-per-page query params if not explicitly provided.

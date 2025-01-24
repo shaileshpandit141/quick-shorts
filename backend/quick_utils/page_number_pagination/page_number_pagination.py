@@ -1,5 +1,5 @@
 from rest_framework import pagination
-from ..response import Response
+from rest_framework.response import Response
 import logging
 
 
@@ -39,18 +39,15 @@ class PageNumberPagination(pagination.PageNumberPagination):
         )
 
         return Response({
-            "message": "Request was successful",
-            "data": {
-                "current_page": page.number,
-                "total_pages": paginator.num_pages,
-                "total_items": paginator.count,
-                "items_per_page": items_per_page,
-                "has_next": page.has_next(),
-                "has_previous": page.has_previous(),
-                "next_page_number": page.next_page_number() if page.has_next() else None,
-                "previous_page_number": page.previous_page_number() if page.has_previous() else None,
-                "next": self.get_next_link(),
-                "previous": self.get_previous_link(),
-                "results": data
-            },
+            "current_page": page.number,
+            "total_pages": paginator.num_pages,
+            "total_items": paginator.count,
+            "items_per_page": items_per_page,
+            "has_next": page.has_next(),
+            "has_previous": page.has_previous(),
+            "next_page_number": page.next_page_number() if page.has_next() else None,
+            "previous_page_number": page.previous_page_number() if page.has_previous() else None,
+            "next": self.get_next_link(),
+            "previous": self.get_previous_link(),
+            "results": data
         })

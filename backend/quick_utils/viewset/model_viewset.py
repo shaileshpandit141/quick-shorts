@@ -86,22 +86,6 @@ class ModelViewSet(viewsets.ModelViewSet):
         logger.error(f"Error Response: {error_response}")
         return error_response
 
-    def _build_success_response(self, data: Any) -> Dict[str, Any]:
-        """Formats successful response with message and data."""
-        logger.info("Request completed successfully")
-
-        if isinstance(data, dict):
-            message = data.get("message")
-            return {
-                "message": message or self.DEFAULT_SUCCESS_MESSAGE,
-                "data": data if message is None else data.get("data")
-            }
-
-        return {
-            "message": self.DEFAULT_SUCCESS_MESSAGE,
-            "data": data
-        }
-
     def finalize_response(
         self,
         request: Request,
@@ -126,7 +110,10 @@ class ModelViewSet(viewsets.ModelViewSet):
             )
         else:
             logger.info(f"Request succeeded with status code {response.status_code}")
-            custom_response = self._build_success_response(data)
+            custom_response = {
+                "message": self.DEFAULT_SUCCESS_MESSAGE,
+                "data": data
+            }
 
         setattr(response, "throttles", get_throttle_details(self))
         setattr(response, "data", custom_response)
