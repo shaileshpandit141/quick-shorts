@@ -2,7 +2,6 @@ from typing import Literal
 from rest_framework import permissions
 import logging
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -14,6 +13,11 @@ class AllowAny(permissions.AllowAny):
     """
 
     def has_permission(self, request, view) -> Literal[True]:
-        # Log user access for debugging purposes
-        logger.debug(f"Allowing request for {request.user}")
+        """Grant permission and log the request details."""
+        user_info = request.user if request.user.is_authenticated else "Anonymous"
+        logger.debug(
+            f"Allowing request for user: {user_info}, "
+            f"IP: {request.META.get('REMOTE_ADDR')}, "
+            f"Endpoint: {request.path}"
+        )
         return True
