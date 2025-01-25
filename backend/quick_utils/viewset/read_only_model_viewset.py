@@ -8,7 +8,6 @@ from rest_framework import pagination
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework.throttling import BaseThrottle
 from rest_framework.filters import BaseFilterBackend
-from rest_framework.authentication import BaseAuthentication
 from rest_framework.permissions import BasePermission, AllowAny
 from rest_framework.renderers import BaseRenderer, JSONRenderer
 from ..get_throttle_details import get_throttle_details
@@ -29,7 +28,6 @@ class ReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
     DEFAULT_DELETE_MESSAGE = "Resource deleted successfully"
 
     # Default configurations
-    authentication_classes: List[Type[BaseAuthentication]] = []
     filter_backends: List[Type[BaseFilterBackend]] = []
     lookup_field: str = 'pk'
     lookup_url_kwarg: Optional[str] = None

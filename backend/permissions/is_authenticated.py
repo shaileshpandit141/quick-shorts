@@ -14,16 +14,25 @@ class IsAuthenticated(permissions.IsAuthenticated):
     def has_permission(self, request, view) -> bool:
         """Check if the request has valid authentication."""
 
+        if request.user.is_superuser:
+            # Allow superusers to bypass further authentication checks
+            logger.info(f"Superuser {request.user.username or request.user.email} authenticated successfully.")
+            return True
+
         if not request.user or not request.user.is_authenticated:
             # Log and raise custom permission denied exception
             logger.warning(f"Unauthenticated access attempt from {request.META.get('REMOTE_ADDR')}")
-            raise PermissionDenied([{
-                "field": "authentication",
-                "code": "not_authenticated",
-                "message": "You must be authenticated to access this resource.",
-                "details": {
-                    "required": True
-                }
-            }])
+            raise PermissionDenied({
+                "message": "Authentication Required",
+                "errors": [{
+                    "field": "authentication",
+                    "code": "not_authenticated",
+                    "message": "You must include a valid authentication token in the Authorization header.",
+                    "details": {
+                        "required": True,
+                        "header": "Authorization: Token <your-token-here>"
+                    }
+                }]
+            })
 
         return True

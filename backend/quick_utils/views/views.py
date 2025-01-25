@@ -3,8 +3,7 @@ import logging
 from django.db.models import QuerySet
 from rest_framework import views
 from rest_framework import status
-from rest_framework.authentication import BaseAuthentication
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import BasePermission, AllowAny
 from rest_framework.throttling import BaseThrottle
 from rest_framework.renderers import BaseRenderer
 from rest_framework.renderers import JSONRenderer
@@ -21,8 +20,7 @@ logger = logging.getLogger(__name__)
 
 class APIView(views.APIView):
     """Base API view with helper methods for quick API development"""
-    authentication_classes: List[Type[BaseAuthentication]] = []
-    permission_classes: List[Type[BasePermission]] = []
+    permission_classes: List[Type[BasePermission]] = [AllowAny]
     throttle_classes: List[Type[BaseThrottle]] = []
     renderer_classes: List[Type[BaseRenderer]] = [JSONRenderer]
     pagination_class: Type[PageNumberPagination] = PageNumberPagination

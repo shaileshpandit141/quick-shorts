@@ -24,13 +24,16 @@ class IsVerified(BasePermission):
             logger.warning(
                 f"Unverified user {request.user.id} attempted to access protected resource"
             )
-            raise PermissionDenied([{
-                "field": "account",
-                "code": "unverified_account",
-                "message": "You must verify your account to access this resource.",
-                "details": {
-                    "verification_status": False
-                }
-            }])
+            raise PermissionDenied({
+                "message": "Your account is not verified",
+                "errors": [{
+                    "field": "account",
+                    "code": "unverified_account",
+                    "message": "You must verify your account to access this resource.",
+                    "details": {
+                        "verification_status": False
+                    }
+                }]
+            })
 
         return True

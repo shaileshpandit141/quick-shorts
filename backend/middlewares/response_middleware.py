@@ -66,10 +66,12 @@ class ResponseMiddleware:
         validate_data: DataType,
         throttles: list,
         response_time: str,
-        request_id: str
+        request_id: str,
+        status_code: int = 200
     ) -> dict:
         return {
             "status": "succeeded" if success else "failed",
+            "status_code": status_code,
             "message": validate_data["message"],
             "data": validate_data.get("data") if success else None,
             "errors": validate_data.get("errors", []) if not success else [],
@@ -164,7 +166,8 @@ class ResponseMiddleware:
                 validate_data,
                 throttles,
                 response_time,
-                request_id
+                request_id,
+                response.status_code
             )
 
             self.log_request(request, response_time, success, True)
@@ -181,6 +184,7 @@ class ResponseMiddleware:
             self.logger.error(f"Invalid data format error for request {request_id}: {str(error)}")
             json_response = JsonResponse({
                 "status": "failed",
+                "status_code": 500,
                 "message": "Invalid response format",
                 "data": None,
                 "errors": [error.error_dict],
@@ -250,6 +254,7 @@ class ResponseMiddleware:
                 self.logger.warning(f"Rate limit exceeded for request {request_id}")
                 json_response = JsonResponse({
                     "status": "failed",
+                    "status_code": 429,
                     "message": "Too many requests. Please wait before trying again.",
                     "data": None,
                     "errors": [{
