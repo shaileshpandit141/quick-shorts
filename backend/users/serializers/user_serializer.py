@@ -11,17 +11,33 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "email", "username", "first_name", "last_name", "is_verified", "avatar"]
-        read_only_fields = ['id', 'usename', 'is_verified']
+        fields = [
+            "id",
+            "email",
+            "username",
+            "first_name",
+            "last_name",
+            "avatar",
+            "is_verified",
+            "is_staff",
+            "is_superuser"
+        ]
+        read_only_fields = [
+            "id",
+            "usename",
+            "is_verified",
+            "is_staff",
+            "is_superuser"
+        ]
 
     def create(self, validated_data):
-        hashed_password = self.context.get('hashed_password', None)
+        hashed_password = self.context.get("hashed_password", None)
 
-        email = validated_data.get('email')
-        username = email.split('@')[0]
+        email = validated_data.get("email")
+        username = email.split("@")[0]
 
         if hashed_password is None:
-            raise ValidationError('Invalid password')
+            raise ValidationError("Invalid password")
 
         # Handle the single record.
         return User.objects.create(
