@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import './Profile.css';
 import { useDispatch } from 'react-redux';
-import { AnchorLink } from 'components'
+import { AnchorLink, SignoutButton } from 'components'
 import { useMenu } from 'hooks';
 import { isAuthenticated } from 'features/auth';
 import { dispatchUserAction, useUserSelector } from 'features/user';
@@ -63,6 +63,7 @@ const Profile: React.FC = (): JSX.Element | null => {
             to={get_absolute_url('/admin/')}
             type='link'
           >Admin</AnchorLink>
+          <SignoutButton />
         </div>
       </div>
     </div>

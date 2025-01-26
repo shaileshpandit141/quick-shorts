@@ -5,7 +5,6 @@ import { AppLogo, Profile } from 'components'
 import NavBar from 'components/NavBar/NavBar'
 import ToggleThemeButton from 'components/ToggleThemeButton/ToggleThemeButton'
 import InstallAppButton from 'components/InstallAppButton/InstallAppButton'
-import SignoutButton from 'components/SignoutButton/SignoutButton'
 import SideBar from 'components/SideBar/SideBar'
 
 const Header: React.FC = (props) => {
@@ -25,7 +24,6 @@ const Header: React.FC = (props) => {
         <div className='right-header'>
           <NavBar />
           <div className='other-links'>
-            <SignoutButton />
             <InstallAppButton />
             <ToggleThemeButton />
             <Profile />
