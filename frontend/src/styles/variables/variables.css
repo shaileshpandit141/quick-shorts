@@ -1,26 +1,5 @@
 /**
  * Global CSS Custom Properties (Variables)
- * =====================================
- * 
- * Core layout and responsive design variables used throughout the application.
- * 
- * Layout Properties
- * ----------------
- * --opacity        Controls overall element transparency (1 = fully opaque)
- * --box-shadow     Provides subtle depth with a light shadow effect
- * --border         Standard border with light color variable
- * --header-height  Fixed header height converted to em units (64px/16px = 4em)
- * --screen-height  Calculates viewport height minus header
- * --transition     Smooth animation timing for interactive elements
- *
- * Responsive Breakpoints 
- * ---------------------
- * Defines standard screen widths for responsive layouts:
- * --breakpoint-xs  480px  - Extra small devices (mobile)
- * --breakpoint-sm  768px  - Small devices (tablets) 
- * --breakpoint-md  1024px - Medium devices (landscape tablets)
- * --breakpoint-lg  1280px - Large devices (laptops/desktops)
- * --breakpoint-xl  1600px - Extra large (4K displays)
  */
 :root {
     /* Layout Properties */
@@ -32,7 +11,8 @@
     --transition:
         background-color 0.3s ease,
         color 0.3s ease,
-        border 0.3s ease;
+        border 0.3s ease,
+        box-shadow 0.3s ease;
 
     /* Responsive Breakpoint Definitions */
     --breakpoint-xs: 480px;  /* Mobile */

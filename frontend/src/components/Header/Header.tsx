@@ -6,6 +6,7 @@ import NavBar from 'components/NavBar/NavBar'
 import ToggleThemeButton from 'components/ToggleThemeButton/ToggleThemeButton'
 import InstallAppButton from 'components/InstallAppButton/InstallAppButton'
 import SignoutButton from 'components/SignoutButton/SignoutButton'
+import SideBar from 'components/SideBar/SideBar'
 
 const Header: React.FC = (props) => {
   return (
@@ -26,6 +27,7 @@ const Header: React.FC = (props) => {
             <SignoutButton />
             <InstallAppButton />
             <ToggleThemeButton />
+            <SideBar />
           </div>
         </div>
       </div>

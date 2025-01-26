@@ -22,7 +22,8 @@ const iconsMap: LazyIconMapType = {
   success: lazy(() => import('@mui/icons-material/DoneAllRounded')),
   info: lazy(() => import('@mui/icons-material/InfoRounded')),
   error: lazy(() => import('@mui/icons-material/ErrorRounded')),
-  warning: lazy(() => import('@mui/icons-material/WarningAmberRounded'))
+  warning: lazy(() => import('@mui/icons-material/WarningAmberRounded')),
+  menuOpen: lazy(() => import('@mui/icons-material/MenuOpenRounded'))
 }
 
 interface LazyIconProps extends SvgIconProps {

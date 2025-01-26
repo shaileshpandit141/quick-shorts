@@ -21,4 +21,5 @@ export interface LazyIconMapType {
   info: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   error: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
   warning: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
+  menuOpen: React.LazyExoticComponent<React.ComponentType<SvgIconProps>>
 }

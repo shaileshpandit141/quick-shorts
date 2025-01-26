@@ -13,7 +13,7 @@ const TRANSITION_DURATION = 300;
 
 const Drawer: React.FC<DrawerProps> = (
   { children, onClick, isOpen, className, style }
-): JSX.Element | null => {
+): JSX.Element => {
   const [isDeactivated, setIsDeactivated] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -36,21 +36,30 @@ const Drawer: React.FC<DrawerProps> = (
   }, []);
 
   useEffect(() => {
-    return isOpen ? handleTransition(true) : handleTransition(false);
+    if (isOpen) {
+      document.documentElement.style.overflow = 'hidden';
+      handleTransition(true);
+    } else {
+      document.documentElement.style.overflow = 'unset';
+      handleTransition(false);
+    }
+    return () => {
+      document.documentElement.style.overflow = 'unset';
+    };
   }, [isOpen, handleTransition]);
 
   const handleClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    if (onClick && !isTransitioning) {
+    if (event.target === event.currentTarget && onClick && !isTransitioning) {
+      event.stopPropagation();
       onClick(event);
     }
   }, [onClick, isTransitioning]);
 
-  if (isDeactivated && !isOpen) {
-    return null;
-  }
-
-  const drawerClassName = `drawer ${className || ''} ${isOpen ? 'drawer--active' : 'drawer--inactive'}`;
+  const drawerClassName = (
+    `drawer ${className || ''}
+    ${isOpen ? 'drawer--active' : 'drawer--inactive'}
+    ${(isDeactivated && !isOpen) ? 'drawer--inactive' : ''}`
+  );
 
   return (
     <div

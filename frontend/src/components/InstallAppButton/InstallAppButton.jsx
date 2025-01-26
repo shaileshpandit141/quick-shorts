@@ -19,7 +19,6 @@ const InstallAppButton = () => {
 
     // Listen for the beforeinstallprompt event
     const handleBeforeInstallPrompt = (event) => {
-      event.preventDefault(); // Prevent the default prompt from showing
       setDeferredPrompt(event); // Save the event for later
       setIsInstallable(true); // Show the install button
     };

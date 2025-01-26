@@ -13,3 +13,4 @@ export { default as PageLoader } from "./PageLoader/PageLoader";
 export { default as SignoutButton } from "./SignoutButton/SignoutButton";
 export { default as ToggleThemeButton } from "./ToggleThemeButton/ToggleThemeButton";
 export { default as ToastContainer } from "./ToastContainer/ToastContainer";
+export { default as NavBar } from "./NavBar/NavBar";

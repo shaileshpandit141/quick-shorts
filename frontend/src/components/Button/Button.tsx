@@ -6,7 +6,7 @@ import Loader from 'components/Loader/Loader';
 
 
 interface ButtonProps {
-  type?: "button" | "submit" | "reset" | "icon";
+  type: "button" | "submit" | "reset" | "icon";
   iconName?: keyof LazyIconMapType;
   children?: string | React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -16,6 +16,7 @@ interface ButtonProps {
   testID?: string;
   accessibilityLabel?: string;
   title?: string;
+  ref?: React.RefObject<HTMLButtonElement>;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
@@ -29,7 +30,8 @@ const Button: React.FC<ButtonProps> = (props) => {
     isLoaderOn = false,
     testID,
     accessibilityLabel,
-    title
+    title,
+    ref
   } = props;
 
   const buttonClasses = type === 'icon' ? 'button-as-icon' : 'button';
@@ -46,6 +48,7 @@ const Button: React.FC<ButtonProps> = (props) => {
 
   return (
     <button
+      ref={ref}
       className={`${buttonClasses} ${className}`}
       onClick={onClick}
       disabled={isLoaderOn || isDisabled}
@@ -59,6 +62,6 @@ const Button: React.FC<ButtonProps> = (props) => {
       {type !== 'icon' && <label>{children}</label>}
     </button>
   )
-}
+};
 
 export default Button;
