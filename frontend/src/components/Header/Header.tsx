@@ -13,6 +13,7 @@ const Header: React.FC = (props) => {
     <header className='inner-grid-1-1 grid-12 header'>
       <div className='inner-grid-2-2 sub-headers'>
         <div className='left-header'>
+          <SideBar />
           <Link to='/' className='left-header-link'>
             <AppLogo />
             <h4>React</h4>
@@ -27,7 +28,6 @@ const Header: React.FC = (props) => {
             <SignoutButton />
             <InstallAppButton />
             <ToggleThemeButton />
-            <SideBar />
             <Profile />
           </div>
         </div>

@@ -1,5 +1,6 @@
 .menu-open-button {
     display: none;
+    transform: rotate(180deg);
 
     @media (width < 768px) {
         & {
@@ -11,16 +12,16 @@
 .side-bar-drawer {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: center;
 
     .side-bar-container {
         background-color: var(--card-background);
         height: 100%;
         width: 100%;
-        max-width: 300px;
+        max-width: 250px;
         box-shadow: var(--box-shadow);
-        transform: translateX(102%);
+        transform: translateX(-102%);
         transition: transform 0.3s ease-in-out, var(--transition);
 
         &.side-bar--active {
@@ -28,7 +29,7 @@
         }
 
         &.side-bar--inactive {
-            transform: translateX(102%);
+            transform: translateX(-102%);
         }
 
         .side-bar-header {
@@ -58,34 +59,45 @@
                 }
             }
         }
-    }
 
-    .header-navbar {
-        height: calc(100vh - var(--header-height));
-        width: 100%;
-        overflow-y: auto;
-
-        .navbar {
-            height: fit-content;
+        .links-container {
+            height: calc(100dvh - var(--header-height));
             width: 100%;
-            overflow: hidden;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            padding-inline: 8px;
 
-            nav {
+            .navbar-container {
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
+                overflow-y: auto;
+
+                nav {
+                    height: fit-content;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    a {
+                        padding-inline: 8px;
+                        justify-content: flex-start;
+                        width: 100%;
+                        border-radius: 8px;
+                    }
+                }
+            }
+
+            .other-links-container {
                 height: fit-content;
                 width: 100%;
+                padding-block: 8px;
                 display: flex;
-                align-items: flex-start;
-                justify-content: flex-end;
-                column-gap: 8px;
-                border: var(--border);
-                padding-block: 16px;
-                border-radius: 16px;
-                transition: var(--transition);
-
-                a {
-                    width: 100%;
-                    border-radius: 0;
-                }
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                row-gap: 8px;
             }
         }
     }

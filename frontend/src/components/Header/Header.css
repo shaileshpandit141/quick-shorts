@@ -21,6 +21,7 @@
             height: fit-content;
             display: flex;
             align-items: center;
+            column-gap: 8px;
 
             .left-header-link {
                 width: fit-content;
