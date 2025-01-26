@@ -25,8 +25,9 @@ export declare module 'FeatureTypes' {
   export interface Meta {
     request_id: string;
     timestamp: string;
+    response_time: string;
     documentation_url: string;
-    rate_limit: RateLimit[]
+    rate_limit: RateLimit[];
   }
 
   /**

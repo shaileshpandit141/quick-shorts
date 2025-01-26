@@ -11,6 +11,7 @@ import {
   SignoutCredentials,
   SignupCredentials
 } from './API.types';
+import axiosInstance from 'axiosInstance';
 
 /** Base API URL from environment variables */
 const BASE_API_URL = process.env.REACT_APP_BASE_API_URL
@@ -42,7 +43,10 @@ const AxiosAPIs = {
  * Currently empty, reserved for future use
  */
 const AxiosInstanceAPIs = {
-
+  /** Signs out authenticated user */
+  userApi: () => {
+    return axiosInstance.get(`${BASE_API_URL}/api/v1/auth/user/`)
+  },
 }
 
 const APIs = { ...AxiosAPIs, ...AxiosInstanceAPIs }

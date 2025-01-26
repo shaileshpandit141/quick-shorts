@@ -57,8 +57,3 @@ export interface RsendVerificationEmailCredentials { }
 export interface RefreshTokenCredentials {
   refresh_token: string
 }
-
-/**
- * Credentials for signed in user
- */
-export interface SigninUserCredentials { }

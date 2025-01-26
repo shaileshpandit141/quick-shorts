@@ -23,6 +23,7 @@ const signoutIntitlState: SignoutInitialState = {
   meta: {
     request_id: "",
     timestamp: "",
+    response_time: '',
     documentation_url: "",
     rate_limit: []
   }
