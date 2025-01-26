@@ -22,8 +22,8 @@
     }
 
     .profile-card-container {
-        --height: 250px;
-        --width: 250px;
+        --height: 225px;
+        --width: 225px;
         opacity: 0;
         transition:
             opacity .3s ease,

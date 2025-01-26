@@ -18,6 +18,7 @@ export const formatCatchAxiosError = (error: CatchAxiosError): ErrorResponse => 
       meta: {
         request_id: "",
         timestamp: "",
+        response_time: "",
         documentation_url: "",
         rate_limit: []
       }

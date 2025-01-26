@@ -4,17 +4,17 @@
  */
 
 import axios from 'axios'
-// import axiosInstance from 'axiosInstance';
+import axiosInstance from 'axiosInstance';
+import { get_absolute_url } from 'utils';
 import {
   SigninCredentials,
   RefreshTokenCredentials,
   SignoutCredentials,
   SignupCredentials
 } from './API.types';
-import axiosInstance from 'axiosInstance';
 
 /** Base API URL from environment variables */
-const BASE_API_URL = process.env.REACT_APP_BASE_API_URL
+const BASE_API_URL = get_absolute_url(null)
 
 /**
  * APIs using direct Axios instance
