@@ -10,6 +10,7 @@ export { default as Input } from "./Input/Input";
 export { default as InstallAppButton } from "./InstallAppButton/InstallAppButton";
 export { default as Loader } from "./Loader/Loader";
 export { default as PageLoader } from "./PageLoader/PageLoader";
+export { default as Profile } from "./Profile/Profile";
 export { default as SignoutButton } from "./SignoutButton/SignoutButton";
 export { default as ToggleThemeButton } from "./ToggleThemeButton/ToggleThemeButton";
 export { default as ToastContainer } from "./ToastContainer/ToastContainer";

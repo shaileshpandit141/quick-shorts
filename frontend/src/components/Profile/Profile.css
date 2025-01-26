@@ -1,0 +1,88 @@
+.profile {
+    --hw: 40px;
+    position: relative;
+    user-select: none;
+    transition: var(--transition);
+
+    .profile-action-button {
+        height: var(--hw);
+        width: var(--hw);
+        padding: 0;
+
+        &:is(:focus, :focus-visible) {
+            outline: none;
+        }
+
+        img {
+            height: var(--hw);
+            width: var(--hw);
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    .profile-card-container {
+        --height: 250px;
+        --width: 250px;
+        opacity: 0;
+        transition:
+            opacity .3s ease,
+            transform 0.3s ease,
+            var(--transition);
+
+        background-color: var(--card-background);
+        position: absolute;
+        top: calc(100% + 4px);
+        right: 0px;
+        bottom: auto;
+        left: auto;
+        height: fit-content;
+        max-width: fit-content;
+        padding-block: 16px;
+        border-radius: 16px;
+        border: var(--border);
+
+        .profile-header-card {
+            height: fit-content;
+            width: var(--width);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-inline: 16px;
+            row-gap: 8px;
+
+            .profile-image {
+                --hw: 70px;
+
+                height: var(--hw);
+                width: var(--hw);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: var(--hw);
+                overflow: hidden;
+                border: var(--border);
+
+                img {
+                    height: var(--hw);
+                    width: var(--hw);
+                    object-fit: cover;
+                    object-position: center;
+                }
+            }
+
+            .profile-info {
+                .username {
+                    margin: 0;
+                    text-align: center;
+                }
+
+                .email {
+                    margin: 0;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}

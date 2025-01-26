@@ -1,7 +1,7 @@
 import React from 'react'
 import './Header.css'
 import { Link } from 'react-router-dom'
-import { AppLogo } from 'components'
+import { AppLogo, Profile } from 'components'
 import NavBar from 'components/NavBar/NavBar'
 import ToggleThemeButton from 'components/ToggleThemeButton/ToggleThemeButton'
 import InstallAppButton from 'components/InstallAppButton/InstallAppButton'
@@ -28,6 +28,7 @@ const Header: React.FC = (props) => {
             <InstallAppButton />
             <ToggleThemeButton />
             <SideBar />
+            <Profile />
           </div>
         </div>
       </div>
