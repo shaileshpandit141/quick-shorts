@@ -1,22 +1,26 @@
-# Import all settings from base configuration
+# Import all Settings from base configuration
+# -------------------------------------------
 from .base import *
 from decouple import config, Csv
 
 # Disable debug mode for production environment for security
-# DEBUG = False
-DEBUG = True
+# ----------------------------------------------------------
+DEBUG = False
 
 # Configure Logging for production
+# --------------------------------
 LOGGING["loggers"]["django"]["level"] = "INFO"
 
-# Configure allowed hosts and CORS origins from environment variables
-# -----------------------
-# These should be comma-separated lists in the environment configuration
+# List of host/domain names that Django can serve
+# -----------------------------------------------
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
+
+# Configure CORS Settings
+# -----------------------
 CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
 
-# PostgreSQL database configuration
-# All sensitive credentials are loaded from environment variables
+# PostgreSQL database configuration Settings
+# ------------------------------------------
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -28,9 +32,8 @@ DATABASES = {
     }
 }
 
-# Caches Configuration
-# -----------------------
-# Redis configuration for local production
+# Redis configuration for production
+# ----------------------------------
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -42,22 +45,11 @@ CACHES = {
 }
 
 
-# Security settings for production environment
-# -----------------------
+# Security Settings for production environment
 # These settings ensure secure communication and protect against common vulnerabilities
+# -------------------------------------------------------------------------------------
 CSRF_COOKIE_SECURE = True  # Enforce HTTPS for CSRF cookies
 SESSION_COOKIE_SECURE = True  # Enforce HTTPS for session cookies
 SECURE_BROWSER_XSS_FILTER = True  # Activate browser's XSS filtering
 SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent MIME-type sniffing security risks
 SECURE_SSL_REDIRECT = True  # Force all connections to use HTTPS
-
-# Password hashing algorithms in order of preference
-# -----------------------
-# Using multiple algorithms provides additional security layers
-PASSWORD_HASHERS = [
-    "django.contrib.auth.hashers.Argon2PasswordHasher",    # Recommended primary hasher
-    "django.contrib.auth.hashers.PBKDF2PasswordHasher",    # Strong fallback option
-    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher", # Additional fallback
-    "django.contrib.auth.hashers.ScryptPasswordHasher",    # Final fallback option
-    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher"
-]

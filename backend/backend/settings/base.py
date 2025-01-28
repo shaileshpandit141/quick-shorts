@@ -3,18 +3,28 @@ from pathlib import Path
 from datetime import timedelta  # type: ignore
 from decouple import config, Csv
 
+# Configuration Settings File for the django backend
+# --------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-# Core Settings
+# Security Configuration Settings
+# -------------------------------
 SECRET_KEY = config("SECRET_KEY", cast=str)
+
+# DEBUG Configuration Settings
+# ----------------------------
 DEBUG = False
+
+# Allowed Host Configuration Settings
+# -----------------------------------
 ALLOWED_HOSTS = config("HOST", cast=Csv())
-APPEND_SLASH = False
+
+# Frontend URL Configuration Setting
+# ----------------------------------
 FRONTEND_URL = config("FRONTEND_URL", cast=str)
 
-# APPLICATION CONFIGURATION
-# -----------------------
-# Django built-in applications
+# Django built-in applications settings
+# -------------------------------------
 INSTALLED_APPS = [
     "daphne",
     "django.contrib.admin",
@@ -25,7 +35,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles"
 ]
 
-# Third-party applications
+# Third-party applications Settings
+# ---------------------------------
 INSTALLED_APPS += [
     "rest_framework",
     "rest_framework.authtoken",
@@ -34,14 +45,15 @@ INSTALLED_APPS += [
     "corsheaders",
 ]
 
-# User Define applications
+# User Define applications Settings
+# ---------------------------------
 INSTALLED_APPS += [
     "users.apps.UsersConfig",
     "last_request_log.apps.LastRequestLogConfig"
 ]
 
-# MIDDLEWARE CONFIGURATION
-# ----------------------
+# Middleware Configuration Settings
+# ---------------------------------
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -54,10 +66,12 @@ MIDDLEWARE = [
     "middlewares.ResponseMiddleware"
 ]
 
-# URL AND TEMPLATE CONFIGURATION
-# ----------------------------
+# Root urls file Configuration Settings
+# -------------------------------------
 ROOT_URLCONF = "backend.urls"
 
+# Templates Configuration Settings
+# --------------------------------
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -74,17 +88,20 @@ TEMPLATES = [
     },
 ]
 
-# APPLICATION SERVER
-# ----------------
+# Application Server Configuration Setting
+# ----------------------------------------
 ASGI_APPLICATION = "backend.asgi.application"
 
-# USER MODEL AND DATABASE
-# ----------------------
+# User Model Configuration Setting
+# --------------------------------
 AUTH_USER_MODEL = "users.User"
+
+# Default primary key field type Configuration Setting
+# ----------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# PASSWORD VALIDATION
-# -----------------
+# Password Validators Configuration Settings
+# ------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -92,24 +109,38 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# INTERNATIONALIZATION
-# ------------------
+# Password hashing algorithms in order of preference
+# Using multiple algorithms provides additional security layers
+# -------------------------------------------------------------
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+    "django.contrib.auth.hashers.ScryptPasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher"
+]
+
+# Internationalization Configuration Settings
+# -------------------------------------------
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# STATIC AND MEDIA FILES
-# ---------------------
+# Static files (CSS, JavaScript, Images)
+# STATIC AND MEDIA FILES Configuration Settings
+# ---------------------------------------------
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+# Configure media files (User-uploaded files)
+# -------------------------------------------
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/media/"
 
-# REST FRAMEWORK SETTINGS
-# ---------------------
+# REST Framework Configuration Settings
+# -------------------------------------
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication"
@@ -135,8 +166,8 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 5,
 }
 
-# JWT TOKEN SETTINGS
-# ----------------
+# JWT Token Configuration Settings
+# --------------------------------
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=20),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
@@ -152,24 +183,26 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
 
-# AUTHENTICATION SETTINGS
-# ---------------------
+# Authentication Configuration Settings
+# -------------------------------------
 AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend"]
 
-# EMAIL SETTINGS
-# ------------
-EMAIL_BACKEND = config("EMAIL_BACKEND", cast=str)
-EMAIL_HOST = config("EMAIL_HOST", cast=str)
-EMAIL_PORT = config("EMAIL_PORT", cast=int)
-EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
-EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=False)
-EMAIL_HOST_USER = config("EMAIL_HOST_USER", cast=str)
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str)
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", cast=str, default=EMAIL_HOST_USER)
+# EMAIL Configuration Settings
+# ----------------------------
+try:
+    EMAIL_BACKEND = config("EMAIL_BACKEND", cast=str)
+    EMAIL_HOST = config("EMAIL_HOST", cast=str)
+    EMAIL_PORT = config("EMAIL_PORT", cast=int)
+    EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
+    EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=False)
+    EMAIL_HOST_USER = config("EMAIL_HOST_USER", cast=str)
+    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str)
+    DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", cast=str, default=EMAIL_HOST_USER)
+except Exception:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-
-# LOGGING CONFIGURATION
-# ----------------
+# Logging Configuration Settings
+# ------------------------------
 LOGGING = {
     "version": 1,  # Version of the logging configuration
     "disable_existing_loggers": False,  # Keep default loggers like Django"s

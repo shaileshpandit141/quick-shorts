@@ -1,20 +1,26 @@
 # Import all settings from base configuration
+# -------------------------------------------
 from .base import *
 from .base import BASE_DIR
 
-# Enable debug mode for development environment
+# Enable debug mode for testing environment
+# -----------------------------------------
 DEBUG = True
 
-# Configure Logging for development
+# Configure Logging for testing environment
+# -----------------------------------------
 LOGGING["loggers"]["django"]["level"] = "DEBUG"
 
-# Allow all hosts to access the application
+# Allow all hosts for testing environment
+# ---------------------------------------
 ALLOWED_HOSTS = ["*"]
 
-# Enable CORS for all origins
+# Enable CORS for all origins for testing environment
+# ---------------------------------------------------
 CORS_ALLOW_ALL_ORIGINS = True
 
-# Database configuration using SQLite for testing
+# SQLite Database Configuration for testing environment
+# -----------------------------------------------------
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -22,17 +28,11 @@ DATABASES = {
     }
 }
 
-# Caches Configuration
-# -----------------------
-# Memcached configuration for local development
+# Memcached configuration for testing environment
+# -----------------------------------------------
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
         "LOCATION": "unique-snowflake",
     }
 }
-
-# Use MD5 password hashing for testing (not recommended for production)
-PASSWORD_HASHERS = [
-    "django.contrib.auth.hashers.MD5PasswordHasher",
-]
