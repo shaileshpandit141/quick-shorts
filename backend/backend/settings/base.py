@@ -201,6 +201,14 @@ try:
 except Exception:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
+# Log-Related Directory Configuration Setup
+# -----------------------------------------
+LOG_DIR = os.path.join(BASE_DIR, "logs")
+
+# Create log directory if it doesn't exist
+# ----------------------------------------
+os.makedirs(LOG_DIR, exist_ok=True)
+
 # Logging Configuration Settings
 # ------------------------------
 LOGGING = {
@@ -230,7 +238,7 @@ LOGGING = {
         "file": {
             "level": "INFO",
             "class": "logging.FileHandler",
-            "filename": os.path.join(BASE_DIR, "logs/django.log"),
+            "filename": os.path.join(LOG_DIR, "django.log"),
             "formatter": "verbose",
         },
         "mail_admins": {
