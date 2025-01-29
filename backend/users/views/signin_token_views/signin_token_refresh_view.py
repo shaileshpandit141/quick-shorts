@@ -10,14 +10,14 @@ from rest_framework_simplejwt.views import TokenRefreshView
 # Local imports
 from quick_utils.views import APIView, Response
 from permissions import AllowAny
-from throttling import AuthRateThrottle
+from throttling import AnonRateThrottle
 
 
 class SigninTokenRefreshView(TokenRefreshView, APIView):
     """Custom token refresh view for handling JWT token refresh operations."""
 
     permission_classes = [AllowAny]
-    throttle_classes = [AuthRateThrottle]
+    throttle_classes = [AnonRateThrottle]
 
     def get_serializer(self, *args, **kwargs) -> NoReturn:
         """Customize serializer to handle refresh token field name."""
