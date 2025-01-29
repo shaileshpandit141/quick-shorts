@@ -1,21 +1,18 @@
-import React, { useEffect } from 'react'
-import './SignupForm.css'
-import { Input } from 'components'
-import { AnchorLink, Button } from 'components'
+import React, { useEffect } from 'react';
+import './SignupForm.css';
+import { Input, AnchorLink, Button, DisplayFormErrors } from 'components';
 import {
-  signupThunk,
-  useSignupSelector,
-  resetSignupState
-} from 'features/auth'
-import { useDispatch } from 'react-redux'
-import { DisplayFormErrors } from 'components'
+  dispatchSignupAction,
+  dispatchRestSigupState,
+  useSignupSelector
+} from 'features/auth/signup';
+import { useDispatch } from 'react-redux';
 import { useFormDataChange } from 'hooks/useFormDataChange'
-import { SignupCredentials } from 'API/API.types'
+import { SignupCredentials } from 'services/authServices'
 import { triggerToast } from 'features/toast'
 
 const SignupForm: React.FC = (props) => {
-
-  const dispatch = useDispatch()
+  
   const { status, message, errors, data } = useSignupSelector()
   const [formData, handleFormDataChange] = useFormDataChange<SignupCredentials>({
     email: '',
@@ -25,19 +22,17 @@ const SignupForm: React.FC = (props) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    dispatch(
-      signupThunk(formData) as any
-    )
+    dispatchSignupAction(formData)
   }
 
   useEffect(() => {
-    dispatch(resetSignupState())
+    dispatchRestSigupState()
     if (status === "succeeded") {
-      triggerToast(dispatch, "success", message)
+      triggerToast("success", message)
     } else if (status === "failed") {
-      triggerToast(dispatch, "error", message)
+      triggerToast("error", message)
     }
-  }, [dispatch, message, status])
+  }, [message, status])
 
 
   return (

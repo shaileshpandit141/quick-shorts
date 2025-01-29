@@ -4,8 +4,11 @@
  */
 
 import axios from 'axios';
-import store from 'store/store';
-import { refreshTokenThunk } from 'features/auth';
+import { store } from 'store/store';
+import {
+  dispatchRefreshTokenAction,
+  dispatchResetSigninState
+} from 'features/auth/signin';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_API_URL,
@@ -33,7 +36,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !request._retry) {
       try {
         request._retry = true;
-        await store.dispatch(refreshTokenThunk());
+        dispatchRefreshTokenAction();
         const token = store.getState().signin.data.access_token;
         if (!token) {
           return Promise.reject(error);
@@ -42,6 +45,7 @@ axiosInstance.interceptors.response.use(
         request.headers['Authorization'] = `Bearer ${token}`;
         return axiosInstance(request);
       } catch (refreshError) {
+        dispatchResetSigninState()
         return Promise.reject(refreshError);
       }
     }

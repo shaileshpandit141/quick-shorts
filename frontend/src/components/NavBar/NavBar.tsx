@@ -1,7 +1,7 @@
 import React from 'react';
 import './NavBar.css';
 import { NavLink } from 'react-router-dom'
-import { isAuthenticated } from 'features/auth'
+import { isAuthenticated } from 'utils'
 import AnchorLink from 'components/AnchorLink/AnchorLink'
 
 const NavBar: React.FC = () => {

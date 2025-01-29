@@ -1,6 +1,6 @@
 import React from 'react'
 import './IndexPage.css'
-import { isAuthenticated } from 'features/auth'
+import { isAuthenticated } from 'utils'
 import { Navigate } from 'react-router-dom'
 
 const IndexPageSkeleton: React.FC = () => {

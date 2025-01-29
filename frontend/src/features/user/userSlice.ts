@@ -1,13 +1,9 @@
-/*
- * Redux slice for managing user state and operations
-  * @module userSlice
- */
 import { createSlice } from "@reduxjs/toolkit";
 import { UserInitialState } from "./user.types";
 import { userAction } from "./userAction";
 
 /**
- * Initial state for user slice
+ * # Initial state for user slice
  * Contains status, message, data, errors and meta information
  */
 const userInitialState: UserInitialState = {

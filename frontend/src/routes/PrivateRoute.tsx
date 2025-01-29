@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import { useSigninSelector } from "features/auth";
+import { useSigninSelector } from "features/auth/signin";
 
 const PrivateRoute = (): JSX.Element => {
   const { data } = useSigninSelector()

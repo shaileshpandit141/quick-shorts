@@ -3,7 +3,7 @@ import './Profile.css';
 import { useDispatch } from 'react-redux';
 import { AnchorLink, SignoutButton } from 'components'
 import { useMenu } from 'hooks';
-import { isAuthenticated } from 'features/auth';
+import { isAuthenticated } from 'utils';
 import { dispatchUserAction, useUserSelector } from 'features/user';
 import { get_absolute_url } from 'utils';
 
@@ -12,7 +12,7 @@ const Profile: React.FC = (): JSX.Element | null => {
   const button = useRef(null)
   const profile = useRef(null)
   const dispatch = useDispatch()
-  const { data } = useUserSelector()
+  const { status, data } = useUserSelector()
 
   const { setVisibleStyle, setHiddenStyle } = useMenu({
     buttonRef: button,
@@ -32,10 +32,12 @@ const Profile: React.FC = (): JSX.Element | null => {
   }, [setVisibleStyle, setHiddenStyle])
 
   useEffect(() => {
-    dispatchUserAction(dispatch)
+    if (status == 'idle' && isAuthenticated()) {
+      dispatchUserAction(dispatch)
+    }
   }, [dispatch]);
 
-  if (!isAuthenticated()) {
+  if (!isAuthenticated() && (status != 'succeeded')) {
     return null
   }
 
@@ -45,7 +47,9 @@ const Profile: React.FC = (): JSX.Element | null => {
         className='button profile-action-button'
         ref={button}
       >
-        <img src={get_absolute_url(data?.avatar)} alt='avatar-image' />
+        {data?.avatar && (
+          <img src={get_absolute_url(data?.avatar)} alt='avatar-image' />
+        )}
       </button>
       <div
         className='profile-card-container'
@@ -53,7 +57,9 @@ const Profile: React.FC = (): JSX.Element | null => {
       >
         <div className='profile-header-card'>
           <section className='profile-image'>
-            <img src={get_absolute_url(data?.avatar)} alt='avatar-image' />
+            {data?.avatar && (
+              <img src={get_absolute_url(data?.avatar)} alt='avatar-image' />
+            )}
           </section>
           <section className='profile-info'>
             <h6 className='username'>{data?.username}</h6>

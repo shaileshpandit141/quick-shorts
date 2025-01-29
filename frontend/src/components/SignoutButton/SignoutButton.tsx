@@ -2,32 +2,35 @@ import React, { useEffect } from 'react';
 import './SignoutButton.css';
 import { Navigate } from 'react-router-dom';
 import Button from 'components/Button/Button';
-import { resetSigninState, isAuthenticated } from 'features/auth';
+import {
+  dispatchResetSigninState,
+  useSigninSelector
+} from 'features/auth/signin';
+import {
+  dispatchSignoutAction,
+  useSignoutSelector
+} from 'features/auth/signout';
+import { isAuthenticated } from 'utils';
 import { triggerToast } from 'features/toast';
-import { useDispatch } from 'react-redux';
-import { signoutThunk } from 'features/auth';
-import { useSignoutSelector } from 'features/auth';
-import { useSigninSelector } from 'features/auth';
 
 const SignoutButton: React.FC = () => {
-  const dispatch = useDispatch();
   const { status, message } = useSignoutSelector();
   const signinState = useSigninSelector();
 
   const handleSignout = (event: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch(signoutThunk({
+    dispatchSignoutAction({
       refresh_token: signinState.data?.refresh_token || ''
-    }) as any);
+    })
   };
 
   useEffect(() => {
     if (status === 'succeeded') {
-      dispatch(resetSigninState());
-      triggerToast(dispatch, "success", message)
+      dispatchResetSigninState();
+      triggerToast("success", message)
     } else if (status === 'failed') {
-      triggerToast(dispatch, "error", message)
+      triggerToast("error", message)
     }
-  }, [status, dispatch, message]);
+  }, [status, message]);
 
   if (!isAuthenticated()) {
     return null

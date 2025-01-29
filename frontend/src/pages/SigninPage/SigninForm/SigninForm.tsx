@@ -3,17 +3,19 @@ import './SigninForm.css'
 import { Navigate, Link } from 'react-router-dom'
 import { Input } from 'components'
 import { AnchorLink } from 'components'
-import { signinThunk, useSigninSelector, resetSignoutState } from 'features/auth'
-import { useDispatch } from 'react-redux'
+import {
+  dispatchSigninAction,
+  useSigninSelector
+} from 'features/auth/signin'
+import { dispatchRestSignoutState } from 'features/auth/signout'
 import { DisplayFormErrors } from 'components'
 import { useFormDataChange } from 'hooks/useFormDataChange'
-import { SigninCredentials } from 'API/API.types'
+import { SigninCredentials } from 'services/authServices'
 import { Button } from 'components'
 import { triggerToast } from 'features/toast'
 
 const SigninForm: React.FC = () => {
-
-  const dispatch = useDispatch()
+  
   const { status, message, errors } = useSigninSelector()
   const [formData, handleFormDataChange] = useFormDataChange<SigninCredentials>({
     email: '',
@@ -21,13 +23,13 @@ const SigninForm: React.FC = () => {
   })
 
   useEffect(() => {
-    dispatch(resetSignoutState())
+    dispatchRestSignoutState();
     if (status === "succeeded") {
-      triggerToast(dispatch, "success", message)
+      triggerToast("success", message)
     } else if (status === "failed") {
-      triggerToast(dispatch, "error", message)
+      triggerToast("error", message)
     }
-  }, [dispatch, message, status])
+  }, [message, status])
 
   if (status === 'succeeded') {
     return <Navigate to='/home' />
@@ -35,9 +37,7 @@ const SigninForm: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    dispatch(
-      signinThunk(formData) as any
-    )
+    dispatchSigninAction(formData)
   }
 
   return (

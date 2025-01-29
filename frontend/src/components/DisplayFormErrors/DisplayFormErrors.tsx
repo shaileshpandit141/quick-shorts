@@ -10,7 +10,7 @@ interface DisplayFormErrorsProps {
 const DisplayFormErrors: React.FC<DisplayFormErrorsProps> = (props) => {
   const { field, errors } = props
   const renderErrors = () => (
-    errors.map((error, index) => (
+    errors && errors.map((error, index) => (
       error.field === field && (
         <p className='error-message' key={index}>{error.message}</p>
       )

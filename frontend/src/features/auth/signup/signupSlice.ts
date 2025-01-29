@@ -1,12 +1,7 @@
-/**
- * Redux slice for managing signup state and operations
- * @module signupSlice
- */
-
 import { createSlice } from "@reduxjs/toolkit";
 import { SignupInitialState } from "./signup.types";
 import { ErrorResponse } from "FeatureTypes";
-import { signupThunk } from './signupThunk'
+import { signupAction } from './signupAction'
 
 /**
  * Initial state for signup slice
@@ -43,13 +38,13 @@ const signupSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // Handle signup async states
-      .addCase(signupThunk.pending, (state) => {
+      .addCase(signupAction.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase(signupThunk.fulfilled, (state, action) => {
+      .addCase(signupAction.fulfilled, (state, action) => {
         Object.assign(state, action.payload)
       })
-      .addCase(signupThunk.rejected, (state, action) => {
+      .addCase(signupAction.rejected, (state, action) => {
         Object.assign(state, action.payload as ErrorResponse)
       })
   }

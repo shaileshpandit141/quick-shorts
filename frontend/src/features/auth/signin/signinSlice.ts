@@ -1,20 +1,11 @@
-/**
- * Redux slice for handling authentication state management
- * Manages signin process and token refresh functionality
- */
-
-// Required imports for authentication slice
 import { createSlice } from "@reduxjs/toolkit"
-import {
-  SigninInitialState
-} from "./signin.types"
+import { SigninInitialState } from "./signin.types"
 import { ErrorResponse } from 'FeatureTypes';
-import {
-  signinThunk,
-  refreshTokenThunk
-} from './signinThunk'
+import { signinAction, refreshTokenAction } from './signinAction';
 
-// Initial authentication state with tokens from localStorage
+/**
+ * Initial authentication state with tokens from localStorage
+ */
 const signinIntitlState: SigninInitialState = {
   status: 'idle',
   message: '',
@@ -32,7 +23,9 @@ const signinIntitlState: SigninInitialState = {
   }
 }
 
-// Authentication slice definition with reducers and async thunks
+/**
+ * Authentication slice definition with reducers and async thunks
+ */
 const signinSlice = createSlice({
   name: 'signin',
   initialState: signinIntitlState,
@@ -51,10 +44,10 @@ const signinSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // Handle signin process states
-      .addCase(signinThunk.pending, (state) => {
+      .addCase(signinAction.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase(signinThunk.fulfilled, (state, action) => {
+      .addCase(signinAction.fulfilled, (state, action) => {
         const { status, message, data, meta } = action.payload
         state.status = status
         state.message = message
@@ -63,7 +56,7 @@ const signinSlice = createSlice({
         localStorage.setItem("access_token", data.access_token)
         localStorage.setItem('refresh_token', data.refresh_token)
       })
-      .addCase(signinThunk.rejected, (state, action) => {
+      .addCase(signinAction.rejected, (state, action) => {
         const { status, message, errors } = action.payload as ErrorResponse
         state.status = status
         state.message = message
@@ -71,10 +64,10 @@ const signinSlice = createSlice({
       })
 
       // Handle token refresh states
-      .addCase(refreshTokenThunk.pending, (state) => {
+      .addCase(refreshTokenAction.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase(refreshTokenThunk.fulfilled, (state, action) => {
+      .addCase(refreshTokenAction.fulfilled, (state, action) => {
         const { status, message, data, meta } = action.payload
         state.status = status
         state.message = message
@@ -82,7 +75,7 @@ const signinSlice = createSlice({
         localStorage.setItem('access_token', data.access_token)
         state.meta = meta
       })
-      .addCase(refreshTokenThunk.rejected, (state, action) => {
+      .addCase(refreshTokenAction.rejected, (state, action) => {
         const { status, message, errors } = action.payload as ErrorResponse
         state.status = status
         state.message = message

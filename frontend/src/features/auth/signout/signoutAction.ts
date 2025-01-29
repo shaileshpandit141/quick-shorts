@@ -1,9 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import API from 'API';
+import { authServices, SignoutCredentials } from 'services/authServices';
 import { SignoutSuccessResponse } from "./signout.types";
-import { CatchAxiosError } from 'FeatureTypes';
+import { CatchAxiosError, ErrorResponse } from 'FeatureTypes';
 import { formatCatchAxiosError } from "utils/formatCatchAxiosError";
-import { SignoutCredentials } from 'API/API.types';
 
 /**
  * Redux thunk for handling user signout
@@ -14,11 +13,15 @@ import { SignoutCredentials } from 'API/API.types';
  * @param credentials - User signout credentials required by the API
  * @returns SignoutSuccessResponse on success, SignoutErrorResponse on failure
  */
-export const signoutThunk = createAsyncThunk(
-  "signout/signoutThunk",
+export const signoutAction = createAsyncThunk<
+  SignoutSuccessResponse,
+  SignoutCredentials,
+  { rejectValue: ErrorResponse }
+>(
+  "signout/signoutAction",
   async (credentials: SignoutCredentials, thunkAPI) => {
     try {
-      const response = await API.signoutApi(credentials);
+      const response = await authServices.signout(credentials);
       return response.data as SignoutSuccessResponse;
     } catch (err: unknown) {
       const error = err as CatchAxiosError;

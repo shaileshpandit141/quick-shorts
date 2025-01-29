@@ -1,27 +1,24 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import API from 'API'
-import {
-  SigninInitialState,
-  SigninSuccessResponse,
-  RefreshTokenSuccessResponse
-} from './signin.types'
-import { SigninCredentials } from 'API/API.types'
-import { CatchAxiosError, ErrorResponse } from 'FeatureTypes'
-import { formatCatchAxiosError } from 'utils/formatCatchAxiosError'
+import { store } from 'store/store';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { authServices, SigninCredentials } from 'services/authServices';
+import { SigninSuccessResponse } from './signin.types';
+import { CatchAxiosError, ErrorResponse } from 'FeatureTypes';
+import { formatCatchAxiosError } from 'utils/formatCatchAxiosError';
+import { RefreshTokenSuccessResponse } from './signin.types';
 
 /**
  * Redux thunk to handle user sign in
  * Makes API call with credentials and returns success/error response
  */
-export const signinThunk = createAsyncThunk<
+export const signinAction = createAsyncThunk<
   SigninSuccessResponse,
   SigninCredentials,
   { rejectValue: ErrorResponse }
 >(
-  'signin/signinThunk',
+  'signin/signinAction',
   async (credentials: SigninCredentials, thunkAPI) => {
     try {
-      const response = await API.signinApi(credentials)
+      const response = await authServices.signin(credentials)
       return response.data as SigninSuccessResponse
     } catch (err: unknown) {
       const error = err as CatchAxiosError
@@ -36,13 +33,16 @@ export const signinThunk = createAsyncThunk<
  * Gets refresh token from state and requests new access token
  * Returns error if no refresh token exists
  */
-export const refreshTokenThunk = createAsyncThunk(
-  'signin/refreshTokenThunk',
-  async (_: void, thunkAPI) => {
-    const state = thunkAPI.getState() as SigninInitialState
-    const refresh_token = state.data?.refresh_token
+export const refreshTokenAction = createAsyncThunk<
+  RefreshTokenSuccessResponse,
+  void,
+  { rejectValue: ErrorResponse }
+>(
+  'signin/refreshTokenAction',
+  async (_, thunkAPI) => {
+    const refresh_token = store.getState().signin.data?.refresh_token;
     try {
-      const response = await API.refreshTokenApi({
+      const response = await authServices.refreshToken({
         refresh_token: refresh_token || ""
       })
       return response.data as RefreshTokenSuccessResponse

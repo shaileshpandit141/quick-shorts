@@ -7,5 +7,4 @@ const store = configureStore<RootState>({
 })
 
 export type AppDispatch = typeof store.dispatch;
-
-export default store;
+export { store }

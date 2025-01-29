@@ -1,9 +1,9 @@
-import React from 'react'
-import './SigninPage.css'
-import { Navigate } from 'react-router-dom'
-import { isAuthenticated } from 'features/auth'
-import SigninHeader from './SigninHeader/SigninHeader'
-import SigninForm from './SigninForm/SigninForm'
+import React from 'react';
+import './SigninPage.css';
+import { Navigate } from 'react-router-dom';
+import { isAuthenticated } from 'utils';
+import SigninHeader from './SigninHeader/SigninHeader';
+import SigninForm from './SigninForm/SigninForm';
 
 const SigninPage: React.FC = (props) => {
   if (isAuthenticated()) {

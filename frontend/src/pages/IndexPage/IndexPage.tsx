@@ -1,7 +1,7 @@
 import React from 'react'
 import './IndexPage.css'
 import { Navigate } from 'react-router-dom'
-import { isAuthenticated } from 'features/auth'
+import { isAuthenticated } from 'utils'
 import { AnchorLink } from 'components'
 
 const IndexPage: React.FC = (props) => {
