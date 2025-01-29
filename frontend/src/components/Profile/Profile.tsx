@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import './Profile.css';
-import { useDispatch } from 'react-redux';
 import { AnchorLink, SignoutButton } from 'components'
 import { useMenu } from 'hooks';
 import { isAuthenticated } from 'utils';
@@ -11,7 +10,6 @@ const Profile: React.FC = (): JSX.Element | null => {
 
   const button = useRef(null)
   const profile = useRef(null)
-  const dispatch = useDispatch()
   const { status, data } = useUserSelector()
 
   const { setVisibleStyle, setHiddenStyle } = useMenu({
@@ -32,12 +30,12 @@ const Profile: React.FC = (): JSX.Element | null => {
   }, [setVisibleStyle, setHiddenStyle])
 
   useEffect(() => {
-    if (status == 'idle' && isAuthenticated()) {
-      dispatchUserAction(dispatch)
+    if (status === 'idle' && isAuthenticated()) {
+      dispatchUserAction()
     }
-  }, [dispatch]);
+  }, [status]);
 
-  if (!isAuthenticated() && (status != 'succeeded')) {
+  if (!isAuthenticated() && (status !== 'succeeded')) {
     return null
   }
 

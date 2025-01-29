@@ -1,14 +1,11 @@
-import { AppDispatch } from "store/store";
+import { store } from "store/store";
 import { userAction } from "./userAction";
 
 /**
- * Dispatches a user action with the provided credentials
+ * Dispatch a user action
  *
- * @param dispatch - Redux dispatch function
  * @returns void
  */
-export const dispatchUserAction = (
-  dispatch: AppDispatch
-): void => {
-  dispatch(userAction());
+export const dispatchUserAction = (): void => {
+  store.dispatch(userAction());
 };

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import axiosInstance from 'axiosInstance';
 import { get_absolute_url } from 'utils';
 import {
   SigninCredentials,

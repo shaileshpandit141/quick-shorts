@@ -1,5 +1,5 @@
 import { store } from "store/store";
-import { SignoutCredentials, SignupCredentials } from "services/authServices";
+import { SignupCredentials } from "services/authServices";
 import { signupAction } from './signupAction'
 import { resetSignupState } from "./signupSlice";
 

@@ -1,4 +1,4 @@
-import { AppDispatch, store } from "store";
+import { store } from "store";
 import { signinAction, refreshTokenAction } from "./signinAction";
 import { resetSigninState } from './signinSlice'
 import { SigninCredentials } from "services/authServices";
