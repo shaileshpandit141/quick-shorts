@@ -237,8 +237,10 @@ LOGGING = {
         },
         "file": {
             "level": "INFO",
-            "class": "logging.FileHandler",
+            "class": "logging.handlers.RotatingFileHandler",
             "filename": os.path.join(LOG_DIR, "django.log"),
+            "maxBytes": 5 * 1024 * 1024,  # 5MB per file
+            "backupCount": 3,  # Keep last 3 log files
             "formatter": "verbose",
         },
         "mail_admins": {
