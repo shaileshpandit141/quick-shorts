@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import './SideBar.css';
-import { Drawer, NavBar, Button, ToggleThemeButton } from 'components';
+import { 
+  Drawer,
+  NavBarLinks,
+  Button,
+  AppLogo
+} from 'components';
 
 const SideBar: React.FC = (): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,6 +42,7 @@ const SideBar: React.FC = (): JSX.Element => {
                   className='close-menu-botton'
                   onClick={handleMenuClick}
                 />
+                <AppLogo />
               </div>
               <div className='header-buttons-right'>
                 {/* Right TSX Goes here */}
@@ -45,7 +51,7 @@ const SideBar: React.FC = (): JSX.Element => {
           </div>
           <div className='links-container'>
             <div className='navbar-container'>
-              <NavBar />
+              <NavBarLinks />
             </div>
             <div className='other-links-container'>
               {/* Other TSX Links Goes here */}

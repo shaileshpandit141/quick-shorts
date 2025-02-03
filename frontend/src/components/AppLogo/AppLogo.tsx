@@ -1,28 +1,16 @@
 import React from 'react'
 import './AppLogo.css'
-import AppLogoImage from './AppLogoImage';
+import { Link } from 'react-router-dom'
+import { AppLogoImage } from 'components';
 
-interface LogoProps {
-  size?: number
-}
-
-const AppLogo: React.FC<LogoProps> = (props) => {
-
-  const size = props.size ? props.size : 40
-
-  const styles = {
-    height: `${size}px`,
-    width: `${size}px`
-  }
+const AppLogo: React.FC = () => {
 
   return (
-    <figure
-      className='logo-container'
-      style={styles}
-    >
-      <AppLogoImage styles={styles} />
-    </figure>
+    <Link to='/' className='app-logo'>
+      <AppLogoImage />
+      <h4 className='logo-title'>React</h4>
+    </Link>
   )
 }
 
-export default AppLogo
+export default AppLogo;

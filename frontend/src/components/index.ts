@@ -1,4 +1,5 @@
 export { default as AppLogo } from "./AppLogo/AppLogo";
+export { default as AppLogoImage } from "./AppLogoImage/AppLogoImage";
 export { default as Button } from "./Button/Button";
 export { default as AnchorLink } from "./AnchorLink/AnchorLink";
 export { default as DisplayFormErrors } from "./DisplayFormErrors/DisplayFormErrors";
@@ -14,4 +15,4 @@ export { default as Profile } from "./Profile/Profile";
 export { default as SignoutButton } from "./SignoutButton/SignoutButton";
 export { default as ToggleThemeButton } from "./ToggleThemeButton/ToggleThemeButton";
 export { default as ToastContainer } from "./ToastContainer/ToastContainer";
-export { default as NavBar } from "./NavBar/NavBar";
+export { default as NavBarLinks } from "./NavBarLinks/NavBarLinks";

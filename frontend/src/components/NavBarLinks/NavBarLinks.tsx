@@ -1,10 +1,10 @@
 import React from 'react';
-import './NavBar.css';
+import './NavBarLinks.css';
 import { NavLink } from 'react-router-dom'
 import { isAuthenticated } from 'utils'
 import AnchorLink from 'components/AnchorLink/AnchorLink'
 
-const NavBar: React.FC = () => {
+const NavBarLinks: React.FC = () => {
   return (
     <nav className='nav-links'>
       <NavLink to='/home' className='link'>Home</NavLink>
@@ -18,4 +18,4 @@ const NavBar: React.FC = () => {
   )
 }
 
-export default NavBar;
+export default NavBarLinks;
