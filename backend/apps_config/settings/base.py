@@ -68,7 +68,7 @@ MIDDLEWARE = [
 
 # Root urls file Configuration Settings
 # -------------------------------------
-ROOT_URLCONF = "backend.urls"
+ROOT_URLCONF = "apps_config.urls"
 
 # Templates Configuration Settings
 # --------------------------------
@@ -90,7 +90,7 @@ TEMPLATES = [
 
 # Application Server Configuration Setting
 # ----------------------------------------
-ASGI_APPLICATION = "backend.asgi.application"
+ASGI_APPLICATION = "apps_config.asgi.application"
 
 # User Model Configuration Setting
 # --------------------------------

@@ -23,9 +23,9 @@ def main():
     - PORT: The port number to use (default: 8000)
     """
     # Set the Django settings module path
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "apps_config.settings")
 
-    # Load host and port configuration from environment variables
+    # Load host and port configuration from environment variables 
     # using python-decouple for safer configuration management
     HOST = config("HOST", cast=str, default="localhost")
     PORT = config("PORT", cast=int, default=8000)

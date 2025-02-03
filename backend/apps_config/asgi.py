@@ -1,7 +1,7 @@
 """
-ASGI Configuration for Backend Project
+ASGI Configuration for Apps Config Project
 
-This module configures the ASGI (Asynchronous Server Gateway Interface) for the Django backend project.
+This module configures the ASGI (Asynchronous Server Gateway Interface) for the Django apps config project.
 ASGI provides a standard interface between async-capable Python web servers, frameworks and applications.
 
 The main purposes of this file are:
@@ -16,7 +16,7 @@ import os
 from django.core.asgi import get_asgi_application
 
 # Configure Django settings module path
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "apps_config.settings")
 
 # Create ASGI application instance
 application = get_asgi_application()
