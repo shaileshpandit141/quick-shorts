@@ -53,7 +53,7 @@ INSTALLED_APPS += [
 # User Define applications Settings
 # ---------------------------------
 INSTALLED_APPS += [
-    "apps.users.apps.UsersConfig",
+    "apps.user_auth.apps.UserAuthConfig",
 ]
 
 # Middleware Configuration Settings
@@ -98,7 +98,7 @@ ASGI_APPLICATION = "apps_config.asgi.application"
 
 # User Model Configuration Setting
 # --------------------------------
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "user_auth.User"
 
 # Default primary key field type Configuration Setting
 # ----------------------------------------------------

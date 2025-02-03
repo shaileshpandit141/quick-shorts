@@ -6,7 +6,7 @@ from quick_utils.views import APIView, Response
 from permissions import IsAuthenticated, IsVerified
 from throttling import UserRateThrottle
 from utils import FieldValidator
-from users.serializers import UserSerializer
+from user_auth.serializers import UserSerializer
 
 User = get_user_model()
 

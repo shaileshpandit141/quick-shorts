@@ -15,7 +15,7 @@ from throttling import AuthRateThrottle
 from utils import add_query_params, FieldValidator
 from quick_utils.send_email import SendEmail
 from quick_utils.token_generator import TokenGenerator
-from users.serializers import UserSerializer
+from user_auth.serializers import UserSerializer
 
 User = get_user_model()
 

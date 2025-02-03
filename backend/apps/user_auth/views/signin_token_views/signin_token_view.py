@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 # Local imports
 from permissions import AllowAny
 from utils import FieldValidator
-from users.serializers import SigninTokenSerializer
+from user_auth.serializers import SigninTokenSerializer
 from throttling import AuthRateThrottle
 from quick_utils.views import APIView, Response
 from quick_utils.format_serializer_errors import format_serializer_errors
