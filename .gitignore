@@ -5,7 +5,7 @@
 # Ignore the backend dependency
 backend/.env
 backend/**/__pycache__
-backend/*/migrations
+backend/**/migrations
 backend/db.sqlite3
 backend/logs/django.log
 
