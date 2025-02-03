@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 from datetime import timedelta  # type: ignore
 from decouple import config, Csv
@@ -6,6 +7,10 @@ from decouple import config, Csv
 # Configuration Settings File for the django backend
 # --------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+# Main applications Directory Path Configuration Settings
+# -------------------------------------------------------
+sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
 # Security Configuration Settings
 # -------------------------------
@@ -48,8 +53,7 @@ INSTALLED_APPS += [
 # User Define applications Settings
 # ---------------------------------
 INSTALLED_APPS += [
-    "users.apps.UsersConfig",
-    "last_request_log.apps.LastRequestLogConfig"
+    "apps.users.apps.UsersConfig",
 ]
 
 # Middleware Configuration Settings

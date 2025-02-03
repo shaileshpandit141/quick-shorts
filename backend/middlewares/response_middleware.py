@@ -6,8 +6,6 @@ import logging
 from datetime import datetime  # type: ignore
 from django.http import JsonResponse
 from rest_framework.response import Response
-from last_request_log.models import LastRequestLog
-from utils import get_client_ip
 
 # Configure logger
 logger = logging.getLogger(__name__)
@@ -78,39 +76,6 @@ class ResponseMiddleware:
             "meta": self.get_meta({"rate_limit": throttles}, response_time, request_id)
         }
 
-    # Logging Functions
-    def log_request(self, request: Any, response_time: str, success: bool, is_api_request: bool):
-        objects = getattr(LastRequestLog, "objects", None)
-        if objects is not None:
-            try:
-                client_ip = get_client_ip(request)
-                log_entry = objects.filter(ip=client_ip).first()
-                if log_entry:
-                    log_entry.user = request.user.email if request.user.is_authenticated else None
-                    log_entry.path = request.path
-                    log_entry.method = request.method
-                    log_entry.timestamp = datetime.utcnow()
-                    log_entry.response_time = response_time
-                    log_entry.is_authenticated = request.user.is_authenticated
-                    log_entry.is_api_request = is_api_request
-                    log_entry.is_request_success = success
-                    log_entry.save()
-                else:
-                    objects.create(
-                        user=request.user.email if request.user.is_authenticated else None,
-                        path=request.path,
-                        method=request.method,
-                        ip=client_ip,
-                        timestamp=datetime.utcnow(),
-                        response_time=response_time,
-                        is_authenticated=request.user.is_authenticated,
-                        is_api_request=is_api_request,
-                        is_request_success=success
-                    )
-                self.logger.info(f"Request logged - Path: {request.path}, Method: {request.method}, Success: {success}")
-            except Exception as error:
-                self.logger.error(f"Error logging request: {str(error)}")
-
     # Header Management
     def add_response_headers(self, response: Any, headers: Dict[str, str]) -> None:
         try:
@@ -170,7 +135,6 @@ class ResponseMiddleware:
                 response.status_code
             )
 
-            self.log_request(request, response_time, success, True)
             json_response = JsonResponse(custom_response, status=response.status_code)
             self.add_response_headers(json_response, {
                 "X-Processing-Time": response_time,
@@ -274,8 +238,6 @@ class ResponseMiddleware:
                 return json_response
 
             # Log non-API requests before returning response
-            success = response.status_code < 400
-            self.log_request(request, response_time, success, False)
             self.add_response_headers(response, {
                 "X-Request-ID": request_id,
                 "X-Status-Code": str(response.status_code)

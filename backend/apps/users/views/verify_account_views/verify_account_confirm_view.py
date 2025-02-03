@@ -8,7 +8,6 @@ from throttling import AuthRateThrottle
 from utils import FieldValidator
 from quick_utils.token_generator import TokenGenerator
 
-
 User = get_user_model()
 
 

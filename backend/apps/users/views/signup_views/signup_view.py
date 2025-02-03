@@ -17,7 +17,6 @@ from quick_utils.send_email import SendEmail
 from quick_utils.token_generator import TokenGenerator
 from users.serializers import UserSerializer
 
-
 User = get_user_model()
 
 

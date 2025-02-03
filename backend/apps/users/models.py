@@ -228,6 +228,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self) -> str:
         """Returns the string representation of the user (email)"""
         return str(self.email)
+        
+    def get_short_name(self) -> str:
+        """Returns the user's first name if it exists"""
+        return (str(self.first_name)).strip()
 
     def get_full_name(self):
         """

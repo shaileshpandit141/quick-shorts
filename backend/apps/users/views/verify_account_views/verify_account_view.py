@@ -10,7 +10,6 @@ from utils import add_query_params, FieldValidator
 from quick_utils.send_email import SendEmail
 from quick_utils.token_generator import TokenGenerator
 
-
 User = get_user_model()
 
 

@@ -9,7 +9,6 @@ from utils import FieldValidator
 from quick_utils.token_generator import TokenGenerator
 from quick_utils.views import APIView, Response
 
-
 User = get_user_model()
 
 

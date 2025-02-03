@@ -9,7 +9,6 @@ from throttling import AuthRateThrottle
 from utils import FieldValidator
 from quick_utils.send_email import SendEmail
 
-
 User = get_user_model()
 
 

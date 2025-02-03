@@ -8,7 +8,6 @@ from throttling import UserRateThrottle
 from utils import FieldValidator
 from users.serializers import UserSerializer
 
-
 User = get_user_model()
 
 

@@ -11,7 +11,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import handler404
 from .views import custom_404_apiview, IndexTemplateView
-from users import urls
+from apps.users import urls as users_urls
 
 
 # Main URL patterns defining route-to-view mappings
@@ -23,7 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls, name="admin"),
 
     # User authentication URLs under /api/v1/auth
-    path("api/v1/auth/", include((urls, "auth"), namespace="auth")),
+    path("api/v1/auth/", include((users_urls, "auth"), namespace="auth")),
 ]
 
 # Configure custom error handling
