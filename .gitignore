@@ -2,12 +2,13 @@
 .venv
 .ropeproject
 
-# Ignore the backend dependency
+# Ignore the backend dependency and cache
 backend/.env
 backend/**/__pycache__
 backend/**/migrations
 backend/db.sqlite3
 backend/logs/django.log
+backend/.ruff_cache
 
 # Ignore the frontend dependency
 frontend/node_modules
