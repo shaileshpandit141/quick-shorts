@@ -4,13 +4,12 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from dns_smtp_email_validator import DNSSMTPEmailValidator
-from user_auth.serializers import UserSerializer
-
 from permissions import AllowAny
 from quick_utils.send_email import SendEmail
 from quick_utils.token_generator import TokenGenerator
 from quick_utils.views import APIView, Response
 from throttling import AuthRateThrottle
+from user_auth.serializers import UserSerializer
 from utils import FieldValidator, add_query_params
 
 User = get_user_model()

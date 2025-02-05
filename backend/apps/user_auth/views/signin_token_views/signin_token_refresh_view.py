@@ -1,11 +1,10 @@
 from typing import NoReturn
 
+from permissions import AllowAny
+from quick_utils.views import APIView, Response
 from rest_framework import serializers, status
 from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.views import TokenRefreshView
-
-from permissions import AllowAny
-from quick_utils.views import APIView, Response
 from throttling import AnonRateThrottle
 
 

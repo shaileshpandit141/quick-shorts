@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
-
 from permissions import AllowAny
 from quick_utils.token_generator import TokenGenerator
 from quick_utils.views import APIView, Response

@@ -1,9 +1,8 @@
 from django.contrib.auth import get_user_model
-from user_auth.serializers import UserSerializer
-
 from permissions import IsAuthenticated, IsVerified
 from quick_utils.views import APIView, Response
 from throttling import UserRateThrottle
+from user_auth.serializers import UserSerializer
 from utils import FieldValidator
 
 User = get_user_model()

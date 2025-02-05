@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
-
 from permissions import AllowAny
 from quick_utils.send_email import SendEmail
 from quick_utils.token_generator import TokenGenerator

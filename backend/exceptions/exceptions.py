@@ -1,4 +1,5 @@
-from rest_framework import status
+from quick_utils.response import Response
+from rest_framework import status, views
 from rest_framework.exceptions import (
     AuthenticationFailed,
     MethodNotAllowed,
@@ -7,9 +8,6 @@ from rest_framework.exceptions import (
     Throttled,
     ValidationError,
 )
-from rest_framework.views import exception_handler as dj_exception_handler
-
-from quick_utils.response import Response
 
 
 def create_error_response(
@@ -71,7 +69,7 @@ def format_validation_errors(detail):
 
 def exception_handler(exc, context):
     """A custom exception handler that returns the exception details in a custom format."""
-    response = dj_exception_handler(exc, context)
+    response = views.exception_handler(exc, context)
 
     error_handlers = {
         ValidationError: lambda error: Response(

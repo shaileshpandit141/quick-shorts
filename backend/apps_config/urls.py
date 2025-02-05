@@ -5,13 +5,13 @@ This module defines the URL patterns and routing configuration for the core Djan
 It maps URLs to their corresponding views and configures static file serving and error handling.
 """
 
+from apps.user_auth import urls as users_auth_urls
 from django.conf import settings
 from django.conf.urls import handler404
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-
-from apps.user_auth import urls as users_auth_urls
+from django.views.generic.base import RedirectView
 
 from .views import IndexTemplateView, custom_404_apiview
 
@@ -21,6 +21,10 @@ urlpatterns = [
     path("", IndexTemplateView.as_view(), name="index"),
     # Django admin interface accessible at /admin
     path("admin/", admin.site.urls, name="admin"),
+    # # Redirect /favicon.ico requests to the static file location of the favicon
+    path(
+        "favicon.ico", RedirectView.as_view(url="/static/favicon.ico", permanent=True)
+    ),
     # User authentication URLs under /api/v1/auth
     path(
         "api/v1/auth/", include((users_auth_urls, "user_auth"), namespace="user_auth")
