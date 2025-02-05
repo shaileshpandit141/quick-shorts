@@ -1,4 +1,5 @@
 import logging
+
 from rest_framework import permissions
 from rest_framework.exceptions import PermissionDenied
 
@@ -28,18 +29,22 @@ class IsAdminUser(permissions.IsAdminUser):
                 f"Unauthenticated access attempt to {request.method} {request.path} "
                 f"from {request.META.get('REMOTE_ADDR')}."
             )
-            raise PermissionDenied({
-                "message": "Authentication Required",
-                "errors": [{
-                    "field": "authentication",
-                    "code": "not_authenticated",
-                    "message": "You must be sign in to access this resource.",
-                    "details": {
-                        "required": True,
-                        "header_example": "Authorization: Token <your-token-here>"
-                    }
-                }]
-            })
+            raise PermissionDenied(
+                {
+                    "message": "Authentication Required",
+                    "errors": [
+                        {
+                            "field": "authentication",
+                            "code": "not_authenticated",
+                            "message": "You must be sign in to access this resource.",
+                            "details": {
+                                "required": True,
+                                "header_example": "Authorization: Token <your-token-here>",
+                            },
+                        }
+                    ],
+                }
+            )
 
         if not request.user.is_staff:
             # Log and raise custom permission denied exception for non-staff users
@@ -47,19 +52,23 @@ class IsAdminUser(permissions.IsAdminUser):
                 f"Non-staff user {request.user.username or request.user.email} attempted to access "
                 f"{request.method} {request.path} from {request.META.get('REMOTE_ADDR')}."
             )
-            raise PermissionDenied({
-                "message": "Staff Access Required",
-                "errors": [{
-                    "field": "authentication",
-                    "code": "not_staff",
-                    "message": "This endpoint requires staff privileges.",
-                    "details": {
-                        "required_role": "staff",
-                        "current_user_role": "non-staff",
-                        "header_example": "Authorization: Token <your-token-here>"
-                    }
-                }]
-            })
+            raise PermissionDenied(
+                {
+                    "message": "Staff Access Required",
+                    "errors": [
+                        {
+                            "field": "authentication",
+                            "code": "not_staff",
+                            "message": "This endpoint requires staff privileges.",
+                            "details": {
+                                "required_role": "staff",
+                                "current_user_role": "non-staff",
+                                "header_example": "Authorization: Token <your-token-here>",
+                            },
+                        }
+                    ],
+                }
+            )
 
         # Log successful staff authentication
         logger.info(

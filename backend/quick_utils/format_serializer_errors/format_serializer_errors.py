@@ -1,4 +1,5 @@
 from typing import Any
+
 from ..types import ErrorsType
 
 
@@ -10,12 +11,14 @@ def format_serializer_errors(errors: Any) -> ErrorsType:
     def append_error(field, code="invalid", message="An error occurred", details=None):
         """Helper function to append an error to the formatted_errors list."""
 
-        formatted_errors.append({
-            "field": field,
-            "code": code,
-            "message": message,
-            "details": details,
-        })
+        formatted_errors.append(
+            {
+                "field": field,
+                "code": code,
+                "message": message,
+                "details": details,
+            }
+        )
 
     for field, error_messages in errors.items():
         if isinstance(error_messages, list):

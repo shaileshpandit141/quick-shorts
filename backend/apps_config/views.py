@@ -9,15 +9,20 @@ def custom_404_apiview(request, exception=None):
     This view handles 404 errors by returning a JSON response with error details instead of
     the default HTML 404 page. This is useful for API endpoints where JSON responses are expected.
     """
-    return JsonResponse({
-        "message": "The requested endpoint could not be found.",
-        "errors": [{
-            "field": "none",
-            "code": "404_not_found",
-            "message": "The requested endpoint could not be found. Please check the URL and try again.",
-            "details": None
-        }]
-    }, status=404)
+    return JsonResponse(
+        {
+            "message": "The requested endpoint could not be found.",
+            "errors": [
+                {
+                    "field": "none",
+                    "code": "404_not_found",
+                    "message": "The requested endpoint could not be found. Please check the URL and try again.",
+                    "details": None,
+                }
+            ],
+        },
+        status=404,
+    )
 
 
 class IndexTemplateView(TemplateView):
@@ -28,4 +33,5 @@ class IndexTemplateView(TemplateView):
     the index.html template. The template_name class variable specifies which template
     to use.
     """
+
     template_name = "index.html"

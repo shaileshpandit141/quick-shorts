@@ -1,6 +1,6 @@
+from django.contrib.auth import get_user_model
 from django.contrib.postgres.forms.hstore import ValidationError
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
 
 # Get the User model configured for the project
 User = get_user_model()
@@ -20,15 +20,9 @@ class UserSerializer(serializers.ModelSerializer):
             "avatar",
             "is_verified",
             "is_staff",
-            "is_superuser"
+            "is_superuser",
         ]
-        read_only_fields = [
-            "id",
-            "usename",
-            "is_verified",
-            "is_staff",
-            "is_superuser"
-        ]
+        read_only_fields = ["id", "usename", "is_verified", "is_staff", "is_superuser"]
 
     def create(self, validated_data):
         hashed_password = self.context.get("hashed_password", None)
@@ -41,7 +35,5 @@ class UserSerializer(serializers.ModelSerializer):
 
         # Handle the single record.
         return User.objects.create(
-            password=hashed_password,
-            username=username,
-            **validated_data
+            password=hashed_password, username=username, **validated_data
         )

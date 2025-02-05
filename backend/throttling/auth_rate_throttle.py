@@ -1,9 +1,11 @@
 import hashlib
-from rest_framework.throttling import SimpleRateThrottle
+
 from django.conf import settings
+from rest_framework.throttling import SimpleRateThrottle
+
 
 class AuthRateThrottle(SimpleRateThrottle):
-    scope = 'custom'
+    scope = "custom"
 
     def get_cache_key(self, request, view):
         """

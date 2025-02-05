@@ -1,8 +1,10 @@
-from datetime import datetime, timedelta  # type: ignore
-import pytz
 import re
-from rest_framework.throttling import BaseThrottle
+from datetime import datetime, timedelta  # type: ignore
+
+import pytz
 from django.conf import settings
+from rest_framework.throttling import BaseThrottle
+
 from ..types import ThrottleRateLimitType
 
 
@@ -12,8 +14,8 @@ def upper_camel_to_snake_case(string: str) -> str:
     removing unnecessary suffixes like 'RateThrottle'.
     """
     # Remove 'RateThrottle' from the class name if present
-    string = string.replace('RateThrottle', '')
-    return re.sub(r'(?<!^)(?=[A-Z])', '_', string).lower()
+    string = string.replace("RateThrottle", "")
+    return re.sub(r"(?<!^)(?=[A-Z])", "_", string).lower()
 
 
 def parse_throttle_rate(rate: str) -> tuple[int, int] | None:
@@ -43,16 +45,17 @@ def get_throttle_details(self) -> list[ThrottleRateLimitType]:
     Returns:
         dict[str, ThrottleRateLimitType]: A dictionary mapping throttle class names to their details.
     """
-    if not hasattr(self, 'throttle_classes'):
-        raise AttributeError(f"throttle_classes not found on class {type(self).__name__}")
+    if not hasattr(self, "throttle_classes"):
+        raise AttributeError(
+            f"throttle_classes not found on class {type(self).__name__}"
+        )
 
-    if not hasattr(self, 'request'):
+    if not hasattr(self, "request"):
         raise AttributeError(f"request not found on class {type(self).__name__}")
 
     throttle_details: list[ThrottleRateLimitType] = []
 
     for throttle_class in self.throttle_classes:
-
         # Instantiate the throttle class
         throttle: BaseThrottle = throttle_class()
 
@@ -60,7 +63,9 @@ def get_throttle_details(self) -> list[ThrottleRateLimitType]:
         throttle_name = upper_camel_to_snake_case(throttle_class.__name__)
 
         # Match throttle name to the correct setting in DEFAULT_THROTTLE_RATES
-        throttle_rate = settings.REST_FRAMEWORK.get("DEFAULT_THROTTLE_RATES", {}).get(throttle_name)
+        throttle_rate = settings.REST_FRAMEWORK.get("DEFAULT_THROTTLE_RATES", {}).get(
+            throttle_name
+        )
 
         if not throttle_rate:
             continue  # Skip this throttle class if no rate is found in settings
@@ -96,12 +101,14 @@ def get_throttle_details(self) -> list[ThrottleRateLimitType]:
         retry_after = max(0, int((reset_time - datetime.now(pytz.UTC)).total_seconds()))
 
         # Add throttle details to the dictionary
-        throttle_details.append({
-            "type": throttle_name,
-            "limit": limit,
-            "remaining": remaining,
-            "reset_time": reset_time.isoformat(),
-            "retry_after": f"{retry_after} seconds"
-        })
+        throttle_details.append(
+            {
+                "type": throttle_name,
+                "limit": limit,
+                "remaining": remaining,
+                "reset_time": reset_time.isoformat(),
+                "retry_after": f"{retry_after} seconds",
+            }
+        )
 
     return throttle_details

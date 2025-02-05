@@ -1,9 +1,9 @@
-from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
-    PermissionsMixin
+    PermissionsMixin,
 )
+from django.db import models
 
 
 class UserManager(BaseUserManager):
@@ -11,6 +11,7 @@ class UserManager(BaseUserManager):
     Custom user manager that extends Django's BaseUserManager to handle email-based authentication.
     Provides methods for creating regular users and superusers.
     """
+
     def create_user(self, email, password=None, **extra_fields):
         """Creates and saves a User with the given email and password."""
 
@@ -77,8 +78,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         error_messages={
             "invalid": "Please enter a valid email address",
             "null": "Email address is required",
-            "blank": "Email address cannot be empty"
-        }
+            "blank": "Email address cannot be empty",
+        },
     )
     username = models.CharField(
         max_length=30,
@@ -91,8 +92,8 @@ class User(AbstractBaseUser, PermissionsMixin):
             "invalid": "Please enter a valid last name",
             "null": "Last name is required",
             "blank": "Last name cannot be empty",
-            "max_length": "Last name cannot be longer than 30 characters"
-        }
+            "max_length": "Last name cannot be longer than 30 characters",
+        },
     )
     first_name = models.CharField(
         max_length=30,
@@ -105,8 +106,8 @@ class User(AbstractBaseUser, PermissionsMixin):
             "invalid": "Please enter a valid first name",
             "null": "First name is required",
             "blank": "First name cannot be empty",
-            "max_length": "First name cannot be longer than 30 characters"
-        }
+            "max_length": "First name cannot be longer than 30 characters",
+        },
     )
     last_name = models.CharField(
         max_length=30,
@@ -119,8 +120,8 @@ class User(AbstractBaseUser, PermissionsMixin):
             "invalid": "Please enter a valid last name",
             "null": "Last name is required",
             "blank": "Last name cannot be empty",
-            "max_length": "Last name cannot be longer than 30 characters"
-        }
+            "max_length": "Last name cannot be longer than 30 characters",
+        },
     )
     avatar = models.ImageField(
         upload_to="users/avatars/",
@@ -139,8 +140,8 @@ class User(AbstractBaseUser, PermissionsMixin):
             "empty": "The uploaded file is empty. Please select a valid image file",
             "max_length": "The filename is too long. 100 characters allowed",
             "null": "An avatar image is required",
-            "blank": "An avatar image is required"
-        }
+            "blank": "An avatar image is required",
+        },
     )
     date_joined = models.DateTimeField(
         auto_now=False,
@@ -151,8 +152,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         error_messages={
             "invalid": "Please enter a valid date and time",
             "null": "Date joined is required",
-            "blank": "Date joined cannot be empty"
-        }
+            "blank": "Date joined cannot be empty",
+        },
     )
     last_login = models.DateTimeField(
         auto_now=True,
@@ -163,8 +164,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         error_messages={
             "invalid": "Please enter a valid date and time",
             "null": "Last login date is required",
-            "blank": "Last login date cannot be empty"
-        }
+            "blank": "Last login date cannot be empty",
+        },
     )
     is_active = models.BooleanField(
         default=models.NOT_PROVIDED,
@@ -173,8 +174,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         error_messages={
             "invalid": "Please specify whether the user is active",
             "null": "Active status is required",
-            "blank": "Active status cannot be empty"
-        }
+            "blank": "Active status cannot be empty",
+        },
     )
     is_staff = models.BooleanField(
         default=models.NOT_PROVIDED,
@@ -183,8 +184,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         error_messages={
             "invalid": "Please specify whether the user is staff",
             "null": "Staff status is required",
-            "blank": "Staff status cannot be empty"
-        }
+            "blank": "Staff status cannot be empty",
+        },
     )
     is_superuser = models.BooleanField(
         default=models.NOT_PROVIDED,
@@ -193,8 +194,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         error_messages={
             "invalid": "Please specify whether the user is a superuser",
             "null": "Superuser status is required",
-            "blank": "Superuser status cannot be empty"
-        }
+            "blank": "Superuser status cannot be empty",
+        },
     )
     is_verified = models.BooleanField(
         default=models.NOT_PROVIDED,
@@ -203,8 +204,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         error_messages={
             "invalid": "Please specify whether the account is verified",
             "null": "Account verification status is required",
-            "blank": "Account verification status cannot be empty"
-        }
+            "blank": "Account verification status cannot be empty",
+        },
     )
 
     def add_default_value(self, field: str, value: bool) -> None:
@@ -218,7 +219,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             "is_active": True,
             "is_staff": False,
             "is_superuser": False,
-            "is_verified": False
+            "is_verified": False,
         }
         for field, value in default_values.items():
             self.add_default_value(field, value)
@@ -228,7 +229,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self) -> str:
         """Returns the string representation of the user (email)"""
         return str(self.email)
-        
+
     def get_short_name(self) -> str:
         """Returns the user's first name if it exists"""
         return (str(self.first_name)).strip()

@@ -8,8 +8,4 @@ ReadOnlyModelViewSet provides default 'read-only' actions.
 from .model_viewset import ModelViewSet
 from .read_only_model_viewset import ReadOnlyModelViewSet
 
-
-__all__ = [
-    "ModelViewSet",
-    "ReadOnlyModelViewSet"
-]
+__all__ = ["ModelViewSet", "ReadOnlyModelViewSet"]

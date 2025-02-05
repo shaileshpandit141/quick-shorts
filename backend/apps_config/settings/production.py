@@ -1,7 +1,8 @@
 # Import all Settings from base configuration
 # -------------------------------------------
+from decouple import Csv, config
+
 from .base import *
-from decouple import config, Csv
 
 # Disable debug mode for production environment for security
 # ----------------------------------------------------------
@@ -40,7 +41,7 @@ CACHES = {
         "LOCATION": config("REDIS_CACHE_LOCATION", cast=str),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
+        },
     }
 }
 

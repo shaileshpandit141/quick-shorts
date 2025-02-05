@@ -1,25 +1,24 @@
-from typing import Any, Dict, Optional, List, Type
 import logging
-from django.db.models import QuerySet
-from rest_framework import views
-from rest_framework import status
-from rest_framework.permissions import BasePermission, AllowAny
-from rest_framework.throttling import BaseThrottle
-from rest_framework.renderers import BaseRenderer
-from rest_framework.renderers import JSONRenderer
-from rest_framework import response
-from ..types import ResponseDataType
-from ..response import Response
-from ..get_throttle_details import get_throttle_details
-from ..format_serializer_errors import format_serializer_errors
-from ..page_number_pagination import PageNumberPagination
+from typing import Any, Dict, List, Optional, Type
 
+from django.db.models import QuerySet
+from rest_framework import response, status, views
+from rest_framework.permissions import AllowAny, BasePermission
+from rest_framework.renderers import BaseRenderer, JSONRenderer
+from rest_framework.throttling import BaseThrottle
+
+from ..format_serializer_errors import format_serializer_errors
+from ..get_throttle_details import get_throttle_details
+from ..page_number_pagination import PageNumberPagination
+from ..response import Response
+from ..types import ResponseDataType
 
 logger = logging.getLogger(__name__)
 
 
 class APIView(views.APIView):
     """Base API view with helper methods for quick API development"""
+
     permission_classes: List[Type[BasePermission]] = [AllowAny]
     throttle_classes: List[Type[BaseThrottle]] = []
     renderer_classes: List[Type[BaseRenderer]] = [JSONRenderer]
@@ -37,7 +36,9 @@ class APIView(views.APIView):
         try:
             return model.objects.get(*args, **kwargs)
         except model.DoesNotExist:
-            logger.info(f"Object not found for model {model.__name__} with args: {args}, kwargs: {kwargs}")
+            logger.info(
+                f"Object not found for model {model.__name__} with args: {args}, kwargs: {kwargs}"
+            )
             return None
 
     def filter_object(self, model, *args: Any, **kwargs: Any) -> QuerySet:
@@ -53,10 +54,7 @@ class APIView(views.APIView):
             return param_value
         return default_value
 
-    def get_paginator(
-        self,
-        queryset: QuerySet
-    ) -> response.Response:
+    def get_paginator(self, queryset: QuerySet) -> response.Response:
         """
         Returns pagination data for the given queryset.
         Uses page and items-per-page query params if not explicitly provided.
@@ -72,10 +70,13 @@ class APIView(views.APIView):
 
         # If no pagination is required
         logger.debug("Returning unpaginated response")
-        return self.response({
-            "message": "Request was successful",
-            "data": queryset  # type: ignore
-        }, status=self.status.HTTP_200_OK)
+        return self.response(
+            {
+                "message": "Request was successful",
+                "data": queryset,  # type: ignore
+            },
+            status=self.status.HTTP_200_OK,
+        )
 
     def response(
         self,
@@ -84,7 +85,7 @@ class APIView(views.APIView):
         template_name: Optional[str] = None,
         headers: Optional[Dict[str, str]] = None,
         exception: bool = False,
-        content_type: Optional[str] = None
+        content_type: Optional[str] = None,
     ) -> Response:
         logger.debug(f"Preparing response with status {status}")
         response = Response(
@@ -93,7 +94,7 @@ class APIView(views.APIView):
             template_name=template_name,
             headers=headers,
             exception=exception,
-            content_type=content_type
+            content_type=content_type,
         )
         setattr(response, "throttles", get_throttle_details(self))
         return response

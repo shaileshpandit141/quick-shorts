@@ -6,9 +6,10 @@ class TokenGeneratorResponse(TypedDict):
 
     Attributes:
         token: Generated auth token string
-        token_salt: Salt value used in token generation 
+        token_salt: Salt value used in token generation
         message: Status or success message
     """
+
     token: str
     token_salt: str
     message: str

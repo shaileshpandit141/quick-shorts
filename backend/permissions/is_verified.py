@@ -1,7 +1,8 @@
-from typing import Literal
 import logging
-from rest_framework.permissions import BasePermission
+from typing import Literal
+
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import BasePermission
 
 logger = logging.getLogger(__name__)
 
@@ -24,17 +25,19 @@ class IsVerified(BasePermission):
                 f"Unauthenticated access attempt to {request.method} {request.path} "
                 f"from {request.META.get('REMOTE_ADDR')}."
             )
-            raise PermissionDenied({
-                "message": "Authentication Required",
-                "errors": [{
-                    "field": "authentication",
-                    "code": "not_authenticated",
-                    "message": "You must be logged in to access this resource.",
-                    "details": {
-                        "authenticated": False
-                    }
-                }]
-            })
+            raise PermissionDenied(
+                {
+                    "message": "Authentication Required",
+                    "errors": [
+                        {
+                            "field": "authentication",
+                            "code": "not_authenticated",
+                            "message": "You must be logged in to access this resource.",
+                            "details": {"authenticated": False},
+                        }
+                    ],
+                }
+            )
 
         # Allow superusers unconditional access
         if request.user.is_superuser:
@@ -45,24 +48,28 @@ class IsVerified(BasePermission):
             return True
 
         # Check if the user's account is verified
-        if not getattr(request.user, 'is_verified', False):
+        if not getattr(request.user, "is_verified", False):
             logger.warning(
                 f"Unverified user {request.user.id} ({request.user.email}) attempted to access "
                 f"{request.method} {request.path}."
             )
-            raise PermissionDenied({
-                "message": "Account Not Verified",
-                "errors": [{
-                    "field": "account",
-                    "code": "unverified_account",
-                    "message": "Your account must be verified to access this resource.",
-                    "details": {
-                        "verification_status": False,
-                        "user_id": request.user.id,
-                        "user_email": request.user.email
-                    }
-                }]
-            })
+            raise PermissionDenied(
+                {
+                    "message": "Account Not Verified",
+                    "errors": [
+                        {
+                            "field": "account",
+                            "code": "unverified_account",
+                            "message": "Your account must be verified to access this resource.",
+                            "details": {
+                                "verification_status": False,
+                                "user_id": request.user.id,
+                                "user_email": request.user.email,
+                            },
+                        }
+                    ],
+                }
+            )
 
         # Log successful verification
         logger.info(

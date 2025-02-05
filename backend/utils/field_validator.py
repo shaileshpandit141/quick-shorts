@@ -1,11 +1,14 @@
-from typing import Dict, List, Callable, Any, TypedDict, Optional
+from typing import Any, Callable, Dict, List, Optional, TypedDict
+
 
 class ErrorsFieldType(TypedDict):
     """Type for API error responses"""
+
     field: str
     code: str
     message: str
     details: Optional[Dict[str, Any]]
+
 
 ErrorsType = List[ErrorsFieldType]
 
@@ -20,10 +23,10 @@ class FieldValidator:
 
     # Default error messages for different validation scenarios
     DEFAULT_MESSAGES = {
-        'blank': 'The {field} field cannot be blank or empty.',
-        'invalid': 'Please provide a valid {field}.',
-        'same_as_field': 'Value "{value}" cannot be the same as field name "{field}".',
-        'invalid_type': 'Invalid data type for {field}. Expected a string.'
+        "blank": "The {field} field cannot be blank or empty.",
+        "invalid": "Please provide a valid {field}.",
+        "same_as_field": 'Value "{value}" cannot be the same as field name "{field}".',
+        "invalid_type": "Invalid data type for {field}. Expected a string.",
     }
 
     def __init__(
@@ -31,7 +34,7 @@ class FieldValidator:
         data: Dict[str, Any] = {},
         fields: List[str] = [],
         custom_validators: Dict[str, Callable] | None = None,
-        case_sensitive: bool = False
+        case_sensitive: bool = False,
     ) -> None:
         """
         Initialize the validator with data and validation rules.
@@ -49,7 +52,7 @@ class FieldValidator:
         self.case_sensitive = case_sensitive
         self.validate()
 
-    def __get_error_message(self, code: str, field: str, value: str = '') -> str:
+    def __get_error_message(self, code: str, field: str, value: str = "") -> str:
         """Generate an error message using the default message template."""
         return self.DEFAULT_MESSAGES[code].format(field=field, value=value)
 
@@ -70,46 +73,64 @@ class FieldValidator:
             if custom_validator := self.custom_validators.get(key):
                 error = custom_validator(value)
                 if error:
-                    self.errors.append({
-                        "field": key,
-                        "code": "code_" + key,
-                        "message": error,
-                        "details": None
-                    })
+                    self.errors.append(
+                        {
+                            "field": key,
+                            "code": "code_" + key,
+                            "message": error,
+                            "details": None,
+                        }
+                    )
                 continue
 
             # Check for valid type
             if not isinstance(value, (str, type(None))):
-                self.errors.append({
-                    "field": key,
-                    "code": "invalid_type",
-                    "message": self.__get_error_message('invalid_type', key),
-                    "details": None
-                })
+                self.errors.append(
+                    {
+                        "field": key,
+                        "code": "invalid_type",
+                        "message": self.__get_error_message("invalid_type", key),
+                        "details": None,
+                    }
+                )
             # Check for empty values
-            elif value is None or value.strip() == '':
-                self.errors.append({
-                    "field": key,
-                    "code": "blank",
-                    "message": self.__get_error_message('blank', key),
-                    "details": None
-                })
+            elif value is None or value.strip() == "":
+                self.errors.append(
+                    {
+                        "field": key,
+                        "code": "blank",
+                        "message": self.__get_error_message("blank", key),
+                        "details": None,
+                    }
+                )
             elif isinstance(value, str):
                 # Check if value matches field name
-                if (value.lower() == key.lower()) if not self.case_sensitive else (value == key):
-                    self.errors.append({
-                        "field": key,
-                        "code": "invalid",
-                        "message": self.__get_error_message('invalid', key),
-                        "details": None
-                    })
-                elif ''.join(key.split('_')).lower() == ''.join(value.split(' ')).lower():
-                    self.errors.append({
-                        "field": key,
-                        "code": "same_as_field",
-                        "message": self.__get_error_message('same_as_field', key, value),
-                        "details": None
-                    })
+                if (
+                    (value.lower() == key.lower())
+                    if not self.case_sensitive
+                    else (value == key)
+                ):
+                    self.errors.append(
+                        {
+                            "field": key,
+                            "code": "invalid",
+                            "message": self.__get_error_message("invalid", key),
+                            "details": None,
+                        }
+                    )
+                elif (
+                    "".join(key.split("_")).lower() == "".join(value.split(" ")).lower()
+                ):
+                    self.errors.append(
+                        {
+                            "field": key,
+                            "code": "same_as_field",
+                            "message": self.__get_error_message(
+                                "same_as_field", key, value
+                            ),
+                            "details": None,
+                        }
+                    )
 
     def is_valid(self) -> bool:
         """Return True if no validation errors were found."""

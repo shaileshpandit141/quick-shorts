@@ -1,5 +1,3 @@
 from .deactivate_account_view import DeactivateAccountView
 
-__all__ = [
-    "DeactivateAccountView"
-]
+__all__ = ["DeactivateAccountView"]

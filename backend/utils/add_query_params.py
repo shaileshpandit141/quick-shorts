@@ -1,7 +1,8 @@
 from typing import Any, Dict
 from urllib.parse import urlencode
 
-def add_query_params(url: str, params: Dict[str, Any]):
+
+def add_query_params(url: str, params: Dict[str, Any]) -> str:
     """
     Adds query parameters to a given URL.
 
@@ -16,7 +17,7 @@ def add_query_params(url: str, params: Dict[str, Any]):
         return url
 
     query_string = urlencode(params)
-    if '?' in url:
+    if "?" in url:
         return f"{url}&{query_string}"
     else:
         return f"{url}?{query_string}"

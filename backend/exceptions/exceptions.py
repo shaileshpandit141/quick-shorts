@@ -1,27 +1,34 @@
-from rest_framework.views import exception_handler as dj_exception_handler
-from rest_framework.exceptions import (
-    ValidationError,
-    MethodNotAllowed,
-    NotFound,
-    NotAuthenticated,
-    AuthenticationFailed,
-    Throttled
-)
-from quick_utils.response import Response
 from rest_framework import status
+from rest_framework.exceptions import (
+    AuthenticationFailed,
+    MethodNotAllowed,
+    NotAuthenticated,
+    NotFound,
+    Throttled,
+    ValidationError,
+)
+from rest_framework.views import exception_handler as dj_exception_handler
+
+from quick_utils.response import Response
 
 
-def create_error_response(message, code, field="none", error_message=None, details=None):
+def create_error_response(
+    message, code, field="none", error_message=None, details=None
+):
     """Helper function to create error response"""
-    return Response({
-        "message": message,
-        "errors": [{
-            "field": field,
-            "code": code,
-            "message": error_message or message,
-            "details": details
-        }]
-    })
+    return Response(
+        {
+            "message": message,
+            "errors": [
+                {
+                    "field": field,
+                    "code": code,
+                    "message": error_message or message,
+                    "details": details,
+                }
+            ],
+        }
+    )
 
 
 def format_validation_errors(detail):
@@ -33,26 +40,32 @@ def format_validation_errors(detail):
                 field = "none"
             if isinstance(messages, list):
                 for message in messages:
-                    error_details.append({
-                        "field": field,
-                        "code": getattr(message, "code", "validation_error"),
-                        "message": str(message),
-                        "details": None
-                    })
+                    error_details.append(
+                        {
+                            "field": field,
+                            "code": getattr(message, "code", "validation_error"),
+                            "message": str(message),
+                            "details": None,
+                        }
+                    )
             else:
-                error_details.append({
-                    "field": field,
-                    "code": getattr(messages, "code", "validation_error"),
-                    "message": str(messages),
-                    "details": None
-                })
+                error_details.append(
+                    {
+                        "field": field,
+                        "code": getattr(messages, "code", "validation_error"),
+                        "message": str(messages),
+                        "details": None,
+                    }
+                )
     else:
-        error_details.append({
-            "field": "none",
-            "code": "validation_error",
-            "message": str(detail),
-            "details": None
-        })
+        error_details.append(
+            {
+                "field": "none",
+                "code": "validation_error",
+                "message": str(detail),
+                "details": None,
+            }
+        )
     return error_details
 
 
@@ -61,45 +74,43 @@ def exception_handler(exc, context):
     response = dj_exception_handler(exc, context)
 
     error_handlers = {
-        ValidationError: lambda error: Response({
-            "message": "Validation error",
-            "errors": format_validation_errors(error.detail)
-        }, status=status.HTTP_400_BAD_REQUEST),
-
+        ValidationError: lambda error: Response(
+            {
+                "message": "Validation error",
+                "errors": format_validation_errors(error.detail),
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        ),
         MethodNotAllowed: lambda error: create_error_response(
             "Method Not Allowed",
             "method_not_allowed",
             error_message="This method is not allowed for this endpoint",
-            details=None
+            details=None,
         ),
-
         NotFound: lambda error: create_error_response(
             "Resource Not Found",
             "not_found",
             error_message="The requested resource was not found",
-            details=None
+            details=None,
         ),
-
         NotAuthenticated: lambda error: create_error_response(
             "Authentication Required",
             "authentication_required",
             error_message="Authentication credentials were not provided",
-            details=None
+            details=None,
         ),
-
         AuthenticationFailed: lambda error: create_error_response(
             "Authentication Failed",
             "authentication_failed",
             error_message="Authentication credentials are incorrect",
-            details=None
+            details=None,
         ),
-
         Throttled: lambda error: create_error_response(
             str(error.detail) or "Request Limit Exceeded",
             "throttled",
             error_message="Allowed limit requests exceeded. Please try again later.",
-            details={"retry_after": f"{error.wait} seconds"}
-        )
+            details={"retry_after": f"{error.wait} seconds"},
+        ),
     }
 
     for exception_class, handler in error_handlers.items():

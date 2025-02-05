@@ -1,10 +1,12 @@
-from typing import List
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
-from django.core.exceptions import ValidationError
-from django.core.validators import validate_email
-from django.conf import settings
 import logging
+from typing import List
+
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.mail import EmailMultiAlternatives
+from django.core.validators import validate_email
+from django.template.loader import render_to_string
+
 from .send_email_types import EmailCredentialType
 
 # Set up a logger
@@ -13,19 +15,18 @@ logger = logging.getLogger(__name__)
 
 class SendEmail:
     def __init__(self, emailCredential: EmailCredentialType) -> None:
-        self.subject = emailCredential['subject']
-        self.from_email = emailCredential['emails'].get(
-            'from_email',
-            settings.DEFAULT_FROM_EMAIL
+        self.subject = emailCredential["subject"]
+        self.from_email = emailCredential["emails"].get(
+            "from_email", settings.DEFAULT_FROM_EMAIL
         )
 
-        if not isinstance(emailCredential['emails']['to_emails'], list):
+        if not isinstance(emailCredential["emails"]["to_emails"], list):
             raise Exception("Invalid to_email data type")
 
-        self.to_emails = emailCredential['emails']['to_emails']
-        self.context = emailCredential['context']
-        self.text_template = emailCredential['templates']['txt']
-        self.html_template = emailCredential['templates']['html']
+        self.to_emails = emailCredential["emails"]["to_emails"]
+        self.context = emailCredential["context"]
+        self.text_template = emailCredential["templates"]["txt"]
+        self.html_template = emailCredential["templates"]["html"]
 
         self.successful_email_send = []
         self.fallback_successful_email_send = []
@@ -65,17 +66,16 @@ class SendEmail:
 
             # Create and send the email
             email = EmailMultiAlternatives(
-                self.subject,
-                text_content,
-                self.from_email,
-                self.unique_to_emails
+                self.subject, text_content, self.from_email, self.unique_to_emails
             )
             email.attach_alternative(html_content, "text/html")
             email.send()
 
             # Track the successful email send
             self.successful_email_send = self.unique_to_emails
-            logger.info(f"Email sent successfully to: {', '.join(self.unique_to_emails)}")
+            logger.info(
+                f"Email sent successfully to: {', '.join(self.unique_to_emails)}"
+            )
 
         except Exception as e:
             logger.error(f"Error sending email to {self.unique_to_emails}: {e}")
@@ -88,10 +88,7 @@ class SendEmail:
             html_content = render_to_string(self.html_template, self.context)
 
             fallback_email = EmailMultiAlternatives(
-                self.subject,
-                text_content,
-                self.from_email,
-                [self.from_email]
+                self.subject, text_content, self.from_email, [self.from_email]
             )
             fallback_email.attach_alternative(html_content, "text/html")
             fallback_email.send()

@@ -1,8 +1,9 @@
 import os
 import sys
-from pathlib import Path
 from datetime import timedelta  # type: ignore
-from decouple import config, Csv
+from pathlib import Path
+
+from decouple import Csv, config
 
 # Configuration Settings File for the django backend
 # --------------------------------------------------
@@ -10,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Main applications Directory Path Configuration Settings
 # -------------------------------------------------------
-sys.path.append(os.path.join(BASE_DIR, 'apps'))
+sys.path.append(os.path.join(BASE_DIR, "apps"))
 
 # Security Configuration Settings
 # -------------------------------
@@ -37,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles"
+    "django.contrib.staticfiles",
 ]
 
 # Third-party applications Settings
@@ -67,7 +68,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "middlewares.ResponseMiddleware"
+    "middlewares.ResponseMiddleware",
 ]
 
 # Root urls file Configuration Settings
@@ -107,7 +108,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Password Validators Configuration Settings
 # ------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
@@ -121,7 +124,7 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
     "django.contrib.auth.hashers.ScryptPasswordHasher",
-    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher"
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
 ]
 
 # Internationalization Configuration Settings
@@ -149,23 +152,15 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "permissions.IsAuthenticated"
-    ],
+    "DEFAULT_PERMISSION_CLASSES": ["permissions.IsAuthenticated"],
     "EXCEPTION_HANDLER": "exceptions.exception_handler",
     "DEFAULT_THROTTLE_CLASSES": [
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
         "throttling.AuthRateThrottle",
     ],
-    "DEFAULT_THROTTLE_RATES": {
-        "anon": "100/day",
-        "auth": "5/hour",
-        "user": "1000/day"
-    },
-    "DEFAULT_RENDERER_CLASSES": [
-        "rest_framework.renderers.JSONRenderer"
-    ],
+    "DEFAULT_THROTTLE_RATES": {"anon": "100/day", "auth": "5/hour", "user": "1000/day"},
+    "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 5,
 }

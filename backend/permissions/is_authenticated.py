@@ -1,4 +1,5 @@
 import logging
+
 from rest_framework import permissions
 from rest_framework.exceptions import PermissionDenied
 
@@ -28,18 +29,22 @@ class IsAuthenticated(permissions.IsAuthenticated):
                 f"Unauthenticated access attempt to {request.method} {request.path} "
                 f"from {request.META.get('REMOTE_ADDR')}."
             )
-            raise PermissionDenied({
-                "message": "Authentication Required",
-                "errors": [{
-                    "field": "authentication",
-                    "code": "not_authenticated",
-                    "message": "You must include a valid authentication token in the Authorization header.",
-                    "details": {
-                        "required": True,
-                        "header_example": "Authorization: Token <your-token-here>"
-                    }
-                }]
-            })
+            raise PermissionDenied(
+                {
+                    "message": "Authentication Required",
+                    "errors": [
+                        {
+                            "field": "authentication",
+                            "code": "not_authenticated",
+                            "message": "You must include a valid authentication token in the Authorization header.",
+                            "details": {
+                                "required": True,
+                                "header_example": "Authorization: Token <your-token-here>",
+                            },
+                        }
+                    ],
+                }
+            )
 
         # Log successful authentication
         logger.info(

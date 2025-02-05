@@ -1,8 +1,9 @@
 # Import all Settings from base configuration
 # -------------------------------------------
+from decouple import Csv, config
+
 from .base import *
 from .base import BASE_DIR
-from decouple import config, Csv
 
 # Enable debug mode for development purposes only
 # -----------------------------------------------

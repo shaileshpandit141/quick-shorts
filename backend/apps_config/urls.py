@@ -5,27 +5,25 @@ This module defines the URL patterns and routing configuration for the core Djan
 It maps URLs to their corresponding views and configures static file serving and error handling.
 """
 
-from django.contrib import admin
-from django.urls import path, include
 from django.conf import settings
-from django.conf.urls.static import static
 from django.conf.urls import handler404
-from .views import custom_404_apiview, IndexTemplateView
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import include, path
+
 from apps.user_auth import urls as users_auth_urls
 
+from .views import IndexTemplateView, custom_404_apiview
 
 # Main URL patterns defining route-to-view mappings
 urlpatterns = [
     # Served the index page
     path("", IndexTemplateView.as_view(), name="index"),
-
     # Django admin interface accessible at /admin
     path("admin/", admin.site.urls, name="admin"),
-
     # User authentication URLs under /api/v1/auth
     path(
-        "api/v1/auth/",
-        include((users_auth_urls, "user_auth"), namespace="user_auth")
+        "api/v1/auth/", include((users_auth_urls, "user_auth"), namespace="user_auth")
     ),
 ]
 

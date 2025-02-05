@@ -1,9 +1,11 @@
 from typing import Dict, Optional
-from rest_framework.response import Response as DRFResponse
+
+from rest_framework import response
+
 from ..types import ResponseDataType
 
 
-class Response(DRFResponse):
+class Response(response.Response):
     """A custom Response class to standardize API responses"""
 
     def __init__(

@@ -4,8 +4,10 @@ Django's command-line utility for administrative tasks.
 This script serves as the main entry point for Django management commands.
 It handles configuration of the Django environment and executes administrative tasks.
 """
+
 import os
 import sys
+
 from decouple import config
 
 
@@ -25,7 +27,7 @@ def main():
     # Set the Django settings module path
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "apps_config.settings")
 
-    # Load host and port configuration from environment variables 
+    # Load host and port configuration from environment variables
     # using python-decouple for safer configuration management
     HOST = config("HOST", cast=str, default="localhost")
     PORT = config("PORT", cast=int, default=8000)

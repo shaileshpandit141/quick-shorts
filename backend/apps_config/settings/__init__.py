@@ -16,4 +16,6 @@ elif ENV == "testing":
     from .testing import *
 else:
     # Raise error if ENV value is not one of the allowed options
-    raise Exception("Please define the DJANGO_ENV mode as development, production, or testing")
+    raise Exception(
+        "Please define the DJANGO_ENV mode as development, production, or testing"
+    )
