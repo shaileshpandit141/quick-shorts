@@ -26,7 +26,11 @@ const userInitialState: UserInitialState = {
 const userSlice = createSlice({
   name: 'user',
   initialState: userInitialState,
-  reducers: {},
+  reducers: {
+    resetUserState: (state) => {
+      Object.assign(state, userInitialState)
+    }
+  },
   extraReducers: (builder) => {
     builder
       // Handle user async states
@@ -44,5 +48,6 @@ const userSlice = createSlice({
 
 // Export user slice actions
 export const {
-  reducer: userReducer
+  reducer: userReducer,
+  actions: { resetUserState }
 } = userSlice

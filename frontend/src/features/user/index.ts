@@ -1,3 +1,3 @@
 export { userReducer } from './userSlice';
-export { dispatchUserAction } from './dispatchUserAction';
+export { dispatchUserAction, dispatchResetUserState } from './dispatchUserAction';
 export { useUserSelector } from './userSelector';

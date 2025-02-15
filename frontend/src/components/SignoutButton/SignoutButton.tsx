@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './SignoutButton.css';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from 'components/Button/Button';
 import {
   dispatchResetSigninState,
@@ -12,9 +12,11 @@ import {
 } from 'features/auth/signout';
 import { isAuthenticated } from 'utils';
 import { triggerToast } from 'features/toast';
+import { dispatchResetUserState } from 'features/user';
 
 const SignoutButton: React.FC = () => {
-  const { status, message } = useSignoutSelector();
+  const navigate = useNavigate()
+  const { status } = useSignoutSelector();
   const signinState = useSigninSelector();
 
   const handleSignout = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -24,20 +26,16 @@ const SignoutButton: React.FC = () => {
   };
 
   useEffect(() => {
-    if (status === 'succeeded') {
+    if (status !== 'idle') {
       dispatchResetSigninState();
-      triggerToast("success", message)
-    } else if (status === 'failed') {
-      triggerToast("error", message)
+      dispatchResetUserState();
+      triggerToast("success", "You have been successfully signed out")
+      navigate("/")
     }
-  }, [status, message]);
+  }, [status, navigate]);
 
   if (!isAuthenticated()) {
     return null
-  }
-
-  if (status === 'succeeded') {
-    return <Navigate to='/sign-in' />
   }
 
   return (
