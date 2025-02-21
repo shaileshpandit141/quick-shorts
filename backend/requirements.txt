@@ -21,7 +21,7 @@ hyperlink==21.0.0
 idna==3.10
 incremental==24.7.2
 itsdangerous==2.2.0
-limited-time-token-handler==0.1.4
+limited-time-token-handler==0.1.5
 pillow==11.0.0
 psycopg2==2.9.10
 pyasn1==0.6.1
