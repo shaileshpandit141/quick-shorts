@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from permissions import AllowAny
-from quick_utils.token_generator import TokenGenerator
+from limited_time_token_handler import LimitedTimeTokenDecoder
 from quick_utils.views import APIView, Response
 from throttling import AuthRateThrottle
 from utils import FieldValidator
@@ -19,9 +19,7 @@ class ForgotPasswordConfirmView(APIView):
         """Handle POST request to confirm and reset password."""
 
         # Validate required fields
-        clean_data = FieldValidator(
-            request.data, ["token", "token_salt", "new_password"]
-        )
+        clean_data = FieldValidator(request.data, ["token", "new_password"])
         if not clean_data.is_valid():
             return self.response(
                 {"message": "Invalid request", "errors": clean_data.errors},
@@ -30,10 +28,25 @@ class ForgotPasswordConfirmView(APIView):
 
         try:
             # Decode token and get user
-            data = TokenGenerator.decode(
-                clean_data.get("token"), clean_data.get("token_salt")
-            )
-            user = User.objects.get(id=data["user_id"])
+            decorder = LimitedTimeTokenDecoder(clean_data.get("token"))
+            if not decorder.is_valid():
+                return self.response(
+                    {
+                        "message": "Invalid request",
+                        "errors": [
+                            {
+                                "field": "token",
+                                "code": "invalid_token",
+                                "message": "Token is invalid or expired, request a new one",
+                                "details": None,
+                            }
+                        ],
+                    },
+                    self.status.HTTP_400_BAD_REQUEST,
+                )
+
+            data = decorder.decode()
+            user = User.objects.get(id=data.get("user_id"))
 
             # Validate and set new password
             validate_password(clean_data.get("new_password"))
@@ -51,13 +64,13 @@ class ForgotPasswordConfirmView(APIView):
         except Exception as error:
             return self.response(
                 {
-                    "message": "Invalid request",
+                    "message": "An error occurred while processing your request. Please try again later.",
                     "errors": [
                         {
                             "field": "none",
-                            "code": "invalid_request",
-                            "message": str(error),
-                            "details": None,
+                            "code": type(error).__name__,
+                            "message": "We encountered an unexpected issue. Please try again.",
+                            "details": {"detail": str(error)},
                         }
                     ],
                 },

@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from permissions import AllowAny
 from quick_utils.send_email import SendEmail
-from quick_utils.token_generator import TokenGenerator
+from limited_time_token_handler import LimitedTimeTokenGenerator
 from quick_utils.views import APIView, Response
 from throttling import AuthRateThrottle
 from utils import FieldValidator, add_query_params
@@ -47,12 +47,27 @@ class ForgotPasswordView(APIView):
             )
 
         # Process request for verified users
-        if user.is_verified:
+        if getattr(user, "is_verified", False):
             # Generate reset token
-            payload = TokenGenerator.generate({"user_id": user.id})
+            generator = LimitedTimeTokenGenerator({"user_id": getattr(user, "id")})
+            token = generator.generate()
+            if token is None:
+                return self.response(
+                    {
+                        "message": "Token generation failed",
+                        "errors": [
+                            {
+                                "field": "none",
+                                "code": "token_generation_failed",
+                                "message": "Failed to generate token",
+                                "details": None,
+                            }
+                        ],
+                    },
+                    self.status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
             active_url = add_query_params(
-                f"{settings.FRONTEND_URL}/auth/verify-email",
-                {"token": payload["token"], "token_salt": payload["token_salt"]},
+                f"{settings.FRONTEND_URL}/auth/verify-email", {"token": token}
             )
 
             # Send reset email

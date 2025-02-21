@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from dns_smtp_email_validator import DNSSMTPEmailValidator
 from permissions import AllowAny
 from quick_utils.send_email import SendEmail
-from quick_utils.token_generator import TokenGenerator
+from limited_time_token_handler import LimitedTimeTokenGenerator
 from quick_utils.views import APIView, Response
 from throttling import AuthRateThrottle
 from user_auth.serializers import UserSerializer
@@ -95,19 +95,33 @@ class SignupView(APIView):
             user = serializer.instance
 
             # Generate verification token and URL
-            payload = TokenGenerator.generate({"user_id": user.id})  # type: ignore
+            generator = LimitedTimeTokenGenerator({"user_id": getattr(user, "id")})
+            token = generator.generate()
+            if token is None:
+                return self.response(
+                    {
+                        "message": "We encountered an issue",
+                        "errors": [
+                            {
+                                "field": "token",
+                                "code": "token_generation_failed",
+                                "message": "We couldn't generate a verification token. Please try again later.",
+                                "details": None,
+                            }
+                        ],
+                    },
+                    self.status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
+
             activate_url = add_query_params(
-                f"{settings.FRONTEND_URL}/auth/verify-email",
-                {"token": payload["token"], "token_salt": payload["token_salt"]},
+                f"{settings.FRONTEND_URL}/auth/verify-email", {"token": token}
             )
 
             # Send verification email
             SendEmail(
                 {
                     "subject": "For email verification",
-                    "emails": {
-                        "to_emails": [user.email]  # type: ignore
-                    },
+                    "emails": {"to_emails": [getattr(user, "email", "Unknown")]},
                     "context": {"user": user, "activate_url": activate_url},
                     "templates": {
                         "txt": "users/verify_account/confirm_message.txt",

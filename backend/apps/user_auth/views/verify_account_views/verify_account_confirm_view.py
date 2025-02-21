@@ -1,9 +1,8 @@
 from django.contrib.auth import get_user_model
 from permissions import AllowAny
-from quick_utils.token_generator import TokenGenerator
+from limited_time_token_handler import LimitedTimeTokenDecoder, TokenError
 from quick_utils.views import APIView, Response
 from throttling import AuthRateThrottle
-from utils import FieldValidator
 
 User = get_user_model()
 
@@ -18,22 +17,34 @@ class VerifyAccountConfirmView(APIView):
         """Handle POST request for email verification"""
 
         # Validate required fields
-        clean_data = FieldValidator(request.data, ["token", "token_salt"])
-        if not clean_data.is_valid:
+        token = request.data.get("token", None)
+        if token is None:
             return self.response(
-                {"message": "Invalid request", "errors": clean_data.errors},
+                {
+                    "message": "Token is required",
+                    "errors": [
+                        {
+                            "field": "token",
+                            "code": "token_required",
+                            "message": "Token is required",
+                            "details": None,
+                        }
+                    ],
+                },
                 self.status.HTTP_400_BAD_REQUEST,
             )
 
         try:
             # Decode verification token
-            data = TokenGenerator.decode(
-                clean_data.get("token"), clean_data.get("token_salt")
-            )
-            user = User.objects.get(id=data["user_id"])
+            decoder = LimitedTimeTokenDecoder(token)
+            if not decoder.is_valid():
+                raise TokenError("Invalid token")
+
+            data = decoder.decode()
+            user = User.objects.get(id=data.get("user_id"))
 
             # Check if already verified
-            if user.is_verified:
+            if getattr(user, "is_verified", False):
                 return self.response(
                     {
                         "message": "Account already verified",
@@ -43,7 +54,7 @@ class VerifyAccountConfirmView(APIView):
                 )
 
             # Update verification status
-            user.is_verified = True
+            setattr(user, "is_verified", True)
             user.save()
             return self.response(
                 {
@@ -53,10 +64,10 @@ class VerifyAccountConfirmView(APIView):
                 self.status.HTTP_200_OK,
             )
 
-        except ValueError as error:
+        except (ValueError, TokenError) as error:
             return self.response(
                 {
-                    "message": "Invalid token",
+                    "message": "Invalid or expired token",
                     "errors": [
                         {
                             "field": "token",

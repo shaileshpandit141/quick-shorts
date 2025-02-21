@@ -35,7 +35,7 @@ class SigninTokenView(TokenObtainPairView, APIView):
 
         # Handle username-based login by fetching associated email
         data = clean_data.data.copy()
-        if not "@" in clean_data.get("email"):
+        if "@" not in clean_data.get("email"):
             try:
                 user = User.objects.get(username=clean_data.get("email"))
                 data["email"] = user.email
