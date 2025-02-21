@@ -24,30 +24,28 @@ const signoutIntitlState: SignoutInitialState = {
  * Redux slice containing signout state logic and reducers
  */
 const signoutSlice = createSlice({
-  name: 'signout',
+  name: "signout",
   initialState: signoutIntitlState,
   reducers: {
     // Reset signout state to initial values
     resetSignoutState: (state) => {
-      state.status = 'idle'
-      state.message = ''
-      state.data = null
-    }
+      Object.assign(state, signoutIntitlState);
+    },
   },
   extraReducers: (builder) => {
     builder
       // Handle signout async states
       .addCase(signoutAction.pending, (state) => {
-        state.status = 'loading'
+        state.status = "loading";
       })
       .addCase(signoutAction.fulfilled, (state, action) => {
-        Object.assign(state, action.payload)
+        Object.assign(state, action.payload);
       })
       .addCase(signoutAction.rejected, (state, action) => {
-        Object.assign(state, action.payload as ErrorResponse)
-      })
-  }
-})
+        Object.assign(state, action.payload as ErrorResponse);
+      });
+  },
+});
 
 // Export signout slice actions
 export const {
