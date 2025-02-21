@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from limited_time_token_handler import LimitedTimeTokenGenerator
 from permissions import AllowAny
 from quick_utils.send_email import SendEmail
-from limited_time_token_handler import LimitedTimeTokenGenerator
 from quick_utils.views import APIView, Response
 from throttling import AuthRateThrottle
 from utils import FieldValidator, add_query_params
