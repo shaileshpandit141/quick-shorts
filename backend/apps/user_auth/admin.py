@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
+from django.utils.safestring import SafeText
 
 from .forms import UserChangeForm, UserCreationForm
 from .models import User
@@ -31,13 +32,13 @@ class CustomUserAdmin(UserAdmin):
     readonly_fields = ("date_joined", "last_login")
     list_per_page = 25
 
-    def full_name(self, obj):
+    def full_name(self, obj) -> str:
         """Get full name of user"""
         return f"{obj.first_name} {obj.last_name}"
 
     full_name.short_description = "Full Name"  # type: ignore
 
-    def is_active_colored(self, obj):
+    def is_active_colored(self, obj) -> SafeText:
         """Get colored active status"""
         if obj.is_active:
             return format_html('<span style="color: green;">Active</span>')
@@ -96,19 +97,19 @@ class CustomUserAdmin(UserAdmin):
     )
     actions = ["activate_users", "deactivate_users", "send_email_verification"]
 
-    def activate_users(self, request, queryset):
+    def activate_users(self, request, queryset) -> None:
         """Activate selected users"""
         queryset.update(is_active=True)
 
     activate_users.short_description = "Activate selected users"  # type: ignore
 
-    def deactivate_users(self, request, queryset):
+    def deactivate_users(self, request, queryset) -> None:
         """Deactivate selected users"""
         queryset.update(is_active=False)
 
     deactivate_users.short_description = "Deactivate selected users"  # type: ignore
 
-    def send_email_verification(self, request, queryset):
+    def send_email_verification(self, request, queryset) -> None:
         """Send verification emails"""
         for user in queryset:
             # Add your email verification logic here

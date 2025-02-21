@@ -1,3 +1,5 @@
+from typing import Any
+
 from quick_utils.response import Response
 from rest_framework import status, views
 from rest_framework.exceptions import (
@@ -12,7 +14,7 @@ from rest_framework.exceptions import (
 
 def create_error_response(
     message, code, field="none", error_message=None, details=None
-):
+) -> Response:
     """Helper function to create error response"""
     return Response(
         {
@@ -29,7 +31,7 @@ def create_error_response(
     )
 
 
-def format_validation_errors(detail):
+def format_validation_errors(detail) -> list[Any]:
     """Helper function to format validation errors"""
     error_details = []
     if isinstance(detail, dict):
@@ -67,7 +69,7 @@ def format_validation_errors(detail):
     return error_details
 
 
-def exception_handler(exc, context):
+def exception_handler(exc, context) -> Response | views.Response | None:
     """A custom exception handler that returns the exception details in a custom format."""
     response = views.exception_handler(exc, context)
 

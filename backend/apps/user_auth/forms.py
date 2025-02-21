@@ -34,7 +34,7 @@ class UserCreationForm(DjangoUserCreationForm):
     is_verified = forms.BooleanField(required=False)
     is_staff = forms.BooleanField(required=False)
 
-    class Meta(DjangoUserCreationForm.Meta):
+    class Meta(DjangoUserCreationForm.Meta):  # type: ignore
         model = User
         fields = (
             "email",
@@ -73,15 +73,18 @@ class UserCreationForm(DjangoUserCreationForm):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords don't match")
 
-        if password1 is None:
+        if not password1:
             raise forms.ValidationError("Password is required")
 
-        if len(str(password1)) < 8:
+        if len(password1) < 8:
             raise forms.ValidationError("Password must be at least 8 characters long")
+
+        if password2 is None:
+            return ""
 
         return password2
 
-    def save(self, commit=True):
+    def save(self, commit=True) -> User:
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
@@ -114,7 +117,7 @@ class UserChangeForm(DjangoUserChangeForm):
     is_verified = forms.BooleanField(required=False)
     is_staff = forms.BooleanField(required=False)
 
-    class Meta(DjangoUserChangeForm.Meta):
+    class Meta(DjangoUserChangeForm.Meta):  # type: ignore
         model = User
         fields = (
             "email",
@@ -127,14 +130,14 @@ class UserChangeForm(DjangoUserChangeForm):
             "is_staff",
         )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.avatar:
             self.fields[
                 "avatar"
             ].help_text = f'<a href="{self.instance.avatar.url}" target="_blank" style="padding-inline: 4px;">View Current Avatar</a>'
 
-    def clean_email(self):
+    def clean_email(self) -> str:
         """Validation for email field."""
 
         email = self.cleaned_data.get("email")
@@ -148,7 +151,7 @@ class UserChangeForm(DjangoUserChangeForm):
 
         return email.lower()
 
-    def save(self, commit=True):
+    def save(self, commit=True) -> User:
         user = super().save(commit=False)
         if commit:
             user.save()

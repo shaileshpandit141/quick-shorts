@@ -2,6 +2,7 @@ import os
 import sys
 from datetime import timedelta  # type: ignore
 from pathlib import Path
+from typing import Any
 
 from decouple import Csv, config
 
@@ -210,7 +211,7 @@ os.makedirs(LOG_DIR, exist_ok=True)
 
 # Logging Configuration Settings
 # ------------------------------
-LOGGING = {
+LOGGING: dict[str, Any] = {
     "version": 1,  # Version of the logging configuration
     "disable_existing_loggers": False,  # Keep default loggers like Django"s
     "formatters": {

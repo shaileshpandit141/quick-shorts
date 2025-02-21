@@ -57,16 +57,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     Extends Django's AbstractBaseUser and PermissionsMixin.
     """
 
-    objects = UserManager()
-
-    USERNAME_FIELD = "email"  # Use email as the unique identifier
-    REQUIRED_FIELDS = []  # Email & password are required by default
-
-    class Meta(AbstractBaseUser.Meta, PermissionsMixin.Meta):
+    class Meta(AbstractBaseUser.Meta, PermissionsMixin.Meta):  # type: ignore
         db_table = "users"
         verbose_name = "User"
         verbose_name_plural = "Users"
         ordering = ["-date_joined"]
+
+    objects = UserManager()
+
+    USERNAME_FIELD = "email"  # Use email as the unique identifier
+    REQUIRED_FIELDS = []  # Email & password are required by default
 
     email = models.EmailField(
         max_length=254,
@@ -125,8 +125,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     avatar = models.ImageField(
         upload_to="users/avatars/",
-        height_field=None,
-        width_field=None,
         max_length=100,
         null=False,
         blank=False,
@@ -168,7 +166,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         },
     )
     is_active = models.BooleanField(
-        default=models.NOT_PROVIDED,
+        default=True,
         null=False,
         db_index=False,
         error_messages={
@@ -178,7 +176,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         },
     )
     is_staff = models.BooleanField(
-        default=models.NOT_PROVIDED,
+        default=False,
         null=False,
         db_index=False,
         error_messages={
@@ -188,7 +186,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         },
     )
     is_superuser = models.BooleanField(
-        default=models.NOT_PROVIDED,
+        default=False,
         null=False,
         db_index=False,
         error_messages={
@@ -198,7 +196,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         },
     )
     is_verified = models.BooleanField(
-        default=models.NOT_PROVIDED,
+        default=False,
         null=False,
         db_index=False,
         error_messages={
@@ -208,24 +206,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         },
     )
 
-    def add_default_value(self, field: str, value: bool) -> None:
-        """Helper method to set default value for a field if it"s None"""
-        if getattr(self, field) is None:
-            setattr(self, field, value)
-
-    def save(self, *args, **kwargs):
-        """Save the user object and set default values for boolean fields"""
-        default_values = {
-            "is_active": True,
-            "is_staff": False,
-            "is_superuser": False,
-            "is_verified": False,
-        }
-        for field, value in default_values.items():
-            self.add_default_value(field, value)
-
-        super().save(*args, **kwargs)
-
     def __str__(self) -> str:
         """Returns the string representation of the user (email)"""
         return str(self.email)
@@ -234,7 +214,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Returns the user's first name if it exists"""
         return (str(self.first_name)).strip()
 
-    def get_full_name(self):
+    def get_full_name(self) -> str | None:
         """
         Returns the user"s full name, with a space between first and last name.
         If exist otherwise None

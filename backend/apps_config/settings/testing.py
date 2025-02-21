@@ -1,7 +1,7 @@
 # Import all settings from base configuration
 # -------------------------------------------
 from .base import *
-from .base import BASE_DIR
+from .base import BASE_DIR, LOGGING
 
 # Enable debug mode for testing environment
 # -----------------------------------------

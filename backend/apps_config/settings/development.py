@@ -3,7 +3,7 @@
 from decouple import Csv, config
 
 from .base import *
-from .base import BASE_DIR
+from .base import BASE_DIR, LOGGING
 
 # Enable debug mode for development purposes only
 # -----------------------------------------------

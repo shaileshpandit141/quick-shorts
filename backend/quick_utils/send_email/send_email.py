@@ -97,5 +97,5 @@ class SendEmail:
             self.fallback_successful_email_send = [self.from_email]
             logger.info(f"Fallback email sent to: {self.from_email}")
 
-        except Exception as e:
-            logger.error(f"Error sending fallback email: {e}")
+        except Exception as error:
+            logger.error(f"Error sending fallback email: {error}")

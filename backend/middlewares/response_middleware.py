@@ -223,7 +223,7 @@ class ResponseMiddleware:
         return data
 
     # Main Entry Point
-    def __call__(self, request):
+    def __call__(self, request) -> JsonResponse | Any:
         start_time = time.perf_counter()
         request_id = str(uuid.uuid4())
         self.logger.info(
@@ -262,7 +262,7 @@ class ResponseMiddleware:
                         "errors": [
                             {
                                 "field": "throttle",
-                                "code": "throttle_limit_excide",
+                                "code": "throttle_limit_exceeded",
                                 "message": response.headers.get("Retry-After", "N/A"),
                                 "details": None,
                             }
@@ -296,7 +296,33 @@ class ResponseMiddleware:
             return response
 
         except Exception as error:
-            self.logger.error(
-                f"Unhandled error processing request {request_id}: {str(error)}"
+            self.logger.exception(
+                f"An unhandled exception occurred while processing request {request_id}: {str(error)}"
             )
-            raise
+            json_response = JsonResponse(
+                {
+                    "status": "failed",
+                    "status_code": 500,
+                    "message": "Internal server error",
+                    "data": None,
+                    "errors": [
+                        {
+                            "field": "server",
+                            "code": "internal_error",
+                            "message": str(error),
+                            "details": None,
+                        }
+                    ],
+                    "meta": self.get_meta({}, "N/A", request_id),
+                },
+                status=500,
+            )
+            self.add_response_headers(
+                json_response,
+                {
+                    "X-Processing-Time": "N/A",
+                    "X-Request-ID": request_id,
+                    "X-Status-Code": "500",
+                },
+            )
+            return json_response

@@ -3,6 +3,7 @@
 from decouple import Csv, config
 
 from .base import *
+from .base import LOGGING
 
 # Disable debug mode for production environment for security
 # ----------------------------------------------------------

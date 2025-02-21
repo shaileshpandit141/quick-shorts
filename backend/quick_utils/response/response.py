@@ -16,7 +16,7 @@ class Response(response.Response):
         headers: Optional[Dict[str, str]] = None,
         exception: bool = False,
         content_type: Optional[str] = None,
-    ):
+    ) -> None:
         super().__init__(
             data=data,
             status=status,
