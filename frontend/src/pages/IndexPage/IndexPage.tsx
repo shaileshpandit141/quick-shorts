@@ -1,8 +1,8 @@
-import React from 'react'
-import './IndexPage.css'
-import { Navigate } from 'react-router-dom'
-import { isAuthenticated } from 'utils'
-import { AnchorLink } from 'components'
+import React from 'react';
+import './IndexPage.css';
+import { Navigate } from 'react-router-dom';
+import { isAuthenticated } from 'utils';
+import { SigninLink, SignupLink } from 'components';
 
 const IndexPage: React.FC = (props) => {
   if (isAuthenticated()) {
@@ -21,20 +21,8 @@ const IndexPage: React.FC = (props) => {
           using React With Django and Django Rest Framework.
         </p>
         <div className="buttons-conatiner">
-          <AnchorLink
-            to='/sign-in'
-            type='link'
-            iconName='signin'
-          >
-            Sign in
-          </AnchorLink>
-          <AnchorLink
-            to='/sign-up'
-            type='link'
-            iconName='signup'
-          >
-            Sign up
-          </AnchorLink>
+          <SigninLink />
+          <SignupLink />
         </div>
       </div>
     </div>

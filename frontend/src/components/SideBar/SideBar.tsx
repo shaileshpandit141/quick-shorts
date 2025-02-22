@@ -4,7 +4,9 @@ import {
   Drawer,
   NavBarLinks,
   Button,
-  AppLogo
+  AppLogo,
+  SigninLink,
+  SignupLink
 } from 'components';
 
 const SideBar: React.FC = (): JSX.Element => {
@@ -55,6 +57,8 @@ const SideBar: React.FC = (): JSX.Element => {
             </div>
             <div className='other-links-container'>
               {/* Other TSX Links Goes here */}
+              <SigninLink />
+              <SignupLink />
             </div>
           </div>
         </div>

@@ -1,18 +1,18 @@
-button {
-  --button-height: calc(40 / 16 * 1em);
-  --button-padding: calc(4 / 16 * 1em);
+a {
+  --link-height: calc(40 / 16 * 1em);
+  --link-padding: calc(4 / 16 * 1em);
   --icon-height: calc(24 / 16 * 1em);
   --icon-width: calc(24 / 16 * 1em);
-  border: var(--border);
+  border: none;
   outline: none;
-  border-radius: 999rem;
-  height: var(--button-height);
+  border-radius: 0;
+  height: var(--link-height);
   width: fit-content;
-  padding: var(--button-padding);
+  padding: var(--link-padding);
   display: flex;
   align-items: center;
   justify-content: center;
-  column-gap: var(--button-padding);
+  column-gap: var(--link-padding);
   user-select: none;
   overflow: hidden;
   transition: var(--transition);
@@ -21,7 +21,7 @@ button {
     cursor: pointer;
   }
 
-  .button-icon-container {
+  .link-icon-container {
     margin: 0;
     height: var(--icon-height);
     width: var(--icon-width);
@@ -37,7 +37,7 @@ button {
     &:is(*) {
       height: var(--icon-height);
       width: var(--icon-width);
-      color: var(--button-text-color);
+      color: var(--link-color);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -46,12 +46,14 @@ button {
     }
   }
 
-  &.button {
+  &.link {
+    border: var(--border);
+    border-radius: 999rem;
     width: 100%;
     padding-inline: calc(16 / 16 * 1em);
     border: var(--border);
     background-color: var(--button-primary-background);
-    color: var(--button-text-color);
+    color: var(--link-color);
     transition: var(--transition);
 
     &:is(:hover) {
@@ -82,11 +84,13 @@ button {
     }
   }
 
-  &.button-as-icon {
-    height: var(--button-height);
-    min-height: var(--button-height);
-    width: var(--button-height);
-    min-width: var(--button-height);
+  &.link-as-icon {
+    border: var(--border);
+    border-radius: 999rem;
+    height: var(--link-height);
+    min-height: var(--link-height);
+    width: var(--link-height);
+    min-width: var(--link-height);
     border: var(--border);
     background-color: var(--button-primary-background);
     color: var(--button-text-color);
@@ -102,15 +106,14 @@ button {
   }
 }
 
-@media (pointer: fine) {
-  .button,
-  .button-1-1 {
-    cursor: pointer;
-  }
+.active {
+  color: var(--link-hover-color);
+  background-color: var(--button-primary-hover);
+}
 
-  .button:disabled,
-  .button-as-icon:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
+@media (pointer: fine) {
+  .link,
+  .link-as-icon {
+    cursor: pointer;
   }
 }

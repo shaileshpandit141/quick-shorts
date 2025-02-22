@@ -2,23 +2,6 @@
  * Root Element (#root)
  * ------------------
  * Container element that defines the main layout structure
- *
- * Layout Properties:
- * @property {grid}    display              - Uses CSS Grid for layout
- * @property {string}  grid-template-cols   - 12-column grid: fixed side margins + 10 equal columns
- * @property {100%}    height              - Takes full height of container
- * @property {100dvh}  min-height          - Ensures minimum full viewport height
- * @property {100%}    width               - Takes full width of container
- *
- * Overflow Handling:
- * @property {hidden}  overflow-x          - Hides horizontal scrolling
- * @property {auto}    overflow-y          - Shows vertical scrollbar when needed
- *
- * Visual Styling:
- * @property {transparent} background      - Transparent background
- * @property {relative}    position        - Establishes positioning context
- * @property {custom}      scrollbar-color - Custom scrollbar colors
- * @property {0.3s}        transition      - Smooth scrollbar color transition
  */
 #root {
     display: grid;

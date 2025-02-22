@@ -1,7 +1,6 @@
 export { default as AppLogo } from "./AppLogo/AppLogo";
 export { default as AppLogoImage } from "./AppLogoImage/AppLogoImage";
 export { default as Button } from "./Button/Button";
-export { default as AnchorLink } from "./AnchorLink/AnchorLink";
 export { default as DisplayFormErrors } from "./DisplayFormErrors/DisplayFormErrors";
 export { default as Drawer } from "./Drawer/Drawer";
 export { default as ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
@@ -16,3 +15,6 @@ export { default as SignoutButton } from "./SignoutButton/SignoutButton";
 export { default as ToggleThemeButton } from "./ToggleThemeButton/ToggleThemeButton";
 export { default as ToastContainer } from "./ToastContainer/ToastContainer";
 export { default as NavBarLinks } from "./NavBarLinks/NavBarLinks";
+export { default as NavLink } from "./NavLink/NavLink";
+export { default as SigninLink } from "./SigninLink/SigninLink";
+export { default as SignupLink } from "./SignupLink/SignupLink";

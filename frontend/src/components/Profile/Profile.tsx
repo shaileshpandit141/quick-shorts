@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import './Profile.css';
-import { AnchorLink, SignoutButton } from 'components'
+import { NavLink, SignoutButton } from 'components'
 import { useMenu } from 'hooks';
 import { isAuthenticated } from 'utils';
 import { dispatchUserAction, useUserSelector } from 'features/user';
@@ -63,10 +63,12 @@ const Profile: React.FC = (): JSX.Element | null => {
             <h6 className='username'>{data?.username}</h6>
             <p className='email'>{data?.email}</p>
           </section>
-          <AnchorLink
+          <NavLink
             to={get_absolute_url('/admin/')}
             type='link'
-          >Admin</AnchorLink>
+            className='edit-profile'
+            target='_blank'
+          >Django Admin</NavLink>
           <SignoutButton />
         </div>
       </div>

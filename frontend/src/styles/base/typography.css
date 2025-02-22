@@ -5,16 +5,6 @@
  * Uses fluid typography with clamp() for responsive scaling and consistent
  * letter spacing for improved readability.
  */
-
-/* Headings (h1-h6)
- * ---------------
- * - Font weight: 700 (bold)
- * - Fluid sizes using clamp() for responsive scaling
- * - Letter spacing: 0.04em for consistency
- * - Colors use CSS custom properties for theming
- * - Auto-capitalization of first letters
- * - Smooth color transitions
- */
 h1,
 h2,
 h3,
@@ -35,11 +25,7 @@ h6 {
 
 /* Individual Heading Sizes
  * ---------------
- * Using clamp() for fluid typography:
- * - Minimum size (mobile)
- * - Fluid scaling with viewport width
- * - Maximum size (desktop)
- * - Progressive line height adjustments
+ * Using clamp() for fluid typography scaling based on viewport width
  */
 h1 {
     font-size: clamp(calc(28/16 * 1rem), calc(16/16 * 1rem) + 2vw, calc(40/16 * 1rem));
@@ -73,11 +59,7 @@ h6 {
 
 /* Text Elements
  * ---------------
- * Base text styling for paragraphs and details elements:
- * - 14px (0.875rem) base size
- * - 1.5 line height for optimal readability
- * - Consistent letter spacing with headings
- * - Smooth color transitions
+ * Base text styling for paragraphs and details elements
  */
 p,
 details {
@@ -91,11 +73,7 @@ details {
 
 /* Form Typography
  * ---------------
- * Consistent styling for form elements:
- * - 16px base size (recommended for mobile)
- * - Matching letter spacing
- * - Custom placeholder styling
- * - Smooth color transitions
+ * Consistent styling for form elements and placeholders
  */
 input,
 button,
@@ -115,12 +93,7 @@ select {
 
 /* Link Typography
  * ---------------
- * Clean and consistent link styling:
- * - Inherits font size from parent
- * - No text decoration
- * - Semi-bold weight (600)
- * - Custom hover states
- * - Auto-capitalization
+ * Clean and consistent link styling with hover and focus states
  */
 a,
 a:visited,
@@ -146,10 +119,8 @@ button::first-letter {
 }
 
 /* Interactive Elements
- * ---------------
- * Cursor styling for pointer devices:
- * - Applies only to devices with fine pointer control
- * - Affects links, buttons, and form controls
+ * --------------------
+ * Cursor styling for pointer devices to indicate interactive elements
  */
 @media (pointer: fine) {
 

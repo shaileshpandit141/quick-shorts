@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './SignupForm.css';
-import { Input, AnchorLink, Button, DisplayFormErrors } from 'components';
+import { Input, NavLink, Button, DisplayFormErrors } from 'components';
 import {
   dispatchSignupAction,
   dispatchRestSigupState,
@@ -68,12 +68,12 @@ const SignupForm: React.FC = (props) => {
         <p>{data.detail}</p>
       )}
       <div className='actions'>
-        <AnchorLink
+        <NavLink
           to="/sign-in"
           type="link"
           iconName='signin'
           className='signin-link'
-        >sign in</AnchorLink>
+        >sign in</NavLink>
         <Button
           type='submit'
           iconName='signup'

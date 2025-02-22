@@ -1,25 +1,26 @@
 .nav-links {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    column-gap: 8px;
-    overflow: hidden;
-    flex-wrap: wrap;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 8px;
+  overflow: hidden;
+  flex-wrap: wrap;
 
-    @media (width < 768px) {
-        & {
-            display: none;
-        }
+  @media (width < 768px) {
+    & {
+      display: none;
     }
+  }
 
-    .link {
-        width: fit-content;
-        background-color: transparent;
-        color: var(--link-color);
+  .link {
+    width: fit-content;
+    background-color: transparent;
+    color: var(--link-color);
+    border-color: transparent;
 
-        &:is(:focus) {
-            outline: none;
-        }
+    &:is(:focus) {
+      outline: none;
     }
+  }
 }

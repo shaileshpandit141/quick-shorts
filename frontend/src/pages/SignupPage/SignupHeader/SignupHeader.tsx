@@ -1,8 +1,6 @@
 import React from 'react'
 import './SignupHeader.css'
-import { Link } from 'react-router-dom'
-import { AppLogoImage } from 'components'
-import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon'
+import { AppLogoImage, NavLink } from 'components'
 
 const SignupHeader: React.FC = (props) => {
   return (
@@ -14,12 +12,13 @@ const SignupHeader: React.FC = (props) => {
           Join us by creating your account
         </p>
       </div>
-      <Link to='../' className='link back-link'>
-        <span className='icon'>
-          <LazyIcon iconName='arrowBack' />
-        </span>
-        <span className='label'>Back</span>
-      </Link>
+      <NavLink
+        to='../'
+        type='link'
+        className='link back-link'
+        iconName='arrowBack'
+      >Back</NavLink>
+
     </div>
   )
 }

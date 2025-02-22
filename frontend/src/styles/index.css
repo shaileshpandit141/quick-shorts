@@ -14,5 +14,4 @@
 @import './base/root.css';
 
 /* UI Components */
-@import './custom_classes/button_and_link.css';
 @import './custom_classes/skeleton.css';

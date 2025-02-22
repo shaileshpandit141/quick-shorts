@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import './SigninForm.css'
 import { Navigate, Link } from 'react-router-dom'
 import { Input } from 'components'
-import { AnchorLink } from 'components'
+import { NavLink } from 'components'
 import {
   dispatchSigninAction,
   useSigninSelector
@@ -15,7 +15,7 @@ import { Button } from 'components'
 import { triggerToast } from 'features/toast'
 
 const SigninForm: React.FC = () => {
-  
+
   const { status, message, errors } = useSigninSelector()
   const [formData, handleFormDataChange] = useFormDataChange<SigninCredentials>({
     email: '',
@@ -70,12 +70,12 @@ const SigninForm: React.FC = () => {
         </Link>
       </div>
       <div className='actions'>
-        <AnchorLink
+        <NavLink
           to="/sign-up"
           type="link"
           iconName='signin'
           className='sign-link'
-        >sign up</AnchorLink>
+        >sign up</NavLink>
         <Button
           type='submit'
           iconName='signin'
