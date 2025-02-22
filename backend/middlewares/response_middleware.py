@@ -39,7 +39,7 @@ class DataType(TypedDict):
 
 # Main Middleware Class
 class ResponseMiddleware:
-    def __init__(self, get_response):
+    def __init__(self, get_response) -> None:
         self.get_response = get_response
         self.logger = logger
 
@@ -75,7 +75,9 @@ class ResponseMiddleware:
             "message": validate_data["message"],
             "data": validate_data.get("data") if success else None,
             "errors": validate_data.get("errors", []) if not success else [],
-            "meta": self.get_meta({"rate_limit": throttles}, response_time, request_id),
+            "meta": self.get_meta(
+                {"rate_limits": throttles}, response_time, request_id
+            ),
         }
 
     # Header Management
