@@ -56,9 +56,10 @@ export function useMenu({ buttonRef, contentRef }: MenuRefs) {
   }, [handleClickOutside]);
 
   useEffect(() => {
-    if (buttonRef.current) {
-      buttonRef.current.addEventListener('click', toggleMenu);
-      return () => buttonRef.current?.removeEventListener('click', toggleMenu);
+    const buttonElement = buttonRef.current;
+    if (buttonElement) {
+      buttonElement.addEventListener('click', toggleMenu);
+      return () => buttonElement.removeEventListener('click', toggleMenu);
     }
   }, [toggleMenu, buttonRef]);
 
