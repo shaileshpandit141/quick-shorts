@@ -1,7 +1,6 @@
 import React from 'react';
 import './PageLoader.css';
 import { Loader } from "components";
-import { CircularProgress } from '@mui/material';
 
 const PageLoader: React.FC = () => {
   return (

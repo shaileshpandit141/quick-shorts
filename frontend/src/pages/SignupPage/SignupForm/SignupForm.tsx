@@ -25,9 +25,9 @@ const SignupForm: React.FC = (props) => {
   }
 
   useEffect(() => {
-    dispatchRestSigupState()
     if (status === "succeeded") {
       triggerToast("success", message)
+      dispatchRestSigupState()
     } else if (status === "failed") {
       triggerToast("error", message)
     }
