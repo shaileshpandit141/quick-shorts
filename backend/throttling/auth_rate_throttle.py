@@ -7,7 +7,7 @@ from rest_framework.throttling import SimpleRateThrottle
 class AuthRateThrottle(SimpleRateThrottle):
     scope = "custom"
 
-    def get_cache_key(self, request, view):
+    def get_cache_key(self, request, view) -> str:
         """
         Generate a cache key unique to each device on the same network.
         Use a combination of router IP and a sanitized device identifier.
@@ -32,7 +32,7 @@ class AuthRateThrottle(SimpleRateThrottle):
         default_rates = settings.REST_FRAMEWORK.get("DEFAULT_THROTTLE_RATES", {})
         return default_rates.get("auth", "30/minute")  # Default rate
 
-    def allow_request(self, request, view):
+    def allow_request(self, request, view) -> bool:
         """
         Apply the rate and determine if the request is allowed.
         """

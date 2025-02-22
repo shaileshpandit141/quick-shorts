@@ -2,7 +2,7 @@ import logging
 from typing import Any, Dict, List, Optional, Type
 
 from django.db.models import QuerySet
-from rest_framework import response, status, views
+from rest_framework import status, views
 from rest_framework.permissions import AllowAny, BasePermission
 from rest_framework.renderers import BaseRenderer, JSONRenderer
 from rest_framework.throttling import BaseThrottle
@@ -48,13 +48,13 @@ class APIView(views.APIView):
 
     def get_query_params(self, param_name: str, default_value=None) -> Any | None:
         """Get query parameter value with optional default"""
-        param_value = self.request.query_params.get(param_name, default_value)
+        param_value = self.request.GET.get(param_name, default_value)
         logger.debug(f"Query param {param_name}: {param_value}")
         if param_value is not None:
             return param_value
         return default_value
 
-    def get_paginator(self, queryset: QuerySet) -> response.Response:
+    def get_paginated_data(self, queryset: QuerySet) -> Dict[str, Any] | QuerySet:
         """
         Returns pagination data for the given queryset.
         Uses page and items-per-page query params if not explicitly provided.
@@ -66,17 +66,31 @@ class APIView(views.APIView):
         page = paginator.paginate_queryset(queryset, self.request)
         if page is not None:
             logger.debug("Returning paginated response")
-            return paginator.get_paginated_response(page)
+            return {
+                "current_page": paginator.page.number,
+                "total_pages": paginator.page.paginator.num_pages,
+                "total_items": paginator.page.paginator.count,
+                "items_per_page": paginator.page.paginator.per_page,
+                "has_next": paginator.page.has_next(),
+                "has_previous": paginator.page.has_previous(),
+                "next_page_number": (
+                    paginator.page.next_page_number()
+                    if paginator.page.has_next()
+                    else None
+                ),
+                "previous_page_number": (
+                    paginator.page.previous_page_number()
+                    if paginator.page.has_previous()
+                    else None
+                ),
+                "next": paginator.get_next_link(),
+                "previous": paginator.get_previous_link(),
+                "results": page,
+            }
 
         # If no pagination is required
         logger.debug("Returning unpaginated response")
-        return self.response(
-            {
-                "message": "Request was successful",
-                "data": queryset,  # type: ignore
-            },
-            status=self.status.HTTP_200_OK,
-        )
+        return queryset
 
     def response(
         self,

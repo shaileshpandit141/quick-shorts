@@ -2,7 +2,7 @@ import logging
 from typing import Any, Dict, List, Optional, Sequence, Type, Union
 
 from django.db.models.query import QuerySet
-from django.http import HttpResponseBase
+from django.http import HttpResponseBase  # type: ignore
 from rest_framework import pagination, viewsets
 from rest_framework.filters import BaseFilterBackend
 from rest_framework.permissions import AllowAny, BasePermission
