@@ -1,6 +1,3 @@
-export { signoutReducer } from './signoutSlice';
-export {
-  dispatchSignoutAction,
-  dispatchRestSignoutState
-} from './dispatches'
-export { useSignoutSelector } from './signoutSelector'
+export { signoutReducer } from "./signoutSlice";
+export { signoutUser, resetSignoutUser } from "./dispatchers";
+export { useSignoutUserSelector } from "./signoutSelector";

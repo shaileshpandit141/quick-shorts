@@ -7,7 +7,7 @@ import { resetUserState } from "./userSlice";
  *
  * @returns void
  */
-export const dispatchUserAction = (): void => {
+export const user = (): void => {
   store.dispatch(userAction());
 };
 
@@ -18,6 +18,6 @@ export const dispatchUserAction = (): void => {
  *
  * @returns void
  */
-export const dispatchResetUserState = (): void => {
+export const resetUser = (): void => {
   store.dispatch(resetUserState());
 };

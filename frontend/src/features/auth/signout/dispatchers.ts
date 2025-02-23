@@ -8,7 +8,7 @@ import { signoutAction } from "./signoutAction";
  *
  * @returns void
  */
-export const dispatchRestSignoutState = (): void => {
+export const resetSignoutUser = (): void => {
   store.dispatch(resetSignoutState());
 };
 
@@ -19,7 +19,7 @@ export const dispatchRestSignoutState = (): void => {
  * @param credentials - Sign out credentials object
  * @returns void
  */
-export const dispatchSignoutAction = (
+export const signoutUser = (
   credentials: SignoutCredentials
 ): void => {
   store.dispatch(signoutAction(credentials));

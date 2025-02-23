@@ -1,6 +1,6 @@
 export { verifyUserAccountReducer } from "./verifyUserAccountSlice";
 export {
-  dispatchVerifyUserAccountAction,
-  dispatchRestVerifyUserAccountState,
-} from "./dispatches";
+  verifyUserAccount,
+  resetVerifyUserAccount,
+} from "./dispatchers";
 export { useVerifyUserAccountSelector } from "./verifyUserAccountSelector";

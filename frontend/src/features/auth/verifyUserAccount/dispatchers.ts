@@ -9,7 +9,7 @@ import { resetVerifyUserAccountState } from "./verifyUserAccountSlice";
  * @param credentials - Verify User Account credentials object
  * @returns void
  */
-export const dispatchVerifyUserAccountAction = (
+export const verifyUserAccount = (
   credentials: VerifyUserAccountCredentials
 ): void => {
   store.dispatch(verifyUserAccountAction(credentials));
@@ -20,6 +20,6 @@ export const dispatchVerifyUserAccountAction = (
  *
  * @returns void
  */
-export const dispatchRestVerifyUserAccountState = (): void => {
+export const resetVerifyUserAccount = (): void => {
   store.dispatch(resetVerifyUserAccountState());
 };

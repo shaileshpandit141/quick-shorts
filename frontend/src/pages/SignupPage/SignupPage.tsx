@@ -1,18 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import './SignupPage.css'
-import { Input, Button, DisplayFormErrors, SigninLink } from 'components'
-import {
-  dispatchSignupAction,
-  dispatchRestSigupState,
-  useSignupSelector
-} from 'features/auth/signup';
-import { useFormDataChange } from 'hooks/useFormDataChange'
-import { SignupCredentials } from 'services/authServices'
-import { triggerToast } from 'features/toast'
+import { useResetOnRouteChange, useFormDataChange } from 'hooks';
+import { Input, Button, DisplayFormErrors, SigninLink } from 'components';
+import { signupUser, resetSignupUser, useSignupUserSelector } from 'features/auth/signup';
+import { SignupCredentials } from 'services/authServices';
+import { triggerToast } from 'features/toast';
 
 const SignupPage: React.FC = (props) => {
-
-  const { status, message, errors, data } = useSignupSelector()
+  const { status, message, errors, data } = useSignupUserSelector()
   const [formData, handleFormDataChange] = useFormDataChange<SignupCredentials>({
     email: '',
     password: '',
@@ -21,17 +16,20 @@ const SignupPage: React.FC = (props) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    dispatchSignupAction(formData)
+    signupUser(formData)
   }
 
   useEffect(() => {
     if (status === "succeeded") {
       triggerToast("success", message)
-      dispatchRestSigupState()
     } else if (status === "failed") {
       triggerToast("error", message)
     }
   }, [message, status])
+
+  useResetOnRouteChange(() => {
+    resetSignupUser();
+  });
 
   return (
     <div className='signup-page'>

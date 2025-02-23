@@ -3,7 +3,7 @@ import './Profile.css';
 import { NavLink, SignoutButton } from 'components'
 import { useMenu } from 'hooks';
 import { isAuthenticated } from 'utils';
-import { dispatchUserAction, useUserSelector } from 'features/user';
+import { user, useUserSelector } from 'features/user';
 import { get_absolute_url } from 'utils';
 
 const Profile: React.FC = (): JSX.Element | null => {
@@ -31,7 +31,7 @@ const Profile: React.FC = (): JSX.Element | null => {
 
   useEffect(() => {
     if (status === 'idle' && isAuthenticated()) {
-      dispatchUserAction()
+      user()
     }
   }, [status]);
 

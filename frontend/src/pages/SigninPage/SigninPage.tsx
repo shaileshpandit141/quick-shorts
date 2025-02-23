@@ -1,42 +1,40 @@
 import React, { useEffect } from 'react';
 import './SigninPage.css';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useFormDataChange } from 'hooks';
 import { isAuthenticated } from 'utils';
-import { Navigate, Link } from 'react-router-dom';
 import { Input, DisplayFormErrors, Button, SignupLink } from 'components';
-import {
-  dispatchSigninAction,
-  useSigninSelector
-} from 'features/auth/signin';
-import { dispatchRestSignoutState } from 'features/auth/signout';
-import { useFormDataChange } from 'hooks/useFormDataChange';
+import { signinUser, resetSigninUser, useSigninUserSelector } from 'features/auth/signin';
 import { SigninCredentials } from 'services/authServices';
 import { triggerToast } from 'features/toast';
 
-const SigninPage: React.FC = (props) => {
-  const { status, message, errors } = useSigninSelector()
+const SigninPage: React.FC = () => {
+
+  const navigate = useNavigate()
+  const { status, message, errors } = useSigninUserSelector()
   const [formData, handleFormDataChange] = useFormDataChange<SigninCredentials>({
     email: '',
     password: ''
   })
 
-  useEffect(() => {
-    dispatchRestSignoutState();
-    if (status === "succeeded") {
-      triggerToast("success", message)
-    } else if (status === "failed") {
-      triggerToast("error", message)
-    }
-  }, [message, status])
-
-  if (status === 'succeeded' || isAuthenticated()) {
-    return <Navigate to='/home' />
-  }
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    dispatchSigninAction(formData)
+    signinUser(formData)
   }
 
+  useEffect(() => {
+    if (status === "succeeded") {
+      triggerToast("success", message)
+      navigate("/home")
+    } else if (status === "failed") {
+      triggerToast("error", message)
+      resetSigninUser();
+    }
+  }, [status, message, navigate])
+
+  if (isAuthenticated()) {
+    return <Navigate to="/home" />
+  }
 
   return (
     <div className='signin-page'>

@@ -8,7 +8,7 @@ import { SigninCredentials } from "services/authServices";
  *
  * @returns void
  */
-export const dispatchRefreshTokenAction = (): void => {
+export const refreshToken = (): void => {
   store.dispatch(refreshTokenAction())
 };
 
@@ -17,7 +17,7 @@ export const dispatchRefreshTokenAction = (): void => {
  *
  * @returns void
  */
-export const dispatchResetSigninState = (): void => {
+export const resetSigninUser = (): void => {
   store.dispatch(resetSigninState())
 };
 
@@ -27,7 +27,7 @@ export const dispatchResetSigninState = (): void => {
  * @param credentials - Sign in credentials object
  * @returns void
  */
-export const dispatchSigninAction = (
+export const signinUser = (
   credentials: SigninCredentials
 ): void => {
   store.dispatch(signinAction(credentials))

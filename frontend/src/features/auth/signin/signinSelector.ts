@@ -5,6 +5,6 @@
 import { useSelector } from "react-redux";
 import { SigninInitialState } from "./signin.types";
 
-export const useSigninSelector = (): SigninInitialState => {
-  return useSelector((state: { signin: SigninInitialState }) => state.signin)
-}
+export const useSigninUserSelector = (): SigninInitialState => {
+  return useSelector((state: { signin: SigninInitialState }) => state.signin);
+};

@@ -9,7 +9,7 @@ import { resetSignupState } from "./signupSlice";
  * @param credentials - Sign up credentials object
  * @returns void
  */
-export const dispatchSignupAction = (
+export const signupUser = (
   credentials: SignupCredentials
 ): void => {
   store.dispatch(signupAction(credentials));
@@ -20,6 +20,6 @@ export const dispatchSignupAction = (
  *
  * @returns void
  */
-export const dispatchRestSigupState = (): void => {
+export const resetSignupUser = (): void => {
   store.dispatch(resetSignupState());
 };

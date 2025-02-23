@@ -1,7 +1,7 @@
 import React from "react";
 import "./ToastContainer.css"
 import Toast from "components/Toast/Toast";
-import { useToastSelector } from "features/toast/toastSelector";
+import { useToastSelector } from "features/toast";
 
 const ToastContainer: React.FC = () => {
   const toasts = useToastSelector();

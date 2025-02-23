@@ -5,6 +5,6 @@ import { SignupInitialState } from "./signup.types";
  * Custom hook to select signup state from Redux store
  * @returns {SignupInitialState} Current signup state
  */
-export const useSignupSelector = (): SignupInitialState => {
+export const useSignupUserSelector = (): SignupInitialState => {
   return useSelector((state: { signup: SignupInitialState }) => state.signup)
 }

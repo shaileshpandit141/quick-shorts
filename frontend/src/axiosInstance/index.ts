@@ -6,8 +6,8 @@
 import axios from 'axios';
 import { store } from 'store/store';
 import {
-  dispatchRefreshTokenAction,
-  dispatchResetSigninState
+  refreshToken,
+  resetSigninUser
 } from 'features/auth/signin';
 
 const axiosInstance = axios.create({
@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !request._retry) {
       try {
         request._retry = true;
-        dispatchRefreshTokenAction();
+        refreshToken();
         const token = store.getState().signin.data.access_token;
         if (!token) {
           return Promise.reject(error);
@@ -45,7 +45,7 @@ axiosInstance.interceptors.response.use(
         request.headers['Authorization'] = `Bearer ${token}`;
         return axiosInstance(request);
       } catch (refreshError) {
-        dispatchResetSigninState()
+        resetSigninUser()
         return Promise.reject(refreshError);
       }
     }

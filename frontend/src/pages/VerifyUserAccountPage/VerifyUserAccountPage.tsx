@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import "./VerifyUserAccountPage.css";
 import { useParams } from "react-router-dom";
-import { NavLink, Button, DisplayFormErrors } from 'components'
-import { useVerifyUserAccountSelector, dispatchVerifyUserAccountAction } from 'features/auth/verifyUserAccount'
+import { useResetOnRouteChange } from "hooks";
+import { NavLink, Button, DisplayFormErrors, SigninLink } from 'components'
+import {
+  useVerifyUserAccountSelector, verifyUserAccount, resetVerifyUserAccount
+} from 'features/auth/verifyUserAccount'
 import { triggerToast } from 'features/toast'
 
 
@@ -12,7 +15,7 @@ const VerifyUserAccountPage: React.FC = (): JSX.Element => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    dispatchVerifyUserAccountAction({
+    verifyUserAccount({
       token: token || ''
     })
   }
@@ -24,6 +27,10 @@ const VerifyUserAccountPage: React.FC = (): JSX.Element => {
       triggerToast("error", message)
     }
   }, [message, status])
+
+  useResetOnRouteChange(() => {
+    resetVerifyUserAccount();
+  });
 
   return (
     <div className="verify-user-account-page">
@@ -44,7 +51,7 @@ const VerifyUserAccountPage: React.FC = (): JSX.Element => {
         )}
         <div className='actions'>
           <NavLink
-            to='../'
+            to='../../'
             type='link'
             className='link back-link'
             iconName='arrowBack'
@@ -57,6 +64,9 @@ const VerifyUserAccountPage: React.FC = (): JSX.Element => {
             isDisabled={status === 'succeeded'}
           >Verify</Button>
         </div>
+        {status === "succeeded" && (
+          <SigninLink />
+        )}
       </form>
     </div>
   )

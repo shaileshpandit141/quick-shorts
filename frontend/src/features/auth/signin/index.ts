@@ -1,7 +1,7 @@
 export { signinReducer } from './signinSlice';
 export {
-  dispatchRefreshTokenAction,
-  dispatchSigninAction,
-  dispatchResetSigninState
-} from './dispatches';
-export { useSigninSelector } from './signinSelector';
+  refreshToken,
+  signinUser,
+  resetSigninUser
+} from './dispatchers';
+export { useSigninUserSelector } from "./signinSelector";
