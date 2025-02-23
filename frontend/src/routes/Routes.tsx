@@ -26,15 +26,14 @@ const SignupPage = lazyModuleImport(() => import('pages/SignupPage/SignupPage'))
 const VerifyUserAccountPage = lazyModuleImport(() => import('pages/VerifyUserAccountPage/VerifyUserAccountPage'))
 
 // 404 Not Found Page
-const NotFound = lazyModuleImport(() => import('pages/NotFound/NotFound'))
+const NotFoundPage = lazyModuleImport(() => import('pages/NotFoundPage/NotFoundPage'))
 
 const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route element={<RootLayout />}>
+        <Route path="/" element={<RootLayout />}>
           <Route element={<MainLayout />}>
-
             {/* Public Routes */}
             <Route element={<PublicRoute />}>
               <Route index element={
@@ -44,28 +43,28 @@ const AppRoutes: React.FC = () => {
 
             {/* Private Routes */}
             <Route element={<PrivateRoute />}>
-              <Route path='/home' element={
+              <Route path='home' element={
                 <LazyModuleLoader element={<Home />} fallback={<PageLoader />} />
               } />
             </Route>
           </Route>
 
           {/* Auth Routes without header */}
-          <Route element={<AuthLayout />}>
-            <Route path='/sign-in' element={
+          <Route path="auth" element={<AuthLayout />}>
+            <Route path='sign-in' element={
               <LazyModuleLoader element={<SigninPage />} fallback={<PageLoader />} />
             } />
-            <Route path='/sign-up' element={
+            <Route path='sign-up' element={
               <LazyModuleLoader element={<SignupPage />} fallback={<PageLoader />} />
             } />
-            <Route path='/verify-user-account/:token' element={
+            <Route path='verify-user-account/:token' element={
               <LazyModuleLoader element={<VerifyUserAccountPage />} fallback={<PageLoader />} />
             } />
           </Route>
 
-          {/* Catch-all route for 404 Not Found */}
+          {/* Catch-all route for 404 Not Found Page */}
           <Route path="*" element={
-            <LazyModuleLoader element={<NotFound />} fallback={<PageLoader />} />
+            <LazyModuleLoader element={<NotFoundPage />} fallback={<PageLoader />} />
           } />
         </Route>
       </Routes>

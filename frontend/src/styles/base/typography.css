@@ -16,7 +16,6 @@ h6 {
     letter-spacing: 0.04em;
     color: var(--text-primary);
     transition: color 0.3s ease;
-    margin-block: 0.5em;
 
     &::first-letter {
         text-transform: capitalize;

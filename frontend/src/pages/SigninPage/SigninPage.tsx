@@ -1,19 +1,16 @@
 import React, { useEffect } from 'react';
 import './SigninPage.css';
 import { isAuthenticated } from 'utils';
-import { Navigate, Link } from 'react-router-dom'
-import { Input } from 'components'
-import { NavLink } from 'components'
+import { Navigate, Link } from 'react-router-dom';
+import { Input, NavLink, DisplayFormErrors, Button, SignupLink } from 'components';
 import {
   dispatchSigninAction,
   useSigninSelector
-} from 'features/auth/signin'
-import { dispatchRestSignoutState } from 'features/auth/signout'
-import { DisplayFormErrors } from 'components'
-import { useFormDataChange } from 'hooks/useFormDataChange'
-import { SigninCredentials } from 'services/authServices'
-import { Button } from 'components'
-import { triggerToast } from 'features/toast'
+} from 'features/auth/signin';
+import { dispatchRestSignoutState } from 'features/auth/signout';
+import { useFormDataChange } from 'hooks/useFormDataChange';
+import { SigninCredentials } from 'services/authServices';
+import { triggerToast } from 'features/toast';
 
 const SigninPage: React.FC = (props) => {
   const { status, message, errors } = useSigninSelector()
@@ -75,12 +72,7 @@ const SigninPage: React.FC = (props) => {
           >Forgot password</Link>
         </div>
         <div className='actions'>
-          <NavLink
-            to="/sign-up"
-            type="link"
-            iconName='signin'
-            className='sign-link'
-          >sign up</NavLink>
+          <SignupLink />
           <Button
             type='submit'
             iconName='signin'
