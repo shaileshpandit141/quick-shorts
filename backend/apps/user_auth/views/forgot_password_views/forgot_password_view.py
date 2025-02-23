@@ -5,7 +5,7 @@ from permissions import AllowAny
 from quick_utils.send_email import SendEmail
 from quick_utils.views import APIView, Response
 from throttling import AuthRateThrottle
-from utils import FieldValidator, add_query_params
+from utils import FieldValidator
 
 User = get_user_model()
 
@@ -66,9 +66,7 @@ class ForgotPasswordView(APIView):
                     },
                     self.status.HTTP_500_INTERNAL_SERVER_ERROR,
                 )
-            active_url = add_query_params(
-                f"{settings.FRONTEND_URL}/auth/verify-email", {"token": token}
-            )
+            active_url = f"{settings.FRONTEND_URL}/auth/forgot-password-confirm/{token}"
 
             # Send reset email
             SendEmail(

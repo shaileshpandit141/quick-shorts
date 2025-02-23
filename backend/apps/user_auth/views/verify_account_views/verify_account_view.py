@@ -5,7 +5,6 @@ from permissions import AllowAny
 from quick_utils.send_email import SendEmail
 from quick_utils.views import APIView, Response
 from throttling import AuthRateThrottle
-from utils import add_query_params
 
 User = get_user_model()
 
@@ -75,9 +74,7 @@ class VerifyAccountView(APIView):
                     self.status.HTTP_500_INTERNAL_SERVER_ERROR,
                 )
 
-            activate_url = add_query_params(
-                f"{settings.FRONTEND_URL}/auth/verify-email", {"token": token}
-            )
+            activate_url = f"{settings.FRONTEND_URL}/auth/verify-user-account/{token}"
 
             # Send verification email
             SendEmail(

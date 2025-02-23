@@ -10,7 +10,7 @@ from quick_utils.send_email import SendEmail
 from quick_utils.views import APIView, Response
 from throttling import AuthRateThrottle
 from user_auth.serializers import UserSerializer
-from utils import FieldValidator, add_query_params
+from utils import FieldValidator
 
 User = get_user_model()
 
@@ -113,14 +113,12 @@ class SignupView(APIView):
                     self.status.HTTP_500_INTERNAL_SERVER_ERROR,
                 )
 
-            activate_url = add_query_params(
-                f"{settings.FRONTEND_URL}/auth/verify-email", {"token": token}
-            )
+            activate_url = f"{settings.FRONTEND_URL}/auth/verify-user-account/{token}"
 
             # Send verification email
             SendEmail(
                 {
-                    "subject": "For email verification",
+                    "subject": "For Account Verification",
                     "emails": {"to_emails": [getattr(user, "email", "Unknown")]},
                     "context": {"user": user, "activate_url": activate_url},
                     "templates": {
