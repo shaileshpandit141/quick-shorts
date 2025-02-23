@@ -7,23 +7,35 @@
     justify-content: center;
     align-items: center;
 
-    .from-title {
+    .from-label {
       text-align: center;
     }
 
-    .form-discription {
+    .form-description {
       text-align: center;
-
     }
   }
 
-  .actions {
+  .form {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     gap: 8px;
 
-    @media (width < 480px) {
-      flex-direction: column;
+    .split-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-block: 4px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+
+      @media (width < 480px) {
+        flex-direction: column;
+      }
     }
   }
 }

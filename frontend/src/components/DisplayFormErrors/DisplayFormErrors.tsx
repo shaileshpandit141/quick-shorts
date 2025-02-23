@@ -16,6 +16,12 @@ const DisplayFormErrors: React.FC<DisplayFormErrorsProps> = (props) => {
       )
     ))
   );
+
+  const errorsJSX = renderErrors();
+  if (errorsJSX.length === 0) {
+    return null;
+  }
+
   return (
     <div className='display-form-errors'>
       {renderErrors()}

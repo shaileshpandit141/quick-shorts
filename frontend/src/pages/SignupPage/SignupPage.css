@@ -1,15 +1,41 @@
 .signup-page {
-    height: 100%;
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 16px;
+  height: 100%;
+  width: 100%;
 
-    @media (width < 768px) {
-        grid-template-columns: repeat(1, 1fr);
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-        .left-section {
-            padding-right: none;
-        }
+    .from-label {
+      text-align: center;
     }
+
+    .form-description {
+      text-align: center;
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .split-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-block: 4px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+
+      @media (width < 480px) {
+        flex-direction: column;
+      }
+    }
+  }
 }
