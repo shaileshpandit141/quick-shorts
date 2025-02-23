@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import './SignupPage.css'
-import { Input, NavLink, Button, DisplayFormErrors, SigninLink } from 'components'
+import { Input, Button, DisplayFormErrors, SigninLink } from 'components'
 import {
   dispatchSignupAction,
   dispatchRestSigupState,

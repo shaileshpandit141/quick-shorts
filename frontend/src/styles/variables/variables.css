@@ -2,22 +2,19 @@
  * Global CSS Custom Properties (Variables)
  */
 :root {
-    /* Layout Properties */
-    --opacity: 1;
-    --box-shadow: 0 0 1.5px gray;
-    --border: 1px solid var(--border-color-light);
-    --header-height: calc(64/16 * 1em);
-    --screen-height: calc(100dvh - var(--header-height));
-    --transition:
-        background-color 0.3s ease,
-        color 0.3s ease,
-        border 0.3s ease,
-        box-shadow 0.3s ease;
+  /* Layout Properties */
+  --opacity: 1;
+  --box-shadow: 0 0 1.5px gray;
+  --border: 1px solid var(--border-color-light);
+  --header-height: calc(64 / 16 * 1em);
+  --screen-height: calc(100dvh - var(--header-height));
+  --transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease,
+    box-shadow 0.3s ease;
 
-    /* Responsive Breakpoint Definitions */
-    --breakpoint-xs: 480px;  /* Mobile */
-    --breakpoint-sm: 768px;  /* Tablet */
-    --breakpoint-md: 1024px; /* Landscape Tablet */
-    --breakpoint-lg: 1280px; /* Laptop/Desktop */
-    --breakpoint-xl: 1600px; /* 4K Displays */
+  /* Responsive Breakpoint Definitions */
+  --breakpoint-xs: 480px; /* Mobile */
+  --breakpoint-sm: 768px; /* Tablet */
+  --breakpoint-md: 1024px; /* Landscape Tablet */
+  --breakpoint-lg: 1280px; /* Laptop/Desktop */
+  --breakpoint-xl: 1600px; /* 4K Displays */
 }

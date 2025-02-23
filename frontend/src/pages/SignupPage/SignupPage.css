@@ -19,19 +19,18 @@
   .form {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 
     .split-container {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-block: 4px;
     }
 
     .actions {
       display: flex;
       justify-content: center;
-      gap: 8px;
+      gap: 12px;
 
       @media (width < 480px) {
         flex-direction: column;

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './SigninPage.css';
 import { isAuthenticated } from 'utils';
 import { Navigate, Link } from 'react-router-dom';
-import { Input, NavLink, DisplayFormErrors, Button, SignupLink } from 'components';
+import { Input, DisplayFormErrors, Button, SignupLink } from 'components';
 import {
   dispatchSigninAction,
   useSigninSelector

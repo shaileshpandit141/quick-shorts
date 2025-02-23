@@ -6,7 +6,6 @@ a {
   border: none;
   outline: none;
   border-radius: 0;
-  height: var(--link-height);
   width: fit-content;
   padding: var(--link-padding);
   display: flex;
@@ -49,6 +48,7 @@ a {
   &.link {
     border: var(--border);
     border-radius: 999rem;
+    height: var(--link-height);
     width: 100%;
     padding-inline: calc(16 / 16 * 1em);
     border: var(--border);
@@ -63,7 +63,7 @@ a {
     &:is(:focus, :focus-visible) {
       background-color: var(--button-primary-hover);
       outline: 2px solid var(--button-primary-hover);
-      outline-offset: 2px;
+      outline-offset: 1px;
     }
 
     label {
