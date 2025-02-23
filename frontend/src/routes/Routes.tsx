@@ -18,10 +18,14 @@ import AuthLayout from 'layouts/AuthLayout/AuthLayout'
 import { PageLoader } from 'components'
 import IndexPageSkeleton from 'pages/IndexPage/IndexPageSkeleton'
 
+// Lazy-loaded Page Imports
 const IndexPage = lazyModuleImport(() => import('pages/IndexPage/IndexPage'))
 const Home = lazyModuleImport(() => import('pages/home/Home'))
 const SigninPage = lazyModuleImport(() => import('pages/SigninPage/SigninPage'))
 const SignupPage = lazyModuleImport(() => import('pages/SignupPage/SignupPage'))
+const VerifyUserAccountPage = lazyModuleImport(() => import('pages/VerifyUserAccountPage/VerifyUserAccountPage'))
+
+// 404 Not Found Page
 const NotFound = lazyModuleImport(() => import('pages/NotFound/NotFound'))
 
 const AppRoutes: React.FC = () => {
@@ -53,6 +57,9 @@ const AppRoutes: React.FC = () => {
             } />
             <Route path='/sign-up' element={
               <LazyModuleLoader element={<SignupPage />} fallback={<PageLoader />} />
+            } />
+            <Route path='/verify-user-account/:token' element={
+              <LazyModuleLoader element={<VerifyUserAccountPage />} fallback={<PageLoader />} />
             } />
           </Route>
 

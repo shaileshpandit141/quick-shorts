@@ -11,7 +11,7 @@ import { SignupCredentials } from 'services/authServices'
 import { triggerToast } from 'features/toast'
 
 const SignupForm: React.FC = (props) => {
-  
+
   const { status, message, errors, data } = useSignupSelector()
   const [formData, handleFormDataChange] = useFormDataChange<SignupCredentials>({
     email: '',

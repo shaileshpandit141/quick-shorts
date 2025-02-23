@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 const AuthLayout: React.FC = (props) => {
   return (
-    <div className='inner-grid-1-1 auth-alyout'>
+    <div className='inner-grid-2-2 auth-alyout'>
       <div className='form-wrapper'>
         <Outlet />
       </div>

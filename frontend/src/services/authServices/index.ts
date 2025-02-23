@@ -1,6 +1,7 @@
 export type {
   SigninCredentials,
   SignupCredentials,
-  SignoutCredentials
-} from './authServices.types'
+  SignoutCredentials,
+  VerifyUserAccountCredentials,
+} from "./authServices.types";
 export { authServices } from './authServices'

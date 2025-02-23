@@ -1,0 +1,29 @@
+.verify-user-account-page {
+  height: 100%;
+  width: 100%;
+
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .from-title {
+      text-align: center;
+    }
+
+    .form-discription {
+      text-align: center;
+
+    }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+    @media (width < 480px) {
+      flex-direction: column;
+    }
+  }
+}

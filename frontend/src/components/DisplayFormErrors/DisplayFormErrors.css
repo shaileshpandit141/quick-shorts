@@ -3,6 +3,7 @@
     background-color: transparent;
     width: 100%;
     padding-inline: 14px;
+    padding-block: 4px;
     display: flex;
     flex-direction: column;
     row-gap: 6px;

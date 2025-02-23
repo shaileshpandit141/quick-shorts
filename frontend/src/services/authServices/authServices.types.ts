@@ -35,3 +35,11 @@ export interface SignoutCredentials {
 export interface RefreshTokenCredentials {
   refresh_token: string
 }
+
+/**
+ * Credentials for verifying user account
+ * @property {string} token - The token used to verify the user account.
+ */
+export interface VerifyUserAccountCredentials {
+  token: string;
+}
