@@ -1,3 +1,4 @@
+from typing import Any
 import hashlib
 
 from django.conf import settings
@@ -25,7 +26,7 @@ class AuthRateThrottle(SimpleRateThrottle):
         # Generate the cache key
         return f"throttle_{router_ip}_{device_id}_{view.__class__.__name__}"
 
-    def get_rate(self):
+    def get_rate(self) -> Any:
         """
         Define a custom rate for throttling.
         """

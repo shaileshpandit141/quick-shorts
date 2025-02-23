@@ -160,7 +160,11 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.UserRateThrottle",
         "throttling.AuthRateThrottle",
     ],
-    "DEFAULT_THROTTLE_RATES": {"anon": "100/day", "auth": "5/hour", "user": "1000/day"},
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "100/day",
+        "auth": "8/hour",
+        "user": "1000/day",
+    },
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 5,
