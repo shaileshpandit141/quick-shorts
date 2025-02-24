@@ -8,6 +8,7 @@ from google.oauth2 import id_token
 from rest_framework import status
 
 from quick_utils.get_jwt_tokens_for_user import get_jwt_tokens_for_user
+from quick_utils.save_image import save_image
 from quick_utils.views import APIView, Response
 
 User = get_user_model()
@@ -58,7 +59,7 @@ class GoogleCallbackView(APIView):
                 token, requests.Request(), settings.GOOGLE_CLIENT_ID
             )
             email = google_data.get("email")
-            name = google_data.get("name")
+            username = email.split("@")[0]
             profile_picture = google_data.get("picture")
 
             if not email:
@@ -77,6 +78,8 @@ class GoogleCallbackView(APIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
+            avatar = save_image(User, "avatar", profile_picture, username)
+
             # Create or update user
             user, created = User.objects.get_or_create(
                 email=email,
@@ -84,7 +87,7 @@ class GoogleCallbackView(APIView):
                     "first_name": google_data.get("given_name"),
                     "last_name": google_data.get("family_name"),
                     "username": email.split("@")[0],
-                    "avatar": profile_picture,
+                    "avatar": avatar,
                     "is_verified": True,
                 },
             )
@@ -97,7 +100,7 @@ class GoogleCallbackView(APIView):
                 # Update user details if they already exist
                 user.first_name = google_data.get("given_name")
                 user.last_name = google_data.get("family_name")
-                setattr(user, "avatar", profile_picture)
+                setattr(user, "avatar", avatar)
                 setattr(user, "is_verified", True)
                 user.save()
 
