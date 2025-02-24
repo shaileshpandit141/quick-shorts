@@ -3,7 +3,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from permissions import AllowAny
 from quick_utils.views import APIView, Response
-from throttling import AuthRateThrottle
+from throttling import AnonRateThrottle
 from utils import FieldValidator
 
 
@@ -11,7 +11,7 @@ class SignoutView(APIView):
     """API view for user sign out functionality."""
 
     permission_classes = [AllowAny]
-    throttle_classes = [AuthRateThrottle]
+    throttle_classes = [AnonRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Handle user sign out by blacklisting their refresh token."""
