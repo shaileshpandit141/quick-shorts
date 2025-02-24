@@ -56,6 +56,7 @@ INSTALLED_APPS += [
 # ---------------------------------
 INSTALLED_APPS += [
     "apps.user_auth.apps.UserAuthConfig",
+    "google_auth.apps.GoogleAuthConfig",
 ]
 
 # Middleware Configuration Settings
@@ -204,6 +205,12 @@ try:
     DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", cast=str, default=EMAIL_HOST_USER)
 except Exception:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# Google OAuth2 Configuration Settings
+# ------------------------------------
+GOOGLE_CLIENT_ID = config("GOOGLE_CLIENT_ID", cast=str)
+GOOGLE_CLIENT_SECRET = config("GOOGLE_CLIENT_SECRET", cast=str)
+GOOGLE_REDIRECT_URI = config("GOOGLE_REDIRECT_URI", cast=str)
 
 # Log-Related Directory Configuration Setup
 # -----------------------------------------

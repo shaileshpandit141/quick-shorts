@@ -1,6 +1,7 @@
 # Django imports
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+
 from permissions import IsAuthenticated
 from quick_utils.send_email import SendEmail
 

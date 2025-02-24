@@ -1,5 +1,5 @@
-from typing import Any
 import hashlib
+from typing import Any
 
 from django.conf import settings
 from rest_framework.throttling import SimpleRateThrottle

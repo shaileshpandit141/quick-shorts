@@ -1,6 +1,5 @@
 from typing import Any
 
-from quick_utils.response import Response
 from rest_framework import status, views
 from rest_framework.exceptions import (
     AuthenticationFailed,
@@ -10,6 +9,8 @@ from rest_framework.exceptions import (
     Throttled,
     ValidationError,
 )
+
+from quick_utils.response import Response
 
 
 def create_error_response(

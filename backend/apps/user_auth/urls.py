@@ -31,7 +31,9 @@ urlpatterns = [
         name="signin_token_refresh",
     ),
     path("signout/", SignoutView.as_view(), name="sign_out"),
-    path("verify-user-account/", VerifyAccountView.as_view(), name="verify_user_account"),
+    path(
+        "verify-user-account/", VerifyAccountView.as_view(), name="verify_user_account"
+    ),
     path(
         "verify-user-account/confirm/",
         VerifyAccountConfirmView.as_view(),

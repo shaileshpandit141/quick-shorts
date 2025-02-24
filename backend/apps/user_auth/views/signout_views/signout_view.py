@@ -1,7 +1,8 @@
-from permissions import AllowAny
-from quick_utils.views import APIView, Response
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
+
+from permissions import AllowAny
+from quick_utils.views import APIView, Response
 from throttling import AuthRateThrottle
 from utils import FieldValidator
 
