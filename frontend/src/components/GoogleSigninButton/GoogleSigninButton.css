@@ -1,0 +1,24 @@
+.google-button-wrapper {
+  display: inline-block;
+  width: 100%;
+  height: fit-content;
+  background-color: var(--button-primary-background);
+  color: var(--text-color);
+  border: var(--border);
+  border-radius: 999rem;
+  overflow: hidden;
+  transition: var(--transition);
+
+  &:hover {
+    background-color: var(--button-primary-hover);
+  }
+
+  div {
+    div {
+      background-color: transparent;
+      color: var(--text-color);
+      overflow: hidden;
+      border: none;
+    }
+  }
+}

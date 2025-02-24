@@ -3,15 +3,13 @@
  * Handles automatic token injection and refresh functionality
  */
 
-import axios from 'axios';
-import { store } from 'store/store';
-import {
-  refreshToken,
-  resetSigninUser
-} from 'features/auth/signin';
+import axios from "axios";
+import { store } from "store/store";
+import { refreshToken, resetSigninUser } from "features/auth/signin";
+import { getBaseAPIURL } from "utils";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_API_URL,
+  baseURL: getBaseAPIURL(),
   timeout: 1000,
 });
 
@@ -21,7 +19,7 @@ axiosInstance.interceptors.request.use(
     const token = store.getState().signin.data.access_token;
     if (token) {
       config.headers = config.headers || {};
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
@@ -42,10 +40,10 @@ axiosInstance.interceptors.response.use(
           return Promise.reject(error);
         }
         request.headers = request.headers || {};
-        request.headers['Authorization'] = `Bearer ${token}`;
+        request.headers["Authorization"] = `Bearer ${token}`;
         return axiosInstance(request);
       } catch (refreshError) {
-        resetSigninUser()
+        resetSigninUser();
         return Promise.reject(refreshError);
       }
     }

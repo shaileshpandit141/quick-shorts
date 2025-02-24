@@ -3,7 +3,7 @@ import './SigninPage.css';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useFormDataChange } from 'hooks';
 import { isAuthenticated } from 'utils';
-import { Input, DisplayFormErrors, Button, SignupLink } from 'components';
+import { Input, DisplayFormErrors, Button, SignupLink, GoogleSigninButton } from 'components';
 import { signinUser, resetSigninUser, useSigninUserSelector } from 'features/auth/signin';
 import { SigninCredentials } from 'services/authServices';
 import { triggerToast } from 'features/toast';
@@ -48,6 +48,7 @@ const SigninPage: React.FC = () => {
         className='form'
         onSubmit={handleSubmit}
       >
+      <GoogleSigninButton />
         <Input
           name='email'
           type='text'

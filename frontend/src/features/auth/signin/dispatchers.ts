@@ -1,34 +1,31 @@
 import { store } from "store";
-import { signinAction, refreshTokenAction } from "./signinAction";
-import { resetSigninState } from './signinSlice'
-import { SigninCredentials } from "services/authServices";
+import {
+  signinAction,
+  refreshTokenAction,
+  googleSigninAction,
+} from "./signinActions";
+import { resetSigninState } from "./signinSlice";
+import {
+  SigninCredentials,
+  GoogleSigninCredentials,
+} from "services/authServices";
 
-/**
- * Dispatch a refresh token action
- *
- * @returns void
- */
+// Dispatch a refresh token action
 export const refreshToken = (): void => {
-  store.dispatch(refreshTokenAction())
+  store.dispatch(refreshTokenAction());
 };
 
-/**
- * Dispatch a reset sign in state
- *
- * @returns void
- */
+// Dispatch a reset sign in state
 export const resetSigninUser = (): void => {
-  store.dispatch(resetSigninState())
+  store.dispatch(resetSigninState());
 };
 
-/**
- * Dispatch a user action with the provided credentials
- *
- * @param credentials - Sign in credentials object
- * @returns void
- */
-export const signinUser = (
-  credentials: SigninCredentials
-): void => {
-  store.dispatch(signinAction(credentials))
+// Dispatch a user action with the provided credentials
+export const signinUser = (credentials: SigninCredentials): void => {
+  store.dispatch(signinAction(credentials));
+};
+
+// Dispatch a Google Sign in action with the provided credentials
+export const googleSigninUser = (credentials: GoogleSigninCredentials): void => {
+  store.dispatch(googleSigninAction(credentials));
 };

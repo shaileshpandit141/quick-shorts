@@ -1,45 +1,32 @@
-/**
- * Credentials for user sign in
- * @property {string} email - The user's email address.
- * @property {string} password - The user's password.
- */
+// Credentials for user sign in
 export interface SigninCredentials {
   email: string
   password: string
 }
 
-/**
- * Credentials for new user registration
- * @property {string} email - The user's email address.
- * @property {string} password - The user's password.
- * @property {string} confirm_password - Confirmation of the user's password.
- */
+// Credentials for user google sign in
+export interface GoogleSigninCredentials {
+  token: string
+}
+
+// Credentials for new user registration
 export interface SignupCredentials {
   email: string
   password: string
   confirm_password: string
 }
 
-/**
- * Credentials for user sign out
- * @property {string} refresh_token - The token used to refresh authentication.
- */
+// Credentials for user sign out
 export interface SignoutCredentials {
   refresh_token: string
 }
 
-/**
- * Credentials for refreshing authentication token
- * @property {string} refresh_token - The token used to refresh authentication.
- */
+// Credentials for refreshing authentication token
 export interface RefreshTokenCredentials {
   refresh_token: string
 }
 
-/**
- * Credentials for verifying user account
- * @property {string} token - The token used to verify the user account.
- */
+// Credentials for verifying user account
 export interface VerifyUserAccountCredentials {
   token: string;
 }

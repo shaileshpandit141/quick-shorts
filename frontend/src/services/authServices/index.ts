@@ -1,5 +1,6 @@
 export type {
   SigninCredentials,
+  GoogleSigninCredentials,
   SignupCredentials,
   SignoutCredentials,
   VerifyUserAccountCredentials,

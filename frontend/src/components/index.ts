@@ -18,3 +18,4 @@ export { default as NavBarLinks } from "./NavBarLinks/NavBarLinks";
 export { default as NavLink } from "./NavLink/NavLink";
 export { default as SigninLink } from "./SigninLink/SigninLink";
 export { default as SignupLink } from "./SignupLink/SignupLink";
+export { default as GoogleSigninButton } from "./GoogleSigninButton/GoogleSigninButton";

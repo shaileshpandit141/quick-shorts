@@ -1,8 +1,5 @@
 import axiosInstance from 'axiosInstance';
-import { get_absolute_url } from 'utils';
-
-/** Base API URL from environment variables */
-const BASE_API_URL = get_absolute_url(null)
+import { getBaseAPIURL } from "utils";
 
 /**
  * APIs using custom Axios instance
@@ -11,6 +8,6 @@ const BASE_API_URL = get_absolute_url(null)
 export const userServices = {
   /** Signs out authenticated user */
   fetchUser: () => {
-    return axiosInstance.get(`${BASE_API_URL}/api/v1/auth/user/`)
+    return axiosInstance.get(`${getBaseAPIURL()}/api/v1/auth/user/`);
   },
 }

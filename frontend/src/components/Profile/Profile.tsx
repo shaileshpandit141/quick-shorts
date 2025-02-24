@@ -4,7 +4,7 @@ import { NavLink, SignoutButton } from 'components'
 import { useMenu } from 'hooks';
 import { isAuthenticated } from 'utils';
 import { user, useUserSelector } from 'features/user';
-import { get_absolute_url } from 'utils';
+import { buildMediaURL, getEnv } from 'utils';
 
 const Profile: React.FC = (): JSX.Element | null => {
 
@@ -46,7 +46,7 @@ const Profile: React.FC = (): JSX.Element | null => {
         ref={button}
       >
         {data?.avatar && (
-          <img src={get_absolute_url(data?.avatar)} alt='avatar-image' />
+          <img src={buildMediaURL(data?.avatar)} alt='avatar-image' />
         )}
       </button>
       <div
@@ -56,7 +56,7 @@ const Profile: React.FC = (): JSX.Element | null => {
         <div className='profile-header-card'>
           <section className='profile-image'>
             {data?.avatar && (
-              <img src={get_absolute_url(data?.avatar)} alt='avatar-image' />
+              <img src={buildMediaURL(data?.avatar)} alt='avatar-image' />
             )}
           </section>
           <section className='profile-info'>
@@ -64,7 +64,7 @@ const Profile: React.FC = (): JSX.Element | null => {
             <p className='email'>{data?.email}</p>
           </section>
           <NavLink
-            to={get_absolute_url('/admin/')}
+            to={`${getEnv("BASE_API_URL")}/admin/`}
             type='link'
             className='edit-profile'
             target='_blank'
