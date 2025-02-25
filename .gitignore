@@ -6,6 +6,7 @@ __pycache__
 
 # Ignore the backend dependency and cache
 backend/.env
+backend/**/.venv
 backend/**/__pycache__
 backend/**/migrations
 backend/db.sqlite3

@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Optional
 
 
-def run_commands():
+def run_commands() -> None:
     backend_dir = Path("./backend").resolve()
     frontend_dir = Path("./frontend").resolve()
 
@@ -27,7 +27,7 @@ def run_commands():
                 "--",
                 "bash",
                 "-c",
-                f"source .venv/bin/activate && cd {backend_dir} && python3 manage.py runserver; exec bash",
+                f"source backend/.venv/bin/activate && cd {backend_dir} && python3 manage.py runserver; exec bash",
             ]
         )
         print("✅ Backend server started successfully")
