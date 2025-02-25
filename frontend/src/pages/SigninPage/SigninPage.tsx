@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./SigninPage.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { AddSEO } from "SEO";
 import { useFormDataChange } from "hooks";
 import { isAuthenticated } from "utils";
 import {
@@ -49,6 +50,11 @@ const SigninPage: React.FC = () => {
 
   return (
     <div className="signin-page">
+      <AddSEO
+        title="Sign in"
+        description="Sign in to access your account and explore our features."
+        keywords="signin, login, authentication"
+      />
       <div className="header">
         <h3 className="form-label">Sign in</h3>
         <p className="form-description">

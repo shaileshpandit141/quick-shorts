@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import "./SignupPage.css";
+import { AddSEO } from "SEO";
 import { useResetOnRouteChange, useFormDataChange } from "hooks";
 import { Input, Button, DisplayFormErrors, SigninLink } from "components";
 import {
@@ -39,6 +40,11 @@ const SignupPage: React.FC = (props) => {
 
   return (
     <div className="signup-page">
+      <AddSEO
+        title="Sign up"
+        description="Join us to access exclusive content and features."
+        keywords="signup, register, account, join"
+      />
       <div className="header">
         <h3 className="form-label">Sign up</h3>
         <p className="form-description">Join us by creating your account.</p>
