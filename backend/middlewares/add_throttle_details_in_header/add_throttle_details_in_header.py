@@ -1,7 +1,7 @@
 from logging import getLogger
 from typing import Any, Dict, List
 
-from .add_response_headers import add_response_headers
+from ..add_response_headers import add_response_headers
 
 # Configure logger
 logger = getLogger(__name__)

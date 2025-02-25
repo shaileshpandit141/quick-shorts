@@ -7,12 +7,10 @@ from typing import Any
 from django.http import JsonResponse
 from rest_framework.response import Response
 
-from ..utils import (
-    add_response_headers,
-    add_throttle_details_in_header,
-    get_meta,
-    handle_response,
-)
+from .add_response_headers import add_response_headers
+from .add_throttle_details_in_header import add_throttle_details_in_header
+from .get_meta import get_meta
+from .handle_response import handle_response
 
 # Configure logger
 logger = getLogger(__name__)

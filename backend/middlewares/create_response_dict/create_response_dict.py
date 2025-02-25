@@ -1,5 +1,5 @@
-from .get_meta import get_meta
-from .types import DataType
+from ..get_meta import get_meta
+from ..types import DataType
 
 
 def create_response_dict(

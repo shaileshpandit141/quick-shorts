@@ -1,5 +1,3 @@
-from typing import Any
-
 from rest_framework import status, views
 from rest_framework.exceptions import (
     AuthenticationFailed,
@@ -12,62 +10,8 @@ from rest_framework.exceptions import (
 
 from quick_utils.response import Response
 
-
-def create_error_response(
-    message, code, field="none", error_message=None, details=None
-) -> Response:
-    """Helper function to create error response"""
-    return Response(
-        {
-            "message": message,
-            "errors": [
-                {
-                    "field": field,
-                    "code": code,
-                    "message": error_message or message,
-                    "details": details,
-                }
-            ],
-        }
-    )
-
-
-def format_validation_errors(detail) -> list[Any]:
-    """Helper function to format validation errors"""
-    error_details = []
-    if isinstance(detail, dict):
-        for field, messages in detail.items():
-            if field == "non_field_errors":
-                field = "none"
-            if isinstance(messages, list):
-                for message in messages:
-                    error_details.append(
-                        {
-                            "field": field,
-                            "code": getattr(message, "code", "validation_error"),
-                            "message": str(message),
-                            "details": None,
-                        }
-                    )
-            else:
-                error_details.append(
-                    {
-                        "field": field,
-                        "code": getattr(messages, "code", "validation_error"),
-                        "message": str(messages),
-                        "details": None,
-                    }
-                )
-    else:
-        error_details.append(
-            {
-                "field": "none",
-                "code": "validation_error",
-                "message": str(detail),
-                "details": None,
-            }
-        )
-    return error_details
+from .create_error_response import create_error_response
+from .format_validation_errors import format_validation_errors
 
 
 def exception_handler(exc, context) -> Response | views.Response | None:

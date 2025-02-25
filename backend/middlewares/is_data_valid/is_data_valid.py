@@ -1,8 +1,8 @@
 from logging import getLogger
 from typing import List
 
-from ..exceptions import InvalidDataFormatError
-from .types import DataType
+from ..invalid_data_format_error import InvalidDataFormatError
+from ..types.types import DataType
 
 # Configure logger
 logger = getLogger(__name__)
