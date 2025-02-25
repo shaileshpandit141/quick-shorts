@@ -6,5 +6,5 @@ import { RootState } from "store/rootReducer";
 import { useSelector } from "react-redux";
 
 export const useToastSelector = () => {
-  return useSelector((state: RootState) => state.toast.toasts)
-}
+  return useSelector((state: RootState) => state.toast.toasts);
+};

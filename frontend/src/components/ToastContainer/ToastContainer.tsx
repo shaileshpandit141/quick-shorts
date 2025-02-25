@@ -1,5 +1,5 @@
 import React from "react";
-import "./ToastContainer.css"
+import "./ToastContainer.css";
 import Toast from "components/Toast/Toast";
 import { useToastSelector } from "features/toast";
 

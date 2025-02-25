@@ -1,13 +1,11 @@
-import React from 'react';
-import './Button.css';
-import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon';
-import { LazyIconMapType } from 'lazyUtils/LazyIcon/LazyIcon.types';
-import Loader from 'components/Loader/Loader';
-
+import React from "react";
+import "./Button.css";
+import { LazyIconMapType, RenderLazyIcon } from "lazyUtils";
+import Loader from "components/Loader/Loader";
 
 interface ButtonProps {
   type: "button" | "submit" | "reset" | "icon";
-  iconName?: keyof LazyIconMapType;
+  icon?: LazyIconMapType;
   children?: string | React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
@@ -21,27 +19,27 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = (props) => {
   const {
-    iconName,
-    type = 'button',
-    children = '',
+    icon,
+    type = "button",
+    children = "",
     onClick,
-    className = '',
+    className = "",
     isDisabled = false,
     isLoaderOn = false,
     testID,
     accessibilityLabel,
     title,
-    ref
+    ref,
   } = props;
 
-  const buttonClasses = type === 'icon' ? 'button-as-icon' : 'button';
+  const buttonClasses = type === "icon" ? "button-as-icon" : "button";
 
   const renderIcon = () => (
-    <div className='button-icon-container'>
+    <div className="button-icon-container">
       {isLoaderOn ? (
         <Loader />
       ) : (
-        iconName && <LazyIcon iconName={iconName} fallback={<Loader />} />
+        icon && <RenderLazyIcon icon={icon} fallback={<Loader />} />
       )}
     </div>
   );
@@ -52,16 +50,16 @@ const Button: React.FC<ButtonProps> = (props) => {
       className={`${buttonClasses} ${className}`}
       onClick={onClick}
       disabled={isLoaderOn || isDisabled}
-      type={type === 'icon' ? 'button' : type}
-      style={{ cursor: isLoaderOn ? 'progress' : 'pointer' }}
+      type={type === "icon" ? "button" : type}
+      style={{ cursor: isLoaderOn ? "progress" : "pointer" }}
       data-testid={testID}
       aria-label={accessibilityLabel}
       title={title}
     >
-      {(type === 'icon' || iconName) && renderIcon()}
-      {type !== 'icon' && <label>{children}</label>}
+      {(type === "icon" || icon) && renderIcon()}
+      {type !== "icon" && <label>{children}</label>}
     </button>
-  )
+  );
 };
 
 export default Button;

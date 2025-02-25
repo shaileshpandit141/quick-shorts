@@ -1,20 +1,23 @@
 import React, { useCallback, useMemo } from "react";
 import "./GoogleSigninButton.css";
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 import { googleSigninUser } from "features/auth/signin";
-import { GoogleLogin, GoogleOAuthProvider, CredentialResponse } from "@react-oauth/google";
+import {
+  GoogleLogin,
+  GoogleOAuthProvider,
+  CredentialResponse,
+} from "@react-oauth/google";
 import { getEnv, isAuthenticated } from "utils";
 
 const GoogleSigninButton: React.FC = () => {
-  const handleSuccess = useCallback(
-    async (response: CredentialResponse) => {
-      const authCode = response?.credential;
-      if (authCode !== undefined) {
-        await googleSigninUser({ token: authCode });
-      } else {
-        console.error("Google Sign-in failed! Please try again later.");
-      }
-    }, []);
+  const handleSuccess = useCallback(async (response: CredentialResponse) => {
+    const authCode = response?.credential;
+    if (authCode !== undefined) {
+      await googleSigninUser({ token: authCode });
+    } else {
+      console.error("Google Sign-in failed! Please try again later.");
+    }
+  }, []);
 
   const handleFailure = useCallback(() => {
     console.error("Google Sign-in failed! Please try again later.");

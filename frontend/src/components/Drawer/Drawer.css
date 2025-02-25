@@ -1,22 +1,20 @@
 .drawer {
-    position: fixed;
-    background-color: transparent;
+  position: fixed;
+  background-color: transparent;
+  inset: 0;
+  user-select: none;
+  z-index: 999;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+
+  &.drawer--active {
+    background-color: rgba(0, 0, 0, 0.43);
     inset: 0;
-    user-select: none;
-    z-index: 999;
-    overflow: hidden;
-    transition: all 0.3s ease-in-out;
+  }
 
-
-    &.drawer--active {
-        background-color: rgba(0, 0, 0, 0.43);
-        inset: 0;
-    }
-
-    &.drawer--inactive {
-        background-color: transparent;
-        pointer-events: none;
-        z-index: 0;
-    }
-
+  &.drawer--inactive {
+    background-color: transparent;
+    pointer-events: none;
+    z-index: 0;
+  }
 }

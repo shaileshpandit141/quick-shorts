@@ -10,7 +10,7 @@ import { resetVerifyUserAccountState } from "./verifyUserAccountSlice";
  * @returns void
  */
 export const verifyUserAccount = (
-  credentials: VerifyUserAccountCredentials
+  credentials: VerifyUserAccountCredentials,
 ): void => {
   store.dispatch(verifyUserAccountAction(credentials));
 };

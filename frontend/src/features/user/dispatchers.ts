@@ -11,8 +11,6 @@ export const user = (): void => {
   store.dispatch(userAction());
 };
 
-
-
 /**
  * Reset user state
  *

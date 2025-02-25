@@ -8,7 +8,8 @@
   --border: 1px solid var(--border-color-light);
   --header-height: calc(64 / 16 * 1em);
   --screen-height: calc(100dvh - var(--header-height));
-  --transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease,
+  --transition:
+    background-color 0.3s ease, color 0.3s ease, border 0.3s ease,
     box-shadow 0.3s ease;
 
   /* Responsive Breakpoint Definitions */

@@ -9,6 +9,6 @@ export const useVerifyUserAccountSelector =
   (): VerifyUserAccountInitialState => {
     return useSelector(
       (state: { verifyUserAccount: VerifyUserAccountInitialState }) =>
-        state.verifyUserAccount
+        state.verifyUserAccount,
     );
   };

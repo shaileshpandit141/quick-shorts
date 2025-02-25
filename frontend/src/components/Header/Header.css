@@ -1,59 +1,59 @@
 .header {
+  width: 100%;
+  min-height: var(--header-height);
+  background-color: var(--header-background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+
+  .sub-headers {
     width: 100%;
-    min-height: var(--header-height);
-    background-color: var(--header-background);
-    display: flex;
-    flex-direction: column;
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
     align-items: center;
-    justify-content: center;
-    transition: var(--transition);
+    column-gap: 8px;
+    justify-content: space-between;
 
-    .sub-headers {
-        width: 100%;
-        height: 100%;
-        display: grid;
-        grid-template-columns: auto auto 1fr;
+    .left-header {
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+
+      .left-header-link {
+        width: fit-content;
+        display: flex;
         align-items: center;
+        justify-content: center;
         column-gap: 8px;
-        justify-content: space-between;
-
-        .left-header {
-            height: fit-content;
-            display: flex;
-            align-items: center;
-            column-gap: 8px;
-
-            .left-header-link {
-                width: fit-content;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                column-gap: 8px;
-                overflow: hidden;
-            }
-        }
-
-        .center-header {
-            height: fit-content;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .right-header {
-            height: fit-content;
-            display: grid;
-            grid-template-columns: 1fr auto;
-            align-items: center;
-
-            .other-links {
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-                column-gap: 8px;
-                padding-left: 8px;
-            }
-        }
+        overflow: hidden;
+      }
     }
+
+    .center-header {
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .right-header {
+      height: fit-content;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+
+      .other-links {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        column-gap: 8px;
+        padding-left: 8px;
+      }
+    }
+  }
 }

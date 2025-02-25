@@ -12,15 +12,12 @@ export const resetSignoutUser = (): void => {
   store.dispatch(resetSignoutState());
 };
 
-
 /**
  * Dispatches a user action with the provided credentials
  *
  * @param credentials - Sign out credentials object
  * @returns void
  */
-export const signoutUser = (
-  credentials: SignoutCredentials
-): void => {
+export const signoutUser = (credentials: SignoutCredentials): void => {
   store.dispatch(signoutAction(credentials));
 };

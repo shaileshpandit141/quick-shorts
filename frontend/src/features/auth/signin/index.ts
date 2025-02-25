@@ -1,8 +1,8 @@
-export { signinReducer } from './signinSlice';
+export { signinReducer } from "./signinSlice";
 export {
   refreshToken,
   signinUser,
   googleSigninUser,
-  resetSigninUser
-} from './dispatchers';
+  resetSigninUser,
+} from "./dispatchers";
 export { useSigninUserSelector } from "./signinSelector";

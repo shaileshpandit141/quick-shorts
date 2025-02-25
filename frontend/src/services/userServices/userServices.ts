@@ -1,4 +1,4 @@
-import axiosInstance from 'axiosInstance';
+import { axiosInstance } from "axiosInstance";
 import { getBaseAPIURL } from "utils";
 
 /**
@@ -10,4 +10,4 @@ export const userServices = {
   fetchUser: () => {
     return axiosInstance.get(`${getBaseAPIURL()}/api/v1/auth/user/`);
   },
-}
+};

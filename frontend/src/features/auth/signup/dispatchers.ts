@@ -1,6 +1,6 @@
 import { store } from "store/store";
 import { SignupCredentials } from "services/authServices";
-import { signupAction } from './signupAction'
+import { signupAction } from "./signupAction";
 import { resetSignupState } from "./signupSlice";
 
 /**
@@ -9,9 +9,7 @@ import { resetSignupState } from "./signupSlice";
  * @param credentials - Sign up credentials object
  * @returns void
  */
-export const signupUser = (
-  credentials: SignupCredentials
-): void => {
+export const signupUser = (credentials: SignupCredentials): void => {
   store.dispatch(signupAction(credentials));
 };
 

@@ -6,7 +6,5 @@ import { UserInitialState } from "./user.types";
  * @returns {UserInitialState} Current user state
  */
 export const useUserSelector = (): UserInitialState => {
-  return useSelector((state: { user: UserInitialState }) => (
-    state.user
-  ))
-}
+  return useSelector((state: { user: UserInitialState }) => state.user);
+};

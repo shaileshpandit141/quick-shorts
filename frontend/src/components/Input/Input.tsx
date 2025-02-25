@@ -1,11 +1,23 @@
-import React, { useState, ChangeEvent } from 'react';
-import './Input.css';
-import Button from 'components/Button/Button';
-import DisplayFormErrors from '../DisplayFormErrors/DisplayFormErrors';
-import { Errors } from 'FeatureTypes';
+import React, { useState, ChangeEvent } from "react";
+import "./Input.css";
+import Button from "components/Button/Button";
+import DisplayFormErrors from "../DisplayFormErrors/DisplayFormErrors";
+import { Errors } from "FeatureTypes";
 
-type InputType = 'text' | 'password' | 'email' | 'url' | 'search' | 'tel' | 'number' |
-  'date' | 'datetime-local' | 'month' | 'week' | 'time' | 'checkbox';
+type InputType =
+  | "text"
+  | "password"
+  | "email"
+  | "url"
+  | "search"
+  | "tel"
+  | "number"
+  | "date"
+  | "datetime-local"
+  | "month"
+  | "week"
+  | "time"
+  | "checkbox";
 
 interface InputProps {
   name: string;
@@ -13,7 +25,7 @@ interface InputProps {
   value: string | number | boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   readOnly?: boolean;
-  errors?: Errors[]
+  errors?: Errors[];
   isRequired?: boolean;
   isDisabled?: boolean;
 }
@@ -26,11 +38,11 @@ const Input: React.FC<InputProps> = ({
   isRequired = true,
   isDisabled = false,
   readOnly = false,
-  errors = []
+  errors = [],
 }) => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const id = `${name}${type}`;
-  const formattedLabel = name.replace(/_/g, ' ');
+  const formattedLabel = name.replace(/_/g, " ");
 
   const renderInputElement = (inputType: string, additionalProps = {}) => (
     <input
@@ -47,23 +59,23 @@ const Input: React.FC<InputProps> = ({
   );
 
   const renderPasswordToggle = () => (
-    <div className='show-password-icon-container'>
+    <div className="show-password-icon-container">
       <Button
-        type='icon'
-        className='password-show-hide-button'
-        iconName={isPasswordShow ? "eyeOpen" : "eyeClose"}
-        onClick={() => setIsPasswordShow(prev => !prev)}
+        type="icon"
+        className="password-show-hide-button"
+        icon={isPasswordShow ? "eyeOpen" : "eyeClose"}
+        onClick={() => setIsPasswordShow((prev) => !prev)}
       />
     </div>
   );
 
-  if (type === 'checkbox') {
+  if (type === "checkbox") {
     return (
-      <div className='input-checkbox-component'>
-        <div className='input-element-wrapper'>
-          <div className='input-element'>
+      <div className="input-checkbox-component">
+        <div className="input-element-wrapper">
+          <div className="input-element">
             {renderInputElement(type, { checked: Boolean(value) })}
-            <label htmlFor={id} className='label'>
+            <label htmlFor={id} className="label">
               <span>{formattedLabel}</span>
             </label>
           </div>
@@ -73,23 +85,24 @@ const Input: React.FC<InputProps> = ({
     );
   }
 
-  const inputType = type === 'password' ? (isPasswordShow ? 'text' : 'password') : type;
-  const inputValue = typeof value !== 'boolean' ? value : String(value);
+  const inputType =
+    type === "password" ? (isPasswordShow ? "text" : "password") : type;
+  const inputValue = typeof value !== "boolean" ? value : String(value);
 
   return (
-    <div className='input-component'>
-      <div className='input-element-wrapper'>
-        <div className='input-element'>
+    <div className="input-component">
+      <div className="input-element-wrapper">
+        <div className="input-element">
           {renderInputElement(inputType, {
             value: inputValue,
-            placeholder: '',
-            autoComplete: "off"
+            placeholder: "",
+            autoComplete: "off",
           })}
-          <label htmlFor={id} className='label'>
+          <label htmlFor={id} className="label">
             <span>{formattedLabel}</span>
           </label>
         </div>
-        {type === 'password' && renderPasswordToggle()}
+        {type === "password" && renderPasswordToggle()}
       </div>
       <DisplayFormErrors field={name} errors={errors} />
     </div>

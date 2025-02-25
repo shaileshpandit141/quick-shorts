@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from 'components';
+import { NavLink } from "components";
 import { isAuthenticated } from "utils";
 
 const SigninLink: React.FC = (): JSX.Element | null => {
@@ -8,14 +8,10 @@ const SigninLink: React.FC = (): JSX.Element | null => {
   }
 
   return (
-    <NavLink
-      to='/auth/sign-in'
-      type='link'
-      iconName='signin'
-    >
+    <NavLink to="/auth/sign-in" type="link" icon="signin">
       Sign in
     </NavLink>
-  )
-}
+  );
+};
 
 export default SigninLink;

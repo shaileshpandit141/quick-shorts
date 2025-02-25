@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Button from 'components/Button/Button';
+import React, { useState, useEffect } from "react";
+import Button from "components/Button/Button";
 
 const InstallAppButton = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -9,7 +9,7 @@ const InstallAppButton = () => {
   useEffect(() => {
     // Check if the app is already installed
     const isStandalone =
-      window.matchMedia('(display-mode: standalone)').matches ||
+      window.matchMedia("(display-mode: standalone)").matches ||
       window.navigator.standalone;
 
     if (isStandalone) {
@@ -23,26 +23,29 @@ const InstallAppButton = () => {
       setIsInstallable(true); // Show the install button
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt,
+      );
     };
   }, []);
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
-      console.warn('Deferred prompt is not available');
+      console.warn("Deferred prompt is not available");
       return;
     }
 
     deferredPrompt.prompt(); // Show the install prompt
 
     const { outcome } = await deferredPrompt.userChoice; // Wait for user choice
-    if (outcome === 'accepted') {
-      console.log('User accepted the install prompt');
+    if (outcome === "accepted") {
+      console.log("User accepted the install prompt");
     } else {
-      console.log('User dismissed the install prompt');
+      console.log("User dismissed the install prompt");
     }
 
     setDeferredPrompt(null); // Reset the deferred prompt
@@ -58,8 +61,8 @@ const InstallAppButton = () => {
     isInstallable && (
       <Button
         type="icon"
-        iconName='installDesktop'
-        className='install-app-button'
+        icon="installDesktop"
+        className="install-app-button"
         onClick={handleInstallClick}
       />
     )

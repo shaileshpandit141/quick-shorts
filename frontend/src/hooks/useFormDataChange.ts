@@ -6,18 +6,25 @@ type FormData = {
 
 export function useFormDataChange<T extends FormData>(initialFormData: T) {
   if (typeof initialFormData !== "object" || initialFormData === null) {
-    throw new Error("The useFormHook only accepts the initialData value as an object.");
+    throw new Error(
+      "The useFormHook only accepts the initialData value as an object.",
+    );
   }
 
   const [formData, setFormData] = useState<T>(initialFormData);
 
-  function handleFormDataChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+  function handleFormDataChange(
+    event: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) {
     const { name, type, value } = event.target;
 
     // Narrow down to HTMLInputElement for 'checked'
-    const checked = type === "checkbox" && event.target instanceof HTMLInputElement
-      ? event.target.checked
-      : undefined;
+    const checked =
+      type === "checkbox" && event.target instanceof HTMLInputElement
+        ? event.target.checked
+        : undefined;
 
     setFormData((prevFormData) => ({
       ...prevFormData,

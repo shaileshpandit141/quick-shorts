@@ -1,15 +1,13 @@
 import React from "react";
 import "./NavLink.css";
 import { NavLink as Link } from "react-router-dom";
-import './NavLink.css';
-import { LazyIcon } from 'lazyUtils/LazyIcon/LazyIcon';
-import { LazyIconMapType } from 'lazyUtils/LazyIcon/LazyIcon.types';
-import Loader from 'components/Loader/Loader';
+import { LazyIconMapType, RenderLazyIcon } from "lazyUtils";
+import Loader from "components/Loader/Loader";
 
 interface NavLinkProps {
   type: "link" | "icon";
   to: string;
-  iconName?: keyof LazyIconMapType;
+  icon?: LazyIconMapType;
   children?: string | React.ReactNode;
   className?: string;
   isDisabled?: boolean;
@@ -24,11 +22,11 @@ interface NavLinkProps {
 
 const NavLink: React.FC<NavLinkProps> = (props) => {
   const {
-    type = 'link',
+    type = "link",
     to,
-    iconName,
-    children = '',
-    className = '',
+    icon,
+    children = "",
+    className = "",
     isDisabled = false,
     isLoaderOn = false,
     testID,
@@ -38,17 +36,17 @@ const NavLink: React.FC<NavLinkProps> = (props) => {
     target,
   } = props;
 
-  const linkClasses = type === 'icon' ? 'link-as-icon' : 'link';
+  const linkClasses = type === "icon" ? "link-as-icon" : "link";
   const linkIsActive = ({ isActive }: { isActive: boolean }) => {
     return isActive ? "active" : "";
-  }
+  };
 
   const renderIcon = () => (
-    <div className='link-icon-container'>
+    <div className="link-icon-container">
       {isLoaderOn ? (
         <Loader />
       ) : (
-        iconName && <LazyIcon iconName={iconName} fallback={<Loader />} />
+        icon && <RenderLazyIcon icon={icon} fallback={<Loader />} />
       )}
     </div>
   );
@@ -56,18 +54,18 @@ const NavLink: React.FC<NavLinkProps> = (props) => {
   return (
     <Link
       ref={ref}
-      to={isDisabled ? '#' : to}
+      to={isDisabled ? "#" : to}
       className={`${linkClasses} ${linkIsActive} ${className}`}
-      style={{ cursor: isLoaderOn ? 'progress' : 'pointer' }}
+      style={{ cursor: isLoaderOn ? "progress" : "pointer" }}
       data-testid={testID}
       aria-label={accessibilityLabel}
       title={title}
       target={target}
     >
-      {(type === 'icon' || iconName) && renderIcon()}
-      {type !== 'icon' && <label>{children}</label>}
+      {(type === "icon" || icon) && renderIcon()}
+      {type !== "icon" && <label>{children}</label>}
     </Link>
-  )
+  );
 };
 
 export default NavLink;

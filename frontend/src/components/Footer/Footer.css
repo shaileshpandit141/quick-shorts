@@ -1,9 +1,9 @@
 .footer {
-    background-color: var(--footer-background);
-    color: var(-text-primary);
-    min-height: 16em;
-    
-    .wrapper {
-        padding-block: 16px;
-    }
+  background-color: var(--footer-background);
+  color: var(-text-primary);
+  min-height: 16em;
+
+  .wrapper {
+    padding-block: 16px;
+  }
 }

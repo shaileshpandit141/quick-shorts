@@ -11,7 +11,7 @@ import { addToast } from "features/toast";
 export const triggerToast = (
   type: "success" | "error" | "info" | "warning",
   message: string,
-  duration?: number
+  duration?: number,
 ) => {
   const id = nanoid();
   store.dispatch(
@@ -20,6 +20,6 @@ export const triggerToast = (
       type,
       message,
       duration,
-    })
+    }),
   );
 };

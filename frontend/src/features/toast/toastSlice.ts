@@ -8,7 +8,7 @@ import { Toast, ToastState } from "./toast.types";
 
 // Initial state with empty toasts array
 const initialState: ToastState = {
-  toasts: []
+  toasts: [],
 };
 
 const toastSlice = createSlice({
@@ -26,7 +26,7 @@ const toastSlice = createSlice({
     // Remove toast notification by ID
     removeToast: (state, action: PayloadAction<string>) => {
       state.toasts = state.toasts.filter(
-        (toast) => toast.id !== action.payload
+        (toast) => toast.id !== action.payload,
       );
     },
   },

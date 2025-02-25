@@ -6,5 +6,5 @@ import { SignupInitialState } from "./signup.types";
  * @returns {SignupInitialState} Current signup state
  */
 export const useSignupUserSelector = (): SignupInitialState => {
-  return useSelector((state: { signup: SignupInitialState }) => state.signup)
-}
+  return useSelector((state: { signup: SignupInitialState }) => state.signup);
+};

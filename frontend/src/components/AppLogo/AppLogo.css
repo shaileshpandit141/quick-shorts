@@ -1,11 +1,11 @@
 .app-logo {
-    display: flex;
-    align-items: center;
-    column-gap: 8px;
-    width: fit-content;
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  width: fit-content;
 
-    .logo-title {
-        font-weight: 900;
-        color: #5bcef6;
-    }
+  .logo-title {
+    font-weight: 900;
+    color: #5bcef6;
+  }
 }

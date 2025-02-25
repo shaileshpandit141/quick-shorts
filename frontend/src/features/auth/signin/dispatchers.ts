@@ -26,6 +26,8 @@ export const signinUser = (credentials: SigninCredentials): void => {
 };
 
 // Dispatch a Google Sign in action with the provided credentials
-export const googleSigninUser = (credentials: GoogleSigninCredentials): void => {
+export const googleSigninUser = (
+  credentials: GoogleSigninCredentials,
+): void => {
   store.dispatch(googleSigninAction(credentials));
 };

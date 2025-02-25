@@ -29,7 +29,7 @@ export const authServices = {
   googleSignin: (credentials: GoogleSigninCredentials) => {
     return axios.post(
       `${BASE_API_URL}/api/v1/auth/google/callback/`,
-      credentials
+      credentials,
     );
   },
 
@@ -37,7 +37,7 @@ export const authServices = {
   refreshToken: (credentials: RefreshTokenCredentials) => {
     return axios.post(
       `${BASE_API_URL}/api/v1/auth/signin/token/refresh/`,
-      credentials
+      credentials,
     );
   },
 
@@ -50,7 +50,7 @@ export const authServices = {
   verifyUserAccount: (credentials: VerifyUserAccountCredentials) => {
     return axios.post(
       `${BASE_API_URL}/api/v1/auth/verify-user-account/confirm/`,
-      credentials
+      credentials,
     );
   },
 };

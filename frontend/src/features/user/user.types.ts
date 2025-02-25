@@ -1,4 +1,4 @@
-import { InitialState, SuccessResponse } from 'FeatureTypes';
+import { InitialState, SuccessResponse } from "FeatureTypes";
 
 /**
  * Interface representing core user data fields
@@ -20,14 +20,10 @@ interface UserData {
  * Interface extending InitialState to handle UserData
  * Used for managing user state with nullable UserData
  */
-export interface UserInitialState extends InitialState<
-  UserData | null
-> { }
+export interface UserInitialState extends InitialState<UserData | null> {}
 
 /**
  * Interface extending SuccessResponse for UserData
  * Used for handling successful user data API responses
  */
-export interface UserSuccessResponse extends SuccessResponse<
-  UserData
-> { }
+export interface UserSuccessResponse extends SuccessResponse<UserData> {}

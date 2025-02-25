@@ -1,2 +1,23 @@
-.not-found-page{align-items:center;display:flex;flex-direction:column;height:100dvh;justify-content:center;width:100%;.not-found-card{align-items:center;display:flex;flex-direction:column;height:-webkit-fit-content;height:fit-content;justify-content:center;max-width:25em;width:100%;.not-found-message,.not-found-title{text-align:center}}}
+.not-found-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  justify-content: center;
+  width: 100%;
+  .not-found-card {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: -webkit-fit-content;
+    height: fit-content;
+    justify-content: center;
+    max-width: 25em;
+    width: 100%;
+    .not-found-message,
+    .not-found-title {
+      text-align: center;
+    }
+  }
+}
 /*# sourceMappingURL=278.d0f948f0.chunk.css.map*/

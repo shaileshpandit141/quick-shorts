@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { userServices } from 'services/userServices'
+import { userServices } from "services/userServices";
 import { UserSuccessResponse } from "./user.types";
 import { CatchAxiosError, ErrorResponse } from "FeatureTypes";
 import { formatCatchAxiosError } from "utils/formatCatchAxiosError";
@@ -17,17 +17,12 @@ export const userAction = createAsyncThunk<
   UserSuccessResponse,
   void,
   { rejectValue: ErrorResponse }
->(
-  "user/userAction",
-  async (_, thunkAPI) => {
-    try {
-      const response = await userServices.fetchUser();
-      return response.data as UserSuccessResponse
-    } catch (err: unknown) {
-      const error = err as CatchAxiosError
-      return thunkAPI.rejectWithValue(
-        formatCatchAxiosError(error)
-      )
-    }
+>("user/userAction", async (_, thunkAPI) => {
+  try {
+    const response = await userServices.fetchUser();
+    return response.data as UserSuccessResponse;
+  } catch (err: unknown) {
+    const error = err as CatchAxiosError;
+    return thunkAPI.rejectWithValue(formatCatchAxiosError(error));
   }
-)
+});

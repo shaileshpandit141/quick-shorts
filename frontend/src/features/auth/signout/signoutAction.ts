@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { authServices, SignoutCredentials } from 'services/authServices';
+import { authServices, SignoutCredentials } from "services/authServices";
 import { SignoutSuccessResponse } from "./signout.types";
-import { CatchAxiosError, ErrorResponse } from 'FeatureTypes';
+import { CatchAxiosError, ErrorResponse } from "FeatureTypes";
 import { formatCatchAxiosError } from "utils/formatCatchAxiosError";
 
 /**
@@ -25,8 +25,8 @@ export const signoutAction = createAsyncThunk<
       return response.data as SignoutSuccessResponse;
     } catch (err: unknown) {
       const error = err as CatchAxiosError;
-      let errorResponse = formatCatchAxiosError(error)
+      let errorResponse = formatCatchAxiosError(error);
       return thunkAPI.rejectWithValue(errorResponse);
     }
-  }
+  },
 );

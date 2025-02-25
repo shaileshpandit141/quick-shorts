@@ -1,8 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { authServices, VerifyUserAccountCredentials } from 'services/authServices';
+import {
+  authServices,
+  VerifyUserAccountCredentials,
+} from "services/authServices";
 import { VerifyUserAccountSuccessResponse } from "./verifyUserAccount.types";
 import { formatCatchAxiosError } from "utils/formatCatchAxiosError";
-import { CatchAxiosError, ErrorResponse } from 'FeatureTypes';
+import { CatchAxiosError, ErrorResponse } from "FeatureTypes";
 
 /**
  * Redux thunk to handle user verifyUserAccount process
@@ -24,8 +27,8 @@ export const verifyUserAccountAction = createAsyncThunk<
       return response.data as VerifyUserAccountSuccessResponse;
     } catch (err: unknown) {
       const error = err as CatchAxiosError;
-      let errorResponse = formatCatchAxiosError(error)
+      let errorResponse = formatCatchAxiosError(error);
       return thunkAPI.rejectWithValue(errorResponse);
     }
-  }
+  },
 );

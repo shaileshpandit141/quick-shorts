@@ -1,29 +1,29 @@
 // Credentials for user sign in
 export interface SigninCredentials {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 // Credentials for user google sign in
 export interface GoogleSigninCredentials {
-  token: string
+  token: string;
 }
 
 // Credentials for new user registration
 export interface SignupCredentials {
-  email: string
-  password: string
-  confirm_password: string
+  email: string;
+  password: string;
+  confirm_password: string;
 }
 
 // Credentials for user sign out
 export interface SignoutCredentials {
-  refresh_token: string
+  refresh_token: string;
 }
 
 // Credentials for refreshing authentication token
 export interface RefreshTokenCredentials {
-  refresh_token: string
+  refresh_token: string;
 }
 
 // Credentials for verifying user account

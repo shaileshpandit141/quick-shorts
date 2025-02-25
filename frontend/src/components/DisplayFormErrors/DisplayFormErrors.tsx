@@ -1,20 +1,24 @@
-import React from 'react';
-import './DisplayFormErrors.css';
-import { Errors } from 'FeatureTypes';
+import React from "react";
+import "./DisplayFormErrors.css";
+import { Errors } from "FeatureTypes";
 
 interface DisplayFormErrorsProps {
   field: string;
   errors: Errors[];
 }
 
-const DisplayFormErrors: React.FC<DisplayFormErrorsProps> = ({ field, errors }) => {
-  const renderErrors = () => (
+const DisplayFormErrors: React.FC<DisplayFormErrorsProps> = ({
+  field,
+  errors,
+}) => {
+  const renderErrors = () =>
     errors
-      .filter(error => error.field === field)
+      .filter((error) => error.field === field)
       .map((error, index) => (
-        <p className='error-message' key={index}>{error.message}</p>
-      ))
-  );
+        <p className="error-message" key={index}>
+          {error.message}
+        </p>
+      ));
 
   const errorsJSX = renderErrors();
 
@@ -22,11 +26,7 @@ const DisplayFormErrors: React.FC<DisplayFormErrorsProps> = ({ field, errors }) 
     return null;
   }
 
-  return (
-    <div className='display-form-errors'>
-      {errorsJSX}
-    </div>
-  );
+  return <div className="display-form-errors">{errorsJSX}</div>;
 };
 
 export default DisplayFormErrors;

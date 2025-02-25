@@ -1,5 +1,4 @@
-export declare module 'FeatureTypes' {
-
+export declare module "FeatureTypes" {
   export interface Pagination {
     current_page: number;
     total_pages: number;
@@ -13,7 +12,7 @@ export declare module 'FeatureTypes' {
     field: string;
     code: string;
     message: string;
-    details: Record<string, any> | null
+    details: Record<string, any> | null;
   }
 
   export interface RateLimit {
@@ -37,7 +36,7 @@ export declare module 'FeatureTypes' {
    * @template META - Type for the meta property (defaults to Record<string,any>)
    */
   export interface InitialState<DATA = Record<string, any>> {
-    status: 'idle' | 'loading' | 'succeeded' | 'failed';
+    status: "idle" | "loading" | "succeeded" | "failed";
     message: string;
     data: DATA;
     pagination?: Pagination;
@@ -51,7 +50,7 @@ export declare module 'FeatureTypes' {
    * @template META - Type for metadata (defaults to Record<string,any>)
    */
   export interface SuccessResponse<DATA = Record<string, any>> {
-    status: 'succeeded';
+    status: "succeeded";
     message: string;
     data: DATA;
     meta: Meta;
@@ -63,7 +62,7 @@ export declare module 'FeatureTypes' {
    * @template ERRORS - Type for error details (defaults to Record<string,string[]>)
    */
   export interface ErrorResponse {
-    status: 'failed';
+    status: "failed";
     message: string;
     data: null;
     meta: Meta;

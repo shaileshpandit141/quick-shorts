@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "./Toast.css"
+import "./Toast.css";
 import { useDispatch } from "react-redux";
 import { removeToast } from "features/toast";
-import { LazyIcon } from "lazyUtils/LazyIcon/LazyIcon";
+import { RenderLazyIcon } from "lazyUtils";
 
 interface ToastProps {
   id: string;
@@ -11,7 +11,12 @@ interface ToastProps {
   duration?: number;
 }
 
-const Toast: React.FC<ToastProps> = ({ id, type, message, duration = 5000 }) => {
+const Toast: React.FC<ToastProps> = ({
+  id,
+  type,
+  message,
+  duration = 5000,
+}) => {
   const dispatch = useDispatch();
   const [isRemoving, setIsRemoving] = useState(false);
 
@@ -34,22 +39,19 @@ const Toast: React.FC<ToastProps> = ({ id, type, message, duration = 5000 }) => 
   };
 
   return (
-    <div className={`toast toast-${type} ${isRemoving ? 'toast-removed' : ''}`}>
+    <div className={`toast toast-${type} ${isRemoving ? "toast-removed" : ""}`}>
       <section className="toast-icon-container">
         <div className="icon-container">
-          <LazyIcon iconName={type} />
+          <RenderLazyIcon icon={type} />
         </div>
       </section>
       <section className="message-container">
         <p className="error-message">{message}</p>
       </section>
       <section className="button-container">
-        <button
-          className="toast-close-button"
-          onClick={handleClose}
-        >
+        <button className="toast-close-button" onClick={handleClose}>
           <div className="icon-container">
-            <LazyIcon iconName="close" />
+            <RenderLazyIcon icon="close" />
           </div>
         </button>
       </section>

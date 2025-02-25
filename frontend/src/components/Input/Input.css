@@ -19,7 +19,9 @@
     border-radius: 16px;
     border-color: var(--border-color);
     user-select: none;
-    transition: background-color 0.3s, border 0.3s;
+    transition:
+      background-color 0.3s,
+      border 0.3s;
 
     .input-element {
       position: relative;
@@ -123,7 +125,9 @@
     border: var(--border);
     border-color: var(--border-color);
     user-select: none;
-    transition: background-color 0.3s, border 0.3s;
+    transition:
+      background-color 0.3s,
+      border 0.3s;
 
     .input-element {
       position: relative;
@@ -157,7 +161,9 @@
           border-color: var(--border-color);
           padding-inline: 6px;
           border-radius: 999rem;
-          transition: background-color 0.3s, border 0.3s;
+          transition:
+            background-color 0.3s,
+            border 0.3s;
 
           &::first-letter {
             text-transform: capitalize;

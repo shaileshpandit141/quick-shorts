@@ -5,4 +5,4 @@ export type {
   SignoutCredentials,
   VerifyUserAccountCredentials,
 } from "./authServices.types";
-export { authServices } from './authServices'
+export { authServices } from "./authServices";

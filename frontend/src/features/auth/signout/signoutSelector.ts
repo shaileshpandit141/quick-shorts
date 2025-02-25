@@ -7,6 +7,6 @@ import { SignoutInitialState } from "./signout.types";
  */
 export const useSignoutUserSelector = (): SignoutInitialState => {
   return useSelector(
-    (state: { signout: SignoutInitialState }) => state.signout
+    (state: { signout: SignoutInitialState }) => state.signout,
   );
 };
