@@ -19,6 +19,10 @@ ALLOWED_HOSTS = ["*"]
 # ---------------------------------------------------
 CORS_ALLOW_ALL_ORIGINS = True
 
+# Allowed All CSP_FRAME_ANCESTORS by Configuration Content-Security-Policy Settings
+# -----------------------------------------------------------------------------
+CSP_FRAME_ANCESTORS = ["*"]
+
 # SQLite Database Configuration for testing environment
 # -----------------------------------------------------
 DATABASES = {
