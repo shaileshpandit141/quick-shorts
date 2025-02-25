@@ -1,10 +1,10 @@
-.profile {
+.user-profile {
     --hw: 40px;
     position: relative;
     user-select: none;
     transition: var(--transition);
 
-    .profile-action-button {
+    .user-profile-action-button {
         height: var(--hw);
         width: var(--hw);
         padding: 0;
@@ -21,7 +21,7 @@
         }
     }
 
-    .profile-card-container {
+    .user-profile-card-container {
         --height: 225px;
         --width: 225px;
         opacity: 0;
@@ -42,7 +42,7 @@
         border-radius: 16px;
         border: var(--border);
 
-        .profile-header-card {
+        .user-profile-header-card {
             height: fit-content;
             width: var(--width);
             display: flex;
@@ -52,7 +52,7 @@
             padding-inline: 16px;
             row-gap: 8px;
 
-            .profile-image {
+            .user-profile-image {
                 --hw: 70px;
 
                 height: var(--hw);
@@ -72,7 +72,7 @@
                 }
             }
 
-            .profile-info {
+            .user-profile-info {
                 .username {
                     margin: 0;
                     text-align: center;

@@ -1,20 +1,20 @@
 import React, { useRef, useEffect } from 'react';
-import './Profile.css';
+import './UserProfile.css';
 import { NavLink, SignoutButton } from 'components'
 import { useMenu } from 'hooks';
 import { isAuthenticated } from 'utils';
 import { user, useUserSelector } from 'features/user';
 import { buildMediaURL, getEnv } from 'utils';
 
-const Profile: React.FC = (): JSX.Element | null => {
+const UserProfile: React.FC = (): JSX.Element | null => {
 
   const button = useRef(null)
-  const profile = useRef(null)
+  const userProfileRef = useRef(null)
   const { status, data } = useUserSelector()
 
   const { setVisibleStyle, setHiddenStyle } = useMenu({
     buttonRef: button,
-    contentRef: profile
+    contentRef: userProfileRef
   })
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const Profile: React.FC = (): JSX.Element | null => {
   }
 
   return (
-    <div className='profile'>
+    <div className='user-profile'>
       <button
         className='button profile-action-button'
         ref={button}
@@ -50,16 +50,16 @@ const Profile: React.FC = (): JSX.Element | null => {
         )}
       </button>
       <div
-        className='profile-card-container'
-        ref={profile}
+        className='user-profile-card-container'
+        ref={userProfileRef}
       >
-        <div className='profile-header-card'>
-          <section className='profile-image'>
+        <div className='user-profile-header-card'>
+          <section className='user-profile-image'>
             {data?.avatar && (
               <img src={buildMediaURL(data?.avatar)} alt='avatar-image' />
             )}
           </section>
-          <section className='profile-info'>
+          <section className='user-profile-info'>
             <h6 className='username'>{data?.username}</h6>
             <p className='email'>{data?.email}</p>
           </section>
@@ -76,4 +76,4 @@ const Profile: React.FC = (): JSX.Element | null => {
   )
 }
 
-export default Profile;
+export default UserProfile;

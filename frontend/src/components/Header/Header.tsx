@@ -1,6 +1,6 @@
 import React from 'react'
 import './Header.css'
-import { AppLogo, Profile, NavBarLinks } from 'components'
+import { AppLogo, UserProfile, NavBarLinks } from 'components'
 import ToggleThemeButton from 'components/ToggleThemeButton/ToggleThemeButton'
 import InstallAppButton from 'components/InstallAppButton/InstallAppButton'
 import SideBar from 'components/SideBar/SideBar'
@@ -21,7 +21,7 @@ const Header: React.FC = (props) => {
           <div className='other-links'>
             <InstallAppButton />
             <ToggleThemeButton />
-            <Profile />
+            <UserProfile />
           </div>
         </div>
       </div>
