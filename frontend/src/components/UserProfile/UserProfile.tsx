@@ -40,7 +40,7 @@ const UserProfile: React.FC = (): JSX.Element | null => {
 
   return (
     <div className="user-profile">
-      <button className="button profile-action-button" ref={button}>
+      <button className="button-as-icon profile-action-button" ref={button}>
         {data?.avatar && (
           <img src={buildMediaURL(data?.avatar)} alt="avatar-image" />
         )}
