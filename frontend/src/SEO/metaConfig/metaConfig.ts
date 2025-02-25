@@ -1,4 +1,4 @@
-export const appMetaConfig = {
+export const metaConfig = {
   appName: "React",
   canonical: "https://www.mywebsite.com/",
   metaTags: {

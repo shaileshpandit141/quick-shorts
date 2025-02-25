@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { AddSEOProps } from "./AddSEO.types";
-import { appMetaConfig } from "SEO/appMetaConfig/appMetaConfig";
+import { metaConfig } from "SEO/metaConfig/metaConfig";
 
 export const AddSEO: React.FC<AddSEOProps> = ({
   title,
@@ -10,7 +10,7 @@ export const AddSEO: React.FC<AddSEOProps> = ({
   robots = "index, follow",
   metaTags = {},
 }) => {
-  const appName = appMetaConfig.appName;
+  const appName = metaConfig.appName;
 
   // Function to update or create meta tags
   const updateMetaTag = (name: string, content: string, isProperty = false) => {
@@ -37,7 +37,7 @@ export const AddSEO: React.FC<AddSEOProps> = ({
       description,
       keywords,
       robots,
-      canonical: canonical || appMetaConfig.canonical,
+      canonical: canonical || metaConfig.canonical,
       "og:title": title ? `${appName} • ${title}` : appName,
       "og:description": description,
       "og:type": "website",
@@ -47,7 +47,7 @@ export const AddSEO: React.FC<AddSEOProps> = ({
       "twitter:description": description,
       "twitter:card": "summary_large_image",
       "twitter:site": "@mywebsite",
-      ...appMetaConfig.metaTags,
+      ...metaConfig.metaTags,
       ...metaTags,
     }),
     [title, description, keywords, canonical, robots, metaTags, appName],

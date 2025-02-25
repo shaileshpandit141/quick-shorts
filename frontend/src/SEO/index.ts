@@ -1,2 +1,2 @@
 export { AddSEO } from "./AddSEO/AddSEO";
-export { appMetaConfig } from "./appMetaConfig/appMetaConfig";
+export { metaConfig } from "./metaConfig/metaConfig";

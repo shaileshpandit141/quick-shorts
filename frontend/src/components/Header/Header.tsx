@@ -1,8 +1,12 @@
 import React from "react";
 import "./Header.css";
-import { AppLogo, UserProfile, NavBarLinks } from "components";
-import ToggleThemeButton from "components/ToggleThemeButton/ToggleThemeButton";
-import InstallAppButton from "components/InstallAppButton/InstallAppButton";
+import {
+  AppLogo,
+  UserProfile,
+  NavBarLinks,
+  ToggleThemeButton,
+  InstallAppButton,
+} from "components";
 import SideBar from "components/SideBar/SideBar";
 
 const Header: React.FC = (props) => {
