@@ -56,14 +56,16 @@ const UserProfile: React.FC = (): JSX.Element | null => {
             <h6 className="username">{data?.username}</h6>
             <p className="email">{data?.email}</p>
           </section>
-          <NavLink
-            to={`${getEnv("BASE_API_URL")}/admin/`}
-            type="link"
-            className="edit-profile"
-            target="_blank"
-          >
-            Django Admin
-          </NavLink>
+          {(data?.is_superuser || data?.is_staff) && (
+            <NavLink
+              to={`${getEnv("BASE_API_URL")}/admin/`}
+              type="link"
+              className="edit-profile"
+              target="_blank"
+            >
+              Django Admin
+            </NavLink>
+          )}
           <SignoutButton />
         </div>
       </div>
