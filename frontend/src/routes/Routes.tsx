@@ -16,7 +16,7 @@ import IndexPageSkeleton from "pages/IndexPage/IndexPageSkeleton";
 
 // Lazy-loaded Page Imports
 const IndexPage = importLazyModule(() => import("pages/IndexPage/IndexPage"));
-const Home = importLazyModule(() => import("pages/home/Home"));
+const HomePage = importLazyModule(() => import("pages/HomePage/HomePage"));
 const SigninPage = importLazyModule(
   () => import("pages/SigninPage/SigninPage"),
 );
@@ -57,7 +57,7 @@ const AppRoutes: React.FC = () => {
                 path="home"
                 element={
                   <RenderLazyModule
-                    element={<Home />}
+                    element={<HomePage />}
                     fallback={<PageLoader />}
                   />
                 }
