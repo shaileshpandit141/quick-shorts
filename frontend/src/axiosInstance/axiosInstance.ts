@@ -43,8 +43,6 @@ axiosInstance.interceptors.response.use(
             const token = store.getState().signin.data.access_token;
             if (token) {
               clearInterval(checkTokenUpdate);
-              console.log("New Token After Refresh: ", token);
-
               request.headers["Authorization"] = `Bearer ${token}`;
               resolve(axiosInstance(request)); // Retry request with new token
             }
