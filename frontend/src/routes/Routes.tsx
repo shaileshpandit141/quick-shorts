@@ -1,14 +1,10 @@
-// Named Imports (external libraries).
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { importLazyModule, RenderLazyModule } from "lazyUtils";
 
 // Default Imports (user-defined layout and pages).
-import PrivateRoute from "./PrivateRoute";
-import PublicRoute from "./PublicRoute";
-import RootLayout from "layouts/RootLayout/RootLayout";
-import MainLayout from "layouts/MainLayout/MainLayout";
-import AuthLayout from "layouts/AuthLayout/AuthLayout";
+import { PrivateRoute, PublicRoute } from "./RoutesPrivacy";
+import { RootLayout, MainLayout, AuthLayout } from "Layouts";
 
 // Default Page loader Imports
 import { PageLoader } from "components";
@@ -37,8 +33,24 @@ const AppRoutes: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<RootLayout />}>
+
+          {/* Routes with header and Footer */}
+          {/* ----------------------------- */}
           <Route element={<MainLayout />}>
-            {/* Public Routes */}
+            {/* Private Routes with header and Footer */}
+            <Route element={<PrivateRoute />}>
+              <Route
+                path="/home"
+                element={
+                  <RenderLazyModule
+                    element={<HomePage />}
+                    fallback={<PageLoader />}
+                  />
+                }
+              />
+            </Route>
+
+            {/* Public Routes with header and Footer */}
             <Route element={<PublicRoute />}>
               <Route
                 index
@@ -50,53 +62,50 @@ const AppRoutes: React.FC = () => {
                 }
               />
             </Route>
+          </Route>
 
-            {/* Private Routes */}
-            <Route element={<PrivateRoute />}>
-              <Route
-                path="home"
-                element={
-                  <RenderLazyModule
-                    element={<HomePage />}
-                    fallback={<PageLoader />}
-                  />
-                }
-              />
+          {/* Routes without header and Footer */}
+          {/* -------------------------------- */}
+          <Route>
+            {/* Private Routes without header and Footer */}
+            <Route element={<PrivateRoute />}></Route>
+
+            {/* Public Routes without header and Footer */}
+            <Route element={<PublicRoute />}>
+              <Route path="auth" element={<AuthLayout />}>
+                <Route
+                  path="sign-in"
+                  element={
+                    <RenderLazyModule
+                      element={<SigninPage />}
+                      fallback={<PageLoader />}
+                    />
+                  }
+                />
+                <Route
+                  path="sign-up"
+                  element={
+                    <RenderLazyModule
+                      element={<SignupPage />}
+                      fallback={<PageLoader />}
+                    />
+                  }
+                />
+                <Route
+                  path="verify-user-account/:token"
+                  element={
+                    <RenderLazyModule
+                      element={<VerifyUserAccountPage />}
+                      fallback={<PageLoader />}
+                    />
+                  }
+                />
+              </Route>
             </Route>
           </Route>
 
-          {/* Auth Routes without header */}
-          <Route path="auth" element={<AuthLayout />}>
-            <Route
-              path="sign-in"
-              element={
-                <RenderLazyModule
-                  element={<SigninPage />}
-                  fallback={<PageLoader />}
-                />
-              }
-            />
-            <Route
-              path="sign-up"
-              element={
-                <RenderLazyModule
-                  element={<SignupPage />}
-                  fallback={<PageLoader />}
-                />
-              }
-            />
-            <Route
-              path="verify-user-account/:token"
-              element={
-                <RenderLazyModule
-                  element={<VerifyUserAccountPage />}
-                  fallback={<PageLoader />}
-                />
-              }
-            />
-          </Route>
-
           {/* Catch-all route for 404 Not Found Page */}
+          {/* -------------------------------------- */}
           <Route
             path="*"
             element={
