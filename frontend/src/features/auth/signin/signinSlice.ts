@@ -44,6 +44,11 @@ const signinSlice = createSlice({
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
     },
+    resetSigninErrorsState: (state) => {
+      state.status = "idle";
+      state.message = "";
+      state.errors = [];
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -110,5 +115,5 @@ const signinSlice = createSlice({
 
 export const {
   reducer: signinReducer,
-  actions: { resetSigninState },
+  actions: { resetSigninState, resetSigninErrorsState },
 } = signinSlice;

@@ -4,7 +4,7 @@ import {
   refreshTokenAction,
   googleSigninAction,
 } from "./signinActions";
-import { resetSigninState } from "./signinSlice";
+import { resetSigninState, resetSigninErrorsState } from "./signinSlice";
 import {
   SigninCredentials,
   GoogleSigninCredentials,
@@ -18,6 +18,11 @@ export const refreshToken = (): void => {
 // Dispatch a reset sign in state
 export const resetSigninUser = (): void => {
   store.dispatch(resetSigninState());
+};
+
+// Dispatch a reset sign in state
+export const resetSigninUserErrors = (): void => {
+  store.dispatch(resetSigninErrorsState());
 };
 
 // Dispatch a user action with the provided credentials

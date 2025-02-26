@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./SigninPage.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { AddSEO } from "SEO";
-import { useFormDataChange } from "hooks";
+import { useFormDataChange, useResetOnRouteChange } from "hooks";
 import { isAuthenticated } from "utils";
 import {
   Input,
@@ -13,7 +13,7 @@ import {
 } from "components";
 import {
   signinUser,
-  resetSigninUser,
+  resetSigninUserErrors,
   useSigninUserSelector,
 } from "features/auth/signin";
 import { SigninCredentials } from "services/authServices";
@@ -40,13 +40,17 @@ const SigninPage: React.FC = () => {
       navigate("/home");
     } else if (status === "failed") {
       triggerToast("error", message);
-      resetSigninUser();
     }
   }, [status, message, navigate]);
+
+  useResetOnRouteChange(() => {
+    resetSigninUserErrors();
+  })
 
   if (isAuthenticated()) {
     return <Navigate to="/home" />;
   }
+
 
   return (
     <div className="signin-page">
