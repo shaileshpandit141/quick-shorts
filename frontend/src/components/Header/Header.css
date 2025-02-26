@@ -14,21 +14,21 @@
     display: grid;
     grid-template-columns: auto auto 1fr;
     align-items: center;
-    column-gap: 8px;
+    column-gap: 4px;
     justify-content: space-between;
 
     .left-header {
       height: fit-content;
       display: flex;
       align-items: center;
-      column-gap: 8px;
+      column-gap: 4px;
 
       .left-header-link {
         width: fit-content;
         display: flex;
         align-items: center;
         justify-content: center;
-        column-gap: 8px;
+        column-gap: 4px;
         overflow: hidden;
       }
     }
@@ -51,7 +51,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        column-gap: 8px;
+        column-gap: 4px;
         padding-left: 8px;
       }
     }

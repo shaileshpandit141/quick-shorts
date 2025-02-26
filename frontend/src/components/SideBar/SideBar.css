@@ -19,7 +19,7 @@
     background-color: var(--card-background);
     height: 100%;
     width: 100%;
-    max-width: 250px;
+    max-width: 275px;
     box-shadow: var(--box-shadow);
     transform: translateX(-102%);
     transition:
@@ -49,7 +49,7 @@
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          column-gap: 8px;
+          column-gap: 4px;
         }
 
         .header-buttons-right {
