@@ -1,6 +1,6 @@
-# Django, React and TypeScript Boilerplate with JWT Authentication
+# Django, React and TypeScript Initial Code with JWT Authentication
 
-This project is a boilerplate for setting up a web application using Django for the backend with JWT (JSON Web Token) authentication, and React with TypeScript for the frontend.
+This project is a Initial Code for setting up a web application using Django for the backend with JWT (JSON Web Token) authentication, and React with TypeScript for the frontend.
 
 ## Features
 
@@ -23,14 +23,14 @@ This project is a boilerplate for setting up a web application using Django for 
 1. **Clone the repository:**
 
   ```bash
-  git clone https://github.com/yourusername/your-repo-name.git
-  cd your-repo-name
+  git clone https://github.com/shaileshpandit141/django-react-typescript-initial-code.git
+  cd django-react-typescript-initial-code
   ```
 
 2. **Create a virtual environment:**
 
   ```bash
-  python3 -m venv venv
+  python3 -m venv .venv
   source venv/bin/activate
   ```
 
@@ -45,40 +45,58 @@ This project is a boilerplate for setting up a web application using Django for 
   Create a `.env` file in the root directory and add the following:
 
   ```plaintext
+  # SECRET_KEY Configuration Settings
+  # ---------------------------------
+  SECRET_KEY=Django_key
+
+  # Server Configuration Settings
+  # -----------------------------
+  HOST=localhost
+  PORT=8000
 
   # DJANGO_ENV mode as development, production, or testing
+  # ------------------------------------------------------
   DJANGO_ENV=development
   # DJANGO_ENV=production
   # DJANGO_ENV=testing
 
-  # Server Configuration
-  HOST=localhost
-  PORT=8000
+  # FRONTEND_URL Configuration Settings
+  # -----------------------------------
   FRONTEND_URL=http://localhost:3000
 
-  # Application Settings
-  SECRET_KEY=your_secret_key
+  # Access Control Configuration Settings, (Only for production)
+  # ------------------------------------------------------------
+  # ALLOWED_HOSTS=localhost,127.0.0.1,192.168.0.116
+  # CORS_ALLOWED_ORIGINS=http://localhost:8000,http://127.0.0.1:8000,http://192.168.0.116:8000
 
-  # # Access Control, (Only for production)
-  # ALLOWED_HOSTS=http:localhost,127.0.0.1
-  # CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+  # PostgreSQL DB Configuration Settings, (Only for production)
+  # -----------------------------------------------------------
+  DB_NAME=postgres
+  DB_USER=postgres
+  DB_PASSWORD=postgres
+  DB_HOST=localhost
+  DB_PORT=5432
 
-  # PostgreSQL DB Configuration Settings
-  # DB_NAME=your_db_name
-  # DB_USER=your_db_user
-  # DB_PASSWORD=your_db_password
-  # DB_HOST=localhost
-  # DB_PORT=5432
+  # Redis configuration Settings, (Only for production)
+  # ---------------------------------------------------
+  REDIS_CACHE_LOCATION=redis://127.0.0.1:6379/1
 
-  # Email Configuration Settings
+  # Email Configuration Settings, (Only for production)
+  # ---------------------------------------------------
   EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
   EMAIL_HOST=smtp.gmail.com
   EMAIL_PORT=587
   EMAIL_USE_TLS=True
   EMAIL_USE_SSL=False
-  EMAIL_HOST_USER=your_email@example.com
-  EMAIL_HOST_PASSWORD=your_email_password
-  DEFAULT_FROM_EMAIL=your_email@example.com
+  EMAIL_HOST_USER=email_host_user@gmail.com
+  EMAIL_HOST_PASSWORD=email_host_password
+  DEFAULT_FROM_EMAIL=default_from_email
+
+  # Google OAuth2 Configuration Settings
+  # ------------------------------------
+  GOOGLE_CLIENT_ID=Google_Client_id
+  GOOGLE_CLIENT_SECRET=Google_Client_Secret
+  GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback
   ```
 
 5. **Apply migrations:**
@@ -107,26 +125,33 @@ This project is a boilerplate for setting up a web application using Django for 
   cd frontend
   ```
 
-2. **Create new TypeScript React app:**
-
-  ```bash
-  npx create-react-app . --template typescript
-  ```
-
-3. **Install dependencies:**
+2. **Install dependencies:**
 
   ```bash
   npm install
   ```
 
-4. **Set up environment variables:**
+3. **Set up environment variables:**
 
   Create a `.env` file in the root directory and add the following:
 
   ```plaintext
-  HOST=localhost
+  # Server Configuration Settings
+  # -----------------------------
+  HOST=192.168.0.145
   PORT=3000
-  REACT_APP_BASE_API_URL=http://localhost:8000/
+
+  # Base API URL endpoint Configuration Settings
+  # --------------------------------------------
+  REACT_APP_BASE_API_URL=http://192.168.0.145:8000
+
+  # Google Client Id Configuration Settings
+  # ---------------------------------------
+  REACT_APP_GOOGLE_CLIENT_ID=Google_Client_Id
+
+  # Base Media URL Configuration Settings
+  # -------------------------------------
+  REACT_APP_BASE_MEDIA_URL=http://192.168.0.145:8000
   ```
   Note: `HOST` name is same as backend `HOST` name.
 
@@ -138,44 +163,52 @@ This project is a boilerplate for setting up a web application using Django for 
 
 ### Configuration
 
+### Performing Authentication Actions API's
 
 ### Performing Authentication Actions API's
 
 - **Registration**:
-Send a POST request to `http://localhost:8000/api/v1/auth/signup/` with user details (email, password1, password2).
+Send a POST request to `http://localhost:8000/api/v1/auth/signup/` with user details.
 
 - **Login**:
-Send a POST request to `http://localhost:8000/api/v1/auth/token/` with email and password to get access and refresh tokens.
-
-- **Logout**:
-Send a POST request to `http://localhost:8000/api/v1/auth/signout/` to log out the user and blacklist the refresh token.
-
-- **Password Reset**:
-Send a POST request to `http://localhost:8000/api/v1/auth/password/reset/` with the user's email.
-
-- **Password Reset Verification**:
-Send a POST request to `http://localhost:8000/api/v1/auth/password/reset/confirm/` with the new password and token received from the email.
-
-- **Email Verification**:
-Send a POST request to `http://localhost:8000/api/v1/auth/signup/verify-email/` with the verification key received in the email.
-
-- **Re Email Verification**:
-Send a POST request to `http://localhost:8000/api/v1/auth/signup/resend-email-verification/` with email to get key received in the email.
+Send a POST request to `http://localhost:8000/api/v1/auth/signin/token/` for access and refresh tokens.
 
 - **Token Refresh**:
-Send a POST request to `http://localhost:8000/api/v1/auth/token/refresh/` with the refresh token to get a new access token.
+Send a POST request to `http://localhost:8000/api/v1/auth/signin/token/refresh/` with refresh token.
 
-- **Access the user**:
-Send a POST request to `http://localhost:8000/api/v1/auth/user/` with the access token to get a userInfo.
+- **Logout**:
+Send a POST request to `http://localhost:8000/api/v1/auth/signout/` to log out.
 
-- **Access a protected endpoint for test**:
-Send a POST request to `http://localhost:8000/api/v1/auth/protected/` with the access token to get a protected route data.
+- **Account Verification**:
+Send a POST request to `http://localhost:8000/api/v1/auth/verify-user-account/` for verification.
 
+- **Account Verification Confirmation**:
+Send a POST request to `http://localhost:8000/api/v1/auth/verify-user-account/confirm/`.
 
+- **Change Password**:
+Send a POST request to `http://localhost:8000/api/v1/auth/change-password/`.
+
+- **Forgot Password**:
+Send a POST request to `http://localhost:8000/api/v1/auth/forgot-password/`.
+
+- **Forgot Password Confirmation**:
+Send a POST request to `http://localhost:8000/api/v1/auth/forgot-password/confirm/`.
+
+- **Deactivate Account**:
+Send a POST request to `http://localhost:8000/api/v1/auth/deactivate-account/`.
+
+- **User Info**:
+Send a GET request to `http://localhost:8000/api/v1/auth/user/`.
+
+- **Google Sign In**:
+Send a GET request to `http://localhost:8000/api/v1/auth/google/signin/`.
+
+- **Google Callback**:
+Send a GET request to `http://localhost:8000/api/v1/auth/google/callback/`.
 ### API's Usages using .rest file
 
 **Register a new user:**
-```
+```json
 POST http://localhost:8000/api/v1/auth/signup/
 Content-Type: application/json
 
@@ -187,32 +220,66 @@ Content-Type: application/json
 ```
 
 Success response:
-```
+```json
 {
-  "status": "success",
-  "message": "The request was successful",
+  "status": "succeeded",
+  "status_code": 200,
+  "message": "Verification e-mail sent.",
   "data": {
-    "detail": "Verification e-mail sent."
+    "detail": "Request was successful."
   },
-  "meta": null
+  "errors": [],
+  "meta": {
+    "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
+    "timestamp": "2025-02-26T09:49:34.288704",
+    "response_time": "0.00717 seconds",
+    "documentation_url": "N/A",
+    "rate_limits": [
+      {
+        "type": "throttle_type",
+        "limit": 1000,
+        "remaining": 900,
+        "reset_time": "2025-02-26T10:49:34.283675+00:00",
+        "retry_after": "3599 seconds"
+      }
+    ]
+  }
 }
 ```
 
 Error response:
-```
+```json
 {
-  "status": "error",
+  "status": "succeeded",
+  "status_code": 400,
   "message": "The request was not successful",
-  "error": {
-    "email": "Invalid email address",
-    "password1": "Invalid password1",
-    "password2": "Invalid password2"
+  "data": null,
+  "errors": [{
+    "type": "validation_error",
+    "code": "invalid_email",
+    "message": "Invalid email address",
+    "details": {}
+  }],
+  "meta": {
+    "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
+    "timestamp": "2025-02-26T09:49:34.288704",
+    "response_time": "0.00717 seconds",
+    "documentation_url": "N/A",
+    "rate_limits": [
+      {
+        "type": "throttle_type",
+        "limit": 1000,
+        "remaining": 900,
+        "reset_time": "2025-02-26T10:49:34.283675+00:00",
+        "retry_after": "3599 seconds"
+      }
+    ]
   }
 }
 ```
 
 **Login to get JWT tokens:**
-```
+```json
 POST http://localhost:8000/api/v1/auth/token/
 Content-Type: application/json
 
@@ -223,31 +290,67 @@ Content-Type: application/json
 ```
 
 Success response:
-```
+```json
 {
-  "status": "success",
+  "status": "succeeded",
+  "status_code": 200,
   "message": "The request was successful",
   "data": {
     "access_token": "jwt_access_token",
     "refresh_token": "jwt_refresh_token"
   },
-  "meta": null
+  "errors": [],
+  "meta": {
+    "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
+    "timestamp": "2025-02-26T09:49:34.288704",
+    "response_time": "0.00717 seconds",
+    "documentation_url": "N/A",
+    "rate_limits": [
+      {
+        "type": "throttle_type",
+        "limit": 1000,
+        "remaining": 900,
+        "reset_time": "2025-02-26T10:49:34.283675+00:00",
+        "retry_after": "3599 seconds"
+      }
+    ]
+  }
 }
 ```
 
 Error response:
-```
+```json
 {
-  "status": "error",
+  "status": "succeeded",
+  "status_code": 400,
   "message": "The request was not successful",
-  "error": {
-    "detail": "No active account found with the given credentials"
+  "data": null,
+  "errors": [{
+    "type": "authentication_error",
+    "code": "invalid_credentials",
+    "message": "No active account found with the given credentials",
+    "details": {}
+  }],
+  "meta": {
+    "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
+    "timestamp": "2025-02-26T09:49:34.288704",
+    "response_time": "0.00717 seconds",
+    "documentation_url": "N/A",
+    "rate_limits": [
+      {
+        "type": "throttle_type",
+        "limit": 1000,
+        "remaining": 900,
+        "reset_time": "2025-02-26T10:49:34.283675+00:00",
+        "retry_after": "3599 seconds"
+      }
+    ]
   }
 }
 ```
 
 **Logout (Blacklist the refresh token):**
-```
+```json
 POST http://localhost:8000/api/v1/auth/logout/
 Content-Type: application/json
 Authorization: Bearer jwt_access_token
@@ -258,19 +361,35 @@ Authorization: Bearer jwt_access_token
 ```
 
 Success response:
-```
+```json
 {
-  "status": "success",
-  "message": "The request was successful",
+  "status": "succeeded",
+  "status_code": 200,
+  "message": "You have signed out successfully.",
   "data": {
-    "detail": "You have signed out successfully."
+    "detail": "Refresh token request was successfull"
   },
-  "meta": null
+  "errors": [],
+  "meta": {
+    "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
+    "timestamp": "2025-02-26T09:49:34.288704",
+    "response_time": "0.00717 seconds",
+    "documentation_url": "N/A",
+    "rate_limits": [
+      {
+        "type": "throttle_type",
+        "limit": 1000,
+        "remaining": 900,
+        "reset_time": "2025-02-26T10:49:34.283675+00:00",
+        "retry_after": "3599 seconds"
+      }
+    ]
+  }
 }
 ```
 
 **Request password reset:**
-```
+```json
 POST http://localhost:8000/api/v1/auth/password/reset/
 Content-Type: application/json
 
@@ -280,19 +399,35 @@ Content-Type: application/json
 ```
 
 Success response:
-```
+```json
 {
-  "status": "success",
-  "message": "The request was successful",
+  "status": "succeeded",
+  "status_code": 200,
+  "message": "Password reset e-mail has been sent.",
   "data": {
-    "detail": "Password reset e-mail has been sent."
+    "detail": "Password reset link has been send to your email."
   },
-  "meta": null
+  "errors": [],
+  "meta": {
+    "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
+    "timestamp": "2025-02-26T09:49:34.288704",
+    "response_time": "0.00717 seconds",
+    "documentation_url": "N/A",
+    "rate_limits": [
+      {
+        "type": "throttle_type",
+        "limit": 1000,
+        "remaining": 900,
+        "reset_time": "2025-02-26T10:49:34.283675+00:00",
+        "retry_after": "3599 seconds"
+      }
+    ]
+  }
 }
 ```
 
 **Confirm password reset:**
-```
+```json
 POST http://localhost:8000/api/v1/auth/password/reset/confirm/
 Content-Type: application/json
 
@@ -305,59 +440,107 @@ Content-Type: application/json
 ```
 
 Success response:
-```
+```json
 {
-  "status": "success",
-  "message": "The request was successful",
+  "status": "succeeded",
+  "status_code": 200,
+  "message": "Password has been reset with the new password.",
   "data": {
-    "detail": "Password has been reset with the new password."
+    "detail": "Your password reset successful."
   },
-  "meta": null
+  "errors": [],
+  "meta": {
+    "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
+    "timestamp": "2025-02-26T09:49:34.288704",
+    "response_time": "0.00717 seconds",
+    "documentation_url": "N/A",
+    "rate_limits": [
+      {
+        "type": "throttle_type",
+        "limit": 1000,
+        "remaining": 900,
+        "reset_time": "2025-02-26T10:49:34.283675+00:00",
+        "retry_after": "3599 seconds"
+      }
+    ]
+  }
 }
 ```
 
 **Verify email:**
-```
+```json
 POST http://localhost:8000/api/v1/auth/signup/verify-email/
 Content-Type: application/json
 
 {
-  "key": "verification_key_from_email"
+  "token": "verification_token"
 }
 ```
 
 Success response:
-```
+```json
 {
-  "status": "success",
-  "message": "The request was successful",
+  "status": "succeeded",
+  "status_code": 200,
+  "message": "Account already verified",
   "data": {
-    "detail": "ok"
+    "detail": "Account verification email was successful"
   },
-  "meta": null
+  "errors": [],
+  "meta": {
+    "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
+    "timestamp": "2025-02-26T09:49:34.288704",
+    "response_time": "0.00717 seconds",
+    "documentation_url": "N/A",
+    "rate_limits": [
+      {
+        "type": "throttle_type",
+        "limit": 1000,
+        "remaining": 900,
+        "reset_time": "2025-02-26T10:49:34.283675+00:00",
+        "retry_after": "3599 seconds"
+      }
+    ]
+  }
 }
 ```
 
 **Resend Verification Email:**
-```
+```json
 POST http://localhost:8000/api/v1/auth/signup/resend-email-verification/
 Authorization: Bearer <your_jwt_token>
 ```
 
 Success response:
-```
+```json
 {
-  "status": "success",
-  "message": "The request was successful",
+  "status": "succeeded",
+  "status_code": 200,
+  "message": "Verification e-mail sent",
   "data": {
-    "detail": "Verification e-mail sent"
+    "detail": "Reset Account Verification link has been send to your email."
   },
-  "meta": null
+  "errors": [],
+  "meta": {
+    "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
+    "timestamp": "2025-02-26T09:49:34.288704",
+    "response_time": "0.00717 seconds",
+    "documentation_url": "N/A",
+    "rate_limits": [
+      {
+        "type": "throttle_type",
+        "limit": 1000,
+        "remaining": 900,
+        "reset_time": "2025-02-26T10:49:34.283675+00:00",
+        "retry_after": "3599 seconds"
+      }
+    ]
+  }
 }
 ```
 
 **Refresh JWT tokens:**
-```
+```json
 POST http://localhost:8000/api/v1/auth/token/refresh/
 Content-Type: application/json
 
@@ -367,27 +550,44 @@ Content-Type: application/json
 ```
 
 Success response:
-```
+```json
 {
-  "status": "success",
+  "status": "succeeded",
+  "status_code": 200,
   "message": "The request was successful",
   "data": {
     "access_token": "new_jwt_access_token"
   },
-  "meta": null
+  "errors": [],
+  "meta": {
+    "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
+    "timestamp": "2025-02-26T09:49:34.288704",
+    "response_time": "0.00717 seconds",
+    "documentation_url": "N/A",
+    "rate_limits": [
+      {
+        "type": "throttle_type",
+        "limit": 1000,
+        "remaining": 900,
+        "reset_time": "2025-02-26T10:49:34.283675+00:00",
+        "retry_after": "3599 seconds"
+      }
+    ]
+  }
 }
 ```
 
 **Access the current user:**
-```
+```json
 GET http://localhost:8000/api/v1/auth/user/
 Authorization: Bearer jwt_access_token
 ```
 
 Success response:
-```
+```json
 {
-  "status": "success",
+  "status": "succeeded",
+  "status_code": 200,
   "message": "The request was successful",
   "data": {
     "id": 1,
@@ -395,25 +595,56 @@ Success response:
     "first_name": "first_name",
     "last_name": "last_name"
   },
-  "meta": null
+  "errors": [],
+  "meta": {
+    "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
+    "timestamp": "2025-02-26T09:49:34.288704",
+    "response_time": "0.00717 seconds",
+    "documentation_url": "N/A",
+    "rate_limits": [
+      {
+        "type": "throttle_type",
+        "limit": 1000,
+        "remaining": 900,
+        "reset_time": "2025-02-26T10:49:34.283675+00:00",
+        "retry_after": "3599 seconds"
+      }
+    ]
+  }
 }
 ```
 
 **Access a protected endpoint:**
-```
+```json
 GET http://localhost:8000/api/v1/auth/protected/
 Authorization: Bearer jwt_access_token
 ```
 
 Success response:
-```
+```json
 {
-  "status": "success",
+  "status": "succeeded",
+  "status_code": 200,
   "message": "The request was successful",
   "data": {
     "detail": "This is a protected view"
   },
-  "meta": null
+  "errors": [],
+  "meta": {
+    "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
+    "timestamp": "2025-02-26T09:49:34.288704",
+    "response_time": "0.00717 seconds",
+    "documentation_url": "N/A",
+    "rate_limits": [
+      {
+        "type": "throttle_type",
+        "limit": 1000,
+        "remaining": 900,
+        "reset_time": "2025-02-26T10:49:34.283675+00:00",
+        "retry_after": "3599 seconds"
+      }
+    ]
+  }
 }
 ```
 
