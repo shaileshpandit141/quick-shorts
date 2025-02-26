@@ -21,10 +21,6 @@ ALLOWED_HOSTS = config("HOST", cast=Csv())
 # -----------------------
 CORS_ALLOWED_ORIGINS = config("FRONTEND_URL", cast=Csv())
 
-# Allowed CSP_FRAME_ANCESTORS by Configuration Content-Security-Policy Settings
-# -----------------------------------------------------------------------------
-CSP_FRAME_ANCESTORS = ["'self'", config("FRONTEND_URL", cast=str)]
-
 # SQLite Database Configuration for development environment
 # ---------------------------------------------------------
 DATABASES = {

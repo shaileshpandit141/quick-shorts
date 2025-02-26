@@ -21,12 +21,6 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 # -----------------------
 CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
 
-# Allowed CSP_FRAME_ANCESTORS by Configuration Content-Security-Policy Settings
-# -----------------------------------------------------------------------------
-CSP_FRAME_ANCESTORS = config("CSP_FRAME_ANCESTORS", cast=Csv(), default=[])
-if isinstance(CSP_FRAME_ANCESTORS, list):
-    CSP_FRAME_ANCESTORS = ["'self'", *CSP_FRAME_ANCESTORS]
-
 # PostgreSQL database configuration Settings
 # ------------------------------------------
 DATABASES = {

@@ -1,4 +1,3 @@
-from email.policy import default
 import os
 import sys
 from datetime import timedelta  # type: ignore
@@ -51,7 +50,6 @@ INSTALLED_APPS += [
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
-    "csp",
 ]
 
 # User Define applications Settings
@@ -72,7 +70,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "csp.middleware.CSPMiddleware",
     "middlewares.ResponseMiddleware",
 ]
 
