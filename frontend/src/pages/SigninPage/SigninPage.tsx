@@ -45,12 +45,11 @@ const SigninPage: React.FC = () => {
 
   useResetOnRouteChange(() => {
     resetSigninUserErrors();
-  })
+  });
 
   if (isAuthenticated()) {
     return <Navigate to="/home" />;
   }
-
 
   return (
     <div className="signin-page">

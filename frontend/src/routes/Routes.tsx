@@ -8,32 +8,25 @@ import { RootLayout, MainLayout, AuthLayout } from "Layouts";
 
 // Default Page loader Imports
 import { PageLoader } from "components";
-import IndexPageSkeleton from "pages/IndexPage/IndexPageSkeleton";
+import IndexPageSkeleton from "pages/IndexPage";
 
 // Lazy-loaded Page Imports
-const IndexPage = importLazyModule(() => import("pages/IndexPage/IndexPage"));
-const HomePage = importLazyModule(() => import("pages/HomePage/HomePage"));
-const SigninPage = importLazyModule(
-  () => import("pages/SigninPage/SigninPage"),
-);
-const SignupPage = importLazyModule(
-  () => import("pages/SignupPage/SignupPage"),
-);
+const IndexPage = importLazyModule(() => import("pages/IndexPage"));
+const HomePage = importLazyModule(() => import("pages/HomePage"));
+const SigninPage = importLazyModule(() => import("pages/SigninPage"));
+const SignupPage = importLazyModule(() => import("pages/SignupPage"));
 const VerifyUserAccountPage = importLazyModule(
-  () => import("pages/VerifyUserAccountPage/VerifyUserAccountPage"),
+  () => import("pages/VerifyUserAccountPage"),
 );
 
-// 404 Not Found Page
-const NotFoundPage = importLazyModule(
-  () => import("pages/NotFoundPage/NotFoundPage"),
-);
+// Lazy-loaded 404 Not Found Page
+const NotFoundPage = importLazyModule(() => import("pages/NotFoundPage"));
 
 const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<RootLayout />}>
-
           {/* Routes with header and Footer */}
           {/* ----------------------------- */}
           <Route element={<MainLayout />}>

@@ -1,2 +1,2 @@
-import IndexPage from "./IndexPage";
-import IndexPageSkeleton from "./IndexPageSkeleton";
+export { default } from "./IndexPage";
+export { default as IndexPageSkeleton } from "./IndexPageSkeleton";

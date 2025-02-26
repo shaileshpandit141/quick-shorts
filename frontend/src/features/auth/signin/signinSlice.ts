@@ -48,7 +48,7 @@ const signinSlice = createSlice({
       state.status = "idle";
       state.message = "";
       state.errors = [];
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
