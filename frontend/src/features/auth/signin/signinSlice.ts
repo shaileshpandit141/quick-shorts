@@ -105,10 +105,17 @@ const signinSlice = createSlice({
         state.meta = meta;
       })
       .addCase(refreshTokenAction.rejected, (state, action) => {
-        const { status, message, errors } = action.payload as ErrorResponse;
+        const { status, message, errors, meta } =
+          action.payload as ErrorResponse;
         state.status = status;
         state.message = message;
+        state.meta = meta;
         console.error(errors);
+        state.errors = [];
+        state.data.access_token = null;
+        state.data.refresh_token = null;
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
       });
   },
 });

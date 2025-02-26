@@ -2,7 +2,6 @@
  * Axios instance configuration with authentication interceptors
  * Handles automatic token injection and refresh functionality
  */
-
 import axios from "axios";
 import { store } from "store/store";
 import { refreshToken, resetSigninUser } from "features/auth/signin";
@@ -26,27 +25,37 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-// Response interceptor - handles 401 errors by refreshing token
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const request = error.config;
+
     if (error.response?.status === 401 && !request._retry) {
+      request._retry = true;
+
       try {
-        request._retry = true;
+        // Call refreshToken (it updates Redux state internally)
         refreshToken();
-        const token = store.getState().signin.data.access_token;
-        if (!token) {
-          return Promise.reject(error);
-        }
-        request.headers = request.headers || {};
-        request.headers["Authorization"] = `Bearer ${token}`;
-        return axiosInstance(request);
+
+        // Wait for Redux store to update before getting the new token
+        return new Promise((resolve) => {
+          const checkTokenUpdate = setInterval(() => {
+            const token = store.getState().signin.data.access_token;
+            if (token) {
+              clearInterval(checkTokenUpdate);
+              console.log("New Token After Refresh: ", token);
+
+              request.headers["Authorization"] = `Bearer ${token}`;
+              resolve(axiosInstance(request)); // Retry request with new token
+            }
+          }, 100); // Check every 100ms until token updates
+        });
       } catch (refreshError) {
         resetSigninUser();
         return Promise.reject(refreshError);
       }
     }
+
     return Promise.reject(error);
   },
 );

@@ -6,7 +6,6 @@ import { getBaseAPIURL } from "utils";
  * Currently empty, reserved for future use
  */
 export const userServices = {
-  /** Signs out authenticated user */
   fetchUser: () => {
     return axiosInstance.get(`${getBaseAPIURL()}/api/v1/auth/user/`);
   },

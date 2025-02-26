@@ -34,7 +34,7 @@ const UserProfile: React.FC = (): JSX.Element | null => {
     }
   }, [status]);
 
-  if (!isAuthenticated() && status !== "succeeded") {
+  if (!isAuthenticated() || status !== "succeeded") {
     return null;
   }
 
