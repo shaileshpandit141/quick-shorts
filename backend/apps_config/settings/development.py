@@ -30,11 +30,11 @@ DATABASES = {
     }
 }
 
-# Memcached Configuration for development environment
-# ---------------------------------------------------
+# Memcached configuration for testing environment
+# -----------------------------------------------
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.memcached.PyLibMCCache",
-        "LOCATION": ["127.0.0.1:11211"],
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
     }
 }
