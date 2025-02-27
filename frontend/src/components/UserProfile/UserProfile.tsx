@@ -7,12 +7,12 @@ import { user, useUserSelector } from "features/user";
 import { buildMediaURL, getEnv } from "utils";
 
 const UserProfile: React.FC = (): JSX.Element | null => {
-  const button = useRef(null);
+  const buttonRef = useRef(null);
   const userProfileRef = useRef(null);
   const { status, data } = useUserSelector();
 
   const { setVisibleStyle, setHiddenStyle } = useMenu({
-    buttonRef: button,
+    buttonRef: buttonRef,
     contentRef: userProfileRef,
   });
 
@@ -34,13 +34,13 @@ const UserProfile: React.FC = (): JSX.Element | null => {
     }
   }, [status]);
 
-  if (!isAuthenticated() || status !== "succeeded") {
+  if (!isAuthenticated() && status !== "succeeded") {
     return null;
   }
 
   return (
     <div className="user-profile">
-      <button className="button-as-icon profile-action-button" ref={button}>
+      <button className="button-as-icon profile-action-button" ref={buttonRef}>
         {data?.avatar && (
           <img src={buildMediaURL(data?.avatar)} alt="avatar-image" />
         )}

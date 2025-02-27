@@ -9,12 +9,14 @@
 
   &.drawer--active {
     background-color: rgba(0, 0, 0, 0.43);
+    backdrop-filter: blur(1.5px);
     inset: 0;
   }
 
   &.drawer--inactive {
     background-color: transparent;
     pointer-events: none;
+    backdrop-filter: blur(0);
     z-index: 0;
   }
 }
