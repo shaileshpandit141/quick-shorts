@@ -11,7 +11,7 @@ import sys
 from decouple import config
 
 
-def main():
+def main() -> None:
     """
     Main function that runs Django administrative tasks.
 
