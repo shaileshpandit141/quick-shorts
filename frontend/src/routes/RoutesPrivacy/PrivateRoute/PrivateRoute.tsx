@@ -1,14 +1,23 @@
+import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { useSigninUserSelector } from "features/auth/signin";
+import { useSigninUserSelector, resetSigninUser } from "features/auth/signin";
+import { JWTTokenHandler } from "utils/JWTTokenHandler";
 
 const PrivateRoute = (): JSX.Element => {
   const { data } = useSigninUserSelector();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
 
-  if (!data.refresh_token) {
-    return <Navigate to="/auth/sign-in" replace={true} />;
-  }
+  useEffect(() => {
+    const tokenHandler = new JWTTokenHandler(data.refresh_token || '');
+    if (!data.refresh_token || tokenHandler.isTokenExpired()) {
+      resetSigninUser();
+      setIsAuthenticated(false);
+    } else {
+      setIsAuthenticated(true);
+    }
+  }, [data]);
 
-  return <Outlet />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/auth/sign-in" replace={true} />;
 };
 
 export default PrivateRoute;
