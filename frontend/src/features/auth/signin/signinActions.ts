@@ -45,7 +45,7 @@ export const googleSigninAction = createAsyncThunk<
       let errorResponse = formatCatchAxiosError(error);
       return thunkAPI.rejectWithValue(errorResponse);
     }
-  },
+  }
 );
 
 /**

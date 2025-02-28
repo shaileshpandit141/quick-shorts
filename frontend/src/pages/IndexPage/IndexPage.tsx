@@ -2,11 +2,11 @@ import React from "react";
 import "./IndexPage.css";
 import { Navigate } from "react-router-dom";
 import { AddSEO } from "SEO";
-import { isAuthenticated } from "utils";
+import { isUserAuthenticated } from "utils/isUserAuthenticated";
 import { SigninLink, SignupLink } from "components";
 
 const IndexPage: React.FC = (props) => {
-  if (isAuthenticated()) {
+  if (isUserAuthenticated()) {
     return <Navigate to={"/home"} />;
   }
   return (

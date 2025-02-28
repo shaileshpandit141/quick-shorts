@@ -7,7 +7,7 @@ const getRefreshToken = (): string | null => {
   }
 };
 
-export const isAuthenticated = (): boolean => {
+export const isUserAuthenticated = (): boolean => {
   const refresh_token = getRefreshToken();
   return Boolean(refresh_token);
 };

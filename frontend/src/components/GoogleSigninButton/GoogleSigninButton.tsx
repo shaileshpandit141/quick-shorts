@@ -7,7 +7,8 @@ import {
   GoogleOAuthProvider,
   CredentialResponse,
 } from "@react-oauth/google";
-import { getEnv, isAuthenticated } from "utils";
+import { isUserAuthenticated } from "utils/isUserAuthenticated";
+import { getEnv } from "utils/getEnv";
 
 const GoogleSigninButton: React.FC = () => {
   const handleSuccess = useCallback(async (response: CredentialResponse) => {
@@ -25,7 +26,7 @@ const GoogleSigninButton: React.FC = () => {
 
   const clientId = useMemo(() => getEnv("GOOGLE_CLIENT_ID"), []);
 
-  if (isAuthenticated()) {
+  if (isUserAuthenticated()) {
     return <Navigate to="/home" />;
   }
 

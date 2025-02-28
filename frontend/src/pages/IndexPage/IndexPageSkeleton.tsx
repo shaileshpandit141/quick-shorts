@@ -1,10 +1,10 @@
 import React from "react";
 import "./IndexPage.css";
-import { isAuthenticated } from "utils";
+import { isUserAuthenticated } from "utils/isUserAuthenticated";
 import { Navigate } from "react-router-dom";
 
 const IndexPageSkeleton: React.FC = () => {
-  if (isAuthenticated()) {
+  if (isUserAuthenticated()) {
     return <Navigate to={"/home"} />;
   }
 

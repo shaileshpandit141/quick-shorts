@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "components";
-import { isAuthenticated } from "utils";
+import { isUserAuthenticated } from "utils/isUserAuthenticated";
 
 const SignupLink: React.FC = (): JSX.Element | null => {
-  if (isAuthenticated()) {
+  if (isUserAuthenticated()) {
     return null;
   }
 

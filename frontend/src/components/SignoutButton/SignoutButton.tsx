@@ -1,6 +1,6 @@
 import React from "react";
 import "./SignoutButton.css";
-import Button from "components/Button/Button";
+import { Button } from "components";
 import { resetSigninUser, useSigninUserSelector } from "features/auth/signin";
 import {
   signoutUser,
@@ -8,7 +8,7 @@ import {
   useSignoutUserSelector,
 } from "features/auth/signout";
 import { resetUser } from "features/user";
-import { isAuthenticated } from "utils";
+import { isUserAuthenticated } from "utils/isUserAuthenticated";
 import { triggerToast } from "features/toast";
 
 const SignoutButton: React.FC = () => {
@@ -25,7 +25,7 @@ const SignoutButton: React.FC = () => {
     resetSignoutUser();
   };
 
-  if (!isAuthenticated()) {
+  if (!isUserAuthenticated()) {
     return null;
   }
 

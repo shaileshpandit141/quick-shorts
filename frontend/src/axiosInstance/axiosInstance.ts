@@ -5,7 +5,7 @@
 import axios from "axios";
 import { store } from "store/store";
 import { refreshToken, resetSigninUser } from "features/auth/signin";
-import { getBaseAPIURL } from "utils";
+import { getBaseAPIURL } from "utils/getBaseAPIURL";
 
 const axiosInstance = axios.create({
   baseURL: getBaseAPIURL(),

@@ -2,9 +2,10 @@ import React, { useRef, useEffect } from "react";
 import "./UserProfile.css";
 import { NavLink, SignoutButton } from "components";
 import { useMenu } from "hooks";
-import { isAuthenticated } from "utils";
 import { user, useUserSelector } from "features/user";
-import { buildMediaURL, getEnv } from "utils";
+import { isUserAuthenticated } from "utils/isUserAuthenticated";
+import { buildMediaURL } from "utils/buildMediaURL";
+import { getEnv } from "utils/getEnv";
 
 const UserProfile: React.FC = (): JSX.Element | null => {
   const buttonRef = useRef(null);
@@ -29,12 +30,12 @@ const UserProfile: React.FC = (): JSX.Element | null => {
   }, [setVisibleStyle, setHiddenStyle]);
 
   useEffect(() => {
-    if (status === "idle" && isAuthenticated()) {
+    if (status === "idle" && isUserAuthenticated()) {
       user();
     }
   }, [status]);
 
-  if (!isAuthenticated() && status !== "succeeded") {
+  if (!isUserAuthenticated() && status !== "succeeded") {
     return null;
   }
 

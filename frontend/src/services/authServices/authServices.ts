@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getBaseAPIURL } from "utils";
+import { getBaseAPIURL } from "utils/getBaseAPIURL";
 import {
   SigninCredentials,
   SignupCredentials,

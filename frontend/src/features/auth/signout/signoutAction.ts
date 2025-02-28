@@ -28,5 +28,5 @@ export const signoutAction = createAsyncThunk<
       let errorResponse = formatCatchAxiosError(error);
       return thunkAPI.rejectWithValue(errorResponse);
     }
-  },
+  }
 );

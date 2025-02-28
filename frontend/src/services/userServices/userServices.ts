@@ -1,5 +1,5 @@
 import { axiosInstance } from "axiosInstance";
-import { getBaseAPIURL } from "utils";
+import { getBaseAPIURL } from "utils/getBaseAPIURL";
 
 /**
  * APIs using custom Axios instance

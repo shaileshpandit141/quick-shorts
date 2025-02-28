@@ -3,7 +3,7 @@ import "./SigninPage.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { AddSEO } from "SEO";
 import { useFormDataChange, useResetOnRouteChange } from "hooks";
-import { isAuthenticated } from "utils";
+import { isUserAuthenticated } from "utils/isUserAuthenticated";
 import {
   Input,
   DisplayFormErrors,
@@ -47,7 +47,7 @@ const SigninPage: React.FC = () => {
     resetSigninUserErrors();
   });
 
-  if (isAuthenticated()) {
+  if (isUserAuthenticated()) {
     return <Navigate to="/home" />;
   }
 
