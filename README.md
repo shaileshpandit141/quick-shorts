@@ -163,21 +163,23 @@ This project is a Initial Code for setting up a web application using Django for
 
   ### Performing Authentication Actions API's
 
-  | Action                            | HTTP Method | Endpoint                                                          | Description                                                                                                                           |
-  |-----------------------------------|-------------|-------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
-  | Registration                      | POST        | http://localhost:8000/api/v1/auth/signup/                         | Submit user registration request including email, password, and other details to create a new user. A verification email is sent.     |
-  | Login                             | POST        | http://localhost:8000/api/v1/auth/signin/token/                   | Authenticate with email and password to receive access and refresh JWT tokens which are used for subsequent secured requests.         |
-  | Token Refresh                     | POST        | http://localhost:8000/api/v1/auth/signin/token/refresh/             | Use a valid refresh token to generate a new access token, eliminating the need for re-entering credentials.                           |
-  | Logout                            | POST        | http://localhost:8000/api/v1/auth/signout/                        | Invalidate the refresh token to log the user out securely and prevent further token refresh operations.                             |
-  | Account Verification              | POST        | http://localhost:8000/api/v1/auth/verify-user-account/              | Submit the verification token to validate the user's email address and complete the account activation process.                       |
-  | Account Verification Confirmation | POST        | http://localhost:8000/api/v1/auth/verify-user-account/confirm/       | Confirm the account by providing the verification token received via email, finalizing the user verification process.                  |
-  | Change Password                   | POST        | http://localhost:8000/api/v1/auth/change-password/                  | Allow authenticated users to update their password by providing the current password along with the new password for verification.    |
-  | Forgot Password                   | POST        | http://localhost:8000/api/v1/auth/forgot-password/                  | Initiate the password reset process by submitting the registered email address to receive a password reset link.                        |
-  | Forgot Password Confirmation      | POST        | http://localhost:8000/api/v1/auth/forgot-password/confirm/           | Confirm the password reset by validating the reset token and setting a new password to finalize the process.                         |
-  | Deactivate Account                | POST        | http://localhost:8000/api/v1/auth/deactivate-account/               | Deactivate the user's account to restrict access until it is reactivated, ensuring enhanced account security.                        |
-  | User Info                         | GET         | http://localhost:8000/api/v1/auth/user/                             | Retrieve detailed profile information of the currently authenticated user including email, name, and other personal details.          |
-  | Google Sign In | GET | http://localhost:8000/api/v1/auth/google/signin/ | Returns the Google redirect URL needed for handling the Google sign-in process. |
-  | Google Callback                   | POST         | http://localhost:8000/api/v1/auth/google/callback/                  | Handle the response from Google after authentication, process the returned data, and generate JWT tokens.             |
+  **Base URL:** http://localhost:8000/api/v1/auth
+
+  | Action                            | HTTP Method | Endpoint                           | Description                                                                                                                                       |
+  |-----------------------------------|-------------|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+  | Registration                      | POST        | /signup/                          | Submit user registration details including email, password, and other information. A verification email is sent upon successful registration. |
+  | Login                             | POST        | /signin/token/                     | Authenticate using email and password to receive access and refresh JWT tokens for secured operations.                                            |
+  | Token Refresh                     | POST        | /signin/token/refresh/             | Use a valid refresh token to obtain a new access token, eliminating the need to log in again.                                                      |
+  | Logout                            | POST        | /signout/                         | Invalidate the refresh token to log out securely and prevent further token refresh operations.                                                  |
+  | Account Verification              | POST        | /verify-user-account/              | Submit the verification token to validate the user's email address and activate the account.                                                      |
+  | Account Verification Confirmation | POST        | /verify-user-account/confirm/      | Confirm account verification by providing the token received via email.                                                                          |
+  | Change Password                   | POST        | /change-password/                  | Allow authenticated users to update their password by providing the current password along with the new password for confirmation.                |
+  | Forgot Password                   | POST        | /forgot-password/                  | Initiate the password reset process by submitting the registered email address to receive a reset link.                                           |
+  | Forgot Password Confirmation      | POST        | /forgot-password/confirm/          | Confirm the password reset by validating the provided token and setting a new password.                                                           |
+  | Deactivate Account                | POST        | /deactivate-account/               | Deactivate the user's account to restrict access until reactivation, enhancing account security.                                                  |
+  | User Info                         | GET         | /user/                            | Retrieve detailed profile information of the currently authenticated user including email, name, and other personal details.                       |
+  | Google Sign In                    | GET         | /google/signin/                    | Returns the redirect URL needed to handle the Google sign-in process.                                                                              |
+  | Google Callback                   | POST        | /google/callback/                  | Process the data returned from Google after authentication and generate JWT tokens accordingly.                                                  |
   ```
 
 ## API's Usages using .rest file
