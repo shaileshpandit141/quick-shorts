@@ -180,7 +180,7 @@ This project is a Initial Code for setting up a web application using Django for
   | User Info                         | GET         | /user/                            | Retrieve detailed profile information of the currently authenticated user including email, name, and other personal details.                       |
   | Google Sign In                    | GET         | /google/signin/                    | Returns the redirect URL needed to handle the Google sign-in process.                                                                              |
   | Google Callback                   | POST        | /google/callback/                  | Process the data returned from Google after authentication and generate JWT tokens accordingly.                                                  |
-  ```
+---
 
 ## API's Usages using .rest file
 
