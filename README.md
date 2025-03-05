@@ -44,7 +44,7 @@ This project is a Initial Code for setting up a web application using Django for
 
   Create a `.env` file in the root directory and add the following:
 
-  ```plaintext
+  ```python
   # SECRET_KEY Configuration Settings
   # ---------------------------------
   SECRET_KEY=Django_key
@@ -135,7 +135,7 @@ This project is a Initial Code for setting up a web application using Django for
 
   Create a `.env` file in the root directory and add the following:
 
-  ```plaintext
+  ```python
   # Server Configuration Settings
   # -----------------------------
   HOST=192.168.0.145
@@ -208,7 +208,7 @@ Send a GET request to `http://localhost:8000/api/v1/auth/google/callback/`.
 ### API's Usages using .rest file
 
 **Register a new user:**
-```json
+```python
 POST http://localhost:8000/api/v1/auth/signup/
 Content-Type: application/json
 
@@ -279,7 +279,7 @@ Error response:
 ```
 
 **Login to get JWT tokens:**
-```json
+```python
 POST http://localhost:8000/api/v1/auth/token/
 Content-Type: application/json
 
@@ -350,7 +350,7 @@ Error response:
 ```
 
 **Logout (Blacklist the refresh token):**
-```json
+```python
 POST http://localhost:8000/api/v1/auth/logout/
 Content-Type: application/json
 Authorization: Bearer jwt_access_token
@@ -389,7 +389,7 @@ Success response:
 ```
 
 **Request password reset:**
-```json
+```python
 POST http://localhost:8000/api/v1/auth/password/reset/
 Content-Type: application/json
 
@@ -427,7 +427,7 @@ Success response:
 ```
 
 **Confirm password reset:**
-```json
+```python
 POST http://localhost:8000/api/v1/auth/password/reset/confirm/
 Content-Type: application/json
 
@@ -468,7 +468,7 @@ Success response:
 ```
 
 **Verify email:**
-```json
+```python
 POST http://localhost:8000/api/v1/auth/signup/verify-email/
 Content-Type: application/json
 
@@ -506,7 +506,7 @@ Success response:
 ```
 
 **Resend Verification Email:**
-```json
+```python
 POST http://localhost:8000/api/v1/auth/signup/resend-email-verification/
 Authorization: Bearer <your_jwt_token>
 ```
@@ -540,7 +540,7 @@ Success response:
 ```
 
 **Refresh JWT tokens:**
-```json
+```python
 POST http://localhost:8000/api/v1/auth/token/refresh/
 Content-Type: application/json
 
@@ -578,7 +578,7 @@ Success response:
 ```
 
 **Access the current user:**
-```json
+```python
 GET http://localhost:8000/api/v1/auth/user/
 Authorization: Bearer jwt_access_token
 ```
@@ -615,7 +615,7 @@ Success response:
 ```
 
 **Access a protected endpoint:**
-```json
+```python
 GET http://localhost:8000/api/v1/auth/protected/
 Authorization: Bearer jwt_access_token
 ```
