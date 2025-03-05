@@ -161,51 +161,26 @@ This project is a Initial Code for setting up a web application using Django for
   npm start
   ```
 
-### Configuration
+  ### Performing Authentication Actions API's
 
-### Performing Authentication Actions API's
+  | Action                            | HTTP Method | Endpoint                                                          | Description                                                                                                                           |
+  |-----------------------------------|-------------|-------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+  | Registration                      | POST        | http://localhost:8000/api/v1/auth/signup/                         | Submit user registration request including email, password, and other details to create a new user. A verification email is sent.     |
+  | Login                             | POST        | http://localhost:8000/api/v1/auth/signin/token/                   | Authenticate with email and password to receive access and refresh JWT tokens which are used for subsequent secured requests.         |
+  | Token Refresh                     | POST        | http://localhost:8000/api/v1/auth/signin/token/refresh/             | Use a valid refresh token to generate a new access token, eliminating the need for re-entering credentials.                           |
+  | Logout                            | POST        | http://localhost:8000/api/v1/auth/signout/                        | Invalidate the refresh token to log the user out securely and prevent further token refresh operations.                             |
+  | Account Verification              | POST        | http://localhost:8000/api/v1/auth/verify-user-account/              | Submit the verification token to validate the user's email address and complete the account activation process.                       |
+  | Account Verification Confirmation | POST        | http://localhost:8000/api/v1/auth/verify-user-account/confirm/       | Confirm the account by providing the verification token received via email, finalizing the user verification process.                  |
+  | Change Password                   | POST        | http://localhost:8000/api/v1/auth/change-password/                  | Allow authenticated users to update their password by providing the current password along with the new password for verification.    |
+  | Forgot Password                   | POST        | http://localhost:8000/api/v1/auth/forgot-password/                  | Initiate the password reset process by submitting the registered email address to receive a password reset link.                        |
+  | Forgot Password Confirmation      | POST        | http://localhost:8000/api/v1/auth/forgot-password/confirm/           | Confirm the password reset by validating the reset token and setting a new password to finalize the process.                         |
+  | Deactivate Account                | POST        | http://localhost:8000/api/v1/auth/deactivate-account/               | Deactivate the user's account to restrict access until it is reactivated, ensuring enhanced account security.                        |
+  | User Info                         | GET         | http://localhost:8000/api/v1/auth/user/                             | Retrieve detailed profile information of the currently authenticated user including email, name, and other personal details.          |
+  | Google Sign In | GET | http://localhost:8000/api/v1/auth/google/signin/ | Returns the Google redirect URL needed for handling the Google sign-in process. |
+  | Google Callback                   | POST         | http://localhost:8000/api/v1/auth/google/callback/                  | Handle the response from Google after authentication, process the returned data, and generate JWT tokens.             |
+  ```
 
-### Performing Authentication Actions API's
-
-- **Registration**:
-Send a POST request to `http://localhost:8000/api/v1/auth/signup/` with user details.
-
-- **Login**:
-Send a POST request to `http://localhost:8000/api/v1/auth/signin/token/` for access and refresh tokens.
-
-- **Token Refresh**:
-Send a POST request to `http://localhost:8000/api/v1/auth/signin/token/refresh/` with refresh token.
-
-- **Logout**:
-Send a POST request to `http://localhost:8000/api/v1/auth/signout/` to log out.
-
-- **Account Verification**:
-Send a POST request to `http://localhost:8000/api/v1/auth/verify-user-account/` for verification.
-
-- **Account Verification Confirmation**:
-Send a POST request to `http://localhost:8000/api/v1/auth/verify-user-account/confirm/`.
-
-- **Change Password**:
-Send a POST request to `http://localhost:8000/api/v1/auth/change-password/`.
-
-- **Forgot Password**:
-Send a POST request to `http://localhost:8000/api/v1/auth/forgot-password/`.
-
-- **Forgot Password Confirmation**:
-Send a POST request to `http://localhost:8000/api/v1/auth/forgot-password/confirm/`.
-
-- **Deactivate Account**:
-Send a POST request to `http://localhost:8000/api/v1/auth/deactivate-account/`.
-
-- **User Info**:
-Send a GET request to `http://localhost:8000/api/v1/auth/user/`.
-
-- **Google Sign In**:
-Send a GET request to `http://localhost:8000/api/v1/auth/google/signin/`.
-
-- **Google Callback**:
-Send a GET request to `http://localhost:8000/api/v1/auth/google/callback/`.
-### API's Usages using .rest file
+## API's Usages using .rest file
 
 **Register a new user:**
 ```python
