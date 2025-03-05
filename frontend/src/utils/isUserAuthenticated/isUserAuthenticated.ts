@@ -1,3 +1,5 @@
+import { JWTTokenHandler } from "utils/JWTTokenHandler";
+
 const getRefreshToken = (): string | null => {
   try {
     return localStorage.getItem("refresh_token");
@@ -8,6 +10,11 @@ const getRefreshToken = (): string | null => {
 };
 
 export const isUserAuthenticated = (): boolean => {
-  const refresh_token = getRefreshToken();
-  return Boolean(refresh_token);
+  const refreshToken = getRefreshToken();
+  if (!refreshToken) {
+    return false;
+  }
+
+  const handler = new JWTTokenHandler(refreshToken);
+  return !handler.isTokenExpired();
 };
