@@ -181,7 +181,7 @@ This project is a Initial Code for setting up a web application using Django for
   | Google Sign In                    | GET         | /google/signin/                    | Returns the redirect URL needed to handle the Google sign-in process.                                                                              |
   | Google Callback                   | POST        | /google/callback/                  | Process the data returned from Google after authentication and generate JWT tokens accordingly.                                                  |
 
-## API's Usages using .rest file
+## API's Test using .rest VSCode File Extenction:
 
 **Register a new user:**
 ```python
