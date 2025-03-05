@@ -8,6 +8,7 @@ import { signoutAction } from "./signoutAction";
  */
 const signoutIntitlState: SignoutInitialState = {
   status: "idle",
+  status_code: null,
   message: "",
   data: null,
   errors: [],

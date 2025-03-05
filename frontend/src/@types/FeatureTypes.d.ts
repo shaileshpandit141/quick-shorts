@@ -37,6 +37,7 @@ export declare module "FeatureTypes" {
    */
   export interface InitialState<DATA = Record<string, any>> {
     status: "idle" | "loading" | "succeeded" | "failed";
+    status_code: null | number;
     message: string;
     data: DATA;
     pagination?: Pagination;
@@ -51,6 +52,7 @@ export declare module "FeatureTypes" {
    */
   export interface SuccessResponse<DATA = Record<string, any>> {
     status: "succeeded";
+    status_code: null | number;
     message: string;
     data: DATA;
     meta: Meta;
@@ -63,6 +65,7 @@ export declare module "FeatureTypes" {
    */
   export interface ErrorResponse {
     status: "failed";
+    status_code: null | number;
     message: string;
     data: null;
     meta: Meta;

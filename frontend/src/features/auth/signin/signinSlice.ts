@@ -12,6 +12,7 @@ import {
  */
 const signinIntitlState: SigninInitialState = {
   status: "idle",
+  status_code: null,
   message: "",
   data: {
     access_token: localStorage.getItem("access_token"),

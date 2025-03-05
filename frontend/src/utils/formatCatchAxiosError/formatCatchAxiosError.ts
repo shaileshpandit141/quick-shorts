@@ -9,6 +9,7 @@ export const formatCatchAxiosError = (
   } else {
     errorResponse = {
       status: "failed",
+      status_code: null,
       message: error.message ?? "An unknown error occurred",
       data: null,
       errors: [

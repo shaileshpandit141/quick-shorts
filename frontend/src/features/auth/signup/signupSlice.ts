@@ -9,6 +9,7 @@ import { signupAction } from "./signupAction";
  */
 const signupIntitlState: SignupInitialState = {
   status: "idle",
+  status_code: null,
   message: "",
   data: null,
   errors: [],

@@ -8,6 +8,7 @@ import { userAction } from "./userAction";
  */
 const userInitialState: UserInitialState = {
   status: "idle",
+  status_code: null,
   message: "",
   data: null,
   errors: [],
