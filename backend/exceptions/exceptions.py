@@ -1,3 +1,4 @@
+from quick_utils.response import Response
 from rest_framework import status, views
 from rest_framework.exceptions import (
     AuthenticationFailed,
@@ -7,8 +8,6 @@ from rest_framework.exceptions import (
     Throttled,
     ValidationError,
 )
-
-from quick_utils.response import Response
 
 from .create_error_response import create_error_response
 from .format_validation_errors import format_validation_errors

@@ -4,12 +4,11 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from google.auth.transport import requests
 from google.oauth2 import id_token
-from requests import get, post
-from rest_framework import status
-
 from quick_utils.get_jwt_tokens_for_user import get_jwt_tokens_for_user
 from quick_utils.save_image import save_image
 from quick_utils.views import APIView, Response
+from requests import get, post
+from rest_framework import status
 
 User = get_user_model()
 

@@ -1,13 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-from rest_framework import status
-from rest_framework_simplejwt.views import TokenObtainPairView
-from user_auth.serializers import SigninTokenSerializer
-
 from permissions import AllowAny
 from quick_utils.format_serializer_errors import format_serializer_errors
 from quick_utils.views import APIView, Response
+from rest_framework import status
+from rest_framework_simplejwt.views import TokenObtainPairView
 from throttling import AuthRateThrottle
+from user_auth.serializers import SigninTokenSerializer
 from utils import FieldValidator
 
 User = get_user_model()

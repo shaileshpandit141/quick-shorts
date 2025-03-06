@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from limited_time_token_handler import LimitedTimeTokenDecoder, TokenError
-
 from permissions import AllowAny
 from quick_utils.views import APIView, Response
 from throttling import AuthRateThrottle
