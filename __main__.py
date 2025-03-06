@@ -27,7 +27,7 @@ def run_commands() -> None:
                 "--",
                 "bash",
                 "-c",
-                f"source backend/.venv/bin/activate && cd {backend_dir} && python3 manage.py runserver; exec bash",
+                f"source .venv/bin/activate && cd {backend_dir} && python3 manage.py runserver; exec bash",
             ]
         )
         print("✅ Backend server started successfully")
