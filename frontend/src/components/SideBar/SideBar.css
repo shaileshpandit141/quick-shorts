@@ -16,7 +16,7 @@
   justify-content: center;
 
   .side-bar-container {
-    background-color: var(--card-background);
+    background-color: var(--bg-secondary);
     height: 100%;
     width: 100%;
     max-width: 275px;

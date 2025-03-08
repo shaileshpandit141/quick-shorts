@@ -1,64 +1,66 @@
-/* CSS Custom Properties (Variables) for Theme Management
- * 
- * This defines a set of CSS custom properties that control the appearance of the application
- * in both light and dark themes.
- * The [data-theme="dark"] selector overrides the default light theme values
- * for dark mode. Transitions are included for smooth theme switching.
- */
+/* Global Theme Variables */
 
 :root {
-  --background-light: #fafafa;
-  --background-dark: #121212;
-  --card-background: #f5f5f5;
-  --header-background: #fafafaf2;
-  --footer-background: #eeeeee;
+  /* Background Colors */
+  --bg-primary: #fafafa;
+  --bg-secondary: #f5f5f5;
+  --bg-header: #fafafaf2;
+  --bg-footer: #eeeeee;
 
+  /* Text Colors */
   --text-primary: #000000;
   --text-secondary: #222222;
-  --text-accent: #555555;
+  --text-muted: #555555;
 
-  --border-color-light: #d6d6d6;
-  --border-color-dark: #404040;
+  /* Border Colors */
+  --border-primary: #d6d6d6;
+  --border-secondary: #404040;
 
-  --button-primary-background: #e5e5e5;
-  --button-primary-hover: #dcdcdc;
-  --button-secondary-background: #e5e5e5;
-  --button-secondary-hover: #dadada;
-  --button-text-color: #000000;
+  /* Button Styles */
+  --btn-primary-bg: #e5e5e5;
+  --btn-primary-hover: #dcdcdc;
+  --btn-secondary-bg: #e5e5e5;
+  --btn-secondary-hover: #dadada;
 
-  --link-color: #005bbb;
-  --link-hover-color: #003f88;
+  /* Link Styles */
+  --link-primary: #005bbb;
+  --link-hover: #003f88;
 
-  --success-color: #4caf50;
-  --error-color: #f44336;
-  --info-color: #2196f3;
-  --warning-color: #ff9800;
+  /* Status Colors */
+  --status-success: #4caf50;
+  --status-error: #f44336;
+  --status-info: #2196f3;
+  --status-warning: #ff9800;
 
+  /* Theme Transition */
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
 }
 
 [data-theme="dark"] {
-  --background-light: #1e1e1e;
-  --background-dark: #121212;
-  --card-background: #2a2a2a;
-  --header-background: #1e1e1ef2;
-  --footer-background: #1a1a1a;
+  /* Background Colors */
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #2a2a2a;
+  --bg-header: #1e1e1ef2;
+  --bg-footer: #1a1a1a;
 
+  /* Text Colors */
   --text-primary: #ffffff;
   --text-secondary: #bbbbbb;
-  --text-accent: #aaaaaa;
+  --text-muted: #aaaaaa;
 
-  --border-color-light: #494949;
-  --border-color-dark: #636363;
+  /* Border Colors */
+  --border-primary: #494949;
+  --border-secondary: #636363;
 
-  --button-primary-background: #4a4a4a;
-  --button-primary-hover: #3a3a3a;
-  --button-secondary-background: #4a4a4a;
-  --button-secondary-hover: #3a3a3a;
-  --button-text-color: #ffffff;
+  /* Button Styles */
+  --btn-primary-bg: #4a4a4a;
+  --btn-primary-hover: #3a3a3a;
+  --btn-secondary-bg: #4a4a4a;
+  --btn-secondary-hover: #3a3a3a;
 
-  --link-color: #5cafff;
-  --link-hover-color: #80c3ff;
+  /* Link Styles */
+  --link-primary: #5cafff;
+  --link-hover: #80c3ff;
 }

@@ -30,7 +30,7 @@
       transform 0.3s ease,
       var(--transition);
 
-    background-color: var(--card-background);
+    background-color: var(--bg-secondary);
     position: absolute;
     top: calc(100% + 4px);
     right: 0px;
@@ -76,11 +76,13 @@
         .username {
           margin: 0;
           text-align: center;
+          color: var(--text-primary);
         }
 
         .email {
           margin: 0;
           text-align: center;
+          color: var(--text-muted);
         }
       }
     }

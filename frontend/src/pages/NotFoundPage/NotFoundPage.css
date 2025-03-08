@@ -1,4 +1,6 @@
 .not-found-page {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   width: 100%;
   height: 100dvh;
   display: flex;
@@ -17,10 +19,12 @@
 
     .not-found-title {
       text-align: center;
+      color: var(--text-primary);
     }
 
     .not-found-message {
       text-align: center;
+      color: var(--text-secondary);
     }
   }
 }

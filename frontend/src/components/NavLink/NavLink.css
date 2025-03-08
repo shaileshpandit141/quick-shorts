@@ -36,7 +36,7 @@ a {
     &:is(*) {
       height: var(--icon-height);
       width: var(--icon-width);
-      color: var(--link-color);
+      color: var(--link-primary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -52,17 +52,17 @@ a {
     width: 100%;
     padding-inline: calc(16 / 16 * 1em);
     border: var(--border);
-    background-color: var(--button-primary-background);
-    color: var(--link-color);
+    background-color: var(--btn-primary-bg);
+    color: var(--link-primary);
     transition: var(--transition);
 
     &:is(:hover) {
-      background-color: var(--button-primary-hover);
+      background-color: var(--btn-primary-hover);
     }
 
     &:is(:focus, :focus-visible) {
-      background-color: var(--button-primary-hover);
-      outline: 2px solid var(--button-primary-hover);
+      background-color: var(--btn-primary-hover);
+      outline: 2px solid var(--btn-primary-hover);
       outline-offset: 1px;
     }
 
@@ -92,23 +92,23 @@ a {
     width: var(--link-height);
     min-width: var(--link-height);
     border: var(--border);
-    background-color: var(--button-primary-background);
-    color: var(--button-text-color);
+    background-color: var(--btn-primary-bg);
+    color: var(--text-primary);
     transition: var(--transition);
 
     &:is(:hover) {
-      background-color: var(--button-primary-hover);
+      background-color: var(--btn-primary-hover);
     }
 
     &:is(:focus, :focus-visible) {
-      background-color: var(--button-primary-hover) !important;
+      background-color: var(--btn-primary-hover) !important;
     }
   }
 }
 
 .active {
-  color: var(--link-hover-color);
-  background-color: var(--button-primary-hover);
+  color: var(--link-hover);
+  background-color: var(--btn-primary-hover);
 }
 
 @media (pointer: fine) {

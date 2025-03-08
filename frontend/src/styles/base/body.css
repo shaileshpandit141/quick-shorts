@@ -7,7 +7,7 @@ body {
   font-size: 1rem;
   width: 100%;
   min-height: var(--screen-height);
-  background-color: var(--background-light);
+  background-color: var(--bg-primary);
   color: var(--text-primary);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

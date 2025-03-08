@@ -1,6 +1,5 @@
 .display-form-errors {
-  background-color: var(--background-light);
-  background-color: transparent;
+  background-color: var(--bg-secondary);
   width: 100%;
   padding-inline: 14px;
   display: flex;
@@ -10,7 +9,7 @@
   transition: background-color 0.3s ease;
 
   .error-message {
-    color: var(--error-color);
+    color: var(--status-error);
     width: 100%;
     padding-inline: 0;
     line-height: 1.2;

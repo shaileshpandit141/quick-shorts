@@ -11,8 +11,7 @@
   padding-inline: calc(16 / 16 * 1rem);
 
   .toasts {
-    background-color: var(--card-background);
-    background-color: transparent;
+    background-color: var(--bg-secondary);
     width: 100%;
     max-width: var(--max-width);
     max-height: 50dvh;

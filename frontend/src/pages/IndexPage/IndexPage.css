@@ -76,7 +76,6 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
       row-gap: calc(6 / 16 * 1em);
       width: 100%;
 
@@ -105,11 +104,10 @@
       }
 
       .link {
-        /* max-width: calc(250/16 * 1em); */
-        background-color: var(--button-secondary-background);
+        background-color: var(--btn-secondary-bg);
 
         &:hover {
-          background-color: var(--button-secondary-hover);
+          background-color: var(--btn-secondary-hover);
         }
       }
     }

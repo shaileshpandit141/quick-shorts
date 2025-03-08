@@ -1,18 +1,18 @@
 .toast {
   &.toast-success {
-    --color: var(--success-color);
+    --color: var(--status-success);
   }
 
   &.toast-error {
-    --color: var(--error-color);
+    --color: var(--status-error);
   }
 
   &.toast-info {
-    --color: var(--info-color);
+    --color: var(--status-info);
   }
 
   &.toast-warning {
-    --color: var(--warning-color);
+    --color: var(--status-warning);
   }
 
   width: 100%;

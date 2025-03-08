@@ -2,21 +2,21 @@
   display: inline-block;
   width: 100%;
   height: fit-content;
-  background-color: var(--button-primary-background);
-  color: var(--text-color);
+  background-color: var(--btn-primary-bg);
+  color: var(--text-primary);
   border: var(--border);
   border-radius: 999rem;
   overflow: hidden;
   transition: var(--transition);
 
   &:hover {
-    background-color: var(--button-primary-hover);
+    background-color: var(--btn-primary-hover);
   }
 
   div {
     div {
       background-color: transparent;
-      color: var(--text-color);
+      color: var(--text-primary);
       overflow: hidden;
       border: none;
     }

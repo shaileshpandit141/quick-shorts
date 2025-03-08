@@ -1,6 +1,6 @@
 .input-checkbox-component {
-  --background-color: var(--background-light);
-  --border-color: var(--border-color-light);
+  --background-color: var(--bg-primary);
+  --border-color: var(--border-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,8 +102,8 @@
 }
 
 .input-component {
-  --background-color: var(--background-light);
-  --border-color: var(--border-color-light);
+  --background-color: var(--bg-secondary);
+  --border-color: var(--border-primary);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -30,14 +30,14 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: inherit;
+    color: var(--text-primary);
     overflow: hidden;
     padding: calc(2 / 16 * 1em);
 
     &:is(*) {
       height: var(--icon-height);
       width: var(--icon-width);
-      color: var(--button-text-color);
+      color: var(--text-primary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -50,17 +50,17 @@ button {
     width: 100%;
     padding-inline: calc(16 / 16 * 1em);
     border: var(--border);
-    background-color: var(--button-primary-background);
-    color: var(--button-text-color);
+    background-color: var(--btn-primary-bg);
+    color: var(--text-primary);
     transition: var(--transition);
 
     &:is(:hover) {
-      background-color: var(--button-primary-hover);
+      background-color: var(--btn-primary-hover);
     }
 
     &:is(:focus, :focus-visible) {
-      background-color: var(--button-primary-hover);
-      outline: 2px solid var(--button-primary-hover);
+      background-color: var(--btn-primary-hover);
+      outline: 2px solid var(--btn-primary-hover);
       outline-offset: 1px;
     }
 
@@ -72,7 +72,6 @@ button {
       line-height: var(--icon-height);
       cursor: inherit;
       text-wrap: nowrap;
-      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
 
@@ -88,16 +87,16 @@ button {
     width: var(--button-height);
     min-width: var(--button-height);
     border: var(--border);
-    background-color: var(--button-primary-background);
-    color: var(--button-text-color);
+    background-color: var(--btn-primary-bg);
+    color: var(--text-primary);
     transition: var(--transition);
 
     &:is(:hover) {
-      background-color: var(--button-primary-hover);
+      background-color: var(--btn-primary-hover);
     }
 
     &:is(:focus, :focus-visible) {
-      background-color: var(--button-primary-hover) !important;
+      background-color: var(--btn-primary-hover) !important;
     }
   }
 }

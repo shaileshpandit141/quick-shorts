@@ -9,7 +9,7 @@
   transition: var(--transition);
 
   .error-boundary-component {
-    background-color: var(--card-background);
+    background-color: var(--bg-secondary);
     width: 100%;
     max-width: fit-content;
     display: flex;
@@ -23,11 +23,11 @@
     .button {
       &:first-child {
         background-color: transparent;
-        color: var(--error-color);
+        color: var(--status-error);
         cursor: default !important;
 
         .label {
-          color: var(--error-color);
+          color: var(--status-error);
         }
 
         &:hover {
