@@ -1,5 +1,6 @@
 .display-form-errors {
   background-color: var(--bg-secondary);
+  background-color: transparent;
   width: 100%;
   padding-inline: 14px;
   display: flex;

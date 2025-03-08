@@ -1,20 +1,20 @@
-/* Global Theme Variables */
+/* Modern Web App Theme Variables */
 
 :root {
   /* Background Colors */
-  --bg-primary: #fafafa;
-  --bg-secondary: #f5f5f5;
-  --bg-header: #fafafaf2;
-  --bg-footer: #eeeeee;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f4f4f8;
+  --bg-header: #ffffff;
+  --bg-footer: #f8f8f8;
 
   /* Text Colors */
-  --text-primary: #000000;
-  --text-secondary: #222222;
-  --text-muted: #555555;
+  --text-primary: #333333;
+  --text-secondary: #4a4a4a;
+  --text-muted: #767676;
 
   /* Border Colors */
-  --border-primary: #d6d6d6;
-  --border-secondary: #404040;
+  --border-primary: #e0e0e0;
+  --border-secondary: #cccccc;
 
   /* Button Styles */
   --btn-primary-bg: #e5e5e5;
@@ -27,10 +27,10 @@
   --link-hover: #003f88;
 
   /* Status Colors */
-  --status-success: #4caf50;
-  --status-error: #f44336;
-  --status-info: #2196f3;
-  --status-warning: #ff9800;
+  --status-success: #28a745;
+  --status-error: #dc3545;
+  --status-info: #17a2b8;
+  --status-warning: #ffc107;
 
   /* Theme Transition */
   transition:
@@ -40,19 +40,19 @@
 
 [data-theme="dark"] {
   /* Background Colors */
-  --bg-primary: #1e1e1e;
-  --bg-secondary: #2a2a2a;
-  --bg-header: #1e1e1ef2;
+  --bg-primary: #121212;
+  --bg-secondary: #1d1d1d;
+  --bg-header: #121212;
   --bg-footer: #1a1a1a;
 
   /* Text Colors */
-  --text-primary: #ffffff;
-  --text-secondary: #bbbbbb;
-  --text-muted: #aaaaaa;
+  --text-primary: #e0e0e0;
+  --text-secondary: #cccccc;
+  --text-muted: #999999;
 
   /* Border Colors */
-  --border-primary: #494949;
-  --border-secondary: #636363;
+  --border-primary: #333333;
+  --border-secondary: #444444;
 
   /* Button Styles */
   --btn-primary-bg: #4a4a4a;
@@ -63,4 +63,10 @@
   /* Link Styles */
   --link-primary: #5cafff;
   --link-hover: #80c3ff;
+
+  /* Status Colors */
+  --status-success: #66bb6a;
+  --status-error: #ef5350;
+  --status-info: #29b6f6;
+  --status-warning: #ffa726;
 }

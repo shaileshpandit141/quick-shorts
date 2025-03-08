@@ -15,19 +15,21 @@
     --color: var(--status-warning);
   }
 
-  width: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: start;
-  justify-content: center;
-  padding: calc(8 / 16 * 1em);
-  border-radius: calc(16 / 16 * 1em);
-  column-gap: 4px;
-  user-select: none;
-  border: var(--border);
-  background-color: var(--card-background);
-  animation: fadeIn 0.5s ease;
-  transition: var(--transition);
+  & {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    justify-content: center;
+    padding: calc(8 / 16 * 1em);
+    border-radius: calc(16 / 16 * 1em);
+    column-gap: 4px;
+    user-select: none;
+    border: var(--border);
+    background-color: var(--bg-secondary);
+    animation: fadeIn 0.5s ease;
+    transition: var(--transition);
+  }
 
   &.toast-removed {
     animation: fadeOut 0.5s ease;
