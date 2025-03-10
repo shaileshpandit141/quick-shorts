@@ -5,7 +5,7 @@ import pytz
 from django.conf import settings
 from rest_framework.throttling import BaseThrottle
 
-from ..types import ThrottleRateLimitType
+from .types import ThrottleRateLimitType
 
 
 def upper_camel_to_snake_case(string: str) -> str:

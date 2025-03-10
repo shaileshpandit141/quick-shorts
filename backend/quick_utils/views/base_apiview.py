@@ -1,20 +1,19 @@
 import logging
 from threading import Lock
-from typing import Any, Self
-from typing import Any, Dict, List, Optional, Type
+from typing import Any, Dict, List, Self, Type
 
 from django.db.models import QuerySet
-from rest_framework import status, views
+from rest_framework import status
 from rest_framework.permissions import AllowAny, BasePermission
 from rest_framework.renderers import BaseRenderer, JSONRenderer
-from rest_framework.throttling import BaseThrottle
-from ..page_number_pagination import PageNumberPagination
-from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.throttling import BaseThrottle
 from rest_framework.views import APIView
-from ..get_throttle_details import get_throttle_details
+
 from ..format_serializer_errors import format_serializer_errors
-from .base_apiview_types import (
+from ..get_throttle_details import get_throttle_details
+from ..page_number_pagination import PageNumberPagination
+from .types import (
     TypeData,
     TypeErrorPayload,
     TypeErrors,

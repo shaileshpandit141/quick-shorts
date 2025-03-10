@@ -8,8 +8,8 @@ interface.
 """
 
 from ..response import Response
-from ..types import ErrorsType, ResponseDataType
+from .base_apiview import BaseAPIView
 from .views import APIView
 
 # Public interface exposing only necessary functionality for API development
-__all__ = ["APIView", "ResponseDataType", "Response", "ErrorsType"]
+__all__ = ["APIView", "BaseAPIView", "Response"]

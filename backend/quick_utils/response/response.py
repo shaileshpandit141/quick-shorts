@@ -2,7 +2,7 @@ from typing import Dict, Optional
 
 from rest_framework import response
 
-from ..types import ResponseDataType
+from .types import TypeResponsePayload
 
 
 class Response(response.Response):
@@ -10,7 +10,7 @@ class Response(response.Response):
 
     def __init__(
         self,
-        data: ResponseDataType,
+        data: TypeResponsePayload,
         status: Optional[int] = None,
         template_name: Optional[str] = None,
         headers: Optional[Dict[str, str]] = None,

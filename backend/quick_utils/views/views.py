@@ -11,7 +11,7 @@ from ..format_serializer_errors import format_serializer_errors
 from ..get_throttle_details import get_throttle_details
 from ..page_number_pagination import PageNumberPagination
 from ..response import Response
-from ..types import ResponseDataType
+from .types import TypeResponsePayload
 
 logger = logging.getLogger(__name__)
 
@@ -94,7 +94,7 @@ class APIView(views.APIView):
 
     def response(
         self,
-        data: ResponseDataType,
+        data: TypeResponsePayload,
         status: Optional[int] = None,
         template_name: Optional[str] = None,
         headers: Optional[Dict[str, str]] = None,
