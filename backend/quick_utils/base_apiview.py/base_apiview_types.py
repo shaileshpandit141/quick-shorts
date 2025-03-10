@@ -15,8 +15,8 @@ TypeErrors = List[TypeError]
 
 class TypeResponsePayload(TypedDict):
     message: str
-    data: NotRequired[TypeData]
-    errors: NotRequired[TypeErrors]
+    data: TypeData
+    errors: TypeErrors
 
 
 class TypeSuccessPayload(TypedDict):
