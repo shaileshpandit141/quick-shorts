@@ -56,6 +56,11 @@ a {
     color: var(--link-primary);
     transition: var(--transition);
 
+    &.active {
+      color: var(--link-hover) !important;
+      background-color: var(--btn-primary-hover) !important;
+    }
+
     &:is(:hover) {
       background-color: var(--btn-primary-hover);
     }
@@ -96,6 +101,11 @@ a {
     color: var(--text-primary);
     transition: var(--transition);
 
+    &.active {
+      color: var(--link-hover) !important;
+      background-color: var(--btn-primary-hover) !important;
+    }
+
     &:is(:hover) {
       background-color: var(--btn-primary-hover);
     }
@@ -104,11 +114,6 @@ a {
       background-color: var(--btn-primary-hover) !important;
     }
   }
-}
-
-.active {
-  color: var(--link-hover);
-  background-color: var(--btn-primary-hover);
 }
 
 @media (pointer: fine) {

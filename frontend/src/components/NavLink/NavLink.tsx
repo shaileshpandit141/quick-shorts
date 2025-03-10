@@ -17,7 +17,6 @@ interface NavLinkProps {
   title?: string;
   ref?: React.RefObject<HTMLAnchorElement>;
   target?: "_self" | "_blank" | "_parent" | "_top";
-  isActive?: boolean;
 }
 
 const NavLink: React.FC<NavLinkProps> = (props) => {
@@ -37,9 +36,6 @@ const NavLink: React.FC<NavLinkProps> = (props) => {
   } = props;
 
   const linkClasses = type === "icon" ? "link-as-icon" : "link";
-  const linkIsActive = ({ isActive }: { isActive: boolean }) => {
-    return isActive ? "active" : "";
-  };
 
   const renderIcon = () => (
     <div className="link-icon-container">
@@ -55,7 +51,9 @@ const NavLink: React.FC<NavLinkProps> = (props) => {
     <Link
       ref={ref}
       to={isDisabled ? "#" : to}
-      className={`${linkClasses} ${linkIsActive} ${className}`}
+      className={({ isActive }) =>
+        `${linkClasses} ${isActive ? "active" : ""} ${className}`
+      }
       style={{ cursor: isLoaderOn ? "progress" : "pointer" }}
       data-testid={testID}
       aria-label={accessibilityLabel}
