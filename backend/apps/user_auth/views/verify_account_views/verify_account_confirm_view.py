@@ -1,13 +1,13 @@
 from django.contrib.auth import get_user_model
 from limited_time_token_handler import LimitedTimeTokenDecoder, TokenError
 from permissions import AllowAny
-from quick_utils.views import APIView, Response
+from core.views import BaseAPIView, Response
 from throttling import AuthRateThrottle
 
 User = get_user_model()
 
 
-class VerifyAccountConfirmView(APIView):
+class VerifyAccountConfirmView(BaseAPIView):
     """API View for verifying user accounts via email confirmation."""
 
     permission_classes = [AllowAny]
@@ -17,65 +17,34 @@ class VerifyAccountConfirmView(APIView):
         """Handle POST request for email verification"""
 
         # Validate required fields
-        token = request.data.get("token", None)
-        if token is None:
-            return self.response(
-                {
-                    "message": "Token is required",
-                    "errors": [
-                        {
-                            "field": "token",
-                            "code": "token_required",
-                            "message": "Token is required",
-                            "details": None,
-                        }
-                    ],
-                },
-                self.status.HTTP_400_BAD_REQUEST,
-            )
+        token = request.data.get("token", "")
 
         try:
             # Decode verification token
             decoder = LimitedTimeTokenDecoder(token)
             if not decoder.is_valid():
-                raise TokenError("Invalid token")
+                raise TokenError("Verification token is not valid.")
 
             data = decoder.decode()
             user = User.objects.get(id=data.get("user_id"))
 
             # Check if already verified
             if getattr(user, "is_verified", False):
-                return self.response(
-                    {
-                        "message": "Account already verified",
-                        "data": {"detail": "Account already verified."},
-                    },
-                    self.status.HTTP_200_OK,
+                return self.handle_success(
+                    "Your account already verified.",
+                    {"detail": "Your account already verified."},
                 )
 
             # Update verification status
             setattr(user, "is_verified", True)
             user.save()
-            return self.response(
-                {
-                    "message": "Account verified successfully",
-                    "data": {"detail": "Account verified successfully"},
-                },
-                self.status.HTTP_200_OK,
+            return self.handle_success(
+                "Account verified successfully.",
+                {"detail": "Your account verified successfully."},
             )
 
         except (ValueError, TokenError) as error:
-            return self.response(
-                {
-                    "message": "Invalid or expired token",
-                    "errors": [
-                        {
-                            "field": "token",
-                            "code": "invalid",
-                            "message": str(error),
-                            "details": None,
-                        }
-                    ],
-                },
-                self.status.HTTP_400_BAD_REQUEST,
+            return self.handle_error(
+                "Provided token is Invalid or expired.",
+                [{"field": "token", "code": "invalid", "message": str(error)}],
             )

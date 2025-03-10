@@ -1,12 +1,10 @@
-# Local imports
 from permissions import IsAuthenticated
-from quick_utils.send_email import SendEmail
-from quick_utils.views import APIView, Response
+from core.send_email import SendEmail
+from core.views import BaseAPIView, Response
 from throttling import UserRateThrottle
-from utils import FieldValidator
 
 
-class DeactivateAccountView(APIView):
+class DeactivateAccountView(BaseAPIView):
     """API view for deactivating user accounts."""
 
     permission_classes = [IsAuthenticated]
@@ -19,29 +17,17 @@ class DeactivateAccountView(APIView):
         user = request.user
         password = request.data.get("password", None)
 
-        # Validate the request data
-        validator = FieldValidator(request.data, ["password"])
-        if not validator.is_valid():
-            return self.response(
-                {"message": "Invalid Password", "errors": validator.errors},
-                self.status.HTTP_400_BAD_REQUEST,
-            )
-
         # Verify password matches
         if not user.check_password(password):
-            return self.response(
-                {
-                    "message": "Invalid Password",
-                    "errors": [
-                        {
-                            "field": "password",
-                            "code": "invalid_password",
-                            "message": "Your password is not correct.",
-                            "details": None,
-                        }
-                    ],
-                },
-                self.status.HTTP_400_BAD_REQUEST,
+            return self.handle_error(
+                "Provided password is not valid.",
+                [
+                    {
+                        "field": "password",
+                        "code": "invalid_password",
+                        "message": "Provided password is not valid.",
+                    }
+                ],
             )
 
         # Deactivate the account
@@ -61,10 +47,7 @@ class DeactivateAccountView(APIView):
             }
         )
 
-        return self.response(
-            {
-                "message": "Deactivation was successful.",
-                "data": {"detail": "Your account has been deactivated successfully."},
-            },
-            self.status.HTTP_200_OK,
+        return self.handle_success(
+            "Account deactivation was successful.",
+            {"detail": "Your account has been deactivated successfully."},
         )

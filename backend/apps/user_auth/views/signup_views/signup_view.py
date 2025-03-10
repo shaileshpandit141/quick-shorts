@@ -6,16 +6,15 @@ from django.core.exceptions import ValidationError
 from dns_smtp_email_validator import DNSSMTPEmailValidator
 from limited_time_token_handler import LimitedTimeTokenGenerator
 from permissions import AllowAny
-from quick_utils.send_email import SendEmail
-from quick_utils.views import APIView, Response
+from core.send_email import SendEmail
+from core.views import BaseAPIView, Response
 from throttling import AuthRateThrottle
 from user_auth.serializers import UserSerializer
-from utils import FieldValidator
 
 User = get_user_model()
 
 
-class SignupView(APIView):
+class SignupView(BaseAPIView):
     """API view for handling user signup functionality"""
 
     permission_classes = [AllowAny]
@@ -24,63 +23,50 @@ class SignupView(APIView):
     def post(self, request, *args, **kwargs) -> Response:
         """Handle user registration"""
 
-        # Validate required fields
-        clean_data = FieldValidator(
-            request.data, ["email", "password", "confirm_password"]
-        )
+        email = request.data.get("email", "")
+        password = request.data.get("password", "")
+        confirm_password = request.data.get("confirm_password", "")
 
-        if not clean_data.is_valid():
-            return self.response(
-                {"message": "Validation error", "errors": clean_data.errors},
-                self.status.HTTP_400_BAD_REQUEST,
-            )
-
-        email = clean_data.get("email")
-        password = clean_data.get("password")
-        confirm_password = clean_data.get("confirm_password")
-
-        # Validate password meets requirements
         try:
+            # Validate password meets requirements
             validate_password(password)
         except ValidationError as error:
-            errors = []
-            for message in error:
-                errors.append(
+            return self.handle_error(
+                "Provided password is not valid.",
+                [
                     {
                         "field": "password",
                         "code": "invalid_password",
-                        "message": message,
-                        "details": None,
+                        "message": str(error),
                     }
-                )
-            return self.response(
-                {"message": "Validation error", "errors": errors},
-                self.status.HTTP_400_BAD_REQUEST,
+                ],
             )
 
         # Check password confirmation matches
         if password != confirm_password:
-            return self.response(
-                {
-                    "message": "Password validation error",
-                    "errors": [
-                        {
-                            "field": "confirm_password",
-                            "code": "confirm_password_not_metch",
-                            "message": "Confirm password is not equal to password",
-                            "details": None,
-                        }
-                    ],
-                },
-                self.status.HTTP_400_BAD_REQUEST,
+            return self.handle_error(
+                "Confirm password is not equal to password.",
+                [
+                    {
+                        "field": "confirm_password",
+                        "code": "confirm_password_not_metch",
+                        "message": "Confirm password is not equal to password.",
+                    }
+                ],
             )
 
         # Validate the email is exist in the internet or not
         validator = DNSSMTPEmailValidator(email)
         if not validator.is_valid():
-            return self.response(
-                {"message": "Email Validation Failed", "errors": validator.errors},
-                self.status.HTTP_400_BAD_REQUEST,
+            return self.handle_error(
+                "Email validation failed.",
+                [
+                    {
+                        "field": "email",
+                        "code": "invalid_email",
+                        "message": "Email validation failed. Please try again later.",
+                    }
+                ],
             )
 
         # Hash the password for secure storage
@@ -88,7 +74,8 @@ class SignupView(APIView):
 
         # Create new user instance
         serializer = UserSerializer(
-            data=clean_data.data, context={"hashed_password": hashed_password}
+            data={"email": email},
+            context={"hashed_password": hashed_password},
         )
         if serializer.is_valid():
             serializer.save()
@@ -98,23 +85,18 @@ class SignupView(APIView):
             generator = LimitedTimeTokenGenerator({"user_id": getattr(user, "id")})
             token = generator.generate()
             if token is None:
-                return self.response(
-                    {
-                        "message": "We encountered an issue",
-                        "errors": [
-                            {
-                                "field": "token",
-                                "code": "token_generation_failed",
-                                "message": "We couldn't generate a verification token. Please try again later.",
-                                "details": None,
-                            }
-                        ],
-                    },
-                    self.status.HTTP_500_INTERNAL_SERVER_ERROR,
+                return self.handle_error(
+                    "Filed to generate an account verification token.",
+                    [
+                        {
+                            "field": "token",
+                            "code": "token_generation_failed",
+                            "message": "We couldn't generate an account verification token. Please try again later.",
+                        }
+                    ],
                 )
 
             activate_url = f"{settings.FRONTEND_URL}/auth/verify-user-account/{token}"
-
             # Send verification email
             SendEmail(
                 {
@@ -127,21 +109,11 @@ class SignupView(APIView):
                     },
                 }
             )
-
-            return self.response(
-                {
-                    "message": "Sign up successful",
-                    "data": {
-                        "detail": "Please check your inbox for the account verification"
-                    },
-                },
-                self.status.HTTP_200_OK,
+            return self.handle_success(
+                "Sign up request was successful.",
+                {"detail": "Please check your inbox for the account verification."},
             )
-
-        return self.response(
-            {
-                "message": "Invalid data provided",
-                "errors": self.format_serializer_errors(serializer.errors),
-            },
-            self.status.HTTP_400_BAD_REQUEST,
+        return self.handle_error(
+            "Provided data is not valid.",
+            self.format_serializer_errors(serializer.errors),
         )

@@ -4,16 +4,15 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from google.auth.transport import requests
 from google.oauth2 import id_token
-from quick_utils.get_jwt_tokens_for_user import get_jwt_tokens_for_user
-from quick_utils.save_image import save_image
-from quick_utils.views import APIView, Response
+from core.get_jwt_tokens_for_user import get_jwt_tokens_for_user
+from core.save_image import save_image
+from core.views import BaseAPIView, Response
 from requests import get, post
-from rest_framework import status
 
 User = get_user_model()
 
 
-class GoogleLoginView(APIView):
+class GoogleLoginView(BaseAPIView):
     def get(self, request) -> Response:
         google_auth_url = "https://accounts.google.com/o/oauth2/v2/auth"
         params = {
@@ -24,34 +23,29 @@ class GoogleLoginView(APIView):
             "access_type": "offline",
         }
         login_url = f"{google_auth_url}?{urlencode(params)}"
-        return self.response(
+        return self.handle_success(
+            "Google sign in URL generated successfully",
             {
-                "message": "Google sign in URL generated successfully",
-                "data": {"login_url": login_url},
+                "login_url": login_url,
             },
-            status=status.HTTP_200_OK,
         )
 
 
-class GoogleTokenExchangeView(APIView):
+class GoogleTokenExchangeView(BaseAPIView):
     def get(self, request) -> Response:
         """Step 2: Exchange authorization code for an access token."""
         auth_code = request.GET.get("code")
 
         if not auth_code:
-            return self.response(
-                {
-                    "message": "Failed to get access token",
-                    "errors": [
-                        {
-                            "field": "code",
-                            "code": "invalid",
-                            "message": "code is not found",
-                            "details": None,
-                        }
-                    ],
-                },
-                status=status.HTTP_400_BAD_REQUEST,
+            return self.handle_error(
+                "Failed to get access token",
+                [
+                    {
+                        "field": "code",
+                        "code": "invalid",
+                        "message": "google generated code is not found",
+                    }
+                ],
             )
 
         token_url = "https://oauth2.googleapis.com/token"
@@ -68,49 +62,32 @@ class GoogleTokenExchangeView(APIView):
         token_data = response.json()
 
         if "access_token" not in token_data:
-            return self.response(
-                {
-                    "message": "Failed to get access token",
-                    "errors": [
-                        {
-                            "field": "token",
-                            "code": "invalid",
-                            "message": token_data,
-                            "details": None,
-                        }
-                    ],
-                },
-                status=status.HTTP_400_BAD_REQUEST,
+            return self.handle_error(
+                "Failed to get google access token",
+                [{"field": "token", "code": "invalid", "message": token_data}],
             )
 
-        return self.response(
-            {
-                "message": "Access token retrieved successfully",
-                "data": {"token": token_data["access_token"]},
-            },
-            status=status.HTTP_200_OK,
+        return self.handle_success(
+            "Google Access token retrieved successfully",
+            {"token": token_data["access_token"]},
         )
 
 
-class GoogleCallbackView(APIView):
+class GoogleCallbackView(BaseAPIView):
     def post(self, request) -> Response:
         """Verify Google token (ID token or access token)."""
         token = request.data.get("token")
 
         if not token:
-            return self.response(
-                {
-                    "message": "Authentication token not provided",
-                    "errors": [
-                        {
-                            "field": "none",
-                            "code": "token_not_provided",
-                            "message": "Please provide a valid authentication token.",
-                            "details": None,
-                        },
-                    ],
-                },
-                status=status.HTTP_400_BAD_REQUEST,
+            return self.handle_error(
+                "Authentication Googel token not provided",
+                [
+                    {
+                        "field": "none",
+                        "code": "token_not_provided",
+                        "message": "Please provide a valid authentication token.",
+                    }
+                ],
             )
 
         try:
@@ -128,19 +105,15 @@ class GoogleCallbackView(APIView):
                 response = get(google_user_info_url, headers=headers)
 
                 if response.status_code != 200:
-                    return self.response(
-                        {
-                            "message": "Invalid token",
-                            "errors": [
-                                {
-                                    "field": "none",
-                                    "code": "invalid_token",
-                                    "message": "The provided authentication token is invalid. Please try again.",
-                                    "details": None,
-                                },
-                            ],
-                        },
-                        status=status.HTTP_400_BAD_REQUEST,
+                    return self.handle_error(
+                        "The provided authentication token is invalid",
+                        [
+                            {
+                                "field": "none",
+                                "code": "invalid_token",
+                                "message": "The provided authentication token is invalid. Please try again.",
+                            }
+                        ],
                     )
 
                 google_data = response.json()
@@ -151,19 +124,15 @@ class GoogleCallbackView(APIView):
             profile_picture = google_data.get("picture")
 
             if not email:
-                return self.response(
-                    {
-                        "message": "Invalid authentication token",
-                        "errors": [
-                            {
-                                "field": "none",
-                                "code": "invalid_token",
-                                "message": "The provided authentication token is invalid. Please try again.",
-                                "details": None,
-                            },
-                        ],
-                    },
-                    status=status.HTTP_400_BAD_REQUEST,
+                return self.handle_error(
+                    "The provided authentication token is invalid",
+                    [
+                        {
+                            "field": "none",
+                            "code": "invalid_token",
+                            "message": "The provided authentication token is invalid. Please try again.",
+                        }
+                    ],
                 )
 
             # Handle user profile picture
@@ -190,26 +159,13 @@ class GoogleCallbackView(APIView):
 
             tokens = get_jwt_tokens_for_user(user)
 
-            return self.response(
-                {
-                    "message": "Sign in successful",
-                    "data": {**tokens},
-                },
-                status=status.HTTP_200_OK,
+            return self.handle_success(
+                "Goole Sign in successful",
+                {**tokens},
             )
 
         except Exception as error:
-            return self.response(
-                {
-                    "message": "An error occurred during authentication",
-                    "errors": [
-                        {
-                            "field": "none",
-                            "code": "invalid_token",
-                            "message": str(error),
-                            "details": None,
-                        },
-                    ],
-                },
-                status=status.HTTP_400_BAD_REQUEST,
+            return self.handle_error(
+                "An error occurred during google authentication",
+                [{"field": "none", "code": "invalid_token", "message": str(error)}],
             )

@@ -1,18 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from permissions import AllowAny
-from quick_utils.format_serializer_errors import format_serializer_errors
-from quick_utils.views import APIView, Response
-from rest_framework import status
+from core.views import BaseAPIView, Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from throttling import AuthRateThrottle
 from user_auth.serializers import SigninTokenSerializer
-from utils import FieldValidator
 
 User = get_user_model()
 
 
-class SigninTokenView(TokenObtainPairView, APIView):
+class SigninTokenView(TokenObtainPairView, BaseAPIView):
     """Custom JWT token view that handles user authentication using email/username and password."""
 
     permission_classes = [AllowAny]
@@ -22,68 +19,50 @@ class SigninTokenView(TokenObtainPairView, APIView):
     def post(self, request, *args, **kwargs) -> Response:
         """Handle user authentication and return JWT tokens."""
 
-        # Validate required fields
-        clean_data = FieldValidator(request.data, ["email", "password"])  # type: ignore
-        if not clean_data.is_valid():
-            return self.response(
-                {
-                    "message": "Sign in failed",
-                    "errors": clean_data.errors,
-                },
-                status.HTTP_400_BAD_REQUEST,
-            )
+        email = request.data.get("email", "")  # type: ignore
+        password = request.data.get("password", "")  # type: ignore
 
         # Handle username-based login by fetching associated email
-        data = clean_data.data.copy()
-        if "@" not in clean_data.get("email"):
+        user_data = {"email": email, "password": password}
+        if "@" not in email:
             try:
-                user = User.objects.get(username=clean_data.get("email"))
-                data["email"] = user.email
-            except User.DoesNotExist:
-                return self.response(
-                    {
-                        "message": "Sign in failed",
-                        "errors": [
-                            {
-                                "field": "none",
-                                "code": "signin_failed",
-                                "message": "Please provide valid authentication credentials.",
-                                "details": None,
-                            }
-                        ],
-                    },
-                    status.HTTP_400_BAD_REQUEST,
+                user = User.objects.get(username=email)
+                user_data["email"] = user.email
+            except User.DoesNotExist as error:
+                return self.handle_error(
+                    "Sign in request is failed.",
+                    [
+                        {
+                            "field": "none",
+                            "code": "signin_failed",
+                            "message": "Please provide valid authentication credentials.",
+                            "details": {"detail": str(error)},
+                        }
+                    ],
                 )
 
         # Validate credentials with serializer
-        serializer = self.get_serializer(data=data)
+        serializer = self.get_serializer(data=user_data)
         if not serializer.is_valid():
-            return self.response(
-                {
-                    "message": "Sign in failed",
-                    "errors": format_serializer_errors(serializer.errors),
-                },
-                status.HTTP_400_BAD_REQUEST,
+            return self.handle_error(
+                "Sign in request is failed.",
+                self.format_serializer_errors(serializer.errors),
             )
 
         # Get the authenticated user from the serializer
         user = serializer.validated_data.get("user")
-
         # Check email verification status for non-superusers
         if user and not user.is_superuser and not user.is_verified:
-            return self.response(
-                {
-                    "message": "Sign in failed - account not verified",
-                    "errors": [
-                        {
-                            "field": "none",
-                            "code": "signin_failed",
-                            "message": "Please verify your account before signing in",
-                            "details": None,
-                        }
-                    ],
-                },
-                status.HTTP_401_UNAUTHORIZED,
+            return self.handle_error(
+                "Sign in request is failed - account not verified.",
+                [
+                    {
+                        "field": "none",
+                        "code": "signin_failed",
+                        "message": "Please verify your account before signing in.",
+                    }
+                ],
+                self.status.HTTP_401_UNAUTHORIZED,
             )
 
         # Update last login timestamp
@@ -92,13 +71,10 @@ class SigninTokenView(TokenObtainPairView, APIView):
             user.save(update_fields=["last_login"])
 
         # Return successful response with JWT tokens
-        return self.response(
+        return self.handle_success(
+            "Welcome back! Sign in request is successful.",
             {
-                "message": "Welcome back! Sign in successful",
-                "data": {
-                    "access_token": serializer.validated_data["access"],
-                    "refresh_token": serializer.validated_data["refresh"],
-                },
+                "access_token": serializer.validated_data["access"],
+                "refresh_token": serializer.validated_data["refresh"],
             },
-            status.HTTP_200_OK,
         )

@@ -1,4 +1,4 @@
-from quick_utils.response import Response
+from core.response import Response
 from rest_framework import status, views
 from rest_framework.exceptions import (
     AuthenticationFailed,
@@ -21,6 +21,7 @@ def exception_handler(exc, context) -> Response | views.Response | None:
         ValidationError: lambda error: Response(
             {
                 "message": "Validation error",
+                "data": {},
                 "errors": format_validation_errors(error.detail),
             },
             status=status.HTTP_400_BAD_REQUEST,
