@@ -139,6 +139,7 @@ class BaseAPIView(APIView):
             "status_code": response.status_code,
             **response.data,
             "meta": {
+                "response_time": "N/A",
                 "request_id": request_id,
                 "timestamp": datetime.utcnow().isoformat(),
                 "documentation_url": "https://github.com/shaileshpandit141/django-react-typescript-initial-code/tree/main",

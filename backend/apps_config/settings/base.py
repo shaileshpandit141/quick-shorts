@@ -70,7 +70,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "middlewares.ResponseMiddleware",
+    "middlewares.response_time_middleware.ResponseTimeMiddleware",
 ]
 
 # Root urls file Configuration Settings
@@ -166,7 +166,10 @@ REST_FRAMEWORK = {
         "auth": "8/hour",
         "user": "1000/day",
     },
-    "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 5,
 }
