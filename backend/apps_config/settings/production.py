@@ -3,7 +3,7 @@
 from decouple import Csv, config
 
 from .base import *
-from .base import LOGGING
+from .base import LOGGING, REST_FRAMEWORK
 
 # Disable debug mode for production environment for security
 # ----------------------------------------------------------
@@ -20,6 +20,18 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 # Configure CORS Settings
 # -----------------------
 CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
+
+# REST Framework Configuration Settings
+# -------------------------------------
+REST_FRAMEWORK.update(
+    {
+        "DEFAULT_RENDERER_CLASSES": [
+            "rest_framework.renderers.JSONRenderer",
+        ],
+    }
+)
+
+REST_FRAMEWORK.update({"PAGE_SIZE": 16})
 
 # PostgreSQL database configuration Settings
 # ------------------------------------------

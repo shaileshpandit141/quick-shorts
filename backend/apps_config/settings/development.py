@@ -3,7 +3,7 @@
 from decouple import Csv, config
 
 from .base import *
-from .base import BASE_DIR, LOGGING
+from .base import BASE_DIR, LOGGING, REST_FRAMEWORK
 
 # Enable debug mode for development purposes only
 # -----------------------------------------------
@@ -20,6 +20,19 @@ ALLOWED_HOSTS = config("HOST", cast=Csv())
 # Configure CORS Settings
 # -----------------------
 CORS_ALLOWED_ORIGINS = config("FRONTEND_URL", cast=Csv())
+
+# REST Framework Configuration Settings
+# -------------------------------------
+REST_FRAMEWORK.update(
+    {
+        "DEFAULT_RENDERER_CLASSES": [
+            "rest_framework.renderers.JSONRenderer",
+            "rest_framework.renderers.BrowsableAPIRenderer",
+        ],
+    }
+)
+
+REST_FRAMEWORK.update({"PAGE_SIZE": 2})
 
 # SQLite Database Configuration for development environment
 # ---------------------------------------------------------

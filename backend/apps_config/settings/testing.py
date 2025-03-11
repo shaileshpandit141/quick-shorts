@@ -1,7 +1,7 @@
 # Import all settings from base configuration
 # -------------------------------------------
 from .base import *
-from .base import BASE_DIR, LOGGING
+from .base import BASE_DIR, LOGGING, REST_FRAMEWORK
 
 # Enable debug mode for testing environment
 # -----------------------------------------
@@ -19,6 +19,17 @@ ALLOWED_HOSTS = ["*"]
 # ---------------------------------------------------
 CORS_ALLOW_ALL_ORIGINS = True
 
+# REST Framework Configuration Settings
+# -------------------------------------
+REST_FRAMEWORK.update(
+    {
+        "DEFAULT_RENDERER_CLASSES": [
+            "rest_framework.renderers.JSONRenderer",
+            "rest_framework.renderers.BrowsableAPIRenderer",
+        ],
+    }
+)
+
 # SQLite Database Configuration for testing environment
 # -----------------------------------------------------
 DATABASES = {
@@ -27,6 +38,8 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+REST_FRAMEWORK.update({"PAGE_SIZE": 2})
 
 # Memcached configuration for testing environment
 # -----------------------------------------------
