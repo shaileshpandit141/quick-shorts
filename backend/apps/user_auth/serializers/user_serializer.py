@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.forms.hstore import ValidationError
-from core.base_model_serializer import BaseModelSerializer
+from core.serializers import BaseModelSerializer
 
 # Get the User model configured for the project
 User = get_user_model()
