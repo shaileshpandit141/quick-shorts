@@ -6,7 +6,6 @@ from django.db.models import QuerySet
 from django.http.response import HttpResponseBase
 from rest_framework import status
 from rest_framework.permissions import AllowAny, BasePermission
-from rest_framework.renderers import BaseRenderer, JSONRenderer
 from rest_framework.response import Response
 from rest_framework.throttling import BaseThrottle
 from rest_framework.views import APIView
@@ -104,7 +103,6 @@ class BaseAPIResponseHandler:
 class BaseAPIView(APIView, BaseAPIResponseHandler):
     permission_classes: List[Type[BasePermission]] = [AllowAny]
     throttle_classes: List[Type[BaseThrottle]] = []
-    renderer_classes: List[Type[BaseRenderer]] = [JSONRenderer]
     pagination_class: Type[PageNumberPagination] = PageNumberPagination
 
     def __init__(self, *args, **kwargs) -> None:
@@ -135,6 +133,8 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
 
         # Add throttles details in headers.
         add_throttle_headers(response, throttles)
+
+        # Update response headers.
         setattr(
             response,
             "headers",
@@ -146,6 +146,10 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
                     "succeeded" if response.status_code < 400 else "failed"
                 ),
             },
+        )
+
+        logger.info(
+            f"Response finalized with status {response.status_code}, Request ID: {request_id}"
         )
 
         # Call to super methods to handle rest process.

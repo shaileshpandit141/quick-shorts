@@ -93,9 +93,9 @@ class ValidationErrorFormatter:
                 if isinstance(message, dict):
                     ValidationErrorFormatter._append_error(
                         field,
-                        message.get("message", "An error occurred"),
+                        message.get("message", "An error occurred."),
                         formatted_errors,
-                        message.get("code", "invalid"),
+                        message.get("code", "unknown"),
                         message.get("details", {}),
                     )
                 else:
@@ -146,7 +146,7 @@ class ValidationErrorFormatter:
         field: str,
         message: str,
         formatted_errors: TypeErrors,
-        code: str = "invalid",
+        code: str = "unknown",
         details: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Append a formatted error to the list."""
