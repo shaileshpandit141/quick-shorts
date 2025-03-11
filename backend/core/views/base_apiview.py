@@ -10,7 +10,6 @@ from rest_framework.renderers import BaseRenderer, JSONRenderer
 from rest_framework.response import Response
 from rest_framework.throttling import BaseThrottle
 from rest_framework.views import APIView
-from ..format_serializer_errors import format_serializer_errors
 from ..validation_error_formatter import ValidationErrorFormatter
 from ..get_throttle_details import get_throttle_details
 from ..add_throttle_headers import add_throttle_headers
