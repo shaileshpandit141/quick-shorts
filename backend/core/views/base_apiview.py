@@ -1,5 +1,4 @@
 import logging
-from threading import Lock
 from typing import Any, Dict, List, Self, Type
 from datetime import datetime
 from uuid import uuid4
