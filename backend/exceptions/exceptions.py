@@ -8,9 +8,8 @@ from rest_framework.exceptions import (
     Throttled,
     ValidationError,
 )
-
+from core.validation_error_formatter import ValidationErrorFormatter
 from .create_error_response import create_error_response
-from .format_validation_errors import format_validation_errors
 
 
 def exception_handler(exc, context) -> Response | views.Response | None:
@@ -22,7 +21,7 @@ def exception_handler(exc, context) -> Response | views.Response | None:
             {
                 "message": "Validation error",
                 "data": {},
-                "errors": format_validation_errors(error.detail),
+                "errors": ValidationErrorFormatter.format(error.detail),
             },
             status=status.HTTP_400_BAD_REQUEST,
         ),
@@ -30,25 +29,21 @@ def exception_handler(exc, context) -> Response | views.Response | None:
             "Method Not Allowed",
             "method_not_allowed",
             error_message="This method is not allowed for this endpoint",
-            details=None,
         ),
         NotFound: lambda error: create_error_response(
             "Resource Not Found",
             "not_found",
             error_message="The requested resource was not found",
-            details=None,
         ),
         NotAuthenticated: lambda error: create_error_response(
             "Authentication Required",
             "authentication_required",
             error_message="Authentication credentials were not provided",
-            details=None,
         ),
         AuthenticationFailed: lambda error: create_error_response(
             "Authentication Failed",
             "authentication_failed",
             error_message="Authentication credentials are incorrect",
-            details=None,
         ),
         Throttled: lambda error: create_error_response(
             str(error.detail) or "Request Limit Exceeded",

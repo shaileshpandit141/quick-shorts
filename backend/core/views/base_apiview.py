@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework.throttling import BaseThrottle
 from rest_framework.views import APIView
 from ..format_serializer_errors import format_serializer_errors
+from ..validation_error_formatter import ValidationErrorFormatter
 from ..get_throttle_details import get_throttle_details
 from ..add_throttle_headers import add_throttle_headers
 from ..page_number_pagination import PageNumberPagination
@@ -110,7 +111,7 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
     def __init__(self, *args, **kwargs) -> None:
         """Initialize view with status attribute"""
         self.status = status
-        self.format_serializer_errors = format_serializer_errors
+        self.formatter = ValidationErrorFormatter()
         super().__init__(*args, **kwargs)
 
     def finalize_response(

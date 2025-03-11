@@ -2,7 +2,7 @@ from core.response import Response
 
 
 def create_error_response(
-    message, code, field="none", error_message=None, details={}
+    message, code, field="none", error_message=None, details=None
 ) -> Response:
     """Helper function to create error response"""
     return Response(
@@ -14,7 +14,7 @@ def create_error_response(
                     "field": field,
                     "code": code,
                     "message": error_message or message,
-                    "details": details,
+                    "details": details or {},
                 }
             ],
         }

@@ -30,14 +30,14 @@ class SignupView(BaseAPIView):
         try:
             # Validate password meets requirements
             validate_password(password)
-        except ValidationError as error:
+        except ValidationError as _:
             return self.handle_error(
                 "Provided password is not valid.",
                 [
                     {
                         "field": "password",
                         "code": "invalid_password",
-                        "message": str(error),
+                        "message": "This password is too short. It must contain at least 8 characters.",
                     }
                 ],
             )
@@ -114,6 +114,6 @@ class SignupView(BaseAPIView):
                 {"detail": "Please check your inbox for the account verification."},
             )
         return self.handle_error(
-            "Provided data is not valid.",
-            self.format_serializer_errors(serializer.errors),
+            "Sign up request was successful.",
+            self.formatter.format(serializer.errors),
         )
