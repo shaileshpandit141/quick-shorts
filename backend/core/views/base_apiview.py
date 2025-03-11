@@ -26,21 +26,7 @@ from .types import (
 logger = logging.getLogger(__name__)
 
 
-class SingletonMeta(type):
-    _instances = {}
-    _lock = Lock()
-
-    def __call__(cls, *args, **kwargs) -> Any:
-        # First check (without lock for performance)
-        if cls not in cls._instances:
-            with cls._lock:
-                # Second check (with lock for safety)
-                if cls not in cls._instances:
-                    cls._instances[cls] = super().__call__(*args, **kwargs)
-        return cls._instances[cls]
-
-
-class BaseAPIResponseHandler(metaclass=SingletonMeta):
+class BaseAPIResponseHandler:
     """
     A handler class for generating standardized API responses.
 
@@ -116,7 +102,7 @@ class BaseAPIResponseHandler(metaclass=SingletonMeta):
         )
 
 
-class BaseAPIView(APIView):
+class BaseAPIView(APIView, BaseAPIResponseHandler):
     permission_classes: List[Type[BasePermission]] = [AllowAny]
     throttle_classes: List[Type[BaseThrottle]] = []
     renderer_classes: List[Type[BaseRenderer]] = [JSONRenderer]
@@ -125,7 +111,6 @@ class BaseAPIView(APIView):
     def __init__(self, *args, **kwargs) -> None:
         """Initialize view with status attribute"""
         self.status = status
-        self.response: BaseAPIResponseHandler = BaseAPIResponseHandler()
         self.format_serializer_errors = format_serializer_errors
         super().__init__(*args, **kwargs)
 
@@ -173,7 +158,7 @@ class BaseAPIView(APIView):
         logger.info(
             f"Handling success with message: {message}, data: {data}, status: {status}"
         )
-        return self.response.success({"message": message, "data": data}, status=status)
+        return self.success({"message": message, "data": data}, status=status)
 
     def handle_error(
         self,
@@ -184,9 +169,7 @@ class BaseAPIView(APIView):
         logger.warning(
             f"Handling error with message: {message}, errors: {errors}, status: {status}"
         )
-        return self.response.error(
-            {"message": message, "errors": errors}, status=status
-        )
+        return self.error({"message": message, "errors": errors}, status=status)
 
     def get_object(self, model, *args, **kwargs) -> Dict[str, Any] | None:
         """Get single model instance or None if not found"""
