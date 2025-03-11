@@ -1,11 +1,11 @@
 """
-This module imports and exposes ModelViewSet and ReadOnlyModelViewSet classes.
+This module imports and exposes BaseModelViewSet and BaseReadOnlyModelViewSet classes.
 
-ModelViewSet provides a complete set of default CRUD actions.
-ReadOnlyModelViewSet provides default 'read-only' actions.
+BaseModelViewSet provides a complete set of default CRUD actions.
+BaseReadOnlyModelViewSet provides default 'read-only' actions.
 """
 
-from .model_viewset import ModelViewSet
-from .read_only_model_viewset import ReadOnlyModelViewSet
+from .base_model_viewset import BaseModelViewSet
+from .base_read_only_model_viewset import BaseReadOnlyModelViewSet
 
-__all__ = ["ModelViewSet", "ReadOnlyModelViewSet"]
+__all__ = ["BaseModelViewSet", "BaseReadOnlyModelViewSet"]
