@@ -95,7 +95,7 @@ class ValidationErrorFormatter:
                         field,
                         message.get("message", "An error occurred."),
                         formatted_errors,
-                        message.get("code", "unknown"),
+                        message.get("code", field),
                         message.get("details", {}),
                     )
                 else:
@@ -146,14 +146,14 @@ class ValidationErrorFormatter:
         field: str,
         message: str,
         formatted_errors: TypeErrors,
-        code: str = "unknown",
+        code: str = "",
         details: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Append a formatted error to the list."""
         formatted_errors.append(
             {
                 "field": field,
-                "code": code,
+                "code": code or field,
                 "message": message,
                 "details": details or {},
             }
