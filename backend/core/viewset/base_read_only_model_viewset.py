@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Sequence, Type, Union
+from typing import List, Optional, Sequence, Type, Union
 from uuid import uuid4
 
 from django.db.models.query import QuerySet
@@ -11,7 +11,6 @@ from rest_framework.permissions import AllowAny, BasePermission
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, BaseThrottle
-from rest_framework.exceptions import ErrorDetail
 
 from ..get_throttle_details import get_throttle_details
 from ..page_number_pagination import PageNumberPagination
@@ -20,10 +19,9 @@ from ..add_throttle_headers import add_throttle_headers
 logger = logging.getLogger(__name__)
 
 
-class BaseReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
+class BaseModelViewSet(viewsets.ReadOnlyModelViewSet):
     """ModelViewSet to provide standard response formatting and error handling."""
 
-    # Default configurations
     filter_backends: List[Type[BaseFilterBackend]] = []
     lookup_field: str = "pk"
     lookup_url_kwarg: Optional[str] = None
@@ -35,47 +33,6 @@ class BaseReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields: Optional[Sequence[str]] = ()
     throttle_classes: List[Type[BaseThrottle]] = [AnonRateThrottle]
 
-    def format_errors(self, errors: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Formats DRF validation errors into the required structure."""
-        formatted_errors = []
-        for field, messages in errors.items():
-            if field == "non_field_errors":
-                field = "none"
-            if isinstance(messages, list):
-                for message in messages:
-                    if isinstance(message, ErrorDetail):
-                        formatted_errors.append(
-                            {
-                                "field": field,
-                                "code": (
-                                    message.code
-                                    if hasattr(message, "code")
-                                    else "unknown"
-                                ),
-                                "message": str(message),
-                                "details": {},
-                            }
-                        )
-                    else:
-                        formatted_errors.append(
-                            {
-                                "field": field,
-                                "code": "unknown",
-                                "message": str(message),
-                                "details": {},
-                            }
-                        )
-            else:  # Handle single error
-                formatted_errors.append(
-                    {
-                        "field": field,
-                        "code": "unknown",
-                        "message": str(messages),
-                        "details": {},
-                    }
-                )
-        return formatted_errors
-
     def finalize_response(
         self,
         request: Request,
@@ -84,13 +41,15 @@ class BaseReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
         **kwargs,
     ) -> Union[Response, HttpResponseBase]:
         """Finalizes API response format with standard structure."""
-        throttles = get_throttle_details(self)
         request_id = str(uuid4())
+        throttles = get_throttle_details(self)
+        data = getattr(response, "data", {})
 
         # Default response structure
         payload = {
             "status": "succeeded" if response.status_code < 400 else "failed",
             "status_code": response.status_code,
+            "message": "",
             "data": {},
             "errors": [],
             "meta": {
@@ -102,34 +61,84 @@ class BaseReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
             },
         }
 
-        # Handle errors separately
         if response.status_code >= 400:
-            payload["errors"] = (
-                self.format_errors(response.data)
-                if isinstance(response.data, dict)
-                else [
-                    {
-                        "field": "none",
-                        "code": "unknown",
-                        "message": str(response.data),
-                        "details": {},
-                    }
-                ]
+            self._handle_error_response(response, data, payload)
+        else:
+            self._handle_success_response(response, request, data, payload)
+
+        setattr(response, "data", payload)
+        add_throttle_headers(response, throttles)
+        self._set_custom_headers(response, request_id)
+
+        logger.info(
+            f"Response finalized with status {response.status_code}, Request ID: {request_id}"
+        )
+        return super().finalize_response(request, response, *args, **kwargs)
+
+    def _handle_error_response(
+        self, response: Union[Response, HttpResponseBase], data: dict, payload: dict
+    ) -> None:
+        """Handles error responses."""
+        if response.status_code == 404:
+            payload.update(
+                {
+                    "message": data.get("message", "Resource Not Found"),
+                    "data": data.get("data", {}),
+                    "errors": data.get(
+                        "errors",
+                        [
+                            {
+                                "field": "none",
+                                "code": "not_found",
+                                "message": "The requested resource was not found",
+                                "details": {},
+                            }
+                        ],
+                    ),
+                }
             )
         else:
             payload.update(
-                {"data": response.data}
-                if isinstance(response.data, dict)
-                else {"data": response.data}
+                {
+                    "message": data.get("message", "An unexpected error occurred."),
+                    "data": data.get("data", {}),
+                    "errors": data.get("errors", []),
+                }
             )
 
-        # Update response data.
-        setattr(response, "data", payload)
+    def _handle_success_response(
+        self,
+        response: Union[Response, HttpResponseBase],
+        request: Request,
+        data: dict,
+        payload: dict,
+    ) -> None:
+        """Handles successful responses."""
+        if response.status_code == 204:
+            response.status_code = 200
+            payload.update(
+                {
+                    "message": "The request was successful",
+                    "data": {
+                        "detail": "The requested resource deletion was successful.",
+                        "id": getattr(request, "parser_context", {})
+                        .setdefault("kwargs", {})
+                        .get("pk", None),
+                    },
+                }
+            )
+        else:
+            payload.update(
+                {
+                    "message": "The request was successful",
+                    "data": data,
+                }
+            )
 
-        # Add throttle details in headers.
-        add_throttle_headers(response, throttles)
-
-        # Update response headers.
+    def _set_custom_headers(
+        self, response: Union[Response, HttpResponseBase], request_id: str
+    ) -> None:
+        """Sets custom headers for tracking request metadata."""
         setattr(
             response,
             "headers",
@@ -142,10 +151,3 @@ class BaseReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
                 ),
             },
         )
-
-        logger.info(
-            f"Response finalized with status {response.status_code}, Request ID: {request_id}"
-        )
-
-        # Call to super methods to handle rest process.
-        return super().finalize_response(request, response, *args, **kwargs)
