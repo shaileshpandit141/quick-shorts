@@ -1,14 +1,14 @@
 from typing import NoReturn
 
 from permissions import AllowAny
-from core.views import BaseAPIView, Response
+from core.views import BaseAPIResponseHandler, Response
 from rest_framework import serializers, status
 from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.views import TokenRefreshView
 from throttling import AnonRateThrottle
 
 
-class SigninTokenRefreshView(TokenRefreshView, BaseAPIView):
+class SigninTokenRefreshView(TokenRefreshView, BaseAPIResponseHandler):
     """Custom token refresh view for handling JWT token refresh operations."""
 
     permission_classes = [AllowAny]
@@ -36,21 +36,29 @@ class SigninTokenRefreshView(TokenRefreshView, BaseAPIView):
         try:
             response = super().post(request, *args, **kwargs)
             if response.status_code == status.HTTP_200_OK:
-                return self.handle_success(
-                    "Token refreshed successfully.",
-                    {"access_token": response.data.get("access", None)},  # type: ignore
+                return self.success(
+                    {
+                        "message": "Token refreshed successfully",
+                        "data": {
+                            "access_token": getattr(request, "data", {}).get(
+                                "access", None
+                            ),
+                        },
+                    }
                 )
 
             # Invalid or expired refresh token
             raise ValidationError("Invalid or expired refresh token.")
         except ValidationError as error:
-            return self.handle_error(
-                "Oops! something went wrong. Please try again later.",
-                [
-                    {
-                        "field": "none",
-                        "code": "refresh_token",
-                        "message": str(error),
-                    }
-                ],
+            return self.error(
+                {
+                    "message": "Oops! something went wrong. Please try again later",
+                    "errors": [
+                        {
+                            "field": "none",
+                            "code": "refresh_token",
+                            "message": str(error),
+                        }
+                    ],
+                }
             )

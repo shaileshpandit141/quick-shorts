@@ -14,6 +14,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic.base import RedirectView
 from apps.todo import urls as todo_urls
+from apps.todo.views import TodoView
 
 from .views import IndexTemplateView, custom_404_apiview
 
@@ -31,6 +32,7 @@ urlpatterns = [
     path("api/v1/auth/", include((users_auth_urls, "user_auth"))),
     path("api/v1/auth/", include((google_auth_urls, "google_auth"))),
     path("api/v1/", include((todo_urls, "todo_app"))),
+    path("api/v1/other-todos/", TodoView.as_view()),
 ]
 
 # Configure custom error handling
