@@ -24,9 +24,9 @@ class SigninTokenView(BaseAPIView):
                     {
                         "field": "password",
                         "code": "blank",
-                        "message": "password filed can not be blank.",
+                        "message": "password field can not be blank.",
                         "details": {
-                            "password": "add password filed in the request payload."
+                            "password": "add password field in the request payload."
                         },
                     }
                 )
@@ -36,8 +36,8 @@ class SigninTokenView(BaseAPIView):
                 {
                     "field": "email",
                     "code": "blank",
-                    "message": "email filed can not be blank.",
-                    "details": {"email": "add email filed in the request payload."},
+                    "message": "email field can not be blank.",
+                    "details": {"email": "add email field in the request payload."},
                 }
             )
 
