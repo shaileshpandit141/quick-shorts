@@ -44,7 +44,13 @@ class BaseModelViewSet(viewsets.ModelViewSet):
         """Finalizes API response format with standard structure."""
         throttles = get_throttle_details(self)
         request_id = str(uuid4())
-        data = response.data
+
+        # Ensure response data exists
+        data = getattr(response, "data", {})
+
+        # Correctly detect validation errors
+        if isinstance(data, dict) and "errors" in data:
+            response.status_code = 400
 
         # Default response structure
         payload = {
@@ -64,23 +70,59 @@ class BaseModelViewSet(viewsets.ModelViewSet):
 
         # Handle errors separately
         if response.status_code >= 400:
-            payload.update({"message": (data["message"] if data is not None else "")})
-            payload.update({"data": (data["data"] if data is not None else {})})
-            payload.update({"errors": (data["errors"] if data is not None else [])})
+            if response.status_code == 404:
+                payload.update({"message": data.get("message", "Resource Not Found")})
+                payload.update({"data": data.get("data", {})})
+                payload.update(
+                    {
+                        "errors": data.get(
+                            "errors",
+                            [
+                                {
+                                    "field": "none",
+                                    "code": "not_found",
+                                    "message": "The requested resource was not found",
+                                    "details": {},
+                                }
+                            ],
+                        )
+                    }
+                )
+            else:
+                payload.update(
+                    {"message": data.get("message", "An Unexpected error occured.")}
+                )
+                payload.update({"data": data.get("data", {})})
+                payload.update({"errors": data.get("errors", [])})
         else:
-            payload.update(
-                {"data": response.data}
-                if isinstance(response.data, dict)
-                else {"data": response.data}
-            )
+            if response.status_code == 204:
+                response.status_code = 200
+                payload.update(
+                    {
+                        "message": "The request was successful",
+                        "data": {
+                            "deatil": "The requested resource deletion was successful.",
+                            "id": getattr(request, "parser_context", {})
+                            .setdefault("kwargs", {})
+                            .get("pk", None),
+                        },
+                    }
+                )
+            else:
+                payload.update(
+                    {
+                        "message": "The request was successful",
+                        "data": response.data,
+                    }
+                )
 
-        # Update response data.
+        # Assign the updated payload
         setattr(response, "data", payload)
 
-        # Add throttle details in headers.
+        # Add throttle details in headers
         add_throttle_headers(response, throttles)
 
-        # Update response headers.
+        # Add custom headers
         setattr(
             response,
             "headers",
@@ -98,5 +140,5 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             f"Response finalized with status {response.status_code}, Request ID: {request_id}"
         )
 
-        # Call to super methods to handle rest process.
+        # Call to super methods to handle rest process
         return super().finalize_response(request, response, *args, **kwargs)
