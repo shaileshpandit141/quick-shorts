@@ -64,9 +64,6 @@ class BaseModelViewSet(viewsets.ModelViewSet):
 
         # Handle errors separately
         if response.status_code >= 400:
-            print("----------------------------")
-            print("Status Code: ", response.status_code)
-            print("----------------------------")
             payload.update({"message": (data["message"] if data is not None else "")})
             payload.update({"data": (data["data"] if data is not None else {})})
             payload.update({"errors": (data["errors"] if data is not None else [])})
