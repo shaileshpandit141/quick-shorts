@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Dict, List, Self, Type
+from typing import Any, Dict, List, Self, Type, Optional
 from datetime import datetime
 from uuid import uuid4
 from django.db.models import QuerySet
@@ -9,10 +9,12 @@ from rest_framework.permissions import AllowAny, BasePermission
 from rest_framework.response import Response
 from rest_framework.throttling import BaseThrottle
 from rest_framework.views import APIView
+from ..serializers import BaseModelSerializer
 from ..validation_error_formatter import ValidationErrorFormatter
 from ..get_throttle_details import get_throttle_details
 from ..add_throttle_headers import add_throttle_headers
 from ..page_number_pagination import PageNumberPagination
+from rest_framework.exceptions import NotFound, APIException
 from .types import (
     TypeData,
     TypeErrorPayload,
@@ -104,6 +106,8 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
     permission_classes: List[Type[BasePermission]] = [AllowAny]
     throttle_classes: List[Type[BaseThrottle]] = []
     pagination_class: Type[PageNumberPagination] = PageNumberPagination
+    serializer_class: Optional[Type[BaseModelSerializer]] = None
+    queryset: Optional[QuerySet] = None
 
     def __init__(self, *args, **kwargs) -> None:
         """Initialize view with status attribute"""
@@ -184,40 +188,49 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
             )
             return None
 
-    def get_paginated_data(self, queryset: QuerySet) -> Dict[str, Any] | QuerySet:
+    def get_paginated_data(self) -> Dict[str, Any]:
         """
         Returns pagination data for the given queryset.
         Uses page and items-per-page query params if not explicitly provided.
         Default page is 1, default items per page is 10.
         """
+        logger.debug("Starting pagination process using pagination_class.")
         paginator = self.pagination_class()
 
         # Paginate the queryset
-        page = paginator.paginate_queryset(queryset, self.request)
-        if page is not None:
-            logger.debug("Returning paginated response")
-            return {
-                "current_page": paginator.page.number,
-                "total_pages": paginator.page.paginator.num_pages,
-                "total_items": paginator.page.paginator.count,
-                "items_per_page": paginator.page.paginator.per_page,
-                "has_next": paginator.page.has_next(),
-                "has_previous": paginator.page.has_previous(),
-                "next_page_number": (
-                    paginator.page.next_page_number()
-                    if paginator.page.has_next()
-                    else None
-                ),
-                "previous_page_number": (
-                    paginator.page.previous_page_number()
-                    if paginator.page.has_previous()
-                    else None
-                ),
-                "next": paginator.get_next_link(),
-                "previous": paginator.get_previous_link(),
-                "results": page,
-            }
+        page = paginator.paginate_queryset(self.queryset, self.request)
+        logger.debug(f"Paginated queryset: {page}")
 
-        # If no pagination is required
-        logger.debug("Returning unpaginated response")
-        return queryset
+        if self.serializer_class is None:
+            logger.error("Serializer class is None. Cannot serialize page data.")
+            raise APIException(detail="Something went wrong!", code=500)
+
+        if page is None:
+            logger.warning("Paginated page is None. Object not found.")
+            raise NotFound(detail="The requested object was not found.")
+
+        serializer = self.serializer_class(instance=page, many=True)
+        logger.debug("Serializer data prepared for the paginated page.")
+
+        result = {
+            "current_page": paginator.page.number,
+            "total_pages": paginator.page.paginator.num_pages,
+            "total_items": paginator.page.paginator.count,
+            "items_per_page": paginator.page.paginator.per_page,
+            "has_next": paginator.page.has_next(),
+            "has_previous": paginator.page.has_previous(),
+            "next_page_number": (
+                paginator.page.next_page_number() if paginator.page.has_next() else None
+            ),
+            "previous_page_number": (
+                paginator.page.previous_page_number()
+                if paginator.page.has_previous()
+                else None
+            ),
+            "next": paginator.get_next_link(),
+            "previous": paginator.get_previous_link(),
+            "results": getattr(serializer, "data", {}),
+        }
+
+        logger.debug(f"Pagination data calculated: {result}")
+        return result
