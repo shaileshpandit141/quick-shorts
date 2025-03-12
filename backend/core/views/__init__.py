@@ -9,7 +9,6 @@ interface.
 
 from rest_framework.response import Response
 from .base_apiview import BaseAPIView
-from .apiview import APIView
 
 # Public interface exposing only necessary functionality for API development
-__all__ = ["APIView", "BaseAPIView", "Response"]
+__all__ = ["BaseAPIView", "Response"]
