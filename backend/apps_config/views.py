@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.views.generic import TemplateView
 
 
-def custom_404_apiview(request, exception=None):
+def custom_404_apiview(request, exception=None) -> JsonResponse:
     """
     Custom 404 error handler that returns a JSON response when a page/endpoint is not found.
 
@@ -17,7 +17,7 @@ def custom_404_apiview(request, exception=None):
                     "field": "none",
                     "code": "404_not_found",
                     "message": "The requested endpoint could not be found. Please check the URL and try again.",
-                    "details": None,
+                    "details": {},
                 }
             ],
         },
