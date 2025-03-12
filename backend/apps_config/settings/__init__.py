@@ -12,8 +12,6 @@ if ENV == "development":
     from .development import *
 elif ENV == "production":
     from .production import *
-elif ENV == "testing":
-    from .testing import *
 else:
     # Raise error if ENV value is not one of the allowed options
     raise Exception(

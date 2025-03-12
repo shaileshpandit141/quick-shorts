@@ -32,7 +32,8 @@ REST_FRAMEWORK.update(
     }
 )
 
-REST_FRAMEWORK.update({"PAGE_SIZE": 2})
+REST_FRAMEWORK.update({"PAGE_SIZE": 4})
+REST_FRAMEWORK.update({"MAX_PAGE_SIZE": 8})
 
 # SQLite Database Configuration for development environment
 # ---------------------------------------------------------

@@ -32,6 +32,7 @@ REST_FRAMEWORK.update(
 )
 
 REST_FRAMEWORK.update({"PAGE_SIZE": 16})
+REST_FRAMEWORK.update({"MAX_PAGE_SIZE": 32})
 
 # PostgreSQL database configuration Settings
 # ------------------------------------------

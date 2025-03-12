@@ -56,7 +56,8 @@ INSTALLED_APPS += [
 # ---------------------------------
 INSTALLED_APPS += [
     "apps.user_auth.apps.UserAuthConfig",
-    "google_auth.apps.GoogleAuthConfig",
+    "apps.google_auth.apps.GoogleAuthConfig",
+    "apps.todo.apps.TodoConfig",
 ]
 
 # Middleware Configuration Settings
@@ -171,7 +172,8 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.BrowsableAPIRenderer",
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 5,
+    "PAGE_SIZE": 4,
+    "MAX_PAGE_SIZE": 8,
 }
 
 # JWT Token Configuration Settings

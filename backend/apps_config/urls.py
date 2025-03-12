@@ -13,6 +13,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic.base import RedirectView
+from apps.todo import urls as todo_urls
 
 from .views import IndexTemplateView, custom_404_apiview
 
@@ -29,6 +30,7 @@ urlpatterns = [
     # User authentication URLs under /api/v1/auth
     path("api/v1/auth/", include((users_auth_urls, "user_auth"))),
     path("api/v1/auth/", include((google_auth_urls, "google_auth"))),
+    path("api/v1/", include((todo_urls, "todo_app"))),
 ]
 
 # Configure custom error handling
