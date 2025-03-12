@@ -54,11 +54,10 @@ This project is a Initial Code for setting up a web application using Django for
   HOST=localhost
   PORT=8000
 
-  # DJANGO_ENV mode as development, production, or testing
-  # ------------------------------------------------------
+  # DJANGO_ENV mode as development, or production
+  # ---------------------------------------------
   DJANGO_ENV=development
   # DJANGO_ENV=production
-  # DJANGO_ENV=testing
 
   # FRONTEND_URL Configuration Settings
   # -----------------------------------
