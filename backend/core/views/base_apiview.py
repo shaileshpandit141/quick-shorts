@@ -33,7 +33,7 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
         self.formatter = ValidationErrorFormatter()
         super().__init__(*args, **kwargs)
 
-    def get_serializer(self, *args, **kwargs) -> Any:
+    def get_serializer(self, *args, **kwargs) -> ModelSerializer:
         """Return the class to use for the serializer."""
         serializer = self.get_serializer_class()
         if serializer is None:
@@ -42,7 +42,7 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
         else:
             return serializer(*args, **kwargs)
 
-    def get_serializer_class(self) -> Any:
+    def get_serializer_class(self) -> Type[ModelSerializer] | None:
         """
         Return the class to use for the serializer.
         Defaults to using `self.get_serializer_class`.
