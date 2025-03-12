@@ -19,7 +19,7 @@ from ..add_throttle_headers import add_throttle_headers
 logger = logging.getLogger(__name__)
 
 
-class BaseModelViewSet(viewsets.ReadOnlyModelViewSet):
+class BaseReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
     """ModelViewSet to provide standard response formatting and error handling."""
 
     filter_backends: List[Type[BaseFilterBackend]] = []
