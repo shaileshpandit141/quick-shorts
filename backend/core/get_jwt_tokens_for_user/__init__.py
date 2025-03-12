@@ -1,6 +1,3 @@
-from .get_jwt_tokens_for_user import JWTPayload, get_jwt_tokens_for_user
+from .get_jwt_tokens_for_user import get_jwt_tokens_for_user
 
-__all__ = [
-    "get_jwt_tokens_for_user",
-    "JWTPayload",
-]
+__all__ = ["get_jwt_tokens_for_user"]

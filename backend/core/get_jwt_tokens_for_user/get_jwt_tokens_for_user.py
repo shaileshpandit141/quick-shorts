@@ -1,19 +1,11 @@
-from typing import TypedDict
-
-from django.contrib.auth import get_user_model
+from typing import cast
 from django.contrib.auth.models import AbstractUser
 from rest_framework_simplejwt.tokens import RefreshToken
-
-User = get_user_model()
-
-
-class JWTPayload(TypedDict):
-    refresh_token: str
-    access_token: str
+from django.db.models import Model
 
 
-def get_jwt_tokens_for_user(user: AbstractUser) -> JWTPayload:
-    refresh = RefreshToken.for_user(user)
+def get_jwt_tokens_for_user(user: Model) -> dict[str, str]:
+    refresh = RefreshToken.for_user(cast(AbstractUser, user))
     return {
         "refresh_token": str(refresh),
         "access_token": str(getattr(refresh, "access_token")),
