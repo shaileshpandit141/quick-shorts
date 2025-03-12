@@ -65,7 +65,7 @@ def exception_handler(exc, context) -> Response | views.Response | None:
             details={"retry_after": f"{error.wait} seconds"},
         ),
         APIException: lambda error: create_error_response(
-            "An internal server error occurred.",
+            "An API response error occurred.",
             "api_exception",
             error_message=getattr(error, "detail", "An unexpected error occurred."),
         ),
