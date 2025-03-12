@@ -1,5 +1,5 @@
 import logging
-
+from django.conf import settings
 from rest_framework import pagination
 from rest_framework.response import Response
 
@@ -9,11 +9,18 @@ logger = logging.getLogger(__name__)
 class PageNumberPagination(pagination.PageNumberPagination):
     """Custom pagination class that extends DRF's PageNumberPagination."""
 
-    page_size = 5  # Number of records per page
+    page_size = settings.REST_FRAMEWORK.get(
+        "PAGE_SIZE", 5
+    )  # Number of records per page
+
+    # Allow clients to set page size via query param
     page_size_query_param = (
-        "page-size"  # Allow clients to set page size via query param
+        "page-size"
     )
-    max_page_size = 50  # Maximum allowed page size limit
+    
+    max_page_size = settings.REST_FRAMEWORK.get(
+        "MAX_PAGE_SIZE", 10
+    )  # Maximum allowed page size limit
 
     def set_page_size(self, size: int) -> None:
         """Set the number of items per page."""
@@ -48,12 +55,12 @@ class PageNumberPagination(pagination.PageNumberPagination):
                 "items_per_page": items_per_page,
                 "has_next": page.has_next(),
                 "has_previous": page.has_previous(),
-                "next_page_number": page.next_page_number()
-                if page.has_next()
-                else None,
-                "previous_page_number": page.previous_page_number()
-                if page.has_previous()
-                else None,
+                "next_page_number": (
+                    page.next_page_number() if page.has_next() else None
+                ),
+                "previous_page_number": (
+                    page.previous_page_number() if page.has_previous() else None
+                ),
                 "next": self.get_next_link(),
                 "previous": self.get_previous_link(),
                 "results": data,
