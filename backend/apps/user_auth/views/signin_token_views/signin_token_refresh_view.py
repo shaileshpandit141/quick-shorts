@@ -1,64 +1,53 @@
-from typing import NoReturn
-
 from permissions import AllowAny
-from core.views import BaseAPIResponseHandler, Response
-from rest_framework import serializers, status
-from rest_framework.exceptions import ValidationError
-from rest_framework_simplejwt.views import TokenRefreshView
+from core.views import BaseAPIView, Response
 from throttling import AnonRateThrottle
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 
 
-class SigninTokenRefreshView(TokenRefreshView, BaseAPIResponseHandler):
+class SigninTokenRefreshView(BaseAPIView):
     """Custom token refresh view for handling JWT token refresh operations."""
 
     permission_classes = [AllowAny]
     throttle_classes = [AnonRateThrottle]
 
-    def get_serializer(self, *args, **kwargs) -> NoReturn:
-        """Customize serializer to handle refresh token field name."""
-
-        data = self.request.data.copy()  # type: ignore
-        refresh_token = data.pop("refresh_token", None)
-        if refresh_token and isinstance(refresh_token, list):
-            if len(refresh_token) > 0:
-                refresh_token = refresh_token[0]
-        if not refresh_token:
-            raise serializers.ValidationError(
-                {"refresh_token": "This field is required."}
-            )
-
-        data["refresh"] = refresh_token
-        return super().get_serializer(data=data)
-
     def post(self, request, *args, **kwargs) -> Response:
         """Handle token refresh POST requests."""
 
-        try:
-            response = super().post(request, *args, **kwargs)
-            if response.status_code == status.HTTP_200_OK:
-                return self.success(
+        refresh_token = request.data.get("refresh_token", None)
+
+        # Validate the refresh_token is empty or not
+        if refresh_token is None:
+            return self.handle_error(
+                "Token refresh request was failed",
+                [
                     {
-                        "message": "Token refreshed successfully",
-                        "data": {
-                            "access_token": getattr(request, "data", {}).get(
-                                "access", None
-                            ),
+                        "field": "refresh_token",
+                        "code": "blank",
+                        "message": "refresh_token filed can not be blank.",
+                        "details": {
+                            "refresh_token": "add refresh_token field in the request payload."
                         },
                     }
-                )
+                ],
+            )
 
-            # Invalid or expired refresh token
-            raise ValidationError("Invalid or expired refresh token.")
-        except ValidationError as error:
-            return self.error(
-                {
-                    "message": "Oops! something went wrong. Please try again later",
-                    "errors": [
-                        {
-                            "field": "none",
-                            "code": "refresh_token",
-                            "message": str(error),
-                        }
-                    ],
-                }
+        # Handle Token refresh logic
+        try:
+            # Create a new refresh token object
+            jwt_tokens = RefreshToken(refresh_token)
+            return self.handle_success(
+                "Token refreshed successfully",
+                {"access_token": str(jwt_tokens.access_token)},
+            )
+        except (TokenError, InvalidToken) as error:
+            return self.handle_error(
+                "Invalid or expired refresh token",
+                [
+                    {
+                        "field": "none",
+                        "code": "refresh_token",
+                        "message": str(error),
+                    }
+                ],
             )
