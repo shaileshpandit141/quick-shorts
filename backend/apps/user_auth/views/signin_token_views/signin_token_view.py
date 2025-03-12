@@ -1,88 +1,98 @@
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 from permissions import AllowAny
-from core.views import BaseAPIResponseHandler, Response
-from rest_framework_simplejwt.views import TokenObtainPairView
+from core.views import BaseAPIView, Response
 from throttling import AuthRateThrottle
-from user_auth.serializers import SigninTokenSerializer
+from core.get_jwt_tokens_for_user import get_jwt_tokens_for_user
+from user_auth.models import User
 
-User = get_user_model()
 
-
-class SigninTokenView(TokenObtainPairView, BaseAPIResponseHandler):
-    """Custom JWT token view that handles user authentication using email/username and password."""
-
+class SigninTokenView(BaseAPIView):
     permission_classes = [AllowAny]
     throttle_classes = [AuthRateThrottle]
-    serializer_class = SigninTokenSerializer
 
     def post(self, request, *args, **kwargs) -> Response:
-        """Handle user authentication and return JWT tokens."""
+        data = request.data
 
-        email = request.data.get("email", "")  # type: ignore
-        password = request.data.get("password", "")  # type: ignore
+        email = data.get("email", None)
+        password = data.get("password", None)
 
-        # Handle username-based login by fetching associated email
-        user_data = {"email": email, "password": password}
-        if "@" not in email:
-            try:
-                user = User.objects.get(username=email)
-                user_data["email"] = user.email
-            except User.DoesNotExist as error:
-                return self.error(
+        if email is None or password is None:
+            errors = []
+            # Check if user is password provide or not
+            if password is None:
+                errors.append(
                     {
-                        "message": "Sign in request is failed.",
-                        "errors": [
-                            {
-                                "field": "none",
-                                "code": "signin_failed",
-                                "message": "Please provide valid authentication credentials.",
-                                "details": {"detail": str(error)},
-                            }
-                        ],
+                        "field": "password",
+                        "code": "blank",
+                        "message": "password filed can not be blank.",
+                        "details": {
+                            "password": "add password filed in the request payload."
+                        },
                     }
                 )
 
-        # Validate credentials with serializer
-        serializer = self.get_serializer(data=user_data)
-        if not serializer.is_valid():
-            return self.error(
+            # Append if only email is not provided
+            errors.append(
                 {
-                    "message": "Sign in request is failed",
-                    "errors": self.formatter(serializer.errors),
+                    "field": "email",
+                    "code": "blank",
+                    "message": "email filed can not be blank.",
+                    "details": {"email": "add email filed in the request payload."},
                 }
             )
 
-        # Get the authenticated user from the serializer
-        user = serializer.validated_data.get("user")
-        # Check email verification status for non-superusers
-        if user and not user.is_superuser and not user.is_verified:
-            return self.error(
-                {
-                    "message": "Sign in request is failed - account not verified",
-                    "errors": [
+            # Return the error response
+            return self.handle_error("Sign in request is failed", errors)
+
+        # Handle email and username based signin
+        try:
+            user = None
+            if "@" in email:
+                user = self.get_object(User, email=email)
+            else:
+                user = self.get_object(User, username=email)
+
+            # Check is user is None
+            if user is None:
+                raise Exception("Something is not correct. try again later!")
+
+            # Check user password is currect or not
+            if not user.check_password(password):
+                raise Exception("Please provide valid authentication credentials.")
+
+            # Handle success signin response
+            if not user.is_superuser and not user.is_verified:
+                return self.handle_error(
+                    "Sign in request is failed - account not verified",
+                    [
                         {
                             "field": "none",
                             "code": "signin_failed",
                             "message": "Please verify your account before signing in.",
                         }
                     ],
-                },
-                self.status.HTTP_401_UNAUTHORIZED,
+                )
+
+            # Generate jwt toke for requested user
+            jwt_tokens = get_jwt_tokens_for_user(user)
+
+            # Update last login timestamp
+            if user:
+                user.last_login = timezone.now()
+                user.save(update_fields=["last_login"])
+
+            # Return success response
+            return self.handle_success(
+                "Welcome back! Sign in request is successful", jwt_tokens
             )
-
-        # Update last login timestamp
-        if user:
-            user.last_login = timezone.now()
-            user.save(update_fields=["last_login"])
-
-        # Return successful response with JWT tokens
-        return self.success(
-            {
-                "message": "Welcome back! Sign in request is successful",
-                "data": {
-                    "access_token": serializer.validated_data["access"],
-                    "refresh_token": serializer.validated_data["refresh"],
-                },
-            }
-        )
+        except Exception as error:
+            return self.handle_error(
+                "Sign in request is failed",
+                [
+                    {
+                        "field": "none",
+                        "code": "signin_failed",
+                        "message": str(error),
+                    }
+                ],
+            )
