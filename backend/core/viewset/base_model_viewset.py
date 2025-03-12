@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Sequence, Type, Union
+from typing import List, Optional, Sequence, Type, Union
 from uuid import uuid4
 
 from django.db.models.query import QuerySet
@@ -11,7 +11,6 @@ from rest_framework.permissions import AllowAny, BasePermission
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, BaseThrottle
-from rest_framework.exceptions import ErrorDetail
 
 from ..get_throttle_details import get_throttle_details
 from ..page_number_pagination import PageNumberPagination
@@ -35,47 +34,6 @@ class BaseModelViewSet(viewsets.ModelViewSet):
     search_fields: Optional[Sequence[str]] = ()
     throttle_classes: List[Type[BaseThrottle]] = [AnonRateThrottle]
 
-    def format_errors(self, errors: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Formats DRF validation errors into the required structure."""
-        formatted_errors = []
-        for field, messages in errors.items():
-            if field == "non_field_errors":
-                field = "none"
-            if isinstance(messages, list):
-                for message in messages:
-                    if isinstance(message, ErrorDetail):
-                        formatted_errors.append(
-                            {
-                                "field": field,
-                                "code": (
-                                    message.code
-                                    if hasattr(message, "code")
-                                    else "unknown"
-                                ),
-                                "message": str(message),
-                                "details": {},
-                            }
-                        )
-                    else:
-                        formatted_errors.append(
-                            {
-                                "field": field,
-                                "code": "unknown",
-                                "message": str(message),
-                                "details": {},
-                            }
-                        )
-            else:  # Handle single error
-                formatted_errors.append(
-                    {
-                        "field": field,
-                        "code": "unknown",
-                        "message": str(messages),
-                        "details": {},
-                    }
-                )
-        return formatted_errors
-
     def finalize_response(
         self,
         request: Request,
@@ -86,11 +44,13 @@ class BaseModelViewSet(viewsets.ModelViewSet):
         """Finalizes API response format with standard structure."""
         throttles = get_throttle_details(self)
         request_id = str(uuid4())
+        data = response.data
 
         # Default response structure
         payload = {
             "status": "succeeded" if response.status_code < 400 else "failed",
             "status_code": response.status_code,
+            "message": "",
             "data": {},
             "errors": [],
             "meta": {
@@ -104,18 +64,12 @@ class BaseModelViewSet(viewsets.ModelViewSet):
 
         # Handle errors separately
         if response.status_code >= 400:
-            payload["errors"] = (
-                self.format_errors(response.data)
-                if isinstance(response.data, dict)
-                else [
-                    {
-                        "field": "none",
-                        "code": "unknown",
-                        "message": str(response.data),
-                        "details": {},
-                    }
-                ]
-            )
+            print("----------------------------")
+            print("Status Code: ", response.status_code)
+            print("----------------------------")
+            payload.update({"message": (data["message"] if data is not None else "")})
+            payload.update({"data": (data["data"] if data is not None else {})})
+            payload.update({"errors": (data["errors"] if data is not None else [])})
         else:
             payload.update(
                 {"data": response.data}
