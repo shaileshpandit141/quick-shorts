@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Dict, List, Type, Optional
+from typing import Any, Dict, List, Type, Optional, TypeVar
 from datetime import datetime
 from uuid import uuid4
 from django.db.models import QuerySet
@@ -16,8 +16,12 @@ from .base_api_response_handler import BaseAPIResponseHandler
 from rest_framework.serializers import ModelSerializer
 from ..validation_error_formatter import ValidationErrorFormatter
 from rest_framework import status
+from django.db.models import Model
 
 logger = logging.getLogger(__name__)
+
+# Define a TypeVar that must be a subclass of Model
+TypeModel = TypeVar("TypeModel", bound=Model)
 
 
 class BaseAPIView(APIView, BaseAPIResponseHandler):
@@ -96,7 +100,7 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
         # Call to super methods to handle rest process.
         return super().finalize_response(request, response, *args, **kwargs)
 
-    def get_object(self, model, *args, **kwargs) -> Dict[str, Any] | None:
+    def get_object(self, model: Type[TypeModel], *args, **kwargs) -> TypeModel | None:
         """Get single model instance or None if not found"""
         try:
             return model.objects.get(*args, **kwargs)

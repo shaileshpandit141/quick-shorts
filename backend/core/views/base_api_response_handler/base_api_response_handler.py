@@ -44,7 +44,7 @@ class BaseAPIResponseHandler:
             errors = []
         else:
             errors = [
-                {**error, "details": error.get("details", None)}
+                {**error, "details": error.get("details", {})}
                 for error in payload["errors"]
             ]
 
