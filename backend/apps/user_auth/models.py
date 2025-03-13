@@ -1,3 +1,4 @@
+from typing import Any
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -7,12 +8,12 @@ from django.db import models
 
 
 class UserManager(BaseUserManager):
-    """
-    Custom user manager that extends Django's BaseUserManager to handle email-based authentication.
-    Provides methods for creating regular users and superusers.
+    """Custom user manager that extends Django's BaseUserManager
+    to handle email-based authentication. Provides methods for
+    creating regular users and superusers.
     """
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, email, password=None, **extra_fields) -> Any:
         """Creates and saves a User with the given email and password."""
 
         if not email:
@@ -32,9 +33,8 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None, **extra_fields):
-        """
-        Creates and saves a superuser with the given email and password.
+    def create_superuser(self, email, password=None, **extra_fields) -> Any:
+        """Creates and saves a superuser with the given email and password.
         Sets is_staff, is_superuser and is_active to True by default.
         """
 
@@ -52,9 +52,9 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """
-    Custom user model that uses email as the username field instead of a username.
-    Extends Django's AbstractBaseUser and PermissionsMixin.
+    """Custom user model that uses email as the username field
+    instead of a username. Extends Django's AbstractBaseUser
+    and PermissionsMixin.
     """
 
     class Meta(AbstractBaseUser.Meta, PermissionsMixin.Meta):  # type: ignore
@@ -215,9 +215,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         return (str(self.first_name)).strip()
 
     def get_full_name(self) -> str | None:
-        """
-        Returns the user"s full name, with a space between first and last name.
-        If exist otherwise None
+        """Returns the user"s full name, with a space between
+        first and last name. If exist otherwise None
         """
         if self.first_name is None or self.last_name is None:
             return None

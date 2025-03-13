@@ -8,17 +8,11 @@ logger = logging.getLogger(__name__)
 
 
 class IsVerified(BasePermission):
-    """
-    Permission class that checks if a user is verified.
-
-    Only allows access to verified users or superusers.
-    Raises PermissionDenied with details if the user is unverified or unauthenticated.
-    """
+    """Permission class that checks if a user is verified."""
 
     def has_permission(self, request, view) -> Literal[True]:
-        """
-        Check if the user is verified or a superuser.
-        """
+        """Check if the user is verified or a superuser."""
+
         # Handle unauthenticated users
         if not request.user or not request.user.is_authenticated:
             logger.warning(
@@ -27,15 +21,10 @@ class IsVerified(BasePermission):
             )
             raise PermissionDenied(
                 {
-                    "message": "Authentication Required",
-                    "errors": [
-                        {
-                            "field": "authentication",
-                            "code": "not_authenticated",
-                            "message": "You must be logged in to access this resource.",
-                            "details": {"authenticated": False},
-                        }
-                    ],
+                    "message": "Authentication required on this endpoint",
+                    "errors": {
+                        "deatil": "You must include a valid authentication token in the Authorization header."
+                    },
                 }
             )
 
@@ -58,14 +47,11 @@ class IsVerified(BasePermission):
                     "message": "Account Not Verified",
                     "errors": [
                         {
-                            "field": "account",
+                            "detail": "Your account must be verified to access this resource.",
                             "code": "unverified_account",
-                            "message": "Your account must be verified to access this resource.",
-                            "details": {
-                                "verification_status": False,
-                                "user_id": request.user.id,
-                                "user_email": request.user.email,
-                            },
+                            "verification_status": False,
+                            "user_id": request.user.id,
+                            "user_email": request.user.email,
                         }
                     ],
                 }

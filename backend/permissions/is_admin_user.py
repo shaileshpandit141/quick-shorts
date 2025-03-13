@@ -7,10 +7,7 @@ logger = logging.getLogger(__name__)
 
 
 class IsAdminUser(permissions.IsAdminUser):
-    """
-    Custom authentication permission class that extends DRF's IsAdminUser.
-    Raises detailed PermissionDenied exception for unauthorized requests.
-    """
+    """Custom authentication permission class that extends DRF's IsAdminUser."""
 
     def has_permission(self, request, view) -> bool:
         """Check if the request has valid authentication and staff privileges."""
@@ -31,18 +28,10 @@ class IsAdminUser(permissions.IsAdminUser):
             )
             raise PermissionDenied(
                 {
-                    "message": "Authentication Required",
-                    "errors": [
-                        {
-                            "field": "authentication",
-                            "code": "not_authenticated",
-                            "message": "You must be sign in to access this resource.",
-                            "details": {
-                                "required": True,
-                                "header_example": "Authorization: Token <your-token-here>",
-                            },
-                        }
-                    ],
+                    "message": "Authentication required on this endpoint",
+                    "errors": {
+                        "deatil": "You must include a valid authentication token in the Authorization header."
+                    },
                 }
             )
 
@@ -54,19 +43,8 @@ class IsAdminUser(permissions.IsAdminUser):
             )
             raise PermissionDenied(
                 {
-                    "message": "Staff Access Required",
-                    "errors": [
-                        {
-                            "field": "authentication",
-                            "code": "not_staff",
-                            "message": "This endpoint requires staff privileges.",
-                            "details": {
-                                "required_role": "staff",
-                                "current_user_role": "non-staff",
-                                "header_example": "Authorization: Token <your-token-here>",
-                            },
-                        }
-                    ],
+                    "message": "Staff access required on this endpoint",
+                    "errors": {"detail": "This endpoint requires staff privileges."},
                 }
             )
 

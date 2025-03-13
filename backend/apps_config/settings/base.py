@@ -57,7 +57,6 @@ INSTALLED_APPS += [
 INSTALLED_APPS += [
     "apps.user_auth.apps.UserAuthConfig",
     "apps.google_auth.apps.GoogleAuthConfig",
-    "apps.todo.apps.TodoConfig",
 ]
 
 # Middleware Configuration Settings
@@ -152,6 +151,7 @@ MEDIA_URL = "/media/"
 # REST Framework Configuration Settings
 # -------------------------------------
 REST_FRAMEWORK = {
+    "NON_FIELD_ERRORS_KEY": "non_field_errors",
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ],

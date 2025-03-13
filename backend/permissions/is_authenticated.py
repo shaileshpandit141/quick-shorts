@@ -7,10 +7,7 @@ logger = logging.getLogger(__name__)
 
 
 class IsAuthenticated(permissions.IsAuthenticated):
-    """
-    Custom authentication permission class that extends DRF's IsAuthenticated.
-    Raises detailed PermissionDenied exception for unauthenticated requests.
-    """
+    """Custom authentication permission class that extends DRF's IsAuthenticated."""
 
     def has_permission(self, request, view) -> bool:
         """Check if the request has valid authentication and log details."""
@@ -31,18 +28,10 @@ class IsAuthenticated(permissions.IsAuthenticated):
             )
             raise PermissionDenied(
                 {
-                    "message": "Authentication Required",
-                    "errors": [
-                        {
-                            "field": "authentication",
-                            "code": "not_authenticated",
-                            "message": "You must include a valid authentication token in the Authorization header.",
-                            "details": {
-                                "required": True,
-                                "header_example": "Authorization: Token <your-token-here>",
-                            },
-                        }
-                    ],
+                    "message": "Authentication required on this endpoint",
+                    "errors": {
+                        "deatil": "You must include a valid authentication token in the Authorization header."
+                    },
                 }
             )
 

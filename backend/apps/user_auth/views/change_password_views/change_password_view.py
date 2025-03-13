@@ -25,14 +25,8 @@ class ChangePasswordView(BaseAPIView):
         # Check if old password is correct
         if not user.check_password(old_password):
             return self.handle_error(
-                "The old password you entered is incorrect.",
-                [
-                    {
-                        "field": "old_password",
-                        "code": "old_password_incorrect",
-                        "message": "Please enter your current password correctly.",
-                    }
-                ],
+                "The old password you entered is incorrect",
+                {"detail": "Please enter your current password correctly."},
             )
 
         # Validate new password complexity
@@ -40,14 +34,8 @@ class ChangePasswordView(BaseAPIView):
             validate_password(new_password)
         except Exception as error:
             return self.handle_error(
-                "Your new password does not meet the requirements.",
-                [
-                    {
-                        "field": "new_password",
-                        "code": "invalid_password",
-                        "message": str(error),
-                    }
-                ],
+                "Your new password does not meet the requirements",
+                {"detail": str(error)},
             )
 
         # Set new password and notify user via email
@@ -66,8 +54,6 @@ class ChangePasswordView(BaseAPIView):
         )
 
         return self.handle_success(
-            "Password updated successfully.",
-            {
-                "detail": "Your password has been changed. Please use your new password for future signin."
-            },
+            "Password updated successfully",
+            {"detail": "Your password has been changed."},
         )

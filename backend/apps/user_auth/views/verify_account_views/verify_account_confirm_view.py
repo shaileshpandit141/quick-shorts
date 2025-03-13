@@ -46,5 +46,5 @@ class VerifyAccountConfirmView(BaseAPIView):
         except (ValueError, TokenError) as error:
             return self.handle_error(
                 "Provided token is Invalid or expired.",
-                [{"field": "token", "code": "invalid", "message": str(error)}],
+                {"detail": str(error)},
             )

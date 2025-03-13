@@ -18,20 +18,21 @@ class VerifyAccountView(BaseAPIView):
     def post(self, request, *args, **kwargs) -> Response:
         """Process a request to resend an account verification email."""
 
-        email = request.data.get("email", "")
+        # Get email from request
+        email = request.data.get("email", None)
 
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
+        # Handle if user not include email in payload
+        if email is None:
+            return self.handle_error(
+                "Sign up request is failed",
+                {"email": ["Email field can not be blank."]},
+            )
+
+        user = self.get_object(User, email=email)
+        if user is None:
             return self.handle_error(
                 "User account not found.",
-                [
-                    {
-                        "field": "email",
-                        "code": "not_exist",
-                        "message": "We could not find an account with this email address.",
-                    }
-                ],
+                {"email": ["We could not find an account with this email address."]},
             )
 
         if not getattr(user, "is_verified", False):
@@ -40,14 +41,10 @@ class VerifyAccountView(BaseAPIView):
             token = generator.generate()
             if token is None:
                 return self.handle_error(
-                    "Failed to generate token.",
-                    [
-                        {
-                            "field": "token",
-                            "code": "generation_failed",
-                            "message": "Failed to generate verification token. Please try again later.",
-                        }
-                    ],
+                    "Failed to generate an account verification token.",
+                    {
+                        "detail": "Failed to generate an account verification token. Please try again later."
+                    },
                 )
 
             activate_url = f"{settings.FRONTEND_URL}/auth/verify-user-account/{token}"

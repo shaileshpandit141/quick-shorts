@@ -7,10 +7,7 @@ logger = logging.getLogger(__name__)
 
 
 class DjangoModelPermissions(permissions.DjangoModelPermissions):
-    """
-    Custom authentication permission class that extends DRF's DjangoModelPermissions.
-    Raises detailed PermissionDenied exception for unauthenticated or unauthorized requests.
-    """
+    """Custom authentication permission class that extends DRF's DjangoModelPermissions."""
 
     perms_map = {
         "GET": ["%(app_label)s.view_%(model_name)s"],
@@ -27,14 +24,10 @@ class DjangoModelPermissions(permissions.DjangoModelPermissions):
         if not getattr(view, "queryset", None):
             raise PermissionDenied(
                 {
-                    "message": "Invalid View Configuration",
-                    "errors": [
-                        {
-                            "field": "queryset",
-                            "code": "missing_query_set",
-                            "message": "Cannot apply DjangoModelPermissions to a view without a `queryset` attribute.",
-                        }
-                    ],
+                    "message": "Invalid view configuration",
+                    "errors": {
+                        "detail": "Cannot apply DjangoModelPermissions to a view without a `queryset` attribute."
+                    },
                 }
             )
 
@@ -52,15 +45,10 @@ class DjangoModelPermissions(permissions.DjangoModelPermissions):
             )
             raise PermissionDenied(
                 {
-                    "message": "Access Denied",
-                    "errors": [
-                        {
-                            "field": "authentication",
-                            "code": "unauthorized",
-                            "message": "You do not have permission to access this resource.",
-                            "details": {"authentication_required": True},
-                        }
-                    ],
+                    "message": "Access denied",
+                    "errors": {
+                        "detail": "You do not have permission to access this resource."
+                    },
                 }
             )
 

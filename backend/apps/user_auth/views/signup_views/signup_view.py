@@ -23,50 +23,57 @@ class SignupView(BaseAPIView):
     def post(self, request, *args, **kwargs) -> Response:
         """Handle user registration"""
 
-        email = request.data.get("email", "")
-        password = request.data.get("password", "")
-        confirm_password = request.data.get("confirm_password", "")
+        email = request.data.get("email", None)
+        password = request.data.get("password", None)
+        confirm_password = request.data.get("confirm_password", None)
+
+        # Handle if user not include email in payload
+        if email is None:
+            return self.handle_error(
+                "Sign up request is failed",
+                {"email": ["Email field can not be blank."]},
+            )
+
+        # Handle if user not include password in payload
+        if password is None:
+            return self.handle_error(
+                "Sign up request is failed",
+                {"password": ["Password field can not be blank."]},
+            )
+
+        # Handle if user not include password in payload
+        if confirm_password is None:
+            return self.handle_error(
+                "Sign up request is failed",
+                {"confirm_password": ["Confirm password field can not be blank."]},
+            )
 
         try:
             # Validate password meets requirements
             validate_password(password)
-        except ValidationError as _:
+        except ValidationError as error:
             return self.handle_error(
                 "Provided password is not valid.",
-                [
-                    {
-                        "field": "password",
-                        "code": "invalid_password",
-                        "message": "This password is too short. It must contain at least 8 characters.",
-                    }
-                ],
+                {"password": str(error)},
             )
 
         # Check password confirmation matches
         if password != confirm_password:
             return self.handle_error(
                 "Confirm password is not equal to password.",
-                [
-                    {
-                        "field": "confirm_password",
-                        "code": "confirm_password_not_metch",
-                        "message": "Confirm password is not equal to password.",
-                    }
-                ],
+                {"confirm_password": ["Confirm password is not equal to password."]},
             )
 
         # Validate the email is exist in the internet or not
         validator = DNSSMTPEmailValidator(email)
         if not validator.is_valid():
             return self.handle_error(
-                "Email validation failed.",
-                [
-                    {
-                        "field": "email",
-                        "code": "invalid_email",
-                        "message": "Email validation failed. Please try again later.",
-                    }
-                ],
+                "Email domain verification failed.",
+                {
+                    "email": [
+                        "Email domain verification failed. Please try again later."
+                    ]
+                },
             )
 
         # Hash the password for secure storage
@@ -77,43 +84,45 @@ class SignupView(BaseAPIView):
             data={"email": email},
             context={"hashed_password": hashed_password},
         )
-        if serializer.is_valid():
-            serializer.save()
-            user = serializer.instance
 
-            # Generate verification token and URL
-            generator = LimitedTimeTokenGenerator({"user_id": getattr(user, "id")})
-            token = generator.generate()
-            if token is None:
-                return self.handle_error(
-                    "Filed to generate an account verification token.",
-                    [
-                        {
-                            "field": "token",
-                            "code": "token_generation_failed",
-                            "message": "We couldn't generate an account verification token. Please try again later.",
-                        }
-                    ],
-                )
+        # Check serialize is valid or not
+        if not serializer.is_valid():
+            return self.handle_error(
+                "Sign up request was not successful.",
+                serializer.errors,
+            )
 
-            activate_url = f"{settings.FRONTEND_URL}/auth/verify-user-account/{token}"
-            # Send verification email
-            SendEmail(
+        # Save serializer data if it valid
+        serializer.save()
+        user = serializer.instance
+
+        # Generate verification token and URL
+        generator = LimitedTimeTokenGenerator({"user_id": getattr(user, "id")})
+        token = generator.generate()
+        if token is None:
+            return self.handle_error(
+                "Filed to generate an account verification token.",
                 {
-                    "subject": "For Account Verification",
-                    "emails": {"to_emails": [getattr(user, "email", "Unknown")]},
-                    "context": {"user": user, "activate_url": activate_url},
-                    "templates": {
-                        "txt": "users/verify_account/confirm_message.txt",
-                        "html": "users/verify_account/confirm_message.html",
-                    },
-                }
+                    "deatail": "We couldn't generate an account verification token. Please try again later."
+                },
             )
-            return self.handle_success(
-                "Sign up request was successful.",
-                {"detail": "Please check your inbox for the account verification."},
-            )
-        return self.handle_error(
+
+        activate_url = f"{settings.FRONTEND_URL}/auth/verify-user-account/{token}"
+        # Send verification email
+        SendEmail(
+            {
+                "subject": "For Account Verification",
+                "emails": {"to_emails": [getattr(user, "email", "Unknown")]},
+                "context": {"user": user, "activate_url": activate_url},
+                "templates": {
+                    "txt": "users/verify_account/confirm_message.txt",
+                    "html": "users/verify_account/confirm_message.html",
+                },
+            }
+        )
+
+        # Return success response object
+        return self.handle_success(
             "Sign up request was successful.",
-            self.formatter.format(serializer.errors),
+            {"detail": "Please check your inbox for the account verification."},
         )

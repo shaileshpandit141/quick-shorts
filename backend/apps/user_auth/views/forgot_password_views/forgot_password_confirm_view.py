@@ -17,6 +17,7 @@ class ForgotPasswordConfirmView(BaseAPIView):
     def post(self, request, *args, **kwargs) -> Response:
         """Handle POST request to confirm and reset password."""
 
+        # Get token and new password from request
         token = request.data.get("token", "")
         new_password = request.data.get("new_password", "")
 
@@ -26,13 +27,7 @@ class ForgotPasswordConfirmView(BaseAPIView):
             if not decorder.is_valid():
                 return self.handle_error(
                     "Provided toke is expired or invalid.",
-                    [
-                        {
-                            "field": "token",
-                            "code": "invalid_token",
-                            "message": "Token is invalid or expired, request a new one.",
-                        }
-                    ],
+                    {"token": ["Token is invalid or expired, request a new one."]},
                 )
 
             data = decorder.decode()
@@ -49,12 +44,5 @@ class ForgotPasswordConfirmView(BaseAPIView):
         except Exception as error:
             return self.handle_error(
                 "Opp's! somethings want wrong. Please try again later.",
-                [
-                    {
-                        "field": "none",
-                        "code": type(error).__name__,
-                        "message": "We encountered an unexpected issue. Please try again later.",
-                        "details": {"detail": str(error)},
-                    }
-                ],
+                {"detail": str(error)},
             )

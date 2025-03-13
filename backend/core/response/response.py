@@ -1,8 +1,8 @@
-from typing import Dict, Optional
+from typing import Optional
 
 from rest_framework import response
 
-from .types import TypeResponsePayload
+from .response_types import TypeResponsePayload
 
 
 class Response(response.Response):
@@ -13,7 +13,7 @@ class Response(response.Response):
         data: TypeResponsePayload,
         status: Optional[int] = None,
         template_name: Optional[str] = None,
-        headers: Optional[Dict[str, str]] = None,
+        headers: Optional[dict[str, str]] = None,
         exception: bool = False,
         content_type: Optional[str] = None,
     ) -> None:

@@ -20,16 +20,7 @@ class SigninTokenRefreshView(BaseAPIView):
         if refresh_token is None:
             return self.handle_error(
                 "Token refresh request was failed",
-                [
-                    {
-                        "field": "refresh_token",
-                        "code": "blank",
-                        "message": "refresh_token filed can not be blank.",
-                        "details": {
-                            "refresh_token": "add refresh_token field in the request payload."
-                        },
-                    }
-                ],
+                {"refresh_token": ["refresh_token filed can not be blank."]},
             )
 
         # Handle Token refresh logic
@@ -43,11 +34,5 @@ class SigninTokenRefreshView(BaseAPIView):
         except (TokenError, InvalidToken) as error:
             return self.handle_error(
                 "Invalid or expired refresh token",
-                [
-                    {
-                        "field": "none",
-                        "code": "refresh_token",
-                        "message": str(error),
-                    }
-                ],
+                {"refresh_token": [str(error)]},
             )

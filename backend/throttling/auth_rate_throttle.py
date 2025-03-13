@@ -9,8 +9,7 @@ class AuthRateThrottle(SimpleRateThrottle):
     scope = "custom"
 
     def get_cache_key(self, request, view) -> str:
-        """
-        Generate a cache key unique to each device on the same network.
+        """Generate a cache key unique to each device on the same network.
         Use a combination of router IP and a sanitized device identifier.
         """
         router_ip = self.get_ident(request)  # Identifies the network's public IP
@@ -27,16 +26,12 @@ class AuthRateThrottle(SimpleRateThrottle):
         return f"throttle_{router_ip}_{device_id}_{view.__class__.__name__}"
 
     def get_rate(self) -> Any:
-        """
-        Define a custom rate for throttling.
-        """
+        """Define a custom rate for throttling."""
         default_rates = settings.REST_FRAMEWORK.get("DEFAULT_THROTTLE_RATES", {})
         return default_rates.get("auth", "30/minute")  # Default rate
 
     def allow_request(self, request, view) -> bool:
-        """
-        Apply the rate and determine if the request is allowed.
-        """
+        """Apply the rate and determine if the request is allowed."""
         self.request = request  # Store request for get_rate
         self.rate = self.get_rate()
         return super().allow_request(request, view)

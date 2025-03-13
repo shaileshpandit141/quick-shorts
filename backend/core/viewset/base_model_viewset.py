@@ -15,11 +15,12 @@ from rest_framework.throttling import AnonRateThrottle, BaseThrottle
 from ..get_throttle_details import get_throttle_details
 from ..page_number_pagination import PageNumberPagination
 from ..add_throttle_headers import add_throttle_headers
+from .view_set_utils import ViewSetUtils
 
 logger = logging.getLogger(__name__)
 
 
-class BaseModelViewSet(viewsets.ModelViewSet):
+class BaseModelViewSet(viewsets.ModelViewSet, ViewSetUtils):
     """ModelViewSet to provide standard response formatting and error handling."""
 
     filter_backends: List[Type[BaseFilterBackend]] = []
@@ -51,7 +52,7 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             "status_code": response.status_code,
             "message": "",
             "data": {},
-            "errors": [],
+            "errors": {},
             "meta": {
                 "response_time": "N/A",
                 "request_id": request_id,
@@ -74,80 +75,3 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             f"Response finalized with status {response.status_code}, Request ID: {request_id}"
         )
         return super().finalize_response(request, response, *args, **kwargs)
-
-    def _handle_error_response(
-        self, response: Union[Response, HttpResponseBase], data: dict, payload: dict
-    ) -> None:
-        """Handles error responses."""
-        if response.status_code == 404:
-            payload.update(
-                {
-                    "message": data.get("message", "Resource Not Found"),
-                    "data": data.get("data", {}),
-                    "errors": data.get(
-                        "errors",
-                        [
-                            {
-                                "field": "none",
-                                "code": "not_found",
-                                "message": "The requested resource was not found",
-                                "details": {},
-                            }
-                        ],
-                    ),
-                }
-            )
-        else:
-            payload.update(
-                {
-                    "message": data.get("message", "An unexpected error occurred."),
-                    "data": data.get("data", {}),
-                    "errors": data.get("errors", []),
-                }
-            )
-
-    def _handle_success_response(
-        self,
-        response: Union[Response, HttpResponseBase],
-        request: Request,
-        data: dict,
-        payload: dict,
-    ) -> None:
-        """Handles successful responses."""
-        if response.status_code == 204:
-            response.status_code = 200
-            payload.update(
-                {
-                    "message": "The request was successful",
-                    "data": {
-                        "detail": "The requested resource deletion was successful.",
-                        "id": getattr(request, "parser_context", {})
-                        .setdefault("kwargs", {})
-                        .get("pk", None),
-                    },
-                }
-            )
-        else:
-            payload.update(
-                {
-                    "message": "The request was successful",
-                    "data": data,
-                }
-            )
-
-    def _set_custom_headers(
-        self, response: Union[Response, HttpResponseBase], request_id: str
-    ) -> None:
-        """Sets custom headers for tracking request metadata."""
-        setattr(
-            response,
-            "headers",
-            {
-                **response.headers,
-                "X-Request-ID": request_id,
-                "X-Status-Code": str(response.status_code),
-                "X-Status-Message": (
-                    "succeeded" if response.status_code < 400 else "failed"
-                ),
-            },
-        )

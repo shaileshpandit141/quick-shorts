@@ -1,14 +1,12 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.forms.hstore import ValidationError
 from core.serializers import BaseModelSerializer
-
-# Get the User model configured for the project
-User = get_user_model()
+from user_auth.models import User
 
 
 class UserSerializer(BaseModelSerializer):
-    """Serializer for User model that handles serialization and deserialization of User objects."""
+    """Serializer for User model that handles serialization and
+    deserialization of User objects.
+    """
 
     class Meta:
         model = User
@@ -25,7 +23,7 @@ class UserSerializer(BaseModelSerializer):
         ]
         read_only_fields = ["id", "usename", "is_verified", "is_staff", "is_superuser"]
 
-    def create(self, validated_data) -> AbstractUser:
+    def create(self, validated_data) -> User:
         hashed_password = self.context.get("hashed_password", None)
 
         email = validated_data.get("email")
@@ -41,7 +39,9 @@ class UserSerializer(BaseModelSerializer):
 
 
 class UserUpdateSerializer(BaseModelSerializer):
-    """Serializer for User model that handles serialization and deserialization of User objects."""
+    """Serializer for User model that handles serialization and
+    deserialization of User objects.
+    """
 
     class Meta:
         model = User

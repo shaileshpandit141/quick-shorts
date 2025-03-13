@@ -1,16 +1,9 @@
-from typing import Any, Dict, List, NotRequired, TypedDict
+from typing import Any, TypedDict
 
-TypeData = Dict[str, Any] | List[Dict[str, Any]]
-
-
-class TypeError(TypedDict):
-    field: str
-    code: str
-    message: str
-    details: NotRequired[Dict[str, Any]]
+TypeData = dict[str, Any] | list[dict[str, Any]]
 
 
-TypeErrors = List[TypeError]
+TypeErrors = dict[str, Any]
 
 
 class TypeResponsePayload(TypedDict):

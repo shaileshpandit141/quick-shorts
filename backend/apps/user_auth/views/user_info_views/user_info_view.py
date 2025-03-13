@@ -38,7 +38,7 @@ class UserInfoView(BaseAPIView):
         if not serializer.is_valid():
             return self.handle_error(
                 "Invalid to procode request with provided data.",
-                self.formatter.format(serializer.errors),
+                serializer.errors,
             )
 
         serializer.save()

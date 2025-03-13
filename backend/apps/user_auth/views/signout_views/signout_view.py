@@ -24,15 +24,8 @@ class SignoutView(BaseAPIView):
                 "You have been successfully signed out.",
                 {"detail": "Your session has been terminated."},
             )
-        except TokenError as error:
+        except TokenError:
             return self.handle_error(
                 "Unable to process refresh token.",
-                [
-                    {
-                        "field": "none",
-                        "code": "invalid_token",
-                        "message": "The provided token is invalid or has already expired.",
-                        "details": {"detail": str(error)},
-                    }
-                ],
+                {"detail": "The provided token is invalid or has already expired."},
             )

@@ -2,7 +2,7 @@ import logging
 from typing import Any, Self
 from rest_framework import status
 from rest_framework.response import Response
-from .types import (
+from .base_api_response_handler_types import (
     TypeData,
     TypeErrors,
     TypeErrorPayload,
@@ -39,20 +39,11 @@ class BaseAPIResponseHandler:
             f"Generating response with payload: {payload} and status: {status}"
         )
 
-        errors = payload.get("errors", None)
-        if errors is None:
-            errors = []
-        else:
-            errors = [
-                {**error, "details": error.get("details", {})}
-                for error in payload["errors"]
-            ]
-
         return Response(
             data={
                 "message": payload["message"],
                 "data": payload.get("data", {}),
-                "errors": errors,
+                "errors": payload.get("errors", {}),
             },
             status=status,
             **kwargs,
@@ -66,7 +57,7 @@ class BaseAPIResponseHandler:
     ) -> Response:
         logger.info(f"Success response with payload: {payload} and status: {status}")
         return self.response(
-            payload={**payload, "errors": []},
+            payload={**payload, "errors": {}},
             status=status,
             **kwargs,
         )

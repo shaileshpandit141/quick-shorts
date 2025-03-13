@@ -17,17 +17,18 @@ class DeactivateAccountView(BaseAPIView):
         user = request.user
         password = request.data.get("password", None)
 
+        # Handle if password is blank
+        if password is None:
+            return self.handle_error(
+                "Password field can not be blank",
+                {"password": ["Password field can not be blank."]},
+            )
+
         # Verify password matches
         if not user.check_password(password):
             return self.handle_error(
-                "Provided password is not valid.",
-                [
-                    {
-                        "field": "password",
-                        "code": "invalid_password",
-                        "message": "Provided password is not valid.",
-                    }
-                ],
+                "Provided password is not currect.",
+                {"password": ["Provided password is not currect."]},
             )
 
         # Deactivate the account

@@ -16,33 +16,19 @@ class SigninTokenView(BaseAPIView):
         email = data.get("email", None)
         password = data.get("password", None)
 
-        if email is None or password is None:
-            errors = []
-            # Check if user is password provide or not
-            if password is None:
-                errors.append(
-                    {
-                        "field": "password",
-                        "code": "blank",
-                        "message": "password field can not be blank.",
-                        "details": {
-                            "password": "add password field in the request payload."
-                        },
-                    }
-                )
-
-            # Append if only email is not provided
-            errors.append(
-                {
-                    "field": "email",
-                    "code": "blank",
-                    "message": "email field can not be blank.",
-                    "details": {"email": "add email field in the request payload."},
-                }
+        # Handle if user not include email in payload
+        if email is None:
+            return self.handle_error(
+                "Sign in request is failed",
+                {"email": ["Email field can not be blank."]},
             )
 
-            # Return the error response
-            return self.handle_error("Sign in request is failed", errors)
+        # Handle if user not include password in payload
+        if password is None:
+            return self.handle_error(
+                "Sign in request is failed",
+                {"password": ["Password field can not be blank."]},
+            )
 
         # Handle email and username based signin
         try:
@@ -64,13 +50,7 @@ class SigninTokenView(BaseAPIView):
             if not user.is_superuser and not user.is_verified:
                 return self.handle_error(
                     "Sign in request is failed - account not verified",
-                    [
-                        {
-                            "field": "none",
-                            "code": "signin_failed",
-                            "message": "Please verify your account before signing in.",
-                        }
-                    ],
+                    {"detail": "Please verify your account before signing in."},
                 )
 
             # Generate jwt toke for requested user
@@ -87,12 +67,5 @@ class SigninTokenView(BaseAPIView):
             )
         except Exception as error:
             return self.handle_error(
-                "Sign in request is failed",
-                [
-                    {
-                        "field": "none",
-                        "code": "signin_failed",
-                        "message": str(error),
-                    }
-                ],
+                "Sign in request is failed", {"detail": str(error)}
             )

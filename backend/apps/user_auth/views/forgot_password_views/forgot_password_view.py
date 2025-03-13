@@ -26,13 +26,7 @@ class ForgotPasswordView(BaseAPIView):
         except User.DoesNotExist:
             return self.handle_error(
                 "Account is not found with the given credentials.",
-                [
-                    {
-                        "field": "email",
-                        "code": "invalid_email",
-                        "message": "No account exists with this email address.",
-                    }
-                ],
+                {"email": ["No account exists with this email address."]},
             )
 
         # Process request for verified users
@@ -43,13 +37,7 @@ class ForgotPasswordView(BaseAPIView):
             if token is None:
                 return self.handle_error(
                     "Failed to generate token. Please try again later.",
-                    [
-                        {
-                            "field": "none",
-                            "code": "token_generation_failed",
-                            "message": "Failed to generate token. Please try again later.",
-                        }
-                    ],
+                    {"detail": "Failed to generate token. Please try again later."},
                 )
 
             active_url = f"{settings.FRONTEND_URL}/auth/forgot-password-confirm/{token}"
@@ -71,13 +59,9 @@ class ForgotPasswordView(BaseAPIView):
             )
         else:
             return self.handle_error(
-                "Please verify your email to continue.",
-                [
-                    {
-                        "field": "none",
-                        "code": "account_not_varified",
-                        "message": "You must verify your account to access this resource.",
-                        "details": {"account_verified": False},
-                    }
-                ],
+                "Please verify your account to continue.",
+                {
+                    "detail": "You must verify your account to access this resource.",
+                    "code": "account_not_varified",
+                },
             )
