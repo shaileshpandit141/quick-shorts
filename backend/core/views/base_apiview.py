@@ -8,14 +8,13 @@ from rest_framework.permissions import AllowAny, BasePermission
 from rest_framework.response import Response
 from rest_framework.throttling import BaseThrottle
 from rest_framework.views import APIView
-from ..get_throttle_details import get_throttle_details
-from ..add_throttle_headers import add_throttle_headers
 from ..page_number_pagination import PageNumberPagination
 from rest_framework.exceptions import NotFound, APIException
 from .base_api_response_handler import BaseAPIResponseHandler
 from rest_framework.serializers import ModelSerializer
 from rest_framework import status
 from django.db.models import Model
+from ..throttle_inspector import ThrottleInspector
 
 logger = logging.getLogger(__name__)
 
@@ -53,8 +52,20 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
     def finalize_response(
         self, request, response, *args, **kwargs
     ) -> Response | HttpResponseBase:
-        throttles = get_throttle_details(self)
+
+        # Initialize ThrottleInspector class
+        throttle_inspector = ThrottleInspector(self)
+
+        # Inspect the throttles details
+        throttle_details = throttle_inspector.get_details()
+
+        # Attach throttle details in headers
+        throttle_inspector.attach_headers(response, throttle_details)
+
+        # Generate the uuid4 token
         request_id = str(uuid4())
+
+        # Base response structure
         payload = {
             "status": "succeeded" if response.status_code < 400 else "failed",
             "status_code": response.status_code,
@@ -64,16 +75,14 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
                 "request_id": request_id,
                 "timestamp": datetime.utcnow().isoformat(),
                 "documentation_url": "https://github.com/shaileshpandit141/django-react-typescript-initial-code/tree/main",
-                "rate_limits": throttles,
+                "rate_limits": throttle_details,
             },
         }
-        # Update the response data.
+
+        # Update the response data to use updated data
         setattr(response, "data", payload)
 
-        # Add throttles details in headers.
-        add_throttle_headers(response, throttles)
-
-        # Update response headers.
+        # Attach meta details in headers
         setattr(
             response,
             "headers",
