@@ -183,8 +183,8 @@ This project is a Initial Code for setting up a web application using Django for
 **`Note:`**
 ## **Django, DRF, and others Error Response Summary Table**
 
-| HTTP Status Code           | Default Response Structure                                           |
-| -------------------------- | -------------------------------------------------------------------- |
+| HTTP Status Code           | Default Response Structure                                         |
+| -------------------------- | ------------------------------------------------------------------ |
 | **400 Bad Request**        | { "field_name": ["Error message"] }                                |
 | **401 Unauthorized**       | { "detail": "Authentication credentials were not provided." }      |
 | **403 Forbidden**          | { "detail": "You do not have permission to perform this action." } |
@@ -216,7 +216,7 @@ Success response:
   "data": {
     "detail": "Request was successful."
   },
-  "errors": { /* Default Django, DRF and others Error response details.*/ },
+  "errors": {},  // Default Django, DRF and others Error response details.
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
@@ -244,7 +244,7 @@ Error response:
   "status_code": 400,
   "message": "The request was not successful",
   "data": null,
-  "errors": { /* Default Django, DRF and others Error response details.*/ },
+  "errors": {},  // Default Django, DRF and others Error response details.
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
@@ -286,7 +286,7 @@ Success response:
     "access_token": "jwt_access_token",
     "refresh_token": "jwt_refresh_token"
   },
-  "errors": { /* Default Django, DRF and others Error response details.*/ },
+  "errors": {},  // Default Django, DRF and others Error response details.
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
@@ -314,7 +314,7 @@ Error response:
   "status_code": 400,
   "message": "The request was not successful",
   "data": null,
-  "errors": { /* Default Django, DRF and others Error response details.*/ },
+  "errors": {},  // Default Django, DRF and others Error response details.
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
@@ -355,7 +355,7 @@ Success response:
   "data": {
     "detail": "Refresh token request was successfull"
   },
-  "errors": { /* Default Django, DRF and others Error response details.*/ },
+  "errors": {},  // Default Django, DRF and others Error response details.
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
@@ -395,7 +395,7 @@ Success response:
   "data": {
     "detail": "Password reset link has been send to your email."
   },
-  "errors": { /* Default Django, DRF and others Error response details.*/ },
+  "errors": {},  // Default Django, DRF and others Error response details.
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
@@ -438,7 +438,7 @@ Success response:
   "data": {
     "detail": "Your password reset successful."
   },
-  "errors": { /* Default Django, DRF and others Error response details.*/ },
+  "errors": {},  // Default Django, DRF and others Error response details.
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
@@ -478,7 +478,7 @@ Success response:
   "data": {
     "detail": "Account verification email was successful"
   },
-  "errors": { /* Default Django, DRF and others Error response details.*/ },
+  "errors": {},  // Default Django, DRF and others Error response details.
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
@@ -514,7 +514,7 @@ Success response:
   "data": {
     "detail": "Reset Account Verification link has been send to your email."
   },
-  "errors": { /* Default Django, DRF and others Error response details.*/ },
+  "errors": {},  // Default Django, DRF and others Error response details.
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
@@ -554,7 +554,7 @@ Success response:
   "data": {
     "access_token": "new_jwt_access_token"
   },
-  "errors": { /* Default Django, DRF and others Error response details.*/ },
+  "errors": {},  // Default Django, DRF and others Error response details.
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
@@ -593,7 +593,7 @@ Success response:
     "first_name": "first_name",
     "last_name": "last_name"
   },
-  "errors": { /* Default Django, DRF and others Error response details.*/ },
+  "errors": {},  // Default Django, DRF and others Error response details.
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
@@ -629,7 +629,7 @@ Success response:
   "data": {
     "detail": "This is a protected view"
   },
-  "errors": { /* Default Django, DRF and others Error response details.*/ },
+  "errors": {},  // Default Django, DRF and others Error response details.
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
