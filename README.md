@@ -164,21 +164,34 @@ This project is a Initial Code for setting up a web application using Django for
 
   **Base URL:** http://localhost:8000/api/v1/auth
 
-  | Action                            | HTTP Method | Endpoint                           | Description                                                                                                                                       |
-  |-----------------------------------|-------------|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-  | Registration                      | POST        | /signup/                          | Submit user registration details including email, password, and other information. A verification email is sent upon successful registration. |
-  | Login                             | POST        | /signin/token/                     | Authenticate using email and password to receive access and refresh JWT tokens for secured operations.                                            |
-  | Token Refresh                     | POST        | /signin/token/refresh/             | Use a valid refresh token to obtain a new access token, eliminating the need to log in again.                                                      |
-  | Logout                            | POST        | /signout/                         | Invalidate the refresh token to log out securely and prevent further token refresh operations.                                                  |
-  | Account Verification              | POST        | /verify-user-account/              | Submit the verification token to validate the user's email address and activate the account.                                                      |
-  | Account Verification Confirmation | POST        | /verify-user-account/confirm/      | Confirm account verification by providing the token received via email.                                                                          |
-  | Change Password                   | POST        | /change-password/                  | Allow authenticated users to update their password by providing the current password along with the new password for confirmation.                |
-  | Forgot Password                   | POST        | /forgot-password/                  | Initiate the password reset process by submitting the registered email address to receive a reset link.                                           |
-  | Forgot Password Confirmation      | POST        | /forgot-password/confirm/          | Confirm the password reset by validating the provided token and setting a new password.                                                           |
-  | Deactivate Account                | POST        | /deactivate-account/               | Deactivate the user's account to restrict access until reactivation, enhancing account security.                                                  |
-  | User Info                         | GET         | /user/                            | Retrieve detailed profile information of the currently authenticated user including email, name, and other personal details.                       |
-  | Google Sign In                    | GET         | /google/signin/                    | Returns the redirect URL needed to handle the Google sign-in process.                                                                              |
-  | Google Callback                   | POST        | /google/callback/                  | Process the data returned from Google after authentication and generate JWT tokens accordingly.                                                  |
+  | Action                            | HTTP Method | Endpoint                      | Description                                                                                                                                   |
+  | --------------------------------- | ----------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+  | Registration                      | POST        | /signup/                      | Submit user registration details including email, password, and other information. A verification email is sent upon successful registration. |
+  | Login                             | POST        | /signin/token/                | Authenticate using email and password to receive access and refresh JWT tokens for secured operations.                                        |
+  | Token Refresh                     | POST        | /signin/token/refresh/        | Use a valid refresh token to obtain a new access token, eliminating the need to log in again.                                                 |
+  | Logout                            | POST        | /signout/                     | Invalidate the refresh token to log out securely and prevent further token refresh operations.                                                |
+  | Account Verification              | POST        | /verify-user-account/         | Submit the verification token to validate the user's email address and activate the account.                                                  |
+  | Account Verification Confirmation | POST        | /verify-user-account/confirm/ | Confirm account verification by providing the token received via email.                                                                       |
+  | Change Password                   | POST        | /change-password/             | Allow authenticated users to update their password by providing the current password along with the new password for confirmation.            |
+  | Forgot Password                   | POST        | /forgot-password/             | Initiate the password reset process by submitting the registered email address to receive a reset link.                                       |
+  | Forgot Password Confirmation      | POST        | /forgot-password/confirm/     | Confirm the password reset by validating the provided token and setting a new password.                                                       |
+  | Deactivate Account                | POST        | /deactivate-account/          | Deactivate the user's account to restrict access until reactivation, enhancing account security.                                              |
+  | User Info                         | GET         | /user/                        | Retrieve detailed profile information of the currently authenticated user including email, name, and other personal details.                  |
+  | Google Sign In                    | GET         | /google/signin/               | Returns the redirect URL needed to handle the Google sign-in process.                                                                         |
+  | Google Callback                   | POST        | /google/callback/             | Process the data returned from Google after authentication and generate JWT tokens accordingly.                                               |
+
+**`Note:`**
+## **Django, DRF, and others Error Response Summary Table**
+
+| HTTP Status Code           | Default Response Structure                                           |
+| -------------------------- | -------------------------------------------------------------------- |
+| **400 Bad Request**        | { "field_name": ["Error message"] }                                |
+| **401 Unauthorized**       | { "detail": "Authentication credentials were not provided." }      |
+| **403 Forbidden**          | { "detail": "You do not have permission to perform this action." } |
+| **404 Not Found**          | { "detail": "Not found." }                                         |
+| **405 Method Not Allowed** | { "detail": "Method 'POST' not allowed." }                         |
+| **500 Server Error**       | { "detail": "A server error occurred." }                           |
+
 
 ## API's Test using .rest VSCode File Extenction:
 
@@ -203,21 +216,23 @@ Success response:
   "data": {
     "detail": "Request was successful."
   },
-  "errors": [],
+  "errors": { /* Default Django, DRF and others Error response details.*/ },
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
     "response_time": "0.00717 seconds",
     "documentation_url": "N/A",
-    "rate_limits": [
-      {
-        "type": "throttle_type",
-        "limit": 1000,
-        "remaining": 900,
-        "reset_time": "2025-02-26T10:49:34.283675+00:00",
-        "retry_after": "3599 seconds"
+    "rate_limits": {
+      "throttled_by": null,
+      "throttles": {
+        "user": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset_time": "2025-03-14T12:50:32.350781+00:00",
+          "retry_after": "86399 seconds"
+        }
       }
-    ]
+  }
   }
 }
 ```
@@ -229,26 +244,23 @@ Error response:
   "status_code": 400,
   "message": "The request was not successful",
   "data": null,
-  "errors": [{
-    "type": "validation_error",
-    "code": "invalid_email",
-    "message": "Invalid email address",
-    "details": {}
-  }],
+  "errors": { /* Default Django, DRF and others Error response details.*/ },
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
     "response_time": "0.00717 seconds",
     "documentation_url": "N/A",
-    "rate_limits": [
-      {
-        "type": "throttle_type",
-        "limit": 1000,
-        "remaining": 900,
-        "reset_time": "2025-02-26T10:49:34.283675+00:00",
-        "retry_after": "3599 seconds"
+    "rate_limits": {
+      "throttled_by": null,
+      "throttles": {
+        "user": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset_time": "2025-03-14T12:50:32.350781+00:00",
+          "retry_after": "86399 seconds"
+        }
       }
-    ]
+  }
   }
 }
 ```
@@ -274,21 +286,23 @@ Success response:
     "access_token": "jwt_access_token",
     "refresh_token": "jwt_refresh_token"
   },
-  "errors": [],
+  "errors": { /* Default Django, DRF and others Error response details.*/ },
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
     "response_time": "0.00717 seconds",
     "documentation_url": "N/A",
-    "rate_limits": [
-      {
-        "type": "throttle_type",
-        "limit": 1000,
-        "remaining": 900,
-        "reset_time": "2025-02-26T10:49:34.283675+00:00",
-        "retry_after": "3599 seconds"
+    "rate_limits": {
+      "throttled_by": null,
+      "throttles": {
+        "user": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset_time": "2025-03-14T12:50:32.350781+00:00",
+          "retry_after": "86399 seconds"
+        }
       }
-    ]
+  }
   }
 }
 ```
@@ -300,26 +314,23 @@ Error response:
   "status_code": 400,
   "message": "The request was not successful",
   "data": null,
-  "errors": [{
-    "type": "authentication_error",
-    "code": "invalid_credentials",
-    "message": "No active account found with the given credentials",
-    "details": {}
-  }],
+  "errors": { /* Default Django, DRF and others Error response details.*/ },
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
     "response_time": "0.00717 seconds",
     "documentation_url": "N/A",
-    "rate_limits": [
-      {
-        "type": "throttle_type",
-        "limit": 1000,
-        "remaining": 900,
-        "reset_time": "2025-02-26T10:49:34.283675+00:00",
-        "retry_after": "3599 seconds"
+    "rate_limits": {
+      "throttled_by": null,
+      "throttles": {
+        "user": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset_time": "2025-03-14T12:50:32.350781+00:00",
+          "retry_after": "86399 seconds"
+        }
       }
-    ]
+  }
   }
 }
 ```
@@ -344,21 +355,23 @@ Success response:
   "data": {
     "detail": "Refresh token request was successfull"
   },
-  "errors": [],
+  "errors": { /* Default Django, DRF and others Error response details.*/ },
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
     "response_time": "0.00717 seconds",
     "documentation_url": "N/A",
-    "rate_limits": [
-      {
-        "type": "throttle_type",
-        "limit": 1000,
-        "remaining": 900,
-        "reset_time": "2025-02-26T10:49:34.283675+00:00",
-        "retry_after": "3599 seconds"
+    "rate_limits": {
+      "throttled_by": null,
+      "throttles": {
+        "user": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset_time": "2025-03-14T12:50:32.350781+00:00",
+          "retry_after": "86399 seconds"
+        }
       }
-    ]
+  }
   }
 }
 ```
@@ -382,21 +395,23 @@ Success response:
   "data": {
     "detail": "Password reset link has been send to your email."
   },
-  "errors": [],
+  "errors": { /* Default Django, DRF and others Error response details.*/ },
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
     "response_time": "0.00717 seconds",
     "documentation_url": "N/A",
-    "rate_limits": [
-      {
-        "type": "throttle_type",
-        "limit": 1000,
-        "remaining": 900,
-        "reset_time": "2025-02-26T10:49:34.283675+00:00",
-        "retry_after": "3599 seconds"
+    "rate_limits": {
+      "throttled_by": null,
+      "throttles": {
+        "user": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset_time": "2025-03-14T12:50:32.350781+00:00",
+          "retry_after": "86399 seconds"
+        }
       }
-    ]
+  }
   }
 }
 ```
@@ -423,21 +438,23 @@ Success response:
   "data": {
     "detail": "Your password reset successful."
   },
-  "errors": [],
+  "errors": { /* Default Django, DRF and others Error response details.*/ },
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
     "response_time": "0.00717 seconds",
     "documentation_url": "N/A",
-    "rate_limits": [
-      {
-        "type": "throttle_type",
-        "limit": 1000,
-        "remaining": 900,
-        "reset_time": "2025-02-26T10:49:34.283675+00:00",
-        "retry_after": "3599 seconds"
+    "rate_limits": {
+      "throttled_by": null,
+      "throttles": {
+        "user": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset_time": "2025-03-14T12:50:32.350781+00:00",
+          "retry_after": "86399 seconds"
+        }
       }
-    ]
+  }
   }
 }
 ```
@@ -461,21 +478,23 @@ Success response:
   "data": {
     "detail": "Account verification email was successful"
   },
-  "errors": [],
+  "errors": { /* Default Django, DRF and others Error response details.*/ },
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
     "response_time": "0.00717 seconds",
     "documentation_url": "N/A",
-    "rate_limits": [
-      {
-        "type": "throttle_type",
-        "limit": 1000,
-        "remaining": 900,
-        "reset_time": "2025-02-26T10:49:34.283675+00:00",
-        "retry_after": "3599 seconds"
+    "rate_limits": {
+      "throttled_by": null,
+      "throttles": {
+        "user": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset_time": "2025-03-14T12:50:32.350781+00:00",
+          "retry_after": "86399 seconds"
+        }
       }
-    ]
+  }
   }
 }
 ```
@@ -495,21 +514,23 @@ Success response:
   "data": {
     "detail": "Reset Account Verification link has been send to your email."
   },
-  "errors": [],
+  "errors": { /* Default Django, DRF and others Error response details.*/ },
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
     "response_time": "0.00717 seconds",
     "documentation_url": "N/A",
-    "rate_limits": [
-      {
-        "type": "throttle_type",
-        "limit": 1000,
-        "remaining": 900,
-        "reset_time": "2025-02-26T10:49:34.283675+00:00",
-        "retry_after": "3599 seconds"
+    "rate_limits": {
+      "throttled_by": null,
+      "throttles": {
+        "user": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset_time": "2025-03-14T12:50:32.350781+00:00",
+          "retry_after": "86399 seconds"
+        }
       }
-    ]
+  }
   }
 }
 ```
@@ -533,21 +554,23 @@ Success response:
   "data": {
     "access_token": "new_jwt_access_token"
   },
-  "errors": [],
+  "errors": { /* Default Django, DRF and others Error response details.*/ },
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
     "response_time": "0.00717 seconds",
     "documentation_url": "N/A",
-    "rate_limits": [
-      {
-        "type": "throttle_type",
-        "limit": 1000,
-        "remaining": 900,
-        "reset_time": "2025-02-26T10:49:34.283675+00:00",
-        "retry_after": "3599 seconds"
+    "rate_limits": {
+      "throttled_by": null,
+      "throttles": {
+        "user": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset_time": "2025-03-14T12:50:32.350781+00:00",
+          "retry_after": "86399 seconds"
+        }
       }
-    ]
+  }
   }
 }
 ```
@@ -570,21 +593,23 @@ Success response:
     "first_name": "first_name",
     "last_name": "last_name"
   },
-  "errors": [],
+  "errors": { /* Default Django, DRF and others Error response details.*/ },
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
     "response_time": "0.00717 seconds",
     "documentation_url": "N/A",
-    "rate_limits": [
-      {
-        "type": "throttle_type",
-        "limit": 1000,
-        "remaining": 900,
-        "reset_time": "2025-02-26T10:49:34.283675+00:00",
-        "retry_after": "3599 seconds"
+    "rate_limits": {
+      "throttled_by": null,
+      "throttles": {
+        "user": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset_time": "2025-03-14T12:50:32.350781+00:00",
+          "retry_after": "86399 seconds"
+        }
       }
-    ]
+  }
   }
 }
 ```
@@ -604,21 +629,23 @@ Success response:
   "data": {
     "detail": "This is a protected view"
   },
-  "errors": [],
+  "errors": { /* Default Django, DRF and others Error response details.*/ },
   "meta": {
     "request_id": "715cb8bf-b8ae-4dc7-85d0-fed7dd735f5c",
     "timestamp": "2025-02-26T09:49:34.288704",
     "response_time": "0.00717 seconds",
     "documentation_url": "N/A",
-    "rate_limits": [
-      {
-        "type": "throttle_type",
-        "limit": 1000,
-        "remaining": 900,
-        "reset_time": "2025-02-26T10:49:34.283675+00:00",
-        "retry_after": "3599 seconds"
+    "rate_limits": {
+      "throttled_by": null,
+      "throttles": {
+        "user": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset_time": "2025-03-14T12:50:32.350781+00:00",
+          "retry_after": "86399 seconds"
+        }
       }
-    ]
+  }
   }
 }
 ```
