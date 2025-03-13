@@ -12,7 +12,7 @@ def create_error_response(
     error_details = {"detail": "Oops! unknown error occurred. Please try again later"}
 
     try:
-        errors_tuple = errors.args
+        errors_tuple = getattr(errors, "args", tuple())
         if len(errors_tuple) > 0 and isinstance(errors_tuple[0], dict):
             error_details = errors_tuple[0]
         elif hasattr(errors, "detail"):
@@ -27,7 +27,7 @@ def create_error_response(
             error_details["detail"] = str(errors)
     except Exception as error:
         logger.error(f"Error occurred while processing error details: {str(error)}")
-        error_details = {"detail": str(error)}
+        error_details["detail"] = str(errors)
 
     return Response(
         {
