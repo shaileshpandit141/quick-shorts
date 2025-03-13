@@ -12,8 +12,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, BaseThrottle
 
-from ..add_throttle_headers import add_throttle_headers
-from ..get_throttle_details import get_throttle_details
+from ..throttle_inspector import ThrottleInspector
 from ..page_number_pagination import PageNumberPagination
 from .view_set_utils import ViewSetUtils
 
@@ -42,8 +41,18 @@ class BaseModelViewSet(viewsets.ModelViewSet, ViewSetUtils):
         **kwargs,
     ) -> Union[Response, HttpResponseBase]:
         """Finalizes API response format with standard structure."""
+        # Initialize ThrottleInspector class
+        throttle_inspector = ThrottleInspector(self)
+
+        # Inspect the throttles details
+        throttle_details = throttle_inspector.get_details()
+
+        # Attach throttle details in headers
+        throttle_inspector.attach_headers(response, throttle_details)
+
+        # Generate the uuid4 token
         request_id = str(uuid4())
-        throttles = get_throttle_details(self)
+
         data = getattr(response, "data", {})
 
         # Default response structure
@@ -58,7 +67,7 @@ class BaseModelViewSet(viewsets.ModelViewSet, ViewSetUtils):
                 "request_id": request_id,
                 "timestamp": datetime.utcnow().isoformat(),
                 "documentation_url": "https://github.com/shaileshpandit141/django-react-typescript-initial-code/tree/main",
-                "rate_limits": throttles,
+                "rate_limits": throttle_details,
             },
         }
 
@@ -68,7 +77,6 @@ class BaseModelViewSet(viewsets.ModelViewSet, ViewSetUtils):
             self._handle_success_response(response, request, data, payload)
 
         setattr(response, "data", payload)
-        add_throttle_headers(response, throttles)
         self._set_custom_headers(response, request_id)
 
         logger.info(
