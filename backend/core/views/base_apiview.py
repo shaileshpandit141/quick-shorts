@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 from rest_framework.throttling import BaseThrottle
 from rest_framework.views import APIView
+from rest_framework.exceptions import MethodNotAllowed
 
 from ..page_number_pagination import PageNumberPagination
 from ..throttle_inspector import ThrottleInspector
@@ -34,6 +35,21 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
         """Initialize view with status attribute"""
         self.status = status
         super().__init__(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs) -> Response:
+        raise MethodNotAllowed("GET")
+
+    def post(self, request, *args, **kwargs) -> Response:
+        raise MethodNotAllowed("POST")
+
+    def put(self, request, *args, **kwargs) -> Response:
+        raise MethodNotAllowed("PUT")
+
+    def patch(self, request, *args, **kwargs) -> Response:
+        raise MethodNotAllowed("PATCH")
+
+    def delete(self, request, *args, **kwargs) -> Response:
+        raise MethodNotAllowed("DELETE")
 
     def get_serializer(self, *args, **kwargs) -> ModelSerializer:
         """Return the class to use for the serializer."""
