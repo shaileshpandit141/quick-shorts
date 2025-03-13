@@ -1,5 +1,5 @@
-from django.contrib.postgres.forms.hstore import ValidationError
 from core.serializers import BaseModelSerializer
+from django.contrib.postgres.forms.hstore import ValidationError
 from user_auth.models import User
 
 

@@ -1,3 +1,5 @@
+from core.send_email import SendEmail
+from core.views import BaseAPIView, Response
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
@@ -6,8 +8,6 @@ from django.core.exceptions import ValidationError
 from dns_smtp_email_validator import DNSSMTPEmailValidator
 from limited_time_token_handler import LimitedTimeTokenGenerator
 from permissions import AllowAny
-from core.send_email import SendEmail
-from core.views import BaseAPIView, Response
 from throttling import AuthRateThrottle
 from user_auth.serializers import UserSerializer
 

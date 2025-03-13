@@ -12,9 +12,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, BaseThrottle
 
+from ..add_throttle_headers import add_throttle_headers
 from ..get_throttle_details import get_throttle_details
 from ..page_number_pagination import PageNumberPagination
-from ..add_throttle_headers import add_throttle_headers
 from .view_set_utils import ViewSetUtils
 
 logger = logging.getLogger(__name__)

@@ -1,9 +1,8 @@
+from core.send_email import SendEmail
+from core.views import BaseAPIView, Response
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from permissions import IsAuthenticated
-from core.send_email import SendEmail
-
-from core.views import BaseAPIView, Response
 from throttling import AuthRateThrottle
 
 User = get_user_model()

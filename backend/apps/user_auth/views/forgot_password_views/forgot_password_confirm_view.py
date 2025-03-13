@@ -1,8 +1,8 @@
+from core.views import BaseAPIView, Response
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from limited_time_token_handler import LimitedTimeTokenDecoder
 from permissions import AllowAny
-from core.views import BaseAPIView, Response
 from throttling import AuthRateThrottle
 
 User = get_user_model()

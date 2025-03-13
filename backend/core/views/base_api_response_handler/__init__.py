@@ -1,8 +1,8 @@
 from .base_api_response_handler import BaseAPIResponseHandler
 from .base_api_response_handler_types import (
     TypeData,
-    TypeErrors,
     TypeErrorPayload,
+    TypeErrors,
     TypeResponsePayload,
     TypeSuccessPayload,
 )

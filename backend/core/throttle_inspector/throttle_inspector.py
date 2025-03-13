@@ -1,10 +1,11 @@
-import re
 import logging
+import re
 from datetime import datetime, timedelta
+from typing import Any, Dict, Optional, Tuple, Type
+
 import pytz
 from django.conf import settings
 from rest_framework.throttling import BaseThrottle
-from typing import Type, Optional, Dict, Tuple, Any
 
 # Configure logging
 logger = logging.getLogger(__name__)

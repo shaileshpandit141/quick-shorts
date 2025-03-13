@@ -1,8 +1,9 @@
 import logging
-from rest_framework.serializers import ModelSerializer, Field
-from typing import Dict, Type, Optional
+from typing import Dict, Optional, Type
+
 from django.core.exceptions import FieldDoesNotExist
 from django.db.models import Model
+from rest_framework.serializers import Field, ModelSerializer
 
 logger = logging.getLogger(__name__)
 

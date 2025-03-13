@@ -1,4 +1,5 @@
 from typing import Union
+
 from django.http import HttpResponseBase  # type: ignore
 from rest_framework.request import Request
 from rest_framework.response import Response

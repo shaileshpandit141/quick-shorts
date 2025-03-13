@@ -1,5 +1,5 @@
-from permissions import AllowAny
 from core.views import BaseAPIView, Response
+from permissions import AllowAny
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from throttling import AnonRateThrottle

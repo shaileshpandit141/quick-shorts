@@ -1,8 +1,8 @@
+from core.get_jwt_tokens_for_user import get_jwt_tokens_for_user
+from core.views import BaseAPIView, Response
 from django.utils import timezone
 from permissions import AllowAny
-from core.views import BaseAPIView, Response
 from throttling import AuthRateThrottle
-from core.get_jwt_tokens_for_user import get_jwt_tokens_for_user
 from user_auth.models import User
 
 

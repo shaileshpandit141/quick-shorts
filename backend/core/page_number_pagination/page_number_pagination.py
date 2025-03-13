@@ -1,4 +1,5 @@
 import logging
+
 from django.conf import settings
 from rest_framework import pagination
 from rest_framework.response import Response
@@ -14,10 +15,8 @@ class PageNumberPagination(pagination.PageNumberPagination):
     )  # Number of records per page
 
     # Allow clients to set page size via query param
-    page_size_query_param = (
-        "page-size"
-    )
-    
+    page_size_query_param = "page-size"
+
     max_page_size = settings.REST_FRAMEWORK.get(
         "MAX_PAGE_SIZE", 10
     )  # Maximum allowed page size limit

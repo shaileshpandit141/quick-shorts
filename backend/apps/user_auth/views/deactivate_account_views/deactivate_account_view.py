@@ -1,6 +1,6 @@
-from permissions import IsAuthenticated
 from core.send_email import SendEmail
 from core.views import BaseAPIView, Response
+from permissions import IsAuthenticated
 from throttling import UserRateThrottle
 
 

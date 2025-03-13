@@ -1,8 +1,8 @@
-from permissions import AllowAny
 from core.views import BaseAPIView, Response
-from throttling import AnonRateThrottle
+from permissions import AllowAny
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
+from throttling import AnonRateThrottle
 
 
 class SigninTokenRefreshView(BaseAPIView):

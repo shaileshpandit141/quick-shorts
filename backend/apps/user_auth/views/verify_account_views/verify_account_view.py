@@ -1,9 +1,9 @@
+from core.send_email import SendEmail
+from core.views import BaseAPIView, Response
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from limited_time_token_handler import LimitedTimeTokenGenerator
 from permissions import AllowAny
-from core.send_email import SendEmail
-from core.views import BaseAPIView, Response
 from throttling import AuthRateThrottle
 
 User = get_user_model()

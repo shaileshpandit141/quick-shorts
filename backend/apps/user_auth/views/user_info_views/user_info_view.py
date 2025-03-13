@@ -1,9 +1,9 @@
+from core.views import BaseAPIView, Response
 from django.contrib.auth import get_user_model
 from permissions import IsVerified
-from core.views import BaseAPIView, Response
+from rest_framework.permissions import IsAuthenticated
 from throttling import UserRateThrottle
 from user_auth.serializers import UserSerializer, UserUpdateSerializer
-from rest_framework.permissions import IsAuthenticated
 
 User = get_user_model()
 

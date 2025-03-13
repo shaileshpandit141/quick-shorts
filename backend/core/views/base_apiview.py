@@ -1,20 +1,21 @@
 import logging
-from typing import Any, Dict, List, Type, Optional, TypeVar
 from datetime import datetime
+from typing import Any, Dict, List, Optional, Type, TypeVar
 from uuid import uuid4
-from django.db.models import QuerySet
+
+from django.db.models import Model, QuerySet
 from django.http.response import HttpResponseBase
+from rest_framework import status
+from rest_framework.exceptions import APIException, NotFound
 from rest_framework.permissions import AllowAny, BasePermission
 from rest_framework.response import Response
+from rest_framework.serializers import ModelSerializer
 from rest_framework.throttling import BaseThrottle
 from rest_framework.views import APIView
+
 from ..page_number_pagination import PageNumberPagination
-from rest_framework.exceptions import NotFound, APIException
-from .base_api_response_handler import BaseAPIResponseHandler
-from rest_framework.serializers import ModelSerializer
-from rest_framework import status
-from django.db.models import Model
 from ..throttle_inspector import ThrottleInspector
+from .base_api_response_handler import BaseAPIResponseHandler
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +53,6 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
     def finalize_response(
         self, request, response, *args, **kwargs
     ) -> Response | HttpResponseBase:
-
         # Initialize ThrottleInspector class
         throttle_inspector = ThrottleInspector(self)
 
