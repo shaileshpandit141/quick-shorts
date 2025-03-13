@@ -70,7 +70,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "middlewares.response_time_middleware.ResponseTimeMiddleware",
+    "core.middlewares.ResponseTimeMiddleware",
 ]
 
 # Root urls file Configuration Settings
@@ -156,7 +156,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ],
     "DEFAULT_PERMISSION_CLASSES": ["permissions.IsAuthenticated"],
-    "EXCEPTION_HANDLER": "exceptions.exception_handler",
+    "EXCEPTION_HANDLER": "core.exceptions.exception_handler",
     "DEFAULT_THROTTLE_CLASSES": [
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
