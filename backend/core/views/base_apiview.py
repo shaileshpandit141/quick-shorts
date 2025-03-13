@@ -14,7 +14,6 @@ from ..page_number_pagination import PageNumberPagination
 from rest_framework.exceptions import NotFound, APIException
 from .base_api_response_handler import BaseAPIResponseHandler
 from rest_framework.serializers import ModelSerializer
-from ..validation_error_formatter import ValidationErrorFormatter
 from rest_framework import status
 from django.db.models import Model
 
@@ -34,7 +33,6 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
     def __init__(self, *args, **kwargs) -> None:
         """Initialize view with status attribute"""
         self.status = status
-        self.formatter = ValidationErrorFormatter()
         super().__init__(*args, **kwargs)
 
     def get_serializer(self, *args, **kwargs) -> ModelSerializer:
@@ -47,12 +45,8 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
             return serializer(*args, **kwargs)
 
     def get_serializer_class(self) -> Type[ModelSerializer] | None:
-        """
-        Return the class to use for the serializer.
-        Defaults to using `self.get_serializer_class`.
-
-        You may want to override this if you need to provide different
-        serializations depending on the incoming request.
+        """Return the class to use for the serializer. Defaults
+        to using `self.get_serializer_class`.
         """
         return self.serializer_class
 
