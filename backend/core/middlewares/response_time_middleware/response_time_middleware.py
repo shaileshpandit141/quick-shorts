@@ -1,6 +1,7 @@
-import time
 import logging
+import time
 from typing import Any
+
 from rest_framework.response import Response
 
 logger = logging.getLogger(__name__)
