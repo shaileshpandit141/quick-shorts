@@ -2,7 +2,13 @@ import React, { useEffect } from "react";
 import "./VerifyUserAccountPage.css";
 import { useParams } from "react-router-dom";
 import { useResetOnRouteChange } from "hooks";
-import { NavLink, Button, DisplaySuccessDetails, DisplayErrorDetails, SigninLink } from "components";
+import {
+  NavLink,
+  Button,
+  DisplaySuccessDetails,
+  DisplayErrorDetails,
+  SigninLink,
+} from "components";
 import {
   useVerifyUserAccountSelector,
   verifyUserAccount,
@@ -44,9 +50,7 @@ const VerifyUserAccountPage: React.FC = (): JSX.Element => {
       <form className="form" onSubmit={handleSubmit}>
         <DisplayErrorDetails details={errors.detail} />
         <DisplayErrorDetails details={errors.token} />
-        {("detail" in data) && (
-          <DisplaySuccessDetails details={data.detail} />
-        )}
+        {"detail" in data && <DisplaySuccessDetails details={data.detail} />}
         <div className="actions">
           <NavLink
             to="../../"

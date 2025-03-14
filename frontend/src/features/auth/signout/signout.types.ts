@@ -1,8 +1,4 @@
-import {
-  InitialState,
-  SuccessResponse,
-  ErrorResponse,
-} from "BaseAPITypes";
+import { InitialState, SuccessResponse, ErrorResponse } from "BaseAPITypes";
 
 /** Initial state interface for signout feature */
 export interface SignoutInitialState

@@ -9,7 +9,7 @@ import {
   SigninSuccessResponse,
   SigninErrorResponse,
   RefreshTokenSuccessResponse,
-  RefreshTokenErrorResponse
+  RefreshTokenErrorResponse,
 } from "./signin.types";
 import { CatchAxiosError } from "BaseAPITypes";
 import { formatCatchAxiosError } from "utils/formatCatchAxiosError";
@@ -49,7 +49,7 @@ export const googleSigninAction = createAsyncThunk<
       let errorResponse = formatCatchAxiosError(error);
       return thunkAPI.rejectWithValue(errorResponse);
     }
-  }
+  },
 );
 
 /**

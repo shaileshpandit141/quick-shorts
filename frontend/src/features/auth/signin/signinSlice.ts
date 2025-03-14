@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   SigninInitialState,
   SigninErrorResponse,
-  RefreshTokenErrorResponse
+  RefreshTokenErrorResponse,
 } from "./signin.types";
 import {
   signinAction,
@@ -99,7 +99,7 @@ const signinSlice = createSlice({
       .addCase(refreshTokenAction.fulfilled, (state, action) => {
         const { status_code, message, data, meta } = action.payload;
         state.status = "succeeded";
-        state.status_code = status_code
+        state.status_code = status_code;
         state.message = message;
         state.data.access_token = data.access_token;
         localStorage.setItem("access_token", data.access_token);

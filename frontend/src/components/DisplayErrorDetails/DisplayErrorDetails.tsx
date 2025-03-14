@@ -2,13 +2,12 @@ import React from "react";
 import "./DisplayErrorDetails.css";
 
 interface Props {
-  details: string | string[] | undefined
+  details: string | string[] | undefined;
 }
 
 const DisplayErrorDetails: React.FC<Props> = ({ details }) => {
-
   if (details === undefined) {
-    return null
+    return null;
   }
 
   if (typeof details === "string") {
@@ -27,8 +26,7 @@ const DisplayErrorDetails: React.FC<Props> = ({ details }) => {
         </p>
       ))}
     </div>
-  )
-
+  );
 };
 
 export default DisplayErrorDetails;

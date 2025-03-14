@@ -1,8 +1,4 @@
-import {
-  InitialState,
-  SuccessResponse,
-  ErrorResponse,
-} from "BaseAPITypes";
+import { InitialState, SuccessResponse, ErrorResponse } from "BaseAPITypes";
 
 export interface SignuResponseData {
   detail: string;

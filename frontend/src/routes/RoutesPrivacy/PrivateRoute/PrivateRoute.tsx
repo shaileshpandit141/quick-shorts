@@ -8,7 +8,7 @@ const PrivateRoute = (): JSX.Element => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
 
   useEffect(() => {
-    const tokenHandler = new JWTTokenHandler(data.refresh_token || '');
+    const tokenHandler = new JWTTokenHandler(data.refresh_token || "");
     if (!data.refresh_token || tokenHandler.isTokenExpired()) {
       resetSigninUser();
       setIsAuthenticated(false);
@@ -17,7 +17,11 @@ const PrivateRoute = (): JSX.Element => {
     }
   }, [data]);
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/auth/sign-in" replace={true} />;
+  return isAuthenticated ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/auth/sign-in" replace={true} />
+  );
 };
 
 export default PrivateRoute;
