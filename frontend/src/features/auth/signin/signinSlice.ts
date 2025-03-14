@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { SigninInitialState } from "./signin.types";
-import { ErrorResponse } from "FeatureTypes";
+import {
+  SigninInitialState,
+  SigninErrorResponse,
+  RefreshTokenErrorResponse
+} from "./signin.types";
 import {
   signinAction,
   googleSigninAction,
@@ -18,14 +21,8 @@ const signinIntitlState: SigninInitialState = {
     access_token: localStorage.getItem("access_token"),
     refresh_token: localStorage.getItem("refresh_token"),
   },
-  errors: [],
-  meta: {
-    request_id: "",
-    timestamp: "",
-    response_time: "",
-    documentation_url: "",
-    rate_limit: [],
-  },
+  errors: {},
+  meta: {},
 };
 
 /**
@@ -41,14 +38,14 @@ const signinSlice = createSlice({
       state.message = "";
       state.data.access_token = null;
       state.data.refresh_token = null;
-      state.errors = [];
+      state.errors = {};
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
     },
     resetSigninErrorsState: (state) => {
       state.status = "idle";
       state.message = "";
-      state.errors = [];
+      state.errors = {};
     },
   },
   extraReducers: (builder) => {
@@ -67,7 +64,8 @@ const signinSlice = createSlice({
         localStorage.setItem("refresh_token", data.refresh_token);
       })
       .addCase(signinAction.rejected, (state, action) => {
-        const { status, message, errors } = action.payload as ErrorResponse;
+        const { status, message, errors } =
+          action.payload as SigninErrorResponse;
         state.status = status;
         state.message = message;
         state.errors = errors;
@@ -87,7 +85,8 @@ const signinSlice = createSlice({
         localStorage.setItem("refresh_token", data.refresh_token);
       })
       .addCase(googleSigninAction.rejected, (state, action) => {
-        const { status, message, errors } = action.payload as ErrorResponse;
+        const { status, message, errors } =
+          action.payload as SigninErrorResponse;
         state.status = status;
         state.message = message;
         state.errors = errors;
@@ -98,21 +97,21 @@ const signinSlice = createSlice({
         state.status = "loading";
       })
       .addCase(refreshTokenAction.fulfilled, (state, action) => {
-        const { status, message, data, meta } = action.payload;
-        state.status = status;
+        const { status_code, message, data, meta } = action.payload;
+        state.status = "succeeded";
+        state.status_code = status_code
         state.message = message;
         state.data.access_token = data.access_token;
         localStorage.setItem("access_token", data.access_token);
         state.meta = meta;
       })
       .addCase(refreshTokenAction.rejected, (state, action) => {
-        const { status, message, errors, meta } =
-          action.payload as ErrorResponse;
-        state.status = status;
+        const { message, errors, meta } =
+          action.payload as RefreshTokenErrorResponse;
+        state.status = "failed";
         state.message = message;
         state.meta = meta;
-        console.error(errors);
-        state.errors = [];
+        state.errors = errors;
         state.data.access_token = null;
         state.data.refresh_token = null;
         localStorage.removeItem("access_token");

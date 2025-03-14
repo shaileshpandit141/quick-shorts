@@ -5,10 +5,14 @@ import {
   SigninCredentials,
   GoogleSigninCredentials,
 } from "services/authServices";
-import { SigninSuccessResponse } from "./signin.types";
-import { CatchAxiosError, ErrorResponse } from "FeatureTypes";
+import {
+  SigninSuccessResponse,
+  SigninErrorResponse,
+  RefreshTokenSuccessResponse,
+  RefreshTokenErrorResponse
+} from "./signin.types";
+import { CatchAxiosError } from "BaseAPITypes";
 import { formatCatchAxiosError } from "utils/formatCatchAxiosError";
-import { RefreshTokenSuccessResponse } from "./signin.types";
 
 /**
  * Redux thunk to handle user sign in
@@ -17,7 +21,7 @@ import { RefreshTokenSuccessResponse } from "./signin.types";
 export const signinAction = createAsyncThunk<
   SigninSuccessResponse,
   SigninCredentials,
-  { rejectValue: ErrorResponse }
+  { rejectValue: SigninErrorResponse }
 >("signin/signinAction", async (credentials: SigninCredentials, thunkAPI) => {
   try {
     const response = await authServices.signin(credentials);
@@ -33,7 +37,7 @@ export const signinAction = createAsyncThunk<
 export const googleSigninAction = createAsyncThunk<
   SigninSuccessResponse,
   GoogleSigninCredentials,
-  { rejectValue: ErrorResponse }
+  { rejectValue: SigninErrorResponse }
 >(
   "signin/googleSigninAction",
   async (credentials: GoogleSigninCredentials, thunkAPI) => {
@@ -56,7 +60,7 @@ export const googleSigninAction = createAsyncThunk<
 export const refreshTokenAction = createAsyncThunk<
   RefreshTokenSuccessResponse,
   void,
-  { rejectValue: ErrorResponse }
+  { rejectValue: RefreshTokenErrorResponse }
 >("signin/refreshTokenAction", async (_, thunkAPI) => {
   const refresh_token = store.getState().signin.data?.refresh_token;
   try {

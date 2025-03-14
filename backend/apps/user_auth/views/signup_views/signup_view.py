@@ -51,10 +51,14 @@ class SignupView(BaseAPIView):
         try:
             # Validate password meets requirements
             validate_password(password)
-        except ValidationError as error:
+        except ValidationError:
             return self.handle_error(
                 "Provided password is not valid.",
-                {"password": str(error)},
+                {
+                    "password": [
+                        "This password is too short. It must contain at least 8 characters."
+                    ]
+                },
             )
 
         # Check password confirmation matches
@@ -71,7 +75,7 @@ class SignupView(BaseAPIView):
                 "Email domain verification failed.",
                 {
                     "email": [
-                        "Email domain verification failed. Please try again later."
+                        "Email domain verification failed. Please use other email."
                     ]
                 },
             )

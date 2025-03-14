@@ -17,7 +17,18 @@ class VerifyAccountConfirmView(BaseAPIView):
         """Handle POST request for email verification"""
 
         # Validate required fields
-        token = request.data.get("token", "")
+        token = request.data.get("token", None)
+
+        # Validate the blank token
+        if token is None:
+            return self.handle_error(
+                "Token can not be blank",
+                {
+                    "token": [
+                        "Token filed is require. Please include it in request payload"
+                    ]
+                },
+            )
 
         try:
             # Decode verification token

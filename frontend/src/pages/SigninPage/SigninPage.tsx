@@ -6,7 +6,7 @@ import { useFormDataChange, useResetOnRouteChange } from "hooks";
 import { isUserAuthenticated } from "utils/isUserAuthenticated";
 import {
   Input,
-  DisplayFormErrors,
+  DisplayErrorDetails,
   Button,
   SignupLink,
   GoogleSigninButton,
@@ -80,7 +80,7 @@ const SigninPage: React.FC = () => {
           onChange={handleFormDataChange}
           isDisabled={status === "loading"}
         />
-        <DisplayFormErrors field={"none"} errors={errors} />
+        <DisplayErrorDetails details={errors.detail} />
         <div className="split-container">
           <span></span>
           <Link to="/forgot-password">Forgot password</Link>

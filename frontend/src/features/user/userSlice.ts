@@ -10,15 +10,9 @@ const userInitialState: UserInitialState = {
   status: "idle",
   status_code: null,
   message: "",
-  data: null,
-  errors: [],
-  meta: {
-    request_id: "",
-    timestamp: "",
-    response_time: "",
-    documentation_url: "",
-    rate_limit: [],
-  },
+  data: {},
+  errors: {},
+  meta: {},
 };
 
 /**
@@ -28,7 +22,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: userInitialState,
   reducers: {
-    resetUserState: (state) => {
+    resetUserState: (state): void => {
       Object.assign(state, userInitialState);
     },
   },
@@ -40,9 +34,11 @@ const userSlice = createSlice({
       })
       .addCase(userAction.fulfilled, (state, action) => {
         Object.assign(state, action.payload);
+        state.status = "succeeded";
       })
       .addCase(userAction.rejected, (state, action) => {
         Object.assign(state, action.payload);
+        state.status = "failed";
       });
   },
 });

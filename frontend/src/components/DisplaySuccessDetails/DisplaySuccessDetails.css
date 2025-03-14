@@ -1,4 +1,4 @@
-.display-form-errors {
+.success-details-container {
   background-color: var(--bg-secondary);
   background-color: transparent;
   width: 100%;
@@ -9,8 +9,8 @@
   overflow: hidden;
   transition: background-color 0.3s ease;
 
-  .error-message {
-    color: var(--status-error);
+  .detail {
+    color: var(--status-success);
     width: 100%;
     padding-inline: 0;
     line-height: 1.2;

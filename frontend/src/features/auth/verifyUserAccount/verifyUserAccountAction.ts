@@ -3,9 +3,12 @@ import {
   authServices,
   VerifyUserAccountCredentials,
 } from "services/authServices";
-import { VerifyUserAccountSuccessResponse } from "./verifyUserAccount.types";
+import {
+  VerifyUserAccountSuccessResponse,
+  VerifyUserAccountErrorResponse,
+} from "./verifyUserAccount.types";
 import { formatCatchAxiosError } from "utils/formatCatchAxiosError";
-import { CatchAxiosError, ErrorResponse } from "FeatureTypes";
+import { CatchAxiosError } from "BaseAPITypes";
 
 /**
  * Redux thunk to handle user verifyUserAccount process
@@ -17,7 +20,7 @@ import { CatchAxiosError, ErrorResponse } from "FeatureTypes";
 export const verifyUserAccountAction = createAsyncThunk<
   VerifyUserAccountSuccessResponse,
   VerifyUserAccountCredentials,
-  { rejectValue: ErrorResponse }
+  { rejectValue: VerifyUserAccountErrorResponse }
 >(
   "verifyUserAccount/verifyUserAccountAction",
   async (credentials: VerifyUserAccountCredentials, thunkAPI) => {

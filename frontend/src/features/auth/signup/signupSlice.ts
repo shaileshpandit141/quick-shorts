@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { SignupInitialState } from "./signup.types";
-import { ErrorResponse } from "FeatureTypes";
 import { signupAction } from "./signupAction";
 
 /**
@@ -11,15 +10,9 @@ const signupIntitlState: SignupInitialState = {
   status: "idle",
   status_code: null,
   message: "",
-  data: null,
-  errors: [],
-  meta: {
-    request_id: "",
-    timestamp: "",
-    response_time: "",
-    documentation_url: "",
-    rate_limit: [],
-  },
+  data: {},
+  errors: {},
+  meta: {},
 };
 
 /**
@@ -42,9 +35,11 @@ const signupSlice = createSlice({
       })
       .addCase(signupAction.fulfilled, (state, action) => {
         Object.assign(state, action.payload);
+        state.status = "succeeded";
       })
       .addCase(signupAction.rejected, (state, action) => {
-        Object.assign(state, action.payload as ErrorResponse);
+        Object.assign(state, action.payload);
+        state.status = "failed";
       });
   },
 });
