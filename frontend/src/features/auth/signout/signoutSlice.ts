@@ -34,11 +34,11 @@ const signoutSlice = createSlice({
       })
       .addCase(signoutAction.fulfilled, (state, action) => {
         Object.assign(state, action.payload);
-        state.status = "succeeded"
+        state.status = "succeeded";
       })
       .addCase(signoutAction.rejected, (state, action) => {
         Object.assign(state, action.payload);
-        state.status = "failed"
+        state.status = "failed";
       });
   },
 });

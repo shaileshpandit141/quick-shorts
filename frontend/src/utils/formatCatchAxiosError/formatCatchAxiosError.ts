@@ -1,7 +1,7 @@
 import { CatchAxiosError, ErrorResponse, Errors } from "BaseAPITypes";
 
 export const formatCatchAxiosError = <T = Record<string, any>>(
-  error: CatchAxiosError
+  error: CatchAxiosError,
 ): ErrorResponse<T> => {
   let errorResponse: ErrorResponse<T>;
 

@@ -33,5 +33,5 @@ export const verifyUserAccountAction = createAsyncThunk<
       let errorResponse = formatCatchAxiosError(error);
       return thunkAPI.rejectWithValue(errorResponse);
     }
-  }
+  },
 );

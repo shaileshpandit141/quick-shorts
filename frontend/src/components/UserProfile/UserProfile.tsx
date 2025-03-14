@@ -35,30 +35,32 @@ const UserProfile: React.FC = (): JSX.Element | null => {
     }
   }, [status]);
 
-  if (!isUserAuthenticated() || (status === "failed")) {
+  if (!isUserAuthenticated() || status === "failed") {
     return null;
   }
 
   return (
     <div className="user-profile">
       <button className="button-as-icon profile-action-button" ref={buttonRef}>
-        {("avatar" in data) && (
+        {"avatar" in data && (
           <img src={buildMediaURL(data.avatar)} alt="avatar-image" />
         )}
       </button>
       <div className="user-profile-card-container" ref={userProfileRef}>
         <div className="user-profile-header-card">
           <section className="user-profile-image">
-            {("avatar" in data) && (
+            {"avatar" in data && (
               <img src={buildMediaURL(data.avatar)} alt="avatar-image" />
             )}
           </section>
           <section className="user-profile-info">
-            <p className="username">{("username" in data) && data.username}</p>
-            <p className="email">{("email" in data) && data.email}</p>
+            <p className="username">{"username" in data && data.username}</p>
+            <p className="email">{"email" in data && data.email}</p>
           </section>
-          {((("is_superuser" in data) && data.is_superuser)
-            && (("is_staff" in data) && data.is_staff)) && (
+          {"is_superuser" in data &&
+            data.is_superuser &&
+            "is_staff" in data &&
+            data.is_staff && (
               <NavLink
                 to={`${getEnv("BASE_API_URL")}/admin/`}
                 type="link"

@@ -2,11 +2,17 @@ import React, { useEffect } from "react";
 import "./SignupPage.css";
 import { AddSEO } from "SEO";
 import { useResetOnRouteChange, useFormDataChange } from "hooks";
-import { Input, Button, DisplayErrorDetails, SigninLink, DisplaySuccessDetails } from "components";
+import {
+  Input,
+  Button,
+  DisplayErrorDetails,
+  SigninLink,
+  DisplaySuccessDetails,
+} from "components";
 import {
   signupUser,
   resetSignupUser,
-  useSignupUserSelector
+  useSignupUserSelector,
 } from "features/auth/signup";
 import { SignupCredentials } from "services/authServices";
 import { triggerToast } from "features/toast";
@@ -76,7 +82,7 @@ const SignupPage: React.FC = () => {
         />
         <DisplayErrorDetails details={errors.detail} />
         <DisplayErrorDetails details={errors.non_field_errors} />
-        {(status === "succeeded" && "detail" in data) && (
+        {status === "succeeded" && "detail" in data && (
           <DisplaySuccessDetails details={data.detail} />
         )}
         <div className="actions">

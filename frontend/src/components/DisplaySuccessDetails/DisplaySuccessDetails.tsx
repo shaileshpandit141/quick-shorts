@@ -2,13 +2,12 @@ import React from "react";
 import "./DisplaySuccessDetails.css";
 
 interface Props {
-  details: string | string[] | undefined
+  details: string | string[] | undefined;
 }
 
 const DisplaySuccessDetails: React.FC<Props> = ({ details }) => {
-
   if (details === undefined) {
-    return null
+    return null;
   }
 
   if (typeof details === "string") {
@@ -27,8 +26,7 @@ const DisplaySuccessDetails: React.FC<Props> = ({ details }) => {
         </p>
       ))}
     </div>
-  )
-
+  );
 };
 
 export default DisplaySuccessDetails;
