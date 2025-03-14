@@ -1,8 +1,6 @@
 import React, { useState, ChangeEvent } from "react";
 import "./Input.css";
-import Button from "components/Button/Button";
-import DisplayFormErrors from "../DisplayFormErrors/DisplayFormErrors";
-import { Errors } from "FeatureTypes";
+import { Button, DisplayErrorDetails } from "components";
 
 type InputType =
   | "text"
@@ -25,7 +23,7 @@ interface InputProps {
   value: string | number | boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   readOnly?: boolean;
-  errors?: Errors[];
+  errors?: string | string[];
   isRequired?: boolean;
   isDisabled?: boolean;
 }
@@ -80,7 +78,7 @@ const Input: React.FC<InputProps> = ({
             </label>
           </div>
         </div>
-        <DisplayFormErrors field={name} errors={errors} />
+        <DisplayErrorDetails details={errors} />
       </div>
     );
   }
@@ -104,7 +102,7 @@ const Input: React.FC<InputProps> = ({
         </div>
         {type === "password" && renderPasswordToggle()}
       </div>
-      <DisplayFormErrors field={name} errors={errors} />
+      <DisplayErrorDetails details={errors} />
     </div>
   );
 };

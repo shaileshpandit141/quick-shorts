@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { VerifyUserAccountInitialState } from "./verifyUserAccount.types";
-import { ErrorResponse } from "FeatureTypes";
 import { verifyUserAccountAction } from "./verifyUserAccountAction";
 
 /**
@@ -11,15 +10,9 @@ const verifyUserAccount: VerifyUserAccountInitialState = {
   status: "idle",
   status_code: null,
   message: "",
-  data: null,
-  errors: [],
-  meta: {
-    request_id: "",
-    timestamp: "",
-    response_time: "",
-    documentation_url: "",
-    rate_limit: [],
-  },
+  data: {},
+  errors: {},
+  meta: {},
 };
 
 /**
@@ -42,9 +35,11 @@ const verifyUserAccountSlice = createSlice({
       })
       .addCase(verifyUserAccountAction.fulfilled, (state, action) => {
         Object.assign(state, action.payload);
+        state.status = "succeeded";
       })
       .addCase(verifyUserAccountAction.rejected, (state, action) => {
-        Object.assign(state, action.payload as ErrorResponse);
+        Object.assign(state, action.payload);
+        state.status = "failed";
       });
   },
 });

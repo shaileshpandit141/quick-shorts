@@ -35,38 +35,39 @@ const UserProfile: React.FC = (): JSX.Element | null => {
     }
   }, [status]);
 
-  if (!isUserAuthenticated() && status !== "succeeded") {
+  if (!isUserAuthenticated() || (status === "failed")) {
     return null;
   }
 
   return (
     <div className="user-profile">
       <button className="button-as-icon profile-action-button" ref={buttonRef}>
-        {data?.avatar && (
-          <img src={buildMediaURL(data?.avatar)} alt="avatar-image" />
+        {("avatar" in data) && (
+          <img src={buildMediaURL(data.avatar)} alt="avatar-image" />
         )}
       </button>
       <div className="user-profile-card-container" ref={userProfileRef}>
         <div className="user-profile-header-card">
           <section className="user-profile-image">
-            {data?.avatar && (
-              <img src={buildMediaURL(data?.avatar)} alt="avatar-image" />
+            {("avatar" in data) && (
+              <img src={buildMediaURL(data.avatar)} alt="avatar-image" />
             )}
           </section>
           <section className="user-profile-info">
-            <h6 className="username">{data?.username}</h6>
-            <p className="email">{data?.email}</p>
+            <p className="username">{("username" in data) && data.username}</p>
+            <p className="email">{("email" in data) && data.email}</p>
           </section>
-          {(data?.is_superuser || data?.is_staff) && (
-            <NavLink
-              to={`${getEnv("BASE_API_URL")}/admin/`}
-              type="link"
-              className="edit-profile"
-              target="_blank"
-            >
-              Django Admin
-            </NavLink>
-          )}
+          {((("is_superuser" in data) && data.is_superuser)
+            && (("is_staff" in data) && data.is_staff)) && (
+              <NavLink
+                to={`${getEnv("BASE_API_URL")}/admin/`}
+                type="link"
+                className="edit-profile"
+                target="_blank"
+              >
+                Django Admin
+              </NavLink>
+            )}
           <SignoutButton />
         </div>
       </div>

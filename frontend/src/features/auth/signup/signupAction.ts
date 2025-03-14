@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { authServices, SignupCredentials } from "services/authServices";
-import { SignupSuccessResponse } from "./signup.types";
+import { SignupSuccessResponse, SignupErrorResponse } from "./signup.types";
 import { formatCatchAxiosError } from "utils/formatCatchAxiosError";
-import { CatchAxiosError, ErrorResponse } from "FeatureTypes";
+import { CatchAxiosError } from "BaseAPITypes";
 
 /**
  * Redux thunk to handle user signup process
@@ -14,7 +14,7 @@ import { CatchAxiosError, ErrorResponse } from "FeatureTypes";
 export const signupAction = createAsyncThunk<
   SignupSuccessResponse,
   SignupCredentials,
-  { rejectValue: ErrorResponse }
+  { rejectValue: SignupErrorResponse }
 >("signup/signupAction", async (credentials: SignupCredentials, thunkAPI) => {
   try {
     // Call signup API endpoint

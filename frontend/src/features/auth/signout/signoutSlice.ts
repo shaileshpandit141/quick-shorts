@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { SignoutInitialState } from "./signout.types";
-import { ErrorResponse } from "FeatureTypes";
 import { signoutAction } from "./signoutAction";
 
 /**
@@ -10,15 +9,9 @@ const signoutIntitlState: SignoutInitialState = {
   status: "idle",
   status_code: null,
   message: "",
-  data: null,
-  errors: [],
-  meta: {
-    request_id: "",
-    timestamp: "",
-    response_time: "",
-    documentation_url: "",
-    rate_limit: [],
-  },
+  data: {},
+  errors: {},
+  meta: {},
 };
 
 /**
@@ -41,9 +34,11 @@ const signoutSlice = createSlice({
       })
       .addCase(signoutAction.fulfilled, (state, action) => {
         Object.assign(state, action.payload);
+        state.status = "succeeded"
       })
       .addCase(signoutAction.rejected, (state, action) => {
-        Object.assign(state, action.payload as ErrorResponse);
+        Object.assign(state, action.payload);
+        state.status = "failed"
       });
   },
 });

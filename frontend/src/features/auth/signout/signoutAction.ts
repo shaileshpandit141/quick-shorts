@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { authServices, SignoutCredentials } from "services/authServices";
-import { SignoutSuccessResponse } from "./signout.types";
-import { CatchAxiosError, ErrorResponse } from "FeatureTypes";
+import { SignoutSuccessResponse, SignoutErrorResponse } from "./signout.types";
+import { CatchAxiosError } from "BaseAPITypes";
 import { formatCatchAxiosError } from "utils/formatCatchAxiosError";
 
 /**
@@ -16,7 +16,7 @@ import { formatCatchAxiosError } from "utils/formatCatchAxiosError";
 export const signoutAction = createAsyncThunk<
   SignoutSuccessResponse,
   SignoutCredentials,
-  { rejectValue: ErrorResponse }
+  { rejectValue: SignoutErrorResponse }
 >(
   "signout/signoutAction",
   async (credentials: SignoutCredentials, thunkAPI) => {

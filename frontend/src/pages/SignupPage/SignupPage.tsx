@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import "./SignupPage.css";
 import { AddSEO } from "SEO";
 import { useResetOnRouteChange, useFormDataChange } from "hooks";
-import { Input, Button, DisplayFormErrors, SigninLink } from "components";
+import { Input, Button, DisplayErrorDetails, SigninLink, DisplaySuccessDetails } from "components";
 import {
   signupUser,
   resetSignupUser,
-  useSignupUserSelector,
+  useSignupUserSelector
 } from "features/auth/signup";
 import { SignupCredentials } from "services/authServices";
 import { triggerToast } from "features/toast";
@@ -56,7 +56,7 @@ const SignupPage: React.FC = () => {
           value={formData.email}
           onChange={handleFormDataChange}
           isDisabled={status === "loading" || status === "succeeded"}
-          errors={errors}
+          errors={errors.email}
         />
         <Input
           name="password"
@@ -64,7 +64,7 @@ const SignupPage: React.FC = () => {
           value={formData.password}
           onChange={handleFormDataChange}
           isDisabled={status === "loading" || status === "succeeded"}
-          errors={errors}
+          errors={errors.password}
         />
         <Input
           name="confirm_password"
@@ -72,10 +72,13 @@ const SignupPage: React.FC = () => {
           value={formData.confirm_password}
           onChange={handleFormDataChange}
           isDisabled={status === "loading" || status === "succeeded"}
-          errors={errors}
+          errors={errors.confirm_password}
         />
-        <DisplayFormErrors field={"none"} errors={errors} />
-        {data?.detail && <p>{data.detail}</p>}
+        <DisplayErrorDetails details={errors.detail} />
+        <DisplayErrorDetails details={errors.non_field_errors} />
+        {(status === "succeeded" && "detail" in data) && (
+          <DisplaySuccessDetails details={data.detail} />
+        )}
         <div className="actions">
           <SigninLink />
           <Button

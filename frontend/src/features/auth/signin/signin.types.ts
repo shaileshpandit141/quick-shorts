@@ -1,21 +1,28 @@
-import { InitialState, SuccessResponse } from "FeatureTypes";
+import { InitialState, SuccessResponse, ErrorResponse } from "BaseAPITypes";
 
-// Interface for initial sign-in state
 export interface SigninInitialState
-  extends InitialState<{
-    access_token: string | null;
-    refresh_token: string | null;
-  }> {}
+  extends InitialState<
+    {
+      access_token: string | null;
+      refresh_token: string | null;
+    },
+    {}
+  > {}
 
-// Interface for successful sign-in response
 export interface SigninSuccessResponse
   extends SuccessResponse<{
     access_token: string;
     refresh_token: string;
   }> {}
 
-// Interface for successful token refresh response
+export interface SigninErrorResponse extends ErrorResponse<{}> {}
+
 export interface RefreshTokenSuccessResponse
   extends SuccessResponse<{
     access_token: string;
+  }> {}
+
+export interface RefreshTokenErrorResponse
+  extends ErrorResponse<{
+    refresh_token?: string[];
   }> {}
