@@ -50,7 +50,7 @@ registerRoute(
     // Return true to signal that we want to use the handler.
     return true;
   },
-  createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html"),
+  createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html")
 );
 
 // An example runtime caching route for requests that aren't handled by the
@@ -67,7 +67,7 @@ registerRoute(
       // least-recently used images are removed.
       new ExpirationPlugin({ maxEntries: 50 }),
     ],
-  }),
+  })
 );
 
 // This allows the web app to trigger skipWaiting via
@@ -79,3 +79,15 @@ self.addEventListener("message", (event) => {
 });
 
 // Any other custom service worker logic can go here.
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    fetch(event.request).catch(async () => {
+      // Return a cached fallback page if offline
+      return caches.match("/offline.html").then((response) => {
+        return (
+          response || new Response("Offline Page Not Found", { status: 404 })
+        );
+      });
+    })
+  );
+});
