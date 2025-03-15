@@ -89,6 +89,11 @@
           color: var(--text-muted);
         }
       }
+
+      button,
+      a {
+        border-radius: 12px;
+      }
     }
   }
 }
