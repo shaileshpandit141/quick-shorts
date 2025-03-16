@@ -3,6 +3,7 @@ from typing import Optional, Type, Any
 
 from django.core.exceptions import FieldDoesNotExist
 from django.db.models import Model
+from django.db import models
 from rest_framework.serializers import Field, ModelSerializer
 
 logger = logging.getLogger(__name__)
@@ -87,3 +88,61 @@ class BaseModelSerializer(ModelSerializer):
                 pass  # Ignore non-model fields
 
         return fields
+
+    def to_representation(self, instance) -> dict[Any, Any]:
+        # Get the default representation of the instance (dictionary format)
+        representation = super().to_representation(instance)
+
+        # Get the request object from the context
+        request = self.context.get("request", None)
+
+        # Log the start of the serialization process (only log once)
+        logger.debug(
+            f"Serializing instance of {self.Meta.model.__name__} with ID {instance.id}"  # type: ignore
+        )
+
+        # Cache model field types to avoid repeated lookups
+        model_fields = {
+            field.name: field for field in self.Meta.model._meta.get_fields()  # type: ignore
+        }
+
+        # Loop through all the fields of the model
+        for field_name, field_value in representation.items():
+            # Skip non-FileField and non-ImageField fields quickly
+            field = model_fields.get(field_name)
+            if not isinstance(field, (models.FileField, models.ImageField)):
+                continue
+
+            try:
+                # If field_value is not empty, attempt to build the absolute URL
+                if field_value:
+                    # If we have a request object, build the absolute URL for the file
+                    if request:
+                        absolute_url = request.build_absolute_uri(field_value)
+                        representation[field_name] = absolute_url
+                        logger.debug(
+                            f"Built absolute URL for {field_name}: {absolute_url}"
+                        )
+                    else:
+                        # If there's no request object, leave the relative URL as is
+                        representation[field_name] = field_value
+                        logger.warning(
+                            f"Request object not found. Keeping relative URL for {field_name}: {field_value}"
+                        )
+                else:
+                    # If field is empty, set it to None
+                    representation[field_name] = None
+                    logger.info(
+                        f"Field {field_name} has no value (None or empty). Setting to None."
+                    )
+
+            except Exception as error:
+                # Log unexpected errors
+                logger.error(
+                    f"Unexpected error occurred while processing field {field_name}: {error}"
+                )
+
+        # Log completion of serialization (only log once)
+        logger.debug(f"Serialization of instance {instance.id} completed.")
+
+        return representation

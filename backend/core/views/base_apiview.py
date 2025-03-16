@@ -58,6 +58,8 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
             logger.error("Serializer class is None. Cannot serialize page data.")
             raise APIException(detail="Something went wrong!", code=500)
         else:
+            # This automatically includes the request boject in the serializer context.
+            kwargs.setdefault("context", {}).update({"request": self.request})
             return serializer(*args, **kwargs)
 
     def get_serializer_class(self) -> Type[ModelSerializer] | None:
