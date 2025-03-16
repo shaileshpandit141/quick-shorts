@@ -16,7 +16,7 @@ class UserSerializer(BaseModelSerializer):
             "username",
             "first_name",
             "last_name",
-            "avatar",
+            "picture",
             "is_verified",
             "is_staff",
             "is_superuser",

@@ -120,7 +120,7 @@ class GoogleCallbackView(BaseAPIView):
                 )
 
             # Handle user profile picture
-            avatar = save_image(User, "avatar", profile_picture, username)
+            picture = save_image(User, "picture", profile_picture, username)
 
             # Save user and generate JWT tokens
             user, created = User.objects.get_or_create(
@@ -129,7 +129,7 @@ class GoogleCallbackView(BaseAPIView):
                     "first_name": google_data.get("given_name"),
                     "last_name": google_data.get("family_name"),
                     "username": username,
-                    "avatar": avatar,
+                    "picture": picture,
                     "is_verified": True,
                 },
             )
@@ -137,7 +137,7 @@ class GoogleCallbackView(BaseAPIView):
             # Update user details if they already exist
             user.first_name = google_data.get("given_name")
             user.last_name = google_data.get("family_name")
-            setattr(user, "avatar", avatar)
+            setattr(user, "picture", picture)
             setattr(user, "is_verified", True)
             user.save()
 

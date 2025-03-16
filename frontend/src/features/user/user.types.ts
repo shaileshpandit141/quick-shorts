@@ -10,7 +10,7 @@ export interface UserData {
   username: string;
   first_name: string;
   last_name: string;
-  avatar: string;
+  picture: string;
   is_verified: boolean;
   is_staff: boolean;
   is_superuser: boolean;

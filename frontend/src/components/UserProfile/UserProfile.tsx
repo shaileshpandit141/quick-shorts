@@ -42,8 +42,8 @@ const UserProfile: React.FC = (): JSX.Element | null => {
   return (
     <div className="user-profile">
       <button className="button-as-icon profile-action-button" ref={buttonRef}>
-        {"avatar" in data && (
-          <img src={data.avatar} alt="avatar-image" />
+        {"picture" in data && (
+          <img src={data.picture} alt="user-picture-image" />
         )}
       </button>
       <div className="user-profile-card-container" ref={userProfileRef}>
@@ -53,8 +53,8 @@ const UserProfile: React.FC = (): JSX.Element | null => {
             className="user-profile-container"
           >
             <section className="user-profile-image">
-              {"avatar" in data && (
-                <img src={data.avatar} alt="avatar-image" />
+              {"picture" in data && (
+                <img src={data.picture} alt="user-picture-image" />
               )}
             </section>
             <section className="user-profile-info">

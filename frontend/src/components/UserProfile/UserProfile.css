@@ -8,11 +8,7 @@
     height: var(--hw);
     width: var(--hw);
     padding: 0;
-
-    &:is(:focus, :focus-visible) {
-      outline: none;
-    }
-
+    
     img {
       height: var(--hw);
       width: var(--hw);

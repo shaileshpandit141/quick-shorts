@@ -27,7 +27,7 @@ const SignupPage: React.FC = () => {
       email: "",
       password: "",
       confirm_password: "",
-      active_url: "active_url"
+      active_url: active_url
     },
   );
 

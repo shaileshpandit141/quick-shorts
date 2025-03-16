@@ -124,22 +124,22 @@ class User(AbstractBaseUser, PermissionsMixin):
             "max_length": "Last name cannot be longer than 30 characters",
         },
     )
-    avatar = models.ImageField(
-        upload_to="users/avatars/",
+    picture = models.ImageField(
+        upload_to="users/pictures/",
         max_length=100,
         null=False,
         blank=False,
         storage=None,
         db_index=False,
-        default="users/avatars/default.png",
+        default="users/pictures/default.png",
         error_messages={
             "invalid": "Please provide a valid image file",
             "invalid_image": "The uploaded file must be a valid image format like JPG, PNG or GIF",
             "missing": "Please select an image file to upload",
             "empty": "The uploaded file is empty. Please select a valid image file",
             "max_length": "The filename is too long. 100 characters allowed",
-            "null": "An avatar image is required",
-            "blank": "An avatar image is required",
+            "null": "An picture image is required",
+            "blank": "An picture image is required",
         },
     )
     date_joined = models.DateTimeField(
