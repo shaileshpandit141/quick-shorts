@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { RefObject } from "react";
+import { useLocation } from "react-router-dom";
 
 interface MenuStyle {
   opacity?: number;
@@ -25,13 +26,20 @@ const DEFAULT_HIDDEN_STYLE: MenuStyle = {
 export function useMenu({ buttonRef, contentRef }: MenuRefs) {
   const [isVisible, setIsVisible] = useState(false);
   const [visibleStyle, setVisibleStyle] = useState<MenuStyle>(
-    DEFAULT_VISIBLE_STYLE,
+    DEFAULT_VISIBLE_STYLE
   );
+  const location = useLocation();
   const [hiddenStyle, setHiddenStyle] =
     useState<MenuStyle>(DEFAULT_HIDDEN_STYLE);
 
+  // Handler to toggle menu state
   const toggleMenu = useCallback(() => {
     setIsVisible((prev) => !prev);
+  }, []);
+
+  // Handler to handle menu close
+  const closeMenu = useCallback(() => {
+    setIsVisible(false);
   }, []);
 
   const getButtonClassName = useCallback(() => {
@@ -53,7 +61,7 @@ export function useMenu({ buttonRef, contentRef }: MenuRefs) {
         setIsVisible(false);
       }
     },
-    [contentRef, getButtonClassName],
+    [contentRef, getButtonClassName]
   );
 
   useEffect(() => {
@@ -79,6 +87,11 @@ export function useMenu({ buttonRef, contentRef }: MenuRefs) {
       });
     }
   }, [hiddenStyle, visibleStyle, isVisible, contentRef]);
+
+  // Close menu when navigating to another route
+  useEffect(() => {
+    closeMenu();
+  }, [location, closeMenu]);
 
   return { toggleMenu, setVisibleStyle, setHiddenStyle };
 }
