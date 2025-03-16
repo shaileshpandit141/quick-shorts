@@ -14,6 +14,7 @@ export interface SignupCredentials {
   email: string;
   password: string;
   confirm_password: string;
+  active_url: string;
 }
 
 // Credentials for user sign out

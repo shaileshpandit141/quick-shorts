@@ -9,7 +9,7 @@ export interface SignuResponseData {
  */
 export interface SignupInitialState
   extends InitialState<
-    SignuResponseData | {},
+    { detail: string } | {},
     {
       email?: string[];
       password?: string[];
@@ -21,7 +21,9 @@ export interface SignupInitialState
  * Interface for successful signup response
  */
 export interface SignupSuccessResponse
-  extends SuccessResponse<SignuResponseData> {}
+  extends SuccessResponse<{
+    detail: string;
+  }> {}
 
 /**
  * Interface for failed signup response

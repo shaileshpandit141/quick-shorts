@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./SignupPage.css";
 import { AddSEO } from "SEO";
-import { useResetOnRouteChange, useFormDataChange } from "hooks";
+import { useResetOnRouteChange, useFormDataChange, useURLBuilder } from "hooks";
 import {
   Input,
   Button,
@@ -19,11 +19,15 @@ import { triggerToast } from "features/toast";
 
 const SignupPage: React.FC = () => {
   const { status, message, errors, data } = useSignupUserSelector();
+  const active_url = useURLBuilder({
+    path: "auth/verify-user-account",
+  })
   const [formData, handleFormDataChange] = useFormDataChange<SignupCredentials>(
     {
       email: "",
       password: "",
       confirm_password: "",
+      active_url: "active_url"
     },
   );
 
