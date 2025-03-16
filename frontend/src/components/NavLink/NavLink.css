@@ -65,12 +65,6 @@ a {
       background-color: var(--btn-primary-hover);
     }
 
-    &:is(:focus, :focus-visible) {
-      background-color: var(--btn-primary-hover);
-      outline: 2px solid var(--btn-primary-hover);
-      outline-offset: 1px;
-    }
-
     label {
       font-size: 1em;
       font-weight: 600;
@@ -108,10 +102,6 @@ a {
 
     &:is(:hover) {
       background-color: var(--btn-primary-hover);
-    }
-
-    &:is(:focus, :focus-visible) {
-      background-color: var(--btn-primary-hover) !important;
     }
   }
 }
