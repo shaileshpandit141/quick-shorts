@@ -36,13 +36,3 @@ class UserSerializer(BaseModelSerializer):
         return User.objects.create(
             password=hashed_password, username=username, **validated_data
         )
-
-
-class UserUpdateSerializer(BaseModelSerializer):
-    """Serializer for User model that handles serialization and
-    deserialization of User objects.
-    """
-
-    class Meta:
-        model = User
-        fields = ["first_name", "last_name", "avatar"]

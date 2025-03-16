@@ -1,3 +1,3 @@
-from .user_serializer import UserSerializer, UserUpdateSerializer
+from .user_serializer import UserSerializer
 
-__all__ = ["UserSerializer", "UserUpdateSerializer"]
+__all__ = ["UserSerializer"]

@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from permissions import IsVerified
 from rest_framework.permissions import IsAuthenticated
 from throttling import UserRateThrottle
-from user_auth.serializers import UserSerializer, UserUpdateSerializer
+from user_auth.serializers import UserSerializer
 
 User = get_user_model()
 
@@ -13,12 +13,13 @@ class UserInfoView(BaseAPIView):
 
     permission_classes = [IsAuthenticated, IsVerified]
     throttle_classes = [UserRateThrottle]
+    serializer_class = UserSerializer
 
     def get(self, request, *args, **kwargs) -> Response:
         """Retrieve current user"s profile information."""
 
         user = request.user
-        serializer = UserSerializer(instance=user, many=False)
+        serializer = self.get_serializer(instance=user, many=False)
         return self.handle_success(
             "Profile information retrieved successfully.",
             serializer.data,
@@ -28,7 +29,7 @@ class UserInfoView(BaseAPIView):
         """Update authenticated user's profile information."""
 
         # Create user serializer instance with new data
-        serializer = UserUpdateSerializer(
+        serializer = self.get_serializer(
             data=request.data,
             instance=request.user,
             many=False,
