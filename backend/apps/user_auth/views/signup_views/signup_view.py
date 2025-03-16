@@ -1,6 +1,5 @@
 from core.send_email import SendEmail
 from core.views import BaseAPIView, Response
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.password_validation import validate_password
@@ -23,9 +22,11 @@ class SignupView(BaseAPIView):
     def post(self, request, *args, **kwargs) -> Response:
         """Handle user registration"""
 
+        # Gatting submitted data from request
         email = request.data.get("email", None)
         password = request.data.get("password", None)
         confirm_password = request.data.get("confirm_password", None)
+        active_url = request.data.get("active_url", None)
 
         # Handle if user not include email in payload
         if email is None:
@@ -111,13 +112,12 @@ class SignupView(BaseAPIView):
                 },
             )
 
-        activate_url = f"{settings.FRONTEND_URL}/auth/verify-user-account/{token}"
         # Send verification email
         SendEmail(
             {
                 "subject": "For Account Verification",
                 "emails": {"to_emails": [getattr(user, "email", "Unknown")]},
-                "context": {"user": user, "activate_url": activate_url},
+                "context": {"user": user, "activate_url": f"{active_url}/{token}"},
                 "templates": {
                     "txt": "users/verify_account/confirm_message.txt",
                     "html": "users/verify_account/confirm_message.html",

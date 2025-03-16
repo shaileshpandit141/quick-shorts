@@ -1,6 +1,5 @@
 from core.send_email import SendEmail
 from core.views import BaseAPIView, Response
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from limited_time_token_handler import LimitedTimeTokenGenerator
 from permissions import AllowAny
@@ -18,8 +17,9 @@ class VerifyAccountView(BaseAPIView):
     def post(self, request, *args, **kwargs) -> Response:
         """Process a request to resend an account verification email."""
 
-        # Get email from request
+        # Gatting submitted data from request
         email = request.data.get("email", None)
+        active_url = request.data.get("active_url", None)
 
         # Handle if user not include email in payload
         if email is None:
@@ -47,13 +47,12 @@ class VerifyAccountView(BaseAPIView):
                     },
                 )
 
-            activate_url = f"{settings.FRONTEND_URL}/auth/verify-user-account/{token}"
             # Send verification email
             SendEmail(
                 {
                     "subject": "Account Verification Request",
                     "emails": {"to_emails": [email]},
-                    "context": {"user": user, "activate_url": activate_url},
+                    "context": {"user": user, "activate_url": f"{active_url}/{token}"},
                     "templates": {
                         "txt": "users/verify_account/confirm_message.txt",
                         "html": "users/verify_account/confirm_message.html",
