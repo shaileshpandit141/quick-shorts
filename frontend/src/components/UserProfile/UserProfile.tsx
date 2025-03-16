@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import "./UserProfile.css";
+import { Link } from "react-router-dom";
 import { NavLink, SignoutButton } from "components";
 import { useMenu } from "hooks";
 import { user, useUserSelector } from "features/user";
@@ -47,15 +48,21 @@ const UserProfile: React.FC = (): JSX.Element | null => {
       </button>
       <div className="user-profile-card-container" ref={userProfileRef}>
         <div className="user-profile-header-card">
-          <section className="user-profile-image">
-            {"avatar" in data && (
-              <img src={data.avatar} alt="avatar-image" />
-            )}
-          </section>
-          <section className="user-profile-info">
-            <p className="username">{"username" in data && data.username}</p>
-            <p className="email">{"email" in data && data.email}</p>
-          </section>
+          <Link
+            to="#"
+            className="user-profile-container"
+          >
+            <section className="user-profile-image">
+              {"avatar" in data && (
+                <img src={data.avatar} alt="avatar-image" />
+              )}
+            </section>
+            <section className="user-profile-info">
+              <p className="email">{"email" in data && data.email}</p>
+              <p className="view-settings">View Settings</p>
+            </section>
+          </Link>
+          <div className="line-break"></div>
           {"is_superuser" in data &&
             data.is_superuser &&
             "is_staff" in data &&
@@ -65,6 +72,7 @@ const UserProfile: React.FC = (): JSX.Element | null => {
                 type="link"
                 className="edit-profile"
                 target="_blank"
+                icon="supervisorAccountIcon"
               >
                 Django Admin
               </NavLink>

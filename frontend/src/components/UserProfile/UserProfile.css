@@ -32,9 +32,9 @@
     left: auto;
     height: fit-content;
     max-width: fit-content;
-    padding: 16px;
-    border-radius: 24px;
-    border: var(--border);
+    padding: 8px;
+    border-radius: 16px;
+    /* border: var(--border); */
     box-shadow: var(--box-shadow);
     opacity: 0;
     transition:
@@ -49,50 +49,86 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      row-gap: 8px;
 
-      .user-profile-image {
-        --hw: 70px;
+      .user-profile-container {
+        width: 100%;
+        padding-inline: 8px;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        column-gap: 8px;
+        background-color: transparent;
+        transition: var(--transition);
 
-        height: var(--hw);
-        width: var(--hw);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: var(--hw);
-        overflow: hidden;
-        border: var(--border);
+        &:hover {
+          background-color: var(--btn-primary-hover);
+        }
 
-        img {
+        .user-profile-image {
+          --hw: 40px;
           height: var(--hw);
           width: var(--hw);
-          object-fit: cover;
-          object-position: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: var(--hw);
+          background-color: var(--btn-primary-bg);
+          overflow: hidden;
+
+          img {
+            height: var(--hw);
+            width: var(--hw);
+            object-fit: cover;
+            object-position: center;
+          }
+        }
+
+        .user-profile-info {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          overflow: hidden;
+
+          .email {
+            margin: 0;
+            color: var(--text-muted);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+          }
+
+          .view-settings {
+            margin: 0;
+            font-size: 12px;
+            text-transform: capitalize;
+            color: var(--link-primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+          }
         }
       }
 
-      .user-profile-info {
-        .username {
-          margin: 0;
-          text-align: center;
-          color: var(--text-primary);
-        }
-
-        .username {
-          font-size: 18px;
-          font-weight: 600;
-        }
-
-        .email {
-          margin: 0;
-          text-align: center;
-          color: var(--text-muted);
-        }
+      .line-break {
+        height: 1.2px;
+        width: 90%;
+        margin-block: 4px;
+        background-color: var(--border-primary);
+        border-radius: 999rem;
+        transition: var(--transition);
       }
 
       button,
       a {
         border-radius: 12px;
+        justify-content: flex-start;
+        background-color: transparent;
+        border: none;
+        padding-inline: 8px;
+        
+        &:hover {
+          background-color: var(--btn-primary-hover);
+        }
       }
     }
   }
