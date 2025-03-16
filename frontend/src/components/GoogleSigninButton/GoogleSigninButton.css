@@ -2,7 +2,7 @@
   display: inline-block;
   width: 100%;
   height: fit-content;
-  background-color: var(--btn-primary-bg);
+  background-color: var(--btn-primary);
   color: var(--text-primary);
   border: var(--border);
   border-radius: 999rem;

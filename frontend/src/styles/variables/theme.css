@@ -17,9 +17,9 @@
   --border-secondary: #cccccc;
 
   /* Button Styles */
-  --btn-primary-bg: #e5e5e5;
+  --btn-primary: #e5e5e5;
   --btn-primary-hover: #dcdcdc;
-  --btn-secondary-bg: #e5e5e5;
+  --btn-secondary: #e5e5e5;
   --btn-secondary-hover: #dadada;
 
   /* Link Styles */
@@ -55,9 +55,9 @@
   --border-secondary: #444444;
 
   /* Button Styles */
-  --btn-primary-bg: #4a4a4a;
+  --btn-primary: #4a4a4a;
   --btn-primary-hover: #3a3a3a;
-  --btn-secondary-bg: #4a4a4a;
+  --btn-secondary: #4a4a4a;
   --btn-secondary-hover: #3a3a3a;
 
   /* Link Styles */

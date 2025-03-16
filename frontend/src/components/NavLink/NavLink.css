@@ -52,7 +52,7 @@ a {
     width: 100%;
     padding-inline: calc(16 / 16 * 1em);
     border: var(--border);
-    background-color: var(--btn-primary-bg);
+    background-color: var(--btn-primary);
     color: var(--link-primary);
     transition: var(--transition);
 
@@ -97,7 +97,7 @@ a {
     width: var(--link-height);
     min-width: var(--link-height);
     border: var(--border);
-    background-color: var(--btn-primary-bg);
+    background-color: var(--btn-primary);
     color: var(--text-primary);
     transition: var(--transition);
 
