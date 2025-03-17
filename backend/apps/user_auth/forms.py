@@ -27,7 +27,7 @@ class UserCreationForm(DjangoUserCreationForm):
     last_name = forms.CharField(
         widget=forms.TextInput(attrs={"class": "form-control"}), required=False
     )
-    avatar = forms.ImageField(
+    picture = forms.ImageField(
         widget=forms.FileInput(attrs={"class": "form-control"}), required=False
     )
     is_active = forms.BooleanField(required=False)
@@ -41,7 +41,7 @@ class UserCreationForm(DjangoUserCreationForm):
             "username",
             "first_name",
             "last_name",
-            "avatar",
+            "picture",
             "is_active",
             "is_verified",
             "is_staff",
@@ -107,7 +107,7 @@ class UserChangeForm(DjangoUserChangeForm):
     last_name = forms.CharField(
         required=False, widget=forms.TextInput(attrs={"class": "form-control"})
     )
-    avatar = forms.ImageField(
+    picture = forms.ImageField(
         required=False,
         widget=forms.FileInput(
             attrs={"class": "form-control", "style": "margin-block: 8px;"}
@@ -124,7 +124,7 @@ class UserChangeForm(DjangoUserChangeForm):
             "username",
             "first_name",
             "last_name",
-            "avatar",
+            "picture",
             "is_active",
             "is_verified",
             "is_staff",
@@ -132,10 +132,10 @@ class UserChangeForm(DjangoUserChangeForm):
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        if self.instance and self.instance.avatar:
+        if self.instance and self.instance.picture:
             self.fields[
-                "avatar"
-            ].help_text = f'<a href="{self.instance.avatar.url}" target="_blank" style="padding-inline: 4px;">View Current Avatar</a>'
+                "picture"
+            ].help_text = f'<a href="{self.instance.picture.url}" target="_blank" style="padding-inline: 4px;">View Current picture</a>'
 
     def clean_email(self) -> str:
         """Validation for email field."""

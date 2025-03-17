@@ -55,8 +55,8 @@ INSTALLED_APPS += [
 # User Define applications Settings
 # ---------------------------------
 INSTALLED_APPS += [
-    "apps.user_auth.apps.UserAuthConfig",
-    "apps.google_auth.apps.GoogleAuthConfig",
+    "apps.user_auth",
+    "apps.google_auth",
 ]
 
 # Middleware Configuration Settings

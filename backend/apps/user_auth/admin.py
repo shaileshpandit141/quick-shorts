@@ -49,7 +49,7 @@ class CustomUserAdmin(UserAdmin):
     # Define how fields are grouped and displayed when editing existing users
     fieldsets = (
         (None, {"fields": ("email", "username", "password")}),
-        ("Personal info", {"fields": ("first_name", "last_name", "avatar")}),
+        ("Personal info", {"fields": ("first_name", "last_name", "picture")}),
         (
             "Permissions",
             {
@@ -80,7 +80,7 @@ class CustomUserAdmin(UserAdmin):
                     "password2",
                     "first_name",
                     "last_name",
-                    "avatar",
+                    "picture",
                     "is_active",
                     "is_verified",
                     "is_staff",
