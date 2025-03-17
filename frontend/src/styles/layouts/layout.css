@@ -3,7 +3,6 @@
  * ------------------
  * A responsive 12-column grid system built with CSS Grid
  * Provides flexible layouts with consistent spacing and alignment
- * Supports nested grids and full-width/contained layouts
  */
 
 /* Base grid container with 12 equal columns and fixed side margins */
@@ -28,6 +27,22 @@
 .inner-grid-2-2,
 .grid-start-2-end-2 {
   grid-column: 2/-2;
+  width: 100%;
+  height: fit-content;
+  transition: background-color 0.3s ease;
+}
+
+/* Full-bleed container spanning edge-to-margins */
+.grid-start-1-end-2 {
+  grid-column: 1/-2;
+  width: 100%;
+  height: fit-content;
+  transition: background-color 0.3s ease;
+}
+
+/* Full-bleed container spanning margins-to-edge */
+.grid-start-2-end-1 {
+  grid-column: 2/-1;
   width: 100%;
   height: fit-content;
   transition: background-color 0.3s ease;

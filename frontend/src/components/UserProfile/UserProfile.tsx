@@ -49,7 +49,7 @@ const UserProfile: React.FC = (): JSX.Element | null => {
       <div className="user-profile-card-container" ref={userProfileRef}>
         <div className="user-profile-header-card">
           <Link
-            to="#"
+            to="dashboard"
             className="user-profile-container"
           >
             <section className="user-profile-image">
@@ -59,7 +59,7 @@ const UserProfile: React.FC = (): JSX.Element | null => {
             </section>
             <section className="user-profile-info">
               <p className="email">{"email" in data && data.email}</p>
-              <p className="view-settings">View Settings</p>
+              <p className="view-settings">view dashboard</p>
             </section>
           </Link>
           <div className="line-break"></div>
