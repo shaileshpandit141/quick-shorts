@@ -1,7 +1,7 @@
 import React from "react";
 import "./RootLayout.css";
 import { Outlet } from "react-router-dom";
-import { ToastContainer, ToggleThemeButton } from "components";
+import { ToastContainer, ToggleThemeButton, Sidebar } from "components";
 
 const RootLayout: React.FC = () => {
   return (
@@ -9,6 +9,7 @@ const RootLayout: React.FC = () => {
       <div className="global-theme-button-container">
         <ToggleThemeButton />
       </div>
+      <Sidebar />
       <ToastContainer />
       <Outlet />
     </>
