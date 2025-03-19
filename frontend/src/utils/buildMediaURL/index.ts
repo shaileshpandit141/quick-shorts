@@ -1,1 +1,0 @@
-export { buildMediaURL } from "./buildMediaURL";
