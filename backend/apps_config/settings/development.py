@@ -1,6 +1,7 @@
 # Import all Settings from base configuration
 # -------------------------------------------
 from datetime import timedelta
+
 from decouple import Csv, config
 
 from .base import *
@@ -24,23 +25,27 @@ CORS_ALLOWED_ORIGINS = config("FRONTEND_URL", cast=Csv())
 
 # REST Framework Configuration Settings
 # -------------------------------------
-REST_FRAMEWORK.update({
-    "DEFAULT_RENDERER_CLASSES": [
-        "rest_framework.renderers.JSONRenderer",
-        "rest_framework.renderers.BrowsableAPIRenderer",
-    ],
-    "PAGE_SIZE": 4,
-    "MAX_PAGE_SIZE": 8,
-})
+REST_FRAMEWORK.update(
+    {
+        "DEFAULT_RENDERER_CLASSES": [
+            "rest_framework.renderers.JSONRenderer",
+            "rest_framework.renderers.BrowsableAPIRenderer",
+        ],
+        "PAGE_SIZE": 4,
+        "MAX_PAGE_SIZE": 8,
+    }
+)
 
 # JWT Token Configuration Settings
 # --------------------------------
-SIMPLE_JWT.update({
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=20),
-    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
-    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(minutes=20),
-})
+SIMPLE_JWT.update(
+    {
+        "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+        "REFRESH_TOKEN_LIFETIME": timedelta(minutes=20),
+        "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+        "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(minutes=20),
+    }
+)
 
 # SQLite Database Configuration for development environment
 # ---------------------------------------------------------

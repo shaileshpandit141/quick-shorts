@@ -12,8 +12,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, BaseThrottle
 
-from ..throttle_inspector import ThrottleInspector
 from ..page_number_pagination import PageNumberPagination
+from ..throttle_inspector import ThrottleInspector
 from .view_set_utils import ViewSetUtils
 
 logger = logging.getLogger(__name__)

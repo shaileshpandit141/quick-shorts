@@ -1,6 +1,7 @@
-from core.views import BaseAPIView, Response
 from django.contrib.auth import get_user_model
 from limited_time_token_handler import LimitedTimeTokenDecoder, TokenError
+
+from core.views import BaseAPIView, Response
 from permissions import AllowAny
 from throttling import AuthRateThrottle
 

@@ -6,13 +6,12 @@ from uuid import uuid4
 from django.db.models import Model, QuerySet
 from django.http.response import HttpResponseBase
 from rest_framework import status
-from rest_framework.exceptions import APIException, NotFound
+from rest_framework.exceptions import APIException, MethodNotAllowed, NotFound
 from rest_framework.permissions import AllowAny, BasePermission
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 from rest_framework.throttling import BaseThrottle
 from rest_framework.views import APIView
-from rest_framework.exceptions import MethodNotAllowed
 
 from ..page_number_pagination import PageNumberPagination
 from ..throttle_inspector import ThrottleInspector

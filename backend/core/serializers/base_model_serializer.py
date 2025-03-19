@@ -1,9 +1,9 @@
 import logging
-from typing import Optional, Type, Any
+from typing import Any, Optional, Type
 
 from django.core.exceptions import FieldDoesNotExist
-from django.db.models import Model
 from django.db import models
+from django.db.models import Model
 from rest_framework.serializers import Field, ModelSerializer
 
 logger = logging.getLogger(__name__)
@@ -103,7 +103,8 @@ class BaseModelSerializer(ModelSerializer):
 
         # Cache model field types to avoid repeated lookups
         model_fields = {
-            field.name: field for field in self.Meta.model._meta.get_fields()  # type: ignore
+            field.name: field
+            for field in self.Meta.model._meta.get_fields()  # type: ignore
         }
 
         # Loop through all the fields of the model

@@ -1,14 +1,15 @@
-from core.send_email import SendEmail
-from core.views import BaseAPIView, Response
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from dns_smtp_email_validator import DNSSMTPEmailValidator
 from limited_time_token_handler import LimitedTimeTokenGenerator
+from user_auth.serializers import UserSerializer
+
+from core.send_email import SendEmail
+from core.views import BaseAPIView, Response
 from permissions import AllowAny
 from throttling import AuthRateThrottle
-from user_auth.serializers import UserSerializer
 
 User = get_user_model()
 
