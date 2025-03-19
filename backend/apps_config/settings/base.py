@@ -1,6 +1,6 @@
 import os
 import sys
-from datetime import timedelta  # type: ignore
+from datetime import timedelta
 from pathlib import Path
 from typing import Any
 
@@ -179,8 +179,8 @@ REST_FRAMEWORK = {
 # JWT Token Configuration Settings
 # --------------------------------
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=20),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=20),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": True,
     "ALGORITHM": "HS256",
@@ -189,8 +189,8 @@ SIMPLE_JWT = {
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=20),
-    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(minutes=20),
 }
 
 # Authentication Configuration Settings
