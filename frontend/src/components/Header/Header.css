@@ -24,6 +24,16 @@
       align-items: center;
       column-gap: 4px;
 
+      .menu-open-button {
+        background-color: transparent;
+        border: none;
+        transform: rotate(360deg);
+
+        &:hover {
+          background-color: var(--btn-primary-hover);
+        }
+      }
+
       .left-header-link {
         width: fit-content;
         display: flex;

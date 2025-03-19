@@ -1,5 +1,4 @@
 export { default as AppLogo } from "./AppLogo/AppLogo";
-export { default as AppLogoImage } from "./AppLogoImage/AppLogoImage";
 export { default as Button } from "./Button/Button";
 export { default as DisplayErrorDetails } from "./DisplayErrorDetails/DisplayErrorDetails";
 export { default as DisplaySuccessDetails } from "./DisplaySuccessDetails/DisplaySuccessDetails";

@@ -51,6 +51,16 @@
           align-items: center;
           justify-content: flex-start;
           column-gap: 4px;
+
+          .close-menu-botton {
+            background-color: transparent;
+            border: none;
+            transform: rotate(360deg);
+
+            &:hover {
+              background-color: var(--btn-primary-hover);
+            }
+          }
         }
 
         .header-buttons-right {

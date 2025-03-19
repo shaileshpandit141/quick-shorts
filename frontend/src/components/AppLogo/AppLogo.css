@@ -4,6 +4,23 @@
   column-gap: 4px;
   width: fit-content;
 
+  .logo-image-container {
+    height: 40px;
+    width: 40px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+
+    img {
+      height: 40px;
+      width: 40px;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+
   .logo-title {
     font-weight: 900;
     color: #5bcef6;

@@ -23,7 +23,7 @@ export const lazyIconMap = {
   info: lazy(() => import("@mui/icons-material/InfoRounded")),
   error: lazy(() => import("@mui/icons-material/ErrorRounded")),
   warning: lazy(() => import("@mui/icons-material/WarningAmberRounded")),
-  menuOpen: lazy(() => import("@mui/icons-material/MenuOpenRounded")),
+  menuOpen: lazy(() => import("@mui/icons-material/SortRounded")),
   checkCircle: lazy(() => import("@mui/icons-material/CheckCircleRounded")),
   click: lazy(() => import("@mui/icons-material/AdsClickRounded")),
   supervisorAccountIcon: lazy(
