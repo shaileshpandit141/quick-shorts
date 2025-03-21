@@ -20,7 +20,7 @@ const PrivateRoute = (): JSX.Element => {
   return isAuthenticated ? (
     <Outlet />
   ) : (
-    <Navigate to="/auth/sign-in" replace={true} />
+    <Navigate to="/sign-in" replace={true} />
   );
 };
 

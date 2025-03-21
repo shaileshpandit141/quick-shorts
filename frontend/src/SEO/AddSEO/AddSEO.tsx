@@ -33,7 +33,7 @@ export const AddSEO: React.FC<AddSEOProps> = ({
   // Memoize meta tag data to prevent unnecessary updates
   const metaData = useMemo(
     () => ({
-      title: title ? `${appName} │ ${title}` : appName,
+      title: title ? `${appName} - ${title}` : appName,
       description,
       keywords,
       robots,
