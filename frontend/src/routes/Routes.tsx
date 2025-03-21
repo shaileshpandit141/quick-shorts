@@ -65,7 +65,7 @@ const AppRoutes: React.FC = () => {
 
             {/* Public Routes without header and Footer */}
             <Route element={<PublicRoute />}>
-              <Route path="auth" element={<AuthLayout />}>
+              <Route element={<AuthLayout />}>
                 <Route
                   path="sign-in"
                   element={

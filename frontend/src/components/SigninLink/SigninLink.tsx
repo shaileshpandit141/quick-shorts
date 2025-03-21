@@ -8,7 +8,7 @@ const SigninLink: React.FC = (): JSX.Element | null => {
   }
 
   return (
-    <NavLink to="/auth/sign-in" type="link" icon="signin">
+    <NavLink to="/sign-in" type="link" icon="signin">
       Sign in
     </NavLink>
   );
