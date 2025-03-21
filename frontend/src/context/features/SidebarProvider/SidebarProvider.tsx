@@ -7,7 +7,9 @@ interface SidebarContextValue {
   handleToggelSidebar: () => void;
 }
 
-const SidebarContext = createContext<SidebarContextValue | undefined>(undefined);
+const SidebarContext = createContext<SidebarContextValue | undefined>(
+  undefined,
+);
 
 interface Props {
   children: ReactNode;
@@ -17,19 +19,26 @@ export const SidebarProvider = ({ children }: Props) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleOpenSidebar = () => {
-    setIsSidebarOpen(true)
+    setIsSidebarOpen(true);
   };
 
   const handleCloseSidebar = () => {
-    setIsSidebarOpen(false)
+    setIsSidebarOpen(false);
   };
 
   const handleToggelSidebar = () => {
-    setIsSidebarOpen((prevState) => !prevState)
+    setIsSidebarOpen((prevState) => !prevState);
   };
 
   return (
-    <SidebarContext.Provider value={{ isSidebarOpen, handleOpenSidebar, handleCloseSidebar, handleToggelSidebar }}>
+    <SidebarContext.Provider
+      value={{
+        isSidebarOpen,
+        handleOpenSidebar,
+        handleCloseSidebar,
+        handleToggelSidebar,
+      }}
+    >
       {children}
     </SidebarContext.Provider>
   );

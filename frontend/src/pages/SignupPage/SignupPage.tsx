@@ -21,13 +21,13 @@ const SignupPage: React.FC = () => {
   const { status, message, errors, data } = useSignupUserSelector();
   const active_url = useURLBuilder({
     path: "auth/verify-user-account",
-  })
+  });
   const [formData, handleFormDataChange] = useFormDataChange<SignupCredentials>(
     {
       email: "",
       password: "",
       confirm_password: "",
-      active_url: active_url
+      active_url: active_url,
     },
   );
 

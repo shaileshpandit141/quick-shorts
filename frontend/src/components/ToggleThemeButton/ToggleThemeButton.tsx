@@ -5,11 +5,15 @@ import { Button } from "components";
 type Theme = "light" | "dark";
 
 const ToggleThemeButton: React.FC = () => {
-
   // Check localStorage first, then system preference
   const getInitialTheme = (): Theme => {
     const savedTheme = localStorage.getItem("theme") as Theme;
-    return savedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    return (
+      savedTheme ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light")
+    );
   };
 
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
@@ -31,11 +35,13 @@ const ToggleThemeButton: React.FC = () => {
     };
 
     mediaQuery.addEventListener("change", handleSystemThemeChange);
-    return () => mediaQuery.removeEventListener("change", handleSystemThemeChange);
+    return () =>
+      mediaQuery.removeEventListener("change", handleSystemThemeChange);
   }, []);
 
   // Toggle theme manually
-  const handleToggleTheme = () => setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  const handleToggleTheme = () =>
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
 
   return (
     <Button

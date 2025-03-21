@@ -12,19 +12,20 @@ import {
 import { useSidebar } from "context/features/SidebarProvider";
 
 const Sidebar: React.FC = (): JSX.Element => {
-
-  const location = useLocation()
+  const location = useLocation();
 
   // Used sidebar hook to handle the sidebar action
-  const { isSidebarOpen, handleCloseSidebar } = useSidebar()
+  const { isSidebarOpen, handleCloseSidebar } = useSidebar();
 
   // Change the sidebar classes base on sidebar state
-  const sideBarClasses = isSidebarOpen ? "side-bar--active" : "side-bar--inactive";
+  const sideBarClasses = isSidebarOpen
+    ? "side-bar--active"
+    : "side-bar--inactive";
 
   // Hnadle sidebar close if route is change
   useEffect(() => {
-    handleCloseSidebar()
-  }, [location])
+    handleCloseSidebar();
+  }, [location]);
 
   return (
     <Drawer

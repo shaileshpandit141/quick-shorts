@@ -11,9 +11,8 @@ import {
 import { useSidebar } from "context/features/SidebarProvider";
 
 const Header: React.FC = () => {
-
   // Used sidebar hook to handle the sidebar action
-  const { handleOpenSidebar } = useSidebar()
+  const { handleOpenSidebar } = useSidebar();
 
   return (
     <header className="inner-grid-1-1 grid-12 header">

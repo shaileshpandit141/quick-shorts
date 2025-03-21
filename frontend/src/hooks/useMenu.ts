@@ -26,7 +26,7 @@ const DEFAULT_HIDDEN_STYLE: MenuStyle = {
 export function useMenu({ buttonRef, contentRef }: MenuRefs) {
   const [isVisible, setIsVisible] = useState(false);
   const [visibleStyle, setVisibleStyle] = useState<MenuStyle>(
-    DEFAULT_VISIBLE_STYLE
+    DEFAULT_VISIBLE_STYLE,
   );
   const location = useLocation();
   const [hiddenStyle, setHiddenStyle] =
@@ -61,7 +61,7 @@ export function useMenu({ buttonRef, contentRef }: MenuRefs) {
         setIsVisible(false);
       }
     },
-    [contentRef, getButtonClassName]
+    [contentRef, getButtonClassName],
   );
 
   useEffect(() => {

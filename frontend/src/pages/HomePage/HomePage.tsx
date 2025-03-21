@@ -11,10 +11,10 @@ const HomePage: React.FC = (props) => {
         keywords="home, react, SEO, optimization"
       />
       <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet quod soluta
-        officia molestias recusandae asperiores est perferendis dolorum! Id
-        reiciendis fugiat laboriosam doloremque quae ratione iusto enim, cumque
-        atque magni.
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet quod
+        soluta officia molestias recusandae asperiores est perferendis dolorum!
+        Id reiciendis fugiat laboriosam doloremque quae ratione iusto enim,
+        cumque atque magni.
       </p>
     </div>
   );
