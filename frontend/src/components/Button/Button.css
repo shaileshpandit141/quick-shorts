@@ -4,10 +4,9 @@ button {
   --icon-height: calc(24 / 16 * 1em);
   --icon-width: calc(24 / 16 * 1em);
   border: var(--border);
-  outline: none;
-  border-radius: 999rem;
   height: var(--button-height);
   width: fit-content;
+  outline: none;
   padding: var(--button-padding);
   display: flex;
   align-items: center;
@@ -50,6 +49,7 @@ button {
     width: 100%;
     padding-inline: calc(16 / 16 * 1em);
     border: var(--border);
+    border-radius: 16px;
     background-color: var(--btn-primary);
     color: var(--text-primary);
     transition: var(--transition);
@@ -81,6 +81,7 @@ button {
     width: var(--button-height);
     min-width: var(--button-height);
     border: var(--border);
+    border-radius: var(--button-height);
     background-color: var(--btn-primary);
     color: var(--text-primary);
     transition: var(--transition);
