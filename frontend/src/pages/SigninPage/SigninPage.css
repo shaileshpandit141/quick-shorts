@@ -40,6 +40,7 @@
 
         .forgot-password-link {
           background-color: transparent;
+          padding: 0;
         }
       }
 
