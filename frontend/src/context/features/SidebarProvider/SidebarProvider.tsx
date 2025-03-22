@@ -1,13 +1,13 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
-interface MainSidebarContextValue {
+interface SidebarContextValue {
   isSidebarOpen: boolean;
   handleOpenSidebar: () => void;
   handleCloseSidebar: () => void;
   handleToggelSidebar: () => void;
 }
 
-const MainSidebarContext = createContext<MainSidebarContextValue | undefined>(
+const SidebarContext = createContext<SidebarContextValue | undefined>(
   undefined,
 );
 
@@ -15,7 +15,7 @@ interface Props {
   children: ReactNode;
 }
 
-export const MainSidebarProvider = ({ children }: Props) => {
+export const SidebarProvider = ({ children }: Props) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleOpenSidebar = () => {
@@ -31,7 +31,7 @@ export const MainSidebarProvider = ({ children }: Props) => {
   };
 
   return (
-    <MainSidebarContext.Provider
+    <SidebarContext.Provider
       value={{
         isSidebarOpen,
         handleOpenSidebar,
@@ -40,14 +40,14 @@ export const MainSidebarProvider = ({ children }: Props) => {
       }}
     >
       {children}
-    </MainSidebarContext.Provider>
+    </SidebarContext.Provider>
   );
 };
 
-export const useMainSidebar = () => {
-  const context = useContext(MainSidebarContext);
+export const useSidebar = () => {
+  const context = useContext(SidebarContext);
   if (!context) {
-    throw new Error("useSidebar must be used within a MainSidebarProvider");
+    throw new Error("useSidebar must be used within a SidebarProvider");
   }
   return context;
 };

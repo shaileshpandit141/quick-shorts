@@ -4,15 +4,15 @@ import {
   AppLogo,
   Button,
   UserProfile,
-  HeaderLinks,
   ToggleThemeButton,
   InstallAppButton,
 } from "components";
-import { useMainSidebar } from "context/features/MainSidebarProvider";
+import HeaderLinks from "../HeaderLinks/HeaderLinks";
+import { useSidebar } from "context/features/SidebarProvider";
 
 const Header: React.FC = () => {
   // Used sidebar hook to handle the sidebar action
-  const { handleOpenSidebar } = useMainSidebar();
+  const { handleOpenSidebar } = useSidebar();
 
   return (
     <header className="grid-12 header">

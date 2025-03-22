@@ -79,6 +79,7 @@
       color: var(--text-primary);
       height: fit-content;
       transition: var(--transition);
+      border-radius: 8px;
 
       .icon-container {
         width: 24px;

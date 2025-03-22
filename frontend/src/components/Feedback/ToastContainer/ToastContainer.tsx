@@ -1,6 +1,6 @@
 import React from "react";
 import "./ToastContainer.css";
-import Toast from "components/Toast/Toast";
+import Toast from "components/Feedback/Toast/Toast";
 import { useToastSelector } from "features/toast";
 
 const ToastContainer: React.FC = () => {

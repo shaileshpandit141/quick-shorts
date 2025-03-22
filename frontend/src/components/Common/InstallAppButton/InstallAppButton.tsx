@@ -1,5 +1,5 @@
 import React, { useState, useEffect, JSX } from "react";
-import Button from "components/Button/Button";
+import Button from "components/Common/Button/Button";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;

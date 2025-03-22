@@ -1,21 +1,21 @@
 import React, { useEffect } from "react";
-import "./MainSidebar.css";
+import "./Sidebar.css";
 import { useLocation } from "react-router-dom";
 import {
   Drawer,
-  HeaderLinks,
   Button,
   AppLogo,
   SigninLink,
   SignupLink,
 } from "components";
-import { useMainSidebar } from "context/features/MainSidebarProvider";
+import HeaderLinks from "../HeaderLinks/HeaderLinks";
+import { useSidebar } from "context/features/SidebarProvider";
 
-const MainSidebar: React.FC = (): JSX.Element => {
+const Sidebar: React.FC = (): JSX.Element => {
   const location = useLocation();
 
   // Used sidebar hook to handle the sidebar action
-  const { isSidebarOpen, handleCloseSidebar } = useMainSidebar();
+  const { isSidebarOpen, handleCloseSidebar } = useSidebar();
 
   // Change the sidebar classes base on sidebar state
   const sideBarClasses = isSidebarOpen
@@ -66,4 +66,4 @@ const MainSidebar: React.FC = (): JSX.Element => {
   );
 };
 
-export default MainSidebar;
+export default Sidebar;

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Button.css";
 import { LazyIconMapType, RenderLazyIcon } from "lazyUtils";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Utils/Loader/Loader";
 
 interface ButtonProps {
   type: "button" | "submit" | "reset" | "icon";

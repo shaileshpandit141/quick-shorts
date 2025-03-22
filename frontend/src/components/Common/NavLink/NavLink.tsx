@@ -2,7 +2,7 @@ import React from "react";
 import "./NavLink.css";
 import { NavLink as Link } from "react-router-dom";
 import { LazyIconMapType, RenderLazyIcon } from "lazyUtils";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Utils/Loader/Loader";
 
 interface NavLinkProps {
   type: "link" | "icon";

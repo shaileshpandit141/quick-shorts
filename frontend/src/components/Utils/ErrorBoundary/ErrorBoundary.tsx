@@ -4,7 +4,7 @@ import {
   FallbackProps,
 } from "react-error-boundary";
 import "./ErrorBoundary.css";
-import Button from "components/Button/Button";
+import Button from "components/Common/Button/Button";
 
 const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => (
   <div className="inner-grid-2-2 error-boundary" role="alert">
