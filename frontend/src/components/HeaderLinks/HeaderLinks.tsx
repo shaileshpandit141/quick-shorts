@@ -1,8 +1,8 @@
 import React from "react";
-import "./NavBarLinks.css";
+import "./HeaderLinks.css";
 import { NavLink } from "components";
 
-const NavBarLinks: React.FC = () => {
+const HeaderLinks: React.FC = () => {
   return (
     <nav className="nav-links">
       <NavLink to="/home" type="link" className="link">
@@ -12,4 +12,4 @@ const NavBarLinks: React.FC = () => {
   );
 };
 
-export default NavBarLinks;
+export default HeaderLinks;

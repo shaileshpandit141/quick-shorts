@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { SidebarProvider } from "../features/SidebarProvider";
+import { MainSidebarProvider } from "../features/MainSidebarProvider";
 import { DashboardSmaillSidebarProvider } from "../features/DashboardSmaillSidebarProvider";
 
 interface Props {
@@ -8,11 +8,11 @@ interface Props {
 
 const RootProvider = ({ children }: Props) => {
   return (
-    <SidebarProvider>
+    <MainSidebarProvider>
       <DashboardSmaillSidebarProvider>
         {children}
       </DashboardSmaillSidebarProvider>
-    </SidebarProvider>
+    </MainSidebarProvider>
   );
 };
 

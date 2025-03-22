@@ -1,21 +1,21 @@
 import React, { useEffect } from "react";
-import "./Sidebar.css";
+import "./MainSidebar.css";
 import { useLocation } from "react-router-dom";
 import {
   Drawer,
-  NavBarLinks,
+  HeaderLinks,
   Button,
   AppLogo,
   SigninLink,
   SignupLink,
 } from "components";
-import { useSidebar } from "context/features/SidebarProvider";
+import { useMainSidebar } from "context/features/MainSidebarProvider";
 
-const Sidebar: React.FC = (): JSX.Element => {
+const MainSidebar: React.FC = (): JSX.Element => {
   const location = useLocation();
 
   // Used sidebar hook to handle the sidebar action
-  const { isSidebarOpen, handleCloseSidebar } = useSidebar();
+  const { isSidebarOpen, handleCloseSidebar } = useMainSidebar();
 
   // Change the sidebar classes base on sidebar state
   const sideBarClasses = isSidebarOpen
@@ -53,7 +53,7 @@ const Sidebar: React.FC = (): JSX.Element => {
         </div>
         <div className="links-container">
           <div className="navbar-container">
-            <NavBarLinks />
+            <HeaderLinks />
           </div>
           <div className="other-links-container">
             {/* Other TSX Links Goes here */}
@@ -66,4 +66,4 @@ const Sidebar: React.FC = (): JSX.Element => {
   );
 };
 
-export default Sidebar;
+export default MainSidebar;

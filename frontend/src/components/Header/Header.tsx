@@ -4,15 +4,15 @@ import {
   AppLogo,
   Button,
   UserProfile,
-  NavBarLinks,
+  HeaderLinks,
   ToggleThemeButton,
   InstallAppButton,
 } from "components";
-import { useSidebar } from "context/features/SidebarProvider";
+import { useMainSidebar } from "context/features/MainSidebarProvider";
 
 const Header: React.FC = () => {
   // Used sidebar hook to handle the sidebar action
-  const { handleOpenSidebar } = useSidebar();
+  const { handleOpenSidebar } = useMainSidebar();
 
   return (
     <header className="inner-grid-1-1 grid-12 header">
@@ -29,7 +29,7 @@ const Header: React.FC = () => {
         </div>
         <div className="center-header">{/* Center TSX goes here */}</div>
         <div className="right-header">
-          <NavBarLinks />
+          <HeaderLinks />
           <div className="other-links">
             <InstallAppButton />
             <ToggleThemeButton />
