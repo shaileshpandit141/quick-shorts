@@ -9,8 +9,8 @@ const IndexPageSkeleton: React.FC = () => {
   }
 
   return (
-    <div className="inner-grid-1-1 grid-12 index">
-      <div className="inner-grid-2-2 index-page">
+    <div className="grid-12 index">
+      <div className="grid-start-2-end-2 index-page">
         {/* Metadata settings */}
         <figure className="logo-container">
           <span className="img-skeleton skeleton"></span>

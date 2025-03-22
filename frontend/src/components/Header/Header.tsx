@@ -15,8 +15,8 @@ const Header: React.FC = () => {
   const { handleOpenSidebar } = useMainSidebar();
 
   return (
-    <header className="inner-grid-1-1 grid-12 header">
-      <div className="inner-grid-2-2 sub-headers">
+    <header className="grid-12 header">
+      <div className="grid-start-2-end-2 sub-headers">
         <div className="left-header">
           <Button
             type="icon"

@@ -15,9 +15,13 @@
   box-sizing: border-box;
   vertical-align: baseline;
   -webkit-tap-highlight-color: transparent;
-  scrollbar-color: gray transparent;
+  scrollbar-color: darkgray transparent;
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
 
-  &:is(:hover, :focus, :focus-visible) {
+  &:hover,
+  :focus,
+  :focus-visible {
     outline: none;
   }
 }

@@ -3,10 +3,6 @@
  * Container element that defines the main layout structure
  */
 #root {
-  display: grid;
-  grid-template-columns: calc(25 / 16 * 1rem) repeat(10, 1fr) calc(
-      25 / 16 * 1rem
-    );
   height: 100%;
   min-height: 100dvh;
   width: 100%;

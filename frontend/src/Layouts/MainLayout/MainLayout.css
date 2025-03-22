@@ -1,15 +1,21 @@
-.header-wrapper {
-  position: fixed;
-  top: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  background-color: transparent;
-}
+.main-layout {
+  .main-layout-continer {
+    display: grid;
+    grid-template-rows: var(--header-height) var(--screen-height);
 
-.main-content {
-  padding-top: var(--header-height);
-  min-height: 100dvh;
+    .main-layout-content-container {
+      display: flex;
+      flex-direction: column;
+      max-height: var(--screen-height);
+      overflow-y: auto;
+
+      .main-layout-content {
+        min-height: var(--screen-height);
+      }
+
+      .main-layout-footer {
+        min-height: fit-content;
+      }
+    }
+  }
 }

@@ -10,13 +10,13 @@ const IndexPage: React.FC = (props) => {
     return <Navigate to={"/home"} />;
   }
   return (
-    <div className="inner-grid-1-1 grid-12 index">
+    <div className="grid-12 index">
       <AddSEO
         title="Index"
         description="Welcome to my website, where you can find the best content."
         keywords="home, react, SEO, optimization"
       />
-      <div className="inner-grid-2-2 index-page">
+      <div className="grid-start-2-end-2 index-page">
         {/* Metadata settings */}
         <figure className="logo-container">
           <img src="logo512.png" alt="logo512.png" />

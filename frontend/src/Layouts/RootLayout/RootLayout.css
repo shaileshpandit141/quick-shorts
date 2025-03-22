@@ -1,9 +1,13 @@
-.global-theme-button-container {
-  position: fixed;
-  height: fit-content;
-  width: fit-content;
-  pointer-events: none;
-  visibility: hidden;
-  opacity: 0;
-  transform: translateX(-100%);
+.root-layout {
+  width: 100%;
+
+  .global-theme-button-container {
+    position: fixed;
+    height: fit-content;
+    width: fit-content;
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-100%);
+  }
 }

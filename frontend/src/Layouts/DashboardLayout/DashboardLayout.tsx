@@ -5,7 +5,7 @@ import { DashboardSidebar, DashboardHeader, DashboardSmallScreenSidebar } from "
 
 const DashboardLayout: React.FC = (): JSX.Element => {
   return (
-    <div className="grid-start-1-end-1 dashboard-layout">
+    <div className="dashboard-layout">
       <DashboardSmallScreenSidebar />
       <section className="grid-12 left-grid">
         <div className="grid-start-1-end-1 left-grid-wrapper">

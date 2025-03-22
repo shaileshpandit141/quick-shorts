@@ -40,38 +40,40 @@ const VerifyUserAccountPage: React.FC = (): JSX.Element => {
   });
 
   return (
-    <div className="verify-user-account-page">
+    <div className="grid-12 verify-user-account-page">
       <div className="header">
         <h3 className="form-label">Verify your account</h3>
         <p className="form-description">
           Click the Verify button below to verify your account.
         </p>
       </div>
-      <form className="form" onSubmit={handleSubmit}>
-        <DisplayErrorDetails details={errors.detail} />
-        <DisplayErrorDetails details={errors.token} />
-        {"detail" in data && <DisplaySuccessDetails details={data.detail} />}
-        <div className="actions">
-          <NavLink
-            to="../../"
-            type="link"
-            className="link back-link"
-            icon="arrowBack"
-          >
-            Back
-          </NavLink>
-          <Button
-            type="submit"
-            icon={status === "succeeded" ? "checkCircle" : "click"}
-            className="button"
-            isLoaderOn={status === "loading"}
-            isDisabled={status === "succeeded"}
-          >
-            Verify
-          </Button>
-        </div>
-        {status === "succeeded" && <SigninLink />}
-      </form>
+      <div className="grid-start-2-end-2 content">
+        <form className="form" onSubmit={handleSubmit}>
+          <DisplayErrorDetails details={errors.detail} />
+          <DisplayErrorDetails details={errors.token} />
+          {"detail" in data && <DisplaySuccessDetails details={data.detail} />}
+          <div className="actions">
+            <NavLink
+              to="../../"
+              type="link"
+              className="link back-link"
+              icon="arrowBack"
+            >
+              Back
+            </NavLink>
+            <Button
+              type="submit"
+              icon={status === "succeeded" ? "checkCircle" : "click"}
+              className="button"
+              isLoaderOn={status === "loading"}
+              isDisabled={status === "succeeded"}
+            >
+              Verify
+            </Button>
+          </div>
+          {status === "succeeded" && <SigninLink />}
+        </form>
+      </div>
     </div>
   );
 };

@@ -52,51 +52,53 @@ const SigninPage: React.FC = () => {
   }
 
   return (
-    <div className="signin-page">
+    <div className="grid-12 signin-page">
       <AddSEO
         title="Sign in"
         description="Sign in to access your account and explore our features."
         keywords="signin, login, authentication"
       />
-      <div className="header">
-        <h3 className="form-label">Sign in</h3>
-        <p className="form-description">
-          Sign in with your existing credentials.
-        </p>
+      <div className="grid-start-2-end-2 content">
+        <div className="header">
+          <h3 className="form-label">Sign in</h3>
+          <p className="form-description">
+            Sign in with your existing credentials.
+          </p>
+        </div>
+        <form className="form" onSubmit={handleSubmit}>
+          <GoogleSigninButton />
+          <Input
+            name="email"
+            type="text"
+            value={formData.email}
+            onChange={handleFormDataChange}
+            isDisabled={status === "loading"}
+          />
+          <Input
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleFormDataChange}
+            isDisabled={status === "loading"}
+          />
+          <DisplayErrorDetails details={errors.detail} />
+          <div className="split-container">
+            <span></span>
+            <Link to="/forgot-password" className="forgot-password-link">Forgot password</Link>
+          </div>
+          <div className="actions">
+            <SignupLink />
+            <Button
+              type="submit"
+              icon="signin"
+              className="button"
+              isLoaderOn={status === "loading"}
+            >
+              sign in
+            </Button>
+          </div>
+        </form>
       </div>
-      <form className="form" onSubmit={handleSubmit}>
-        <GoogleSigninButton />
-        <Input
-          name="email"
-          type="text"
-          value={formData.email}
-          onChange={handleFormDataChange}
-          isDisabled={status === "loading"}
-        />
-        <Input
-          name="password"
-          type="password"
-          value={formData.password}
-          onChange={handleFormDataChange}
-          isDisabled={status === "loading"}
-        />
-        <DisplayErrorDetails details={errors.detail} />
-        <div className="split-container">
-          <span></span>
-          <Link to="/forgot-password" className="forgot-password-link">Forgot password</Link>
-        </div>
-        <div className="actions">
-          <SignupLink />
-          <Button
-            type="submit"
-            icon="signin"
-            className="button"
-            isLoaderOn={status === "loading"}
-          >
-            sign in
-          </Button>
-        </div>
-      </form>
     </div>
   );
 };

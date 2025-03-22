@@ -6,7 +6,7 @@ interface DashboardPageProps { }
 
 const DashboardPage: FC<DashboardPageProps> = (props): JSX.Element => {
   return (
-    <div>
+    <div className="dashboard-page">
       <AddSEO
         title="Dashboard"
         description=""

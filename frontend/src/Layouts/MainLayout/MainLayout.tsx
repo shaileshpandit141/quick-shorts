@@ -3,20 +3,24 @@ import "./MainLayout.css";
 import { Outlet } from "react-router-dom";
 import { Header, Sidebar, Footer } from "components";
 
-const MainLayout: React.FC = (props) => {
+const MainLayout: React.FC = () => {
   return (
-    <>
+    <div className="main-layout">
       <Sidebar />
-      <section className="inner-grid-1-1 grid-12 header-wrapper">
-        <Header />
-      </section>
-      <main className="inner-grid-1-1 grid-12 main-content">
-        <Outlet />
-      </main>
-      <section className="inner-grid-1-1 grid-12">
-        <Footer />
-      </section>
-    </>
+      <div className="main-layout-continer">
+        <section className="main-layout-header">
+          <Header />
+        </section>
+        <section className="main-layout-content-container">
+          <main className="main-layout-content">
+            <Outlet />
+          </main>
+          <footer className="main-layout-footer">
+            <Footer />
+          </footer>
+        </section>
+      </div>
+    </div>
   );
 };
 

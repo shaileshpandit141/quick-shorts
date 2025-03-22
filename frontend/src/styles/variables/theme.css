@@ -3,9 +3,9 @@
 :root {
   /* Background Colors */
   --bg-primary: #ffffff;
-  --bg-secondary: #f4f4f8;
-  --bg-header: #ffffff;
-  --bg-footer: #f8f8f8;
+  --bg-secondary: #f0f0f0;
+  --bg-header: var(--bg-primary);
+  --bg-footer: var(--bg-secondary);
 
   /* Text Colors */
   --text-primary: #333333;
@@ -42,8 +42,8 @@
   /* Background Colors */
   --bg-primary: #121212;
   --bg-secondary: #1d1d1d;
-  --bg-header: #121212;
-  --bg-footer: #1a1a1a;
+  --bg-header: var(--bg-primary);
+  --bg-footer: var(--bg-secondary);
 
   /* Text Colors */
   --text-primary: #e0e0e0;
