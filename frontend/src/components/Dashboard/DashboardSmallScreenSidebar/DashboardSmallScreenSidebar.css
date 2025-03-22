@@ -1,0 +1,20 @@
+.dashboard-small-screen-sidebar-drawer {
+  .dashboard-small-screen-sidebar {
+    height: 100%;
+    width: 275px;
+    background-color: var(--bg-secondary);
+    box-shadow: var(--box-shadow);
+    transform: translateX(-102%);
+    transition:
+      transform 0.3s ease-in-out,
+      var(--transition);
+
+    &.side-bar--active {
+      transform: translateX(0);
+    }
+
+    &.side-bar--inactive {
+      transform: translateX(-102%);
+    }
+  }
+}

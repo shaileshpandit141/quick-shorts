@@ -4,7 +4,7 @@ import { importLazyModule, RenderLazyModule } from "lazyUtils";
 
 // Default Imports (user-defined layout and pages).
 import { PrivateRoute, PublicRoute } from "./RoutesPrivacy";
-import { RootLayout, MainLayout, AuthLayout } from "Layouts";
+import { RootLayout, MainLayout, AuthLayout, DashboardLayout } from "Layouts";
 
 // Default Page loader Imports
 import { PageLoader } from "components";
@@ -18,6 +18,7 @@ const SignupPage = importLazyModule(() => import("pages/SignupPage"));
 const VerifyUserAccountPage = importLazyModule(
   () => import("pages/VerifyUserAccountPage"),
 );
+const DashboardPage = importLazyModule(() => import("pages/Dashboard"));
 
 // Lazy-loaded 404 Not Found Page
 const NotFoundPage = importLazyModule(() => import("pages/NotFoundPage"));
@@ -61,7 +62,22 @@ const AppRoutes: React.FC = () => {
           {/* -------------------------------- */}
           <Route>
             {/* Private Routes without header and Footer */}
-            <Route element={<PrivateRoute />}></Route>
+            <Route element={<PrivateRoute />}>
+              <Route
+                path="/dashboard"
+                element={<DashboardLayout />}
+              >
+                <Route
+                  index
+                  element={
+                    <RenderLazyModule
+                      element={<DashboardPage />}
+                      fallback={<PageLoader />}
+                    />
+                  }
+                />
+              </Route>
+            </Route>
 
             {/* Public Routes without header and Footer */}
             <Route element={<PublicRoute />}>
