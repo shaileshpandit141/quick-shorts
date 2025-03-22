@@ -1,8 +1,9 @@
 button {
   --button-height: calc(40 / 16 * 1em);
-  --button-padding: calc(4 / 16 * 1em);
+  --button-padding: calc(8 / 16 * 1em);
   --icon-height: calc(24 / 16 * 1em);
   --icon-width: calc(24 / 16 * 1em);
+  
   border: var(--border);
   height: var(--button-height);
   width: fit-content;
@@ -47,16 +48,9 @@ button {
 
   &.button {
     width: 100%;
-    padding-inline: calc(16 / 16 * 1em);
     border: var(--border);
     border-radius: 16px;
-    background-color: var(--btn-primary);
-    color: var(--text-primary);
     transition: var(--transition);
-
-    &:is(:hover) {
-      background-color: var(--btn-primary-hover);
-    }
 
     label {
       font-size: 1em;
@@ -82,13 +76,7 @@ button {
     min-width: var(--button-height);
     border: var(--border);
     border-radius: var(--button-height);
-    background-color: var(--btn-primary);
-    color: var(--text-primary);
     transition: var(--transition);
-
-    &:is(:hover) {
-      background-color: var(--btn-primary-hover);
-    }
   }
 }
 
@@ -102,5 +90,16 @@ button {
   .button-as-icon:disabled {
     cursor: not-allowed;
     opacity: 0.6;
+  }
+}
+
+button,
+.button,
+.button-as-icon {
+  background-color: var(--btn-primary);
+  color: var(--text-primary);
+
+  &:hover {
+    background-color: var(--btn-primary-hover) !important;
   }
 }

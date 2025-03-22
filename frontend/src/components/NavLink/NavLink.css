@@ -1,8 +1,9 @@
 a {
   --link-height: calc(40 / 16 * 1em);
-  --link-padding: calc(4 / 16 * 1em);
+  --link-padding: calc(8 / 16 * 1em);
   --icon-height: calc(24 / 16 * 1em);
   --icon-width: calc(24 / 16 * 1em);
+  
   border: none;
   outline: none;
   width: fit-content;
@@ -49,19 +50,6 @@ a {
     width: 100%;
     border: var(--border);
     border-radius: 16px;
-    padding-inline: calc(16 / 16 * 1em);
-    background-color: var(--btn-primary);
-    color: var(--link-primary);
-    transition: var(--transition);
-
-    &.active {
-      color: var(--link-hover) !important;
-      background-color: var(--btn-primary-hover) !important;
-    }
-
-    &:is(:hover) {
-      background-color: var(--btn-primary-hover);
-    }
 
     label {
       font-size: 1em;
@@ -88,18 +76,6 @@ a {
     width: var(--link-height);
     border: var(--border);
     border-radius: 999rem;
-    background-color: var(--btn-primary);
-    color: var(--text-primary);
-    transition: var(--transition);
-
-    &.active {
-      color: var(--link-hover) !important;
-      background-color: var(--btn-primary-hover) !important;
-    }
-
-    &:is(:hover) {
-      background-color: var(--btn-primary-hover);
-    }
   }
 }
 
@@ -107,5 +83,22 @@ a {
   .link,
   .link-as-icon {
     cursor: pointer;
+  }
+}
+
+a,
+.link,
+.link-as-icon {
+  background-color: var(--btn-primary);
+  color: var(--link-primary);
+  transition: var(--transition) !important;
+
+  &.active {
+    color: var(--link-hover) !important;
+    background-color: var(--btn-primary-hover) !important;
+  }
+
+  &:hover {
+    background-color: var(--btn-primary-hover);
   }
 }

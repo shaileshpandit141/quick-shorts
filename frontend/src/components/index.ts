@@ -20,3 +20,6 @@ export { default as SigninLink } from "./SigninLink/SigninLink";
 export { default as SignupLink } from "./SignupLink/SignupLink";
 export { default as GoogleSigninButton } from "./GoogleSigninButton/GoogleSigninButton";
 export { default as Sidebar } from "./Sidebar/Sidebar";
+export { default as DashboardHeader } from "./Dashboard/DashboardHeader/DashboardHeader";
+export { default as DashboardSidebar } from "./Dashboard/DashboardSidebar/DashboardSidebar";
+export { default as DashboardSmallScreenSidebar } from "./Dashboard/DashboardSmallScreenSidebar/DashboardSmallScreenSidebar";

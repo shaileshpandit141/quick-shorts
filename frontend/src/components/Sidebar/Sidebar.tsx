@@ -39,7 +39,7 @@ const Sidebar: React.FC = (): JSX.Element => {
             <div className="header-buttons-left">
               <Button
                 type="icon"
-                icon="menuOpen"
+                icon="sidebarIcon"
                 title="close menu button"
                 className="close-menu-botton"
                 onClick={handleCloseSidebar}

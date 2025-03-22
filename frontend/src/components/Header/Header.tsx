@@ -20,7 +20,7 @@ const Header: React.FC = () => {
         <div className="left-header">
           <Button
             type="icon"
-            icon="menuOpen"
+            icon="sidebarIcon"
             title="open menu button"
             className="menu-open-button"
             onClick={handleOpenSidebar}

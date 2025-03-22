@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, JSX } from "react";
 import {
   ErrorBoundary as ReactErrorBoundary,
   FallbackProps,
@@ -24,10 +24,16 @@ const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => (
   </div>
 );
 
-const ErrorBoundary = ({ children }: { children: React.ReactNode }) => (
-  <ReactErrorBoundary FallbackComponent={ErrorFallback}>
-    {children}
-  </ReactErrorBoundary>
-);
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+const ErrorBoundary: FC<ErrorBoundaryProps> = ({ children }): JSX.Element => {
+  return (
+    <ReactErrorBoundary FallbackComponent={ErrorFallback}>
+      {children}
+    </ReactErrorBoundary>
+  )
+};
 
 export default ErrorBoundary;

@@ -30,8 +30,8 @@
     max-width: fit-content;
     padding: 8px;
     border-radius: 16px;
-    /* border: var(--border); */
-    box-shadow: var(--box-shadow);
+    border: var(--border);
+    /* box-shadow: var(--box-shadow); */
     opacity: 0;
     transition:
       opacity 0.3s ease,
