@@ -75,11 +75,14 @@ export function useDropdownMenu(
       });
     }
     if (contentRef.current) {
+      const transition = contentRef.current.style.transition;
+      const zIndex = contentRef.current.style.zIndex;
+
       Object.assign(contentRef.current.style, {
         position: "absolute",
         userSelect: "none",
-        zIndex: "999",
-        transition: "opacity 0.3s ease-in, transform 0.3s ease-in",
+        zIndex: zIndex ? zIndex : "999",
+        transition: `opacity 0.3s ease-in-out, transform 0.3s ease-in-out, ${transition}`,
         ...(isVisible ? visibleStyles : hiddenStyles),
       });
     }
