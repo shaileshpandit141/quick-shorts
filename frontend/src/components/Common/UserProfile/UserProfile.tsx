@@ -2,32 +2,17 @@ import React, { useRef, useEffect } from "react";
 import "./UserProfile.css";
 import { Link } from "react-router-dom";
 import { NavLink, SignoutButton } from "components";
-import { useMenu } from "hooks";
+import { useDropdownMenu } from "hooks";
 import { user, useUserSelector } from "features/user";
 import { isUserAuthenticated } from "utils/isUserAuthenticated";
 import { getEnv } from "utils/getEnv";
 
 const UserProfile: React.FC = (): JSX.Element | null => {
-  const buttonRef = useRef(null);
-  const userProfileRef = useRef(null);
+  const { buttonRef, contentRef, toggleDropdownMenu } = useDropdownMenu(
+    { transform: "scale(1)" },
+    { transform: "scale(0.8)" }
+  );
   const { status, data } = useUserSelector();
-
-  const { setVisibleStyle, setHiddenStyle } = useMenu({
-    buttonRef: buttonRef,
-    contentRef: userProfileRef,
-  });
-
-  useEffect(() => {
-    setVisibleStyle((prevStyles) => ({
-      ...prevStyles,
-      transform: "scale(1)",
-    }));
-
-    setHiddenStyle((prevStyles) => ({
-      ...prevStyles,
-      transform: "scale(0.9)",
-    }));
-  }, [setVisibleStyle, setHiddenStyle]);
 
   useEffect(() => {
     if (status === "idle" && isUserAuthenticated()) {
@@ -41,12 +26,16 @@ const UserProfile: React.FC = (): JSX.Element | null => {
 
   return (
     <div className="user-profile">
-      <button className="button-as-icon profile-action-button" ref={buttonRef}>
+      <button
+        className="button-as-icon profile-action-button"
+        ref={buttonRef}
+        onClick={toggleDropdownMenu}
+      >
         {"picture" in data && (
           <img src={data.picture} alt="user-picture-image" />
         )}
       </button>
-      <div className="user-profile-card-container" ref={userProfileRef}>
+      <div className="user-profile-card-container" ref={contentRef}>
         <div className="user-profile-header-card">
           <Link to="/dashboard" className="user-profile-container">
             <section className="user-profile-image">

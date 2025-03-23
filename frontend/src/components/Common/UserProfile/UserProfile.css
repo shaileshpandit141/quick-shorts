@@ -20,8 +20,10 @@
   .user-profile-card-container {
     --height: 225px;
     --width: 225px;
+
     background-color: var(--bg-secondary);
     position: absolute;
+    opacity: 0;
     top: calc(100% + 4px);
     right: 0px;
     bottom: auto;
@@ -31,11 +33,10 @@
     padding: 8px;
     border-radius: 16px;
     border: var(--border);
-    /* box-shadow: var(--box-shadow); */
-    opacity: 0;
+    transform-origin: top right;
     transition:
-      opacity 0.3s ease,
-      transform 0.3s ease,
+      opacity 0.3s ease-in,
+      transform 0.3s ease-in,
       var(--transition);
 
     .user-profile-header-card {
