@@ -15,7 +15,15 @@ const Footer: React.FC = (props) => {
         </div>
         <section className="copy-right-container">
           <p className="copy-right-text">
-            &copy; {copyRightYear} {metaConfig.appName}. All rights reserved. &#124; <Link to="/privacy-policy" className="links">Privacy Policy</Link> &#124; <Link to="/terms" className="links">Terms of Service</Link>
+            &copy; {copyRightYear} {metaConfig.appName}. All rights reserved.
+            &#124;{" "}
+            <Link to="/privacy-policy" className="links">
+              Privacy Policy
+            </Link>{" "}
+            &#124;{" "}
+            <Link to="/terms" className="links">
+              Terms of Service
+            </Link>
           </p>
         </section>
       </div>

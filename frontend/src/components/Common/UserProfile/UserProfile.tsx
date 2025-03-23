@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./UserProfile.css";
 import { Link } from "react-router-dom";
 import { NavLink, SignoutButton } from "components";
