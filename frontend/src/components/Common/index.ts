@@ -5,5 +5,6 @@ export { default as GoogleSigninButton } from "./GoogleSigninButton/GoogleSignin
 export { default as Input } from "./Input/Input";
 export { default as InstallAppButton } from "./InstallAppButton/InstallAppButton";
 export { default as NavLink } from "./NavLink/NavLink";
+export { default as SplitUI } from "./SplitUI/SplitUI";
 export { default as ToggleThemeButton } from "./ToggleThemeButton/ToggleThemeButton";
 export { default as UserProfile } from "./UserProfile/UserProfile";
