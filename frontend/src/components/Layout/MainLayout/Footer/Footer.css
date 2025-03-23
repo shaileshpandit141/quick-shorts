@@ -1,9 +1,40 @@
 .footer {
-  background-color: var(--bg-footer);
-  color: var(--text-primary);
   min-height: 16em;
 
-  .footer .wrapper {
-    padding-block: 16px;
+  .footer-wrapper {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    height: 100%;
+
+    .content {
+      padding-block: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .copy-right-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      user-select: none;
+
+      .copy-right-text,
+      .links {
+        font-size: 0.9em !important;
+      }
+
+      .copy-right-text {
+        text-align: center;
+        margin: 4px;
+      }
+      
+      .links {
+        display: inline !important;
+        padding: 0;
+        background-color: transparent;
+      }
+    }
   }
 }
