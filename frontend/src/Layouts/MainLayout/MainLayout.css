@@ -10,7 +10,7 @@
       overflow-y: auto;
 
       .main-layout-content {
-        min-height: var(--screen-height);
+        height: fit-content;
       }
 
       .main-layout-footer {
