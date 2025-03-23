@@ -1,7 +1,7 @@
 import React, { JSX } from "react";
 import "./DashboardSidebar.css";
 import { AppLogo, NavLink, Button } from "components";
-import { useDashboardSmaillSidebar } from "context/features/DashboardSmaillSidebarProvider"
+import { useDashboardSmaillSidebar } from "context/features/DashboardSmaillSidebarProvider";
 
 const DashboardSidebar: React.FC = (): JSX.Element => {
   // Used dashboard small sidebar hook to handle the sidebar action
@@ -23,12 +23,16 @@ const DashboardSidebar: React.FC = (): JSX.Element => {
       </div>
       <div className="grid-12 nav-links-container">
         <div className="grid-start-2-end-2 nav-links-container-wrapper">
-          <NavLink to="." type="link" icon="dashboardIcon">dashboard</NavLink>
-          <NavLink to="profile" type="link" icon="person">profile</NavLink>
+          <NavLink to="." type="link" icon="dashboardIcon">
+            dashboard
+          </NavLink>
+          <NavLink to="profile" type="link" icon="person">
+            profile
+          </NavLink>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default DashboardSidebar;

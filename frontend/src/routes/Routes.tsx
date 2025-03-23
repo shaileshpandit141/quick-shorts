@@ -63,10 +63,7 @@ const AppRoutes: React.FC = () => {
           <Route>
             {/* Private Routes without header and Footer */}
             <Route element={<PrivateRoute />}>
-              <Route
-                path="/dashboard"
-                element={<DashboardLayout />}
-              >
+              <Route path="/dashboard" element={<DashboardLayout />}>
                 <Route
                   index
                   element={

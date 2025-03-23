@@ -84,7 +84,9 @@ const SigninPage: React.FC = () => {
           <DisplayErrorDetails details={errors.detail} />
           <div className="split-container">
             <span></span>
-            <Link to="/forgot-password" className="forgot-password-link">Forgot password</Link>
+            <Link to="/forgot-password" className="forgot-password-link">
+              Forgot password
+            </Link>
           </div>
           <div className="actions">
             <SignupLink />

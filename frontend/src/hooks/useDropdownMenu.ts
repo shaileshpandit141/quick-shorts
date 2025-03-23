@@ -8,7 +8,7 @@ function useVisibleStyles(additionalStyles: React.CSSProperties = {}) {
       pointerEvents: "auto",
       ...additionalStyles,
     }),
-    [additionalStyles]
+    [additionalStyles],
   );
 }
 
@@ -19,13 +19,13 @@ function useHiddenStyles(additionalStyles: React.CSSProperties = {}) {
       pointerEvents: "none",
       ...additionalStyles,
     }),
-    [additionalStyles]
+    [additionalStyles],
   );
 }
 
 export function useDropdownMenu(
   visibleExtraStyles: React.CSSProperties = {},
-  hiddenExtraStyles: React.CSSProperties = {}
+  hiddenExtraStyles: React.CSSProperties = {},
 ) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);

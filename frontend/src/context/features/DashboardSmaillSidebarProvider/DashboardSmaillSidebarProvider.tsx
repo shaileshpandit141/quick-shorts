@@ -7,9 +7,9 @@ interface DashboardSmallSidebarContextValue {
   handleToggelSidebar: () => void;
 }
 
-const DashboardSmaillSidebarContext = createContext<DashboardSmallSidebarContextValue | undefined>(
-  undefined,
-);
+const DashboardSmaillSidebarContext = createContext<
+  DashboardSmallSidebarContextValue | undefined
+>(undefined);
 
 interface Props {
   children: ReactNode;
@@ -47,7 +47,9 @@ export const DashboardSmaillSidebarProvider = ({ children }: Props) => {
 export const useDashboardSmaillSidebar = () => {
   const context = useContext(DashboardSmaillSidebarContext);
   if (!context) {
-    throw new Error("useDashboardSmaillSidebar must be used within a DashboardSmaillSidebarProvider");
+    throw new Error(
+      "useDashboardSmaillSidebar must be used within a DashboardSmaillSidebarProvider",
+    );
   }
   return context;
 };

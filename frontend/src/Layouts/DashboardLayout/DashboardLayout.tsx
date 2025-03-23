@@ -1,7 +1,11 @@
 import React, { JSX } from "react";
 import "./DashboardLayout.css";
 import { Outlet } from "react-router-dom";
-import { DashboardSidebar, DashboardHeader, DashboardSmallScreenSidebar } from "components";
+import {
+  DashboardSidebar,
+  DashboardHeader,
+  DashboardSmallScreenSidebar,
+} from "components";
 
 const DashboardLayout: React.FC = (): JSX.Element => {
   return (
@@ -31,7 +35,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
 export default DashboardLayout;

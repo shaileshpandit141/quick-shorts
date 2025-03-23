@@ -14,9 +14,9 @@ const HomePage: React.FC = (props) => {
         <h1>Welcome to my website</h1>
         <p>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet quod
-          soluta officia molestias recusandae asperiores est perferendis dolorum!
-          Id reiciendis fugiat laboriosam doloremque quae ratione iusto enim,
-          cumque atque magni.
+          soluta officia molestias recusandae asperiores est perferendis
+          dolorum! Id reiciendis fugiat laboriosam doloremque quae ratione iusto
+          enim, cumque atque magni.
         </p>
       </div>
     </div>

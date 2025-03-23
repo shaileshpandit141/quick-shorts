@@ -10,7 +10,7 @@ import { getEnv } from "utils/getEnv";
 const UserProfile: React.FC = (): JSX.Element | null => {
   const { buttonRef, contentRef, toggleDropdownMenu } = useDropdownMenu(
     { transform: "scale(1)" },
-    { transform: "scale(0.8)" }
+    { transform: "scale(0.8)" },
   );
   const { status, data } = useUserSelector();
 

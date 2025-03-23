@@ -30,7 +30,7 @@ const DashboardSmallScreenSidebar: React.FC = (): JSX.Element => {
         <DashboardSidebar />
       </div>
     </Drawer>
-  )
-}
+  );
+};
 
 export default DashboardSmallScreenSidebar;

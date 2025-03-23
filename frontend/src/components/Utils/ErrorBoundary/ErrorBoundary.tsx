@@ -33,7 +33,7 @@ const ErrorBoundary: FC<ErrorBoundaryProps> = ({ children }): JSX.Element => {
     <ReactErrorBoundary FallbackComponent={ErrorFallback}>
       {children}
     </ReactErrorBoundary>
-  )
+  );
 };
 
 export default ErrorBoundary;

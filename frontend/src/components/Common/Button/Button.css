@@ -3,7 +3,7 @@ button {
   --button-padding: calc(8 / 16 * 1em);
   --icon-height: calc(24 / 16 * 1em);
   --icon-width: calc(24 / 16 * 1em);
-  
+
   border: var(--border);
   height: var(--button-height);
   width: fit-content;
