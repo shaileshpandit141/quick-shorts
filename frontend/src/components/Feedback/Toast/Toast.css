@@ -27,13 +27,13 @@
     user-select: none;
     border: var(--border);
     background-color: var(--bg-secondary);
-    animation: fadeIn 0.5s ease;
-    transition: var(--transition);
+    animation: fadeIn 0.5s ease-in-out;
+    transition: var(--ts-seconday);
   }
 
   &.toast-removed {
-    animation: fadeOut 0.5s ease;
-    transition: var(--transition);
+    animation: fadeOut 0.5s ease-in-out;
+    transition: var(--ts-seconday);
   }
 
   .toast-icon-container {
@@ -45,7 +45,7 @@
       color: var(--color);
       width: 24px;
       height: 24px;
-      transition: var(--transition);
+      transition: var(--ts-seconday);
     }
   }
 
@@ -56,12 +56,12 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    transition: var(--transition);
+    transition: var(--ts-seconday);
 
     .error-message {
       margin: 0;
       color: var(--color);
-      transition: var(--transition);
+      transition: var(--ts-seconday);
 
       &::first-letter {
         text-transform: capitalize;
@@ -78,7 +78,7 @@
     .toast-close-button {
       color: var(--text-primary);
       height: fit-content;
-      transition: var(--transition);
+      transition: var(--ts-seconday);
       border-radius: 8px;
 
       .icon-container {

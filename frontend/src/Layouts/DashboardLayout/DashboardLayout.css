@@ -1,5 +1,5 @@
 .dashboard-layout {
-  height: 100dvh !important;
+  height: 100%;
   display: grid;
   grid-template-columns: auto 1fr;
 
@@ -9,8 +9,8 @@
     background-color: var(--bg-secondary);
     overflow: hidden;
     transition:
-      background-color 0.3s ease,
-      width 0.3s ease;
+      var(--ts-primary),
+      width 0.3s ease-in-out;
 
     @media (width <= 768px) {
       & {

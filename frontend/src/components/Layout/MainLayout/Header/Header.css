@@ -1,13 +1,9 @@
 .header {
   width: 100%;
-  min-height: var(--header-height);
-  background-color: var(--bg-header);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: var(--transition);
-  /* border-bottom: var(--border); */
 
   .sub-headers {
     width: 100%;

@@ -12,12 +12,12 @@
     width: fit-content !important;
     height: fit-content !important;
     color: var(--text-primary);
-    transition: var(--transition);
+    transition: var(--ts-primary);
 
     .MuiCircularProgress-svg {
       width: var(--icon-size);
       height: var(--icon-size);
-      transition: var(--transition);
+      transition: var(--ts-primary);
     }
   }
 }

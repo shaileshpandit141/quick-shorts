@@ -1,9 +1,9 @@
 .auth-alyout {
+  min-height: var(--screen-height);
+  width: 100%;
   background-color: transparent;
-  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: var(--transition);
 }

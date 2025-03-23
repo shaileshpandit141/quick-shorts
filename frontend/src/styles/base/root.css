@@ -4,11 +4,8 @@
  */
 #root {
   height: 100%;
-  min-height: 100dvh;
   width: 100%;
   background-color: transparent;
   overflow: hidden;
-  overflow-y: auto;
   position: relative;
-  transition: scrollbar-color 0.3s ease;
 }

@@ -23,8 +23,8 @@
     box-shadow: var(--box-shadow);
     transform: translateX(-102%);
     transition:
-      transform 0.3s ease-in-out,
-      var(--transition);
+      var(--ts-secondary),
+      transform 0.3s ease-in-out;
 
     &.side-bar--active {
       transform: translateX(0);

@@ -19,9 +19,7 @@
     border-radius: 16px;
     border-color: var(--border-primary);
     user-select: none;
-    transition:
-      background-color 0.3s,
-      border 0.3s;
+    transition: var(--ts-secondary);
 
     .input-element {
       position: relative;
@@ -61,14 +59,14 @@
           padding: 4px;
           background-color: var(--background-color);
           margin-right: 8px;
-          transition: background-color 0.3s border 0.3s;
+          transition: var(--ts-secondary);
         }
 
         span {
           border-color: var(--border-color);
           padding-inline: 6px;
           border-radius: 999rem;
-          transition: background-color 0.3s color 0.3s;
+          transition: var(--ts-primary);
 
           &::first-letter {
             text-transform: capitalize;
@@ -125,9 +123,7 @@
     border: var(--border);
     border-color: var(--border-color);
     user-select: none;
-    transition:
-      background-color 0.3s,
-      border 0.3s;
+    transition: var(--ts-secondary);
 
     .input-element {
       position: relative;
@@ -161,9 +157,7 @@
           border-color: var(--border-color);
           padding-inline: 6px;
           border-radius: 999rem;
-          transition:
-            background-color 0.3s,
-            border 0.3s;
+          transition: var(--ts-secondary);
 
           &::first-letter {
             text-transform: capitalize;

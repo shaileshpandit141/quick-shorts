@@ -6,7 +6,6 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  transition: var(--transition);
 
   .error-boundary-component {
     background-color: var(--bg-secondary);
@@ -18,7 +17,7 @@
     padding: 12px;
     border-radius: 24px;
     border: var(--border);
-    transition: var(--transition);
+    transition: var(--ts-secondary);
 
     .button {
       &:first-child {

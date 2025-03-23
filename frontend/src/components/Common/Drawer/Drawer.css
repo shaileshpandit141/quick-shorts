@@ -5,7 +5,7 @@
   user-select: none;
   z-index: 9999;
   overflow: hidden;
-  transition: all 0.3s ease-in-out;
+  transition: var(--ts-secondary);
 
   &.drawer--active {
     background-color: #0000006e;

@@ -14,7 +14,7 @@ a {
   column-gap: var(--link-padding);
   user-select: none;
   overflow: hidden;
-  transition: var(--transition);
+  transition: var(--ts-secondary);
 
   @media (pointer: fine) {
     cursor: pointer;
@@ -41,7 +41,7 @@ a {
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      transition: var(--transition);
+      transition: var(--ts-secondary);
     }
   }
 
@@ -91,7 +91,7 @@ a,
 .link-as-icon {
   background-color: var(--btn-primary);
   color: var(--link-primary);
-  transition: var(--transition) !important;
+  transition: var(--ts-secondary) !important;
 
   &.active {
     color: var(--link-hover) !important;

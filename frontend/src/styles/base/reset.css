@@ -20,8 +20,8 @@
   scroll-behavior: smooth;
 
   &:hover,
-  :focus,
-  :focus-visible {
+  &:focus,
+  &:focus-visible {
     outline: none;
   }
 }
@@ -176,5 +176,5 @@ footer,
 input,
 main,
 button {
-  transition: var(--transition);
+  transition: var(--ts-secondary);
 }

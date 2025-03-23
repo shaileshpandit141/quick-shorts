@@ -15,7 +15,7 @@ h6 {
   line-height: 1.2;
   letter-spacing: 0.04em;
   color: var(--text-primary);
-  transition: color 0.3s ease;
+  transition: color 0.3s ease-in;
 
   &::first-letter {
     text-transform: capitalize;
@@ -91,7 +91,7 @@ details {
   letter-spacing: 0.04em;
   color: var(--text-primary);
   line-height: 1.5;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease-in;
 }
 
 /* Form Typography
@@ -126,7 +126,7 @@ a:active {
   letter-spacing: 0.04em;
   font-weight: 600;
   color: var(--link-primary);
-  transition: color 0.3s ease;
+  transition: color 0.3s ease-in;
 
   &:is(:hover, :focus, :focus-visible) {
     color: var(--link-hover);
@@ -155,5 +155,5 @@ button::first-letter {
 }
 
 p {
-  transition: color 0.3s ease;
+  transition: color 0.3s ease-in;
 }

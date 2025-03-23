@@ -1,4 +1,5 @@
 .root-layout {
+  height: 100%;
   width: 100%;
 
   .global-theme-button-container {

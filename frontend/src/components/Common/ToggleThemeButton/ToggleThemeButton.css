@@ -1,5 +1,5 @@
 header {
   .toggle-theme-button {
-    transition: var(--transition);
+    transition: var(--ts-secondary);
   }
 }

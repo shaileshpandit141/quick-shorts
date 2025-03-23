@@ -7,7 +7,7 @@ import "./ErrorBoundary.css";
 import Button from "components/Common/Button/Button";
 
 const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => (
-  <div className="inner-grid-2-2 error-boundary" role="alert">
+  <div className="grid-start-2-end-2 error-boundary" role="alert">
     <div className="error-boundary-component">
       <Button type="button" icon="info" title={error?.message}>
         Something went wrong!
