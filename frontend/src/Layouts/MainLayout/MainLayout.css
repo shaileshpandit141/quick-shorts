@@ -10,11 +10,11 @@
       overflow-y: auto;
 
       .main-layout-content {
-        height: fit-content;
+        min-height: var(--screen-height);
       }
 
       .main-layout-footer {
-        min-height: fit-content;
+        height: fit-content;
       }
     }
   }
