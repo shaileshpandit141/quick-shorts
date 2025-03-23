@@ -1,6 +1,7 @@
 import React from "react";
 import "./Footer.css";
 import { Link } from "react-router-dom";
+import { metaConfig } from "SEO";
 
 const Footer: React.FC = (props) => {
   const copyRightYear = new Date().getFullYear();
@@ -14,16 +15,7 @@ const Footer: React.FC = (props) => {
         </div>
         <section className="copy-right-container">
           <p className="copy-right-text">
-            &copy; {copyRightYear} YourCompany. All rights reserved. &#124;
-            <Link to="/privacy-policy" className="links">
-              {" "}
-              Privacy Policy{" "}
-            </Link>
-            &#124;
-            <Link to="/terms" className="links">
-              {" "}
-              Terms of Service
-            </Link>
+            &copy; {copyRightYear} {metaConfig.appName}. All rights reserved. &#124; <Link to="/privacy-policy" className="links">Privacy Policy</Link> &#124; <Link to="/terms" className="links">Terms of Service</Link>
           </p>
         </section>
       </div>

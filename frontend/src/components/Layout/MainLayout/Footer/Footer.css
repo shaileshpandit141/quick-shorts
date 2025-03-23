@@ -4,6 +4,7 @@
   .footer-wrapper {
     display: grid;
     grid-template-rows: 1fr auto;
+    justify-content: center;
     height: 100%;
 
     .content {
@@ -17,23 +18,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-wrap: wrap;
       gap: 4px;
       user-select: none;
-
-      .copy-right-text,
-      .links {
-        font-size: 0.9em !important;
-      }
+      max-width: fit-content;
 
       .copy-right-text {
         text-align: center;
-        margin: 4px;
-      }
-
-      .links {
-        display: inline !important;
+        flex: 1;
         padding: 0;
-        background-color: transparent;
+        margin: 4px;
+        font-weight: 500;
+
+        .links {
+          display: inline !important;
+          padding: 0;
+          background-color: transparent;
+        }
       }
     }
   }
