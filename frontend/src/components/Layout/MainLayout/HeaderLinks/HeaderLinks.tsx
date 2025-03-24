@@ -5,7 +5,7 @@ import { NavLink } from "components";
 const HeaderLinks: React.FC = () => {
   return (
     <nav className="nav-links">
-      <NavLink to="/home" type="link" className="link">
+      <NavLink to="/home" type="link" className="home-link">
         Home
       </NavLink>
     </nav>

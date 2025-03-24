@@ -99,6 +99,6 @@ a,
   }
 
   &:hover {
-    background-color: var(--btn-primary-hover);
+    background-color: var(--btn-primary-hover) !important;
   }
 }

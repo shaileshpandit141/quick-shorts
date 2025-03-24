@@ -13,18 +13,9 @@
     }
   }
 
-  .link {
+  .home-link {
     width: fit-content;
     background-color: transparent;
-    color: var(--link-primary);
-    border-color: transparent;
-
-    &:is(:focus) {
-      outline: none;
-    }
-
-    &:hover {
-      color: var(--link-hover);
-    }
+    border: none;
   }
 }
