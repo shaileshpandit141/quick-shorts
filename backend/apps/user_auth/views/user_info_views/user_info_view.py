@@ -22,7 +22,7 @@ class UserInfoView(BaseAPIView):
         user = request.user
         serializer = self.get_serializer(instance=user, many=False)
         return self.handle_success(
-            "Profile information retrieved successfully.",
+            "User profile data fetched successfully",
             serializer.data,
         )
 
@@ -39,12 +39,12 @@ class UserInfoView(BaseAPIView):
 
         if not serializer.is_valid():
             return self.handle_error(
-                "Invalid to procode request with provided data.",
+                "Unable to update profile - invalid data provided",
                 serializer.errors,
             )
 
         serializer.save()
         return self.handle_success(
-            "Profile information updated successfully.",
+            "User profile has been updated successfully",
             serializer.data,
         )

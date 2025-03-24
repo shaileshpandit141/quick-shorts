@@ -20,15 +20,23 @@ class DeactivateAccountView(BaseAPIView):
         # Handle if password is blank
         if password is None:
             return self.handle_error(
-                "Password field can not be blank",
-                {"password": ["Password field can not be blank."]},
+                "Password is required to deactivate your account",
+                {
+                    "password": [
+                        "Please enter your password to confirm account deactivation."
+                    ]
+                },
             )
 
         # Verify password matches
         if not user.check_password(password):
             return self.handle_error(
-                "Provided password is not currect.",
-                {"password": ["Provided password is not currect."]},
+                "Incorrect password provided",
+                {
+                    "password": [
+                        "The password you entered is incorrect. Please try again."
+                    ]
+                },
             )
 
         # Deactivate the account
@@ -49,6 +57,8 @@ class DeactivateAccountView(BaseAPIView):
         )
 
         return self.handle_success(
-            "Account deactivation was successful.",
-            {"detail": "Your account has been deactivated successfully."},
+            "Account deactivated successfully",
+            {
+                "detail": "Your account has been deactivated. You will be signed out shortly."
+            },
         )

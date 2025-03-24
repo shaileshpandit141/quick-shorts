@@ -28,9 +28,9 @@ class IsAuthenticated(permissions.IsAuthenticated):
             )
             raise PermissionDenied(
                 {
-                    "message": "Authentication required on this endpoint",
+                    "message": "Authentication failed - Access denied",
                     "errors": {
-                        "deatil": "You must include a valid authentication token in the Authorization header."
+                        "detail": "Authentication credentials were not provided or are invalid. Please include a valid authentication token in the Authorization header.",
                     },
                 }
             )

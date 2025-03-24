@@ -28,9 +28,9 @@ class IsAdminUser(permissions.IsAdminUser):
             )
             raise PermissionDenied(
                 {
-                    "message": "Authentication required on this endpoint",
+                    "message": "Authentication failed - valid credentials required",
                     "errors": {
-                        "deatil": "You must include a valid authentication token in the Authorization header."
+                        "detail": "Please provide a valid authentication token in the Authorization header to access this endpoint."
                     },
                 }
             )
@@ -43,8 +43,10 @@ class IsAdminUser(permissions.IsAdminUser):
             )
             raise PermissionDenied(
                 {
-                    "message": "Staff access required on this endpoint",
-                    "errors": {"detail": "This endpoint requires staff privileges."},
+                    "message": "Access denied - insufficient privileges",
+                    "errors": {
+                        "detail": "This endpoint is restricted to staff users only. Your account does not have the required permissions."
+                    },
                 }
             )
 

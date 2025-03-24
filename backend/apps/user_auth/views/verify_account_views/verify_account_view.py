@@ -25,15 +25,19 @@ class VerifyAccountView(BaseAPIView):
         # Handle if user not include email in payload
         if email is None:
             return self.handle_error(
-                "Sign up request is failed",
-                {"email": ["Email field can not be blank."]},
+                "Email is required",
+                {"email": ["Please provide an email address."]},
             )
 
         user = self.get_object(User, email=email)
         if user is None:
             return self.handle_error(
-                "User account not found.",
-                {"email": ["We could not find an account with this email address."]},
+                "Account not found",
+                {
+                    "email": [
+                        "No account exists with this email address. Please sign up first."
+                    ]
+                },
             )
 
         if not getattr(user, "is_verified", False):
@@ -42,9 +46,9 @@ class VerifyAccountView(BaseAPIView):
             token = generator.generate()
             if token is None:
                 return self.handle_error(
-                    "Failed to generate an account verification token.",
+                    "Verification token generation failed",
                     {
-                        "detail": "Failed to generate an account verification token. Please try again later."
+                        "detail": "Unable to generate verification token. Please try again in a few minutes."
                     },
                 )
 
@@ -61,15 +65,15 @@ class VerifyAccountView(BaseAPIView):
                 }
             )
             return self.handle_success(
-                "Account verification email sent successfully.",
+                "Verification email sent",
                 {
-                    "detail": "A verification link has been sent to your email. Please check your inbox."
+                    "detail": "We've sent a verification link to your email address. Please check your inbox and spam folder."
                 },
             )
         else:
             return self.handle_success(
-                "Account already verified",
+                "Account Already Verified",
                 {
-                    "detail": "This Account has already been verified. You can proceed to sign in."
+                    "detail": "Your account has already been verified. Please proceed to sign in with your credentials."
                 },
             )

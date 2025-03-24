@@ -27,47 +27,47 @@ def exception_handler(exc, context) -> Response | views.Response | None:
 
     error_handlers = {
         ValidationError: lambda error: create_error_response(
-            message="Oops! validation error occurs",
+            message="Validation error occurred. Please check your input.",
             errors=error,
             status=status.HTTP_400_BAD_REQUEST,
         ),
         MethodNotAllowed: lambda error: create_error_response(
-            message="Method not allowed on this endpoint",
+            message="This HTTP method is not allowed for this endpoint.",
             errors=error,
             status=status.HTTP_405_METHOD_NOT_ALLOWED,
         ),
         NotFound: lambda error: create_error_response(
-            message="Resource not found with given credential",
+            message="The requested resource could not be found.",
             errors=error,
             status=status.HTTP_404_NOT_FOUND,
         ),
         NotAuthenticated: lambda error: create_error_response(
-            message="Authentication required on this endpoint",
+            message="Please sign in to access this resource.",
             errors=error,
             status=status.HTTP_401_UNAUTHORIZED,
         ),
         AuthenticationFailed: lambda error: create_error_response(
-            message="Authentication failed. Please try again later",
+            message="Invalid credentials provided. Please check and try again.",
             errors=error,
             status=status.HTTP_401_UNAUTHORIZED,
         ),
         Throttled: lambda error: create_error_response(
-            message="Opps! request limit exceeded",
+            message="Request limit exceeded. Please try again later.",
             errors=error,
             status=status.HTTP_429_TOO_MANY_REQUESTS,
         ),
         InvalidToken: lambda error: create_error_response(
-            message="Invalid token: token is invalid or expired",
+            message="Your authentication token is invalid or has expired.",
             errors=error,
             status=status.HTTP_401_UNAUTHORIZED,
         ),
         TokenError: lambda error: create_error_response(
-            message="Token error: please provide a valid token",
+            message="Authentication token error. Please provide a valid token.",
             errors=error,
             status=status.HTTP_401_UNAUTHORIZED,
         ),
         APIException: lambda error: create_error_response(
-            message="Something went wrong. Please try again later",
+            message="An unexpected error occurred. Our team has been notified.",
             errors=error,
         ),
     }
@@ -124,9 +124,9 @@ def exception_handler(exc, context) -> Response | views.Response | None:
                                     )
 
                                 return create_error_response(
-                                    message="Opps! request limit exceeded",
+                                    message="Rate limit exceeded",
                                     errors={
-                                        "detail": "Opps! request limit exceeded. Please try again later.",
+                                        "detail": "You have exceeded the rate limit. Please wait before making more requests.",
                                         "retry_after": f"{retry_after} seconds",
                                     },
                                     status=status.HTTP_429_TOO_MANY_REQUESTS,

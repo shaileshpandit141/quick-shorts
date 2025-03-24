@@ -27,6 +27,6 @@ class SignoutView(BaseAPIView):
             )
         except TokenError:
             return self.handle_error(
-                "Unable to process refresh token.",
-                {"detail": "The provided token is invalid or has already expired."},
+                "Invalid refresh token.",
+                {"detail": "The provided token is invalid or expired."},
             )

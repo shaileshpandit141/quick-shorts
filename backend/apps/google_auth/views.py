@@ -25,7 +25,7 @@ class GoogleLoginView(BaseAPIView):
         }
         login_url = f"{google_auth_url}?{urlencode(params)}"
         return self.handle_success(
-            "Google sign in URL generated successfully",
+            "Google sign-in URL successfully generated",
             {
                 "login_url": login_url,
             },
@@ -39,8 +39,8 @@ class GoogleTokenExchangeView(BaseAPIView):
 
         if not auth_code:
             return self.handle_error(
-                "Failed to get access token",
-                {"code": ["google generated code is not found."]},
+                "Access token retrieval failed",
+                {"code": ["Google authorization code was not found."]},
             )
 
         token_url = "https://oauth2.googleapis.com/token"
@@ -58,12 +58,12 @@ class GoogleTokenExchangeView(BaseAPIView):
 
         if "access_token" not in token_data:
             return self.handle_error(
-                "Failed to get google access token",
-                {"code": ["Google not return access token in reponse."]},
+                "Google access token retrieval failed",
+                {"code": ["Access token not present in Google's response."]},
             )
 
         return self.handle_success(
-            "Google Access token retrieved successfully",
+            "Google access token successfully retrieved",
             {"token": token_data["access_token"]},
         )
 
@@ -75,8 +75,8 @@ class GoogleCallbackView(BaseAPIView):
 
         if not token:
             return self.handle_error(
-                "Authentication Googel token not provided",
-                {"token": ["Please provide a valid authentication token."]},
+                "Google authentication token missing",
+                {"token": ["A valid authentication token is required."]},
             )
 
         try:
@@ -95,10 +95,10 @@ class GoogleCallbackView(BaseAPIView):
 
                 if response.status_code != 200:
                     return self.handle_error(
-                        "The provided authentication token is invalid",
+                        "Invalid authentication token",
                         {
                             "token": [
-                                "The provided authentication token is invalid or expire. Please try again."
+                                "The authentication token is invalid or has expired. Please try again."
                             ]
                         },
                     )
@@ -112,10 +112,10 @@ class GoogleCallbackView(BaseAPIView):
 
             if not email:
                 return self.handle_error(
-                    "The provided authentication token is invalid",
+                    "Invalid authentication token",
                     {
                         "token": [
-                            "The provided authentication token is invalid or expire. Please try again."
+                            "The authentication token is invalid or has expired. Please try again."
                         ]
                     },
                 )
@@ -145,11 +145,11 @@ class GoogleCallbackView(BaseAPIView):
             tokens = get_jwt_tokens_for_user(user)
 
             return self.handle_success(
-                "Google Sign in successful",
+                "Google sign-in completed successfully",
                 {**tokens},
             )
 
         except Exception as error:
             return self.handle_error(
-                "An error occurred during google authentication", {"detail": str(error)}
+                "Google authentication failed", {"detail": str(error)}
             )

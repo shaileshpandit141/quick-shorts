@@ -20,15 +20,15 @@ class SigninTokenView(BaseAPIView):
         # Handle if user not include email in payload
         if email is None:
             return self.handle_error(
-                "Sign in request is failed",
-                {"email": ["Email field can not be blank."]},
+                "Sign in failed - Email required",
+                {"email": ["Please enter your email address"]},
             )
 
         # Handle if user not include password in payload
         if password is None:
             return self.handle_error(
-                "Sign in request is failed",
-                {"password": ["Password field can not be blank."]},
+                "Sign in failed - Password required",
+                {"password": ["Please enter your password"]},
             )
 
         # Handle email and username based signin
@@ -41,17 +41,21 @@ class SigninTokenView(BaseAPIView):
 
             # Check is user is None
             if user is None:
-                raise Exception("Something is not correct. try again later!")
+                raise Exception(
+                    "Invalid credentials. Please check your email/username and try again."
+                )
 
             # Check user password is currect or not
             if not user.check_password(password):
-                raise Exception("Please provide valid authentication credentials.")
+                raise Exception("Invalid password. Please try again.")
 
             # Handle success signin response
             if not user.is_superuser and not user.is_verified:
                 return self.handle_error(
-                    "Sign in request is failed - account not verified",
-                    {"detail": "Please verify your account before signing in."},
+                    "Sign in failed - Email verification required",
+                    {
+                        "detail": "Please verify your email address to sign in. Check your inbox for the verification link."
+                    },
                 )
 
             # Generate jwt toke for requested user
@@ -59,14 +63,12 @@ class SigninTokenView(BaseAPIView):
 
             # Update last login timestamp
             if user:
-                user.last_login = timezone.now()
+                setattr(user, "last_login", timezone.now())
                 user.save(update_fields=["last_login"])
 
             # Return success response
             return self.handle_success(
-                "Welcome back! Sign in request is successful", jwt_tokens
+                "Welcome back! You have successfully signed in", jwt_tokens
             )
         except Exception as error:
-            return self.handle_error(
-                "Sign in request is failed", {"detail": str(error)}
-            )
+            return self.handle_error("Sign in failed", {"detail": str(error)})

@@ -24,9 +24,9 @@ class DjangoModelPermissions(permissions.DjangoModelPermissions):
         if not getattr(view, "queryset", None):
             raise PermissionDenied(
                 {
-                    "message": "Invalid view configuration",
+                    "message": "API Configuration Error",
                     "errors": {
-                        "detail": "Cannot apply DjangoModelPermissions to a view without a `queryset` attribute."
+                        "detail": "The API endpoint configuration is invalid. The required queryset attribute is missing. Please check the API configuration."
                     },
                 }
             )
@@ -45,9 +45,9 @@ class DjangoModelPermissions(permissions.DjangoModelPermissions):
             )
             raise PermissionDenied(
                 {
-                    "message": "Access denied",
+                    "message": "Access denied - insufficient privileges",
                     "errors": {
-                        "detail": "You do not have permission to access this resource."
+                        "detail": "Access to this resource is restricted to administrative staff only. If you require access, please contact your system administrator for authorization."
                     },
                 }
             )

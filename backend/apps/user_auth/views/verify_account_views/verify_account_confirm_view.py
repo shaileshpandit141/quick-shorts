@@ -23,10 +23,10 @@ class VerifyAccountConfirmView(BaseAPIView):
         # Validate the blank token
         if token is None:
             return self.handle_error(
-                "Token can not be blank",
+                "Token is missing",
                 {
                     "token": [
-                        "Token filed is require. Please include it in request payload"
+                        "Token field is required. Please provide a valid verification token."
                     ]
                 },
             )
@@ -35,7 +35,7 @@ class VerifyAccountConfirmView(BaseAPIView):
             # Decode verification token
             decoder = LimitedTimeTokenDecoder(token)
             if not decoder.is_valid():
-                raise TokenError("Verification token is not valid.")
+                raise TokenError("The verification token is invalid or has expired.")
 
             data = decoder.decode()
             user = User.objects.get(id=data.get("user_id"))
@@ -43,20 +43,24 @@ class VerifyAccountConfirmView(BaseAPIView):
             # Check if already verified
             if getattr(user, "is_verified", False):
                 return self.handle_success(
-                    "Your account already verified.",
-                    {"detail": "Your account already verified."},
+                    "Account Already Verified",
+                    {
+                        "detail": "This account has already been verified. No further action is needed."
+                    },
                 )
 
             # Update verification status
             setattr(user, "is_verified", True)
             user.save()
             return self.handle_success(
-                "Account verified successfully.",
-                {"detail": "Your account verified successfully."},
+                "Account verification successful",
+                {"detail": "Your account has been verified successfully."},
             )
 
-        except (ValueError, TokenError) as error:
+        except (ValueError, TokenError):
             return self.handle_error(
-                "Provided token is Invalid or expired.",
-                {"detail": str(error)},
+                "Invalid verification token",
+                {
+                    "detail": "The provided verification token is invalid or has expired."
+                },
             )

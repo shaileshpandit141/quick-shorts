@@ -23,9 +23,10 @@ class IsOwner(BasePermission):
             )
             raise PermissionDenied(
                 {
-                    "message": "Authentication required on this endpoint",
+                    "message": "Authentication failed - valid credentials required",
                     "errors": {
-                        "deatil": "You must include a valid authentication token in the Authorization header."
+                        "detail": "Access denied. Please provide valid authentication credentials in the Authorization header.",
+                        "code": "authentication_required",
                     },
                 }
             )
@@ -44,9 +45,9 @@ class IsOwner(BasePermission):
         )
         raise PermissionDenied(
             {
-                "message": "Permission Denied",
+                "message": "Access denied - insufficient privileges",
                 "errors": {
-                    "detail": "You do not have permission to access this resource.",
+                    "detail": "You do not have sufficient permissions to perform this action. Only the resource owner can access this endpoint.",
                     "code": "not_owner",
                     "required_role": "owner",
                     "current_user": request.user.username or request.user.email,

@@ -10,7 +10,9 @@ def create_error_response(
     message: str, errors: Any, status: int | None = None
 ) -> Response:
     """Helper function to create error response"""
-    error_details = {"detail": "Oops! unknown error occurred. Please try again later"}
+    error_details = {
+        "detail": "Something went wrong. Please try again later or contact support if the issue persists."
+    }
 
     try:
         errors_tuple = getattr(errors, "args", tuple())
@@ -27,12 +29,16 @@ def create_error_response(
         else:
             error_details["detail"] = str(errors)
     except Exception as error:
-        logger.error(f"Error occurred while processing error details: {str(error)}")
-        error_details["detail"] = str(errors)
+        logger.error(
+            f"An unexpected error occurred while processing error details: {str(error)}"
+        )
+        error_details["detail"] = (
+            "An unexpected error occurred. Our team has been notified."
+        )
 
     return Response(
         {
-            "message": message,
+            "message": message or "Error occurred",
             "data": {},
             "errors": error_details,
         },

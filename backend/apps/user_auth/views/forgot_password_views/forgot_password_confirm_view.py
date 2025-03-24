@@ -27,8 +27,12 @@ class ForgotPasswordConfirmView(BaseAPIView):
             decorder = LimitedTimeTokenDecoder(token)
             if not decorder.is_valid():
                 return self.handle_error(
-                    "Provided toke is expired or invalid.",
-                    {"token": ["Token is invalid or expired, request a new one."]},
+                    "The password reset token has expired or is invalid.",
+                    {
+                        "token": [
+                            "Invalid or expired token. Please request a new password reset."
+                        ]
+                    },
                 )
 
             data = decorder.decode()
@@ -39,11 +43,13 @@ class ForgotPasswordConfirmView(BaseAPIView):
             user.set_password(new_password)
             user.save()
             return self.handle_success(
-                "Your password changed successfull",
-                {"detail": "Your password has been successfully updated"},
+                "Password successfully reset",
+                {
+                    "detail": "Your password has been successfully reset. You can now sign-in with your new password."
+                },
             )
         except Exception as error:
             return self.handle_error(
-                "Opp's! somethings want wrong. Please try again later.",
+                "An error occurred while resetting your password. Please try again.",
                 {"detail": str(error)},
             )

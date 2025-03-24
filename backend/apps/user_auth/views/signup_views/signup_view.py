@@ -32,22 +32,22 @@ class SignupView(BaseAPIView):
         # Handle if user not include email in payload
         if email is None:
             return self.handle_error(
-                "Sign up request is failed",
-                {"email": ["Email field can not be blank."]},
+                "Sign up failed",
+                {"email": ["Please provide a valid email address."]},
             )
 
         # Handle if user not include password in payload
         if password is None:
             return self.handle_error(
-                "Sign up request is failed",
-                {"password": ["Password field can not be blank."]},
+                "Sign up failed",
+                {"password": ["Please provide a password."]},
             )
 
         # Handle if user not include password in payload
         if confirm_password is None:
             return self.handle_error(
-                "Sign up request is failed",
-                {"confirm_password": ["Confirm password field can not be blank."]},
+                "Sign up failed",
+                {"confirm_password": ["Please confirm your password."]},
             )
 
         try:
@@ -55,10 +55,10 @@ class SignupView(BaseAPIView):
             validate_password(password)
         except ValidationError:
             return self.handle_error(
-                "Provided password is not valid.",
+                "Invalid password",
                 {
                     "password": [
-                        "This password is too short. It must contain at least 8 characters."
+                        "Password must be at least 8 characters long and contain a mix of letters, numbers and symbols."
                     ]
                 },
             )
@@ -66,18 +66,18 @@ class SignupView(BaseAPIView):
         # Check password confirmation matches
         if password != confirm_password:
             return self.handle_error(
-                "Confirm password is not equal to password.",
-                {"confirm_password": ["Confirm password is not equal to password."]},
+                "Password mismatch",
+                {"confirm_password": ["Passwords do not match. Please try again."]},
             )
 
         # Validate the email is exist in the internet or not
         validator = DNSSMTPEmailValidator(email)
         if not validator.is_valid():
             return self.handle_error(
-                "Email domain verification failed.",
+                "Invalid email domain",
                 {
                     "email": [
-                        "Email domain verification failed. Please use other email."
+                        "The email domain appears to be invalid. Please use a valid email address."
                     ]
                 },
             )
@@ -94,7 +94,7 @@ class SignupView(BaseAPIView):
         # Check serialize is valid or not
         if not serializer.is_valid():
             return self.handle_error(
-                "Sign up request was not successful.",
+                "Sign up failed",
                 serializer.errors,
             )
 
@@ -107,16 +107,16 @@ class SignupView(BaseAPIView):
         token = generator.generate()
         if token is None:
             return self.handle_error(
-                "Filed to generate an account verification token.",
+                "Verification token generation failed",
                 {
-                    "deatail": "We couldn't generate an account verification token. Please try again later."
+                    "detail": "Unable to generate verification token. Please try registering again."
                 },
             )
 
         # Send verification email
         SendEmail(
             {
-                "subject": "For Account Verification",
+                "subject": "Verify Your Account",
                 "emails": {"to_emails": [getattr(user, "email", "Unknown")]},
                 "context": {"user": user, "activate_url": f"{active_url}/{token}"},
                 "templates": {
@@ -128,6 +128,6 @@ class SignupView(BaseAPIView):
 
         # Return success response object
         return self.handle_success(
-            "Sign up request was successful.",
-            {"detail": "Please check your inbox for the account verification."},
+            "Sign up successful",
+            {"detail": "Success! Please check your email to verify your account."},
         )

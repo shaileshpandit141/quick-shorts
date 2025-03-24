@@ -20,8 +20,8 @@ class SigninTokenRefreshView(BaseAPIView):
         # Validate the refresh_token is empty or not
         if refresh_token is None:
             return self.handle_error(
-                "Token refresh request was failed",
-                {"refresh_token": ["refresh_token filed can not be blank."]},
+                "Failed to refresh token - refresh token is missing",
+                {"refresh_token": ["Refresh token field cannot be empty"]},
             )
 
         # Handle Token refresh logic
@@ -29,11 +29,11 @@ class SigninTokenRefreshView(BaseAPIView):
             # Create a new refresh token object
             jwt_tokens = RefreshToken(refresh_token)
             return self.handle_success(
-                "Token refreshed successfully",
+                "Access token refreshed successfully",
                 {"access_token": str(jwt_tokens.access_token)},
             )
         except (TokenError, InvalidToken) as error:
             return self.handle_error(
-                "Invalid or expired refresh token",
+                "Token refresh failed - invalid or expired refresh token provided",
                 {"refresh_token": [str(error)]},
             )

@@ -21,9 +21,9 @@ class IsVerified(BasePermission):
             )
             raise PermissionDenied(
                 {
-                    "message": "Authentication required on this endpoint",
+                    "message": "Authentication failed - valid credentials required",
                     "errors": {
-                        "deatil": "You must include a valid authentication token in the Authorization header."
+                        "detail": "Please provide a valid authentication token in the Authorization header to access this endpoint."
                     },
                 }
             )
@@ -44,10 +44,10 @@ class IsVerified(BasePermission):
             )
             raise PermissionDenied(
                 {
-                    "message": "Account Not Verified",
+                    "message": "Account Verification Required",
                     "errors": [
                         {
-                            "detail": "Your account must be verified to access this resource.",
+                            "detail": "Please verify your account to access this resource.",
                             "code": "unverified_account",
                             "verification_status": False,
                             "user_id": request.user.id,
