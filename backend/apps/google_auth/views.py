@@ -145,7 +145,7 @@ class GoogleCallbackView(BaseAPIView):
             tokens = get_jwt_tokens_for_user(user)
 
             return self.handle_success(
-                "Goole Sign in successful",
+                "Google Sign in successful",
                 {**tokens},
             )
 
