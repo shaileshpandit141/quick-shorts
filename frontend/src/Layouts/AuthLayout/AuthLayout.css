@@ -1,5 +1,5 @@
-.auth-alyout {
-  min-height: var(--screen-height);
+.auth-layout {
+  min-height: 100%;
   width: 100%;
   background-color: transparent;
   display: flex;
