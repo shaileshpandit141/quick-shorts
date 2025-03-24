@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./SigninPage.css";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { AddSEO } from "SEO";
 import { useFormDataChange, useResetOnRouteChange } from "hooks";
 import { isUserAuthenticated } from "utils/isUserAuthenticated";
@@ -20,7 +20,6 @@ import { SigninCredentials } from "services/authServices";
 import { triggerToast } from "features/toast";
 
 const SigninPage: React.FC = () => {
-  const navigate = useNavigate();
   const { status, message, errors } = useSigninUserSelector();
   const [formData, handleFormDataChange] = useFormDataChange<SigninCredentials>(
     {
@@ -37,18 +36,21 @@ const SigninPage: React.FC = () => {
   useEffect(() => {
     if (status === "succeeded") {
       triggerToast("success", message);
-      navigate("/home");
     } else if (status === "failed") {
       triggerToast("error", message);
     }
-  }, [status, message, navigate]);
+  }, [status, message]);
 
   useResetOnRouteChange(() => {
     resetSigninUserErrors();
   });
 
   if (isUserAuthenticated()) {
-    return <Navigate to="/home" />;
+    return <Navigate to="/home" replace />;
+  }
+
+  if (status === "succeeded") {
+    return <Navigate to="/home" replace />;
   }
 
   return (

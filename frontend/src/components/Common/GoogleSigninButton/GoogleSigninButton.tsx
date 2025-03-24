@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import "./GoogleSigninButton.css";
 import { Navigate } from "react-router-dom";
-import { googleSigninUser } from "features/auth/signin";
+import { googleSigninUser, useSigninUserSelector } from "features/auth/signin";
 import {
   GoogleLogin,
   GoogleOAuthProvider,
@@ -11,6 +11,8 @@ import { isUserAuthenticated } from "utils/isUserAuthenticated";
 import { getEnv } from "utils/getEnv";
 
 const GoogleSigninButton: React.FC = () => {
+  const { status } = useSigninUserSelector();
+
   const handleSuccess = useCallback(async (response: CredentialResponse) => {
     const authCode = response?.credential;
     if (authCode !== undefined) {
@@ -27,7 +29,11 @@ const GoogleSigninButton: React.FC = () => {
   const clientId = useMemo(() => getEnv("GOOGLE_CLIENT_ID"), []);
 
   if (isUserAuthenticated()) {
-    return <Navigate to="/home" />;
+    return <Navigate to="/home" replace />;
+  }
+
+  if (status === "succeeded") {
+    return <Navigate to="/home" replace />;
   }
 
   return (
