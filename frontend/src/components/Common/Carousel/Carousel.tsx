@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef, ReactNode } from "react";
 import "./Carousel.css";
 
+// Interface defining allowed props for the Carousel component
 interface CarouselProps {
-  children: ReactNode[];
-  navigation: "buttons" | "thumbnails" | "dot-thumbnails";
-  infiniteScroll?: boolean;
-  autoplay?: boolean;
-  autoplaySpeed?: number;
-  className?: string;
-  style?: React.CSSProperties;
+  children: ReactNode[]; // Array of child elements to display as slides
+  navigation: "buttons" | "thumbnails" | "dot-thumbnails"; // Navigation style
+  infiniteScroll?: boolean; // Enable infinite scrolling
+  autoplay?: boolean; // Enable autoplay
+  autoplaySpeed?: number; // Autoplay interval in ms
+  className?: string; // Optional CSS class
+  style?: React.CSSProperties; // Optional inline styles
 }
 
 const Carousel: React.FC<CarouselProps> = ({
@@ -21,22 +22,26 @@ const Carousel: React.FC<CarouselProps> = ({
   style = {},
 }) => {
   const totalSlides = children.length;
+  // Add clone slides at start/end if infinite scroll enabled
   const extendedSlides = infiniteScroll
-    ? [children[totalSlides - 1], ...children, children[0]] // Add extra first & last slide
+    ? [children[totalSlides - 1], ...children, children[0]] 
     : children;
 
-  const [currentIndex, setCurrentIndex] = useState(infiniteScroll ? 1 : 0); // Start at 1 for smooth looping
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const touchStartX = useRef<number | null>(null);
+  // State management for carousel
+  const [currentIndex, setCurrentIndex] = useState(infiniteScroll ? 1 : 0); // Start at 1 for infinite scroll
+  const [isTransitioning, setIsTransitioning] = useState(false); // Control slide animations
+  const [isPaused, setIsPaused] = useState(false); // Pause autoplay on hover
+  const trackRef = useRef<HTMLDivElement>(null); // Reference to track element
+  const touchStartX = useRef<number | null>(null); // Store touch position for swipe
 
+  // Handle autoplay functionality
   useEffect(() => {
     if (!autoplay || isPaused) return;
     const interval = setInterval(() => nextSlide(), autoplaySpeed);
     return () => clearInterval(interval);
   }, [autoplay, autoplaySpeed, isPaused]);
 
+  // Navigate to next slide
   const nextSlide = () => {
     if (!isTransitioning) {
       setIsTransitioning(true);
@@ -44,6 +49,7 @@ const Carousel: React.FC<CarouselProps> = ({
     }
   };
 
+  // Navigate to previous slide
   const prevSlide = () => {
     if (!isTransitioning) {
       setIsTransitioning(true);
@@ -51,14 +57,17 @@ const Carousel: React.FC<CarouselProps> = ({
     }
   };
 
-  // Handle Infinite Scroll Reset
+  // Handle infinite scroll slide transitions
   useEffect(() => {
     if (!infiniteScroll) return;
     const transitionEnd = () => {
       setIsTransitioning(false);
+      // Jump to end when reaching start
       if (currentIndex === 0) {
         setCurrentIndex(totalSlides);
-      } else if (currentIndex === totalSlides + 1) {
+      } 
+      // Jump to start when reaching end
+      else if (currentIndex === totalSlides + 1) {
         setCurrentIndex(1);
       }
     };
@@ -70,6 +79,7 @@ const Carousel: React.FC<CarouselProps> = ({
     };
   }, [currentIndex, infiniteScroll, totalSlides]);
 
+  // Touch event handlers for mobile swipe
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -79,6 +89,7 @@ const Carousel: React.FC<CarouselProps> = ({
     const touchEndX = e.changedTouches[0].clientX;
     const deltaX = touchStartX.current - touchEndX;
 
+    // If swipe distance > 50px, change slide
     if (Math.abs(deltaX) > 50) {
       deltaX > 0 ? nextSlide() : prevSlide();
     }
@@ -110,7 +121,7 @@ const Carousel: React.FC<CarouselProps> = ({
       </div>
 
       <div className="carousel-navigations">
-        {/* Handle thumbnail navigations */}
+        {/* Thumbnail navigation - displays image thumbnails */}
         {navigation === "thumbnails" && (
           <div className="thumbnails">
             {children.map((child, index) => {
@@ -129,7 +140,7 @@ const Carousel: React.FC<CarouselProps> = ({
             })}
           </div>
         )}
-        {/* Handle dot thumbnail navigations */}
+        {/* Dot thumbnail navigation - displays dots for each slide */}
         {navigation === "dot-thumbnails" && (
           <div className="dot-thumbnails">
             {children.map((child, index) => {
@@ -144,7 +155,7 @@ const Carousel: React.FC<CarouselProps> = ({
           </div>
         )}
 
-        {/* Handle button navigations */}
+        {/* Button navigation - displays prev/next buttons */}
         {navigation === "buttons" && (
           <div className="buttons">
             <button
