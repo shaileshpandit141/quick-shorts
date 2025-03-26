@@ -4,7 +4,8 @@ import "./Carousel.css";
 // Interface defining allowed props for the Carousel component
 interface CarouselProps {
   children: ReactNode[]; // Array of child elements to display as slides
-  navigation: "buttons" | "thumbnails" | "dot-thumbnails"; // Navigation style
+  navigation: "none" | "buttons" | "thumbnails" | "dot-thumbnails"; // Navigation style
+  slideStatus?: boolean;  // Display carousel slide status or not
   infiniteScroll?: boolean; // Enable infinite scrolling
   autoplay?: boolean; // Enable autoplay
   autoplaySpeed?: number; // Autoplay interval in ms
@@ -14,7 +15,8 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({
   children,
-  navigation = "buttons",
+  navigation = "none",
+  slideStatus = true,
   infiniteScroll = false,
   autoplay = false,
   autoplaySpeed = 3000,
@@ -100,14 +102,14 @@ const Carousel: React.FC<CarouselProps> = ({
     <div
       className={`carousel ${className}`}
       style={style}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
     >
       <div
         className="carousel-track"
         ref={trackRef}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         style={{
           transform: `translateX(-${currentIndex * 100}%)`,
           transition: isTransitioning ? "transform 0.4s ease-in-out" : "none",
@@ -120,88 +122,93 @@ const Carousel: React.FC<CarouselProps> = ({
         ))}
       </div>
 
-      <div className="carousel-navigations">
-        {/* Thumbnail navigation - displays image thumbnails */}
-        {navigation === "thumbnails" && (
-          <div className="thumbnails">
-            {children.map((child, index) => {
-              let ReactChild = child as React.ReactElement
-              if (ReactChild.type === "img") {
-                return (
-                  <img
-                    key={index}
-                    src={(child as React.ReactElement).props.src}
-                    alt={`Thumbnail ${index}`}
-                    className={
-                      (infiniteScroll
-                        ? currentIndex === index + 1 // Adjust for infinite scroll offset
-                        : currentIndex === index)
-                        ? "active"
-                        : ""
-                    }
-                    onClick={() => {
-                      setIsTransitioning(true);
-                      setIsPaused(true)
-                      setCurrentIndex(infiniteScroll ? index + 1 : index);
-                    }}
-                  />
-                )
-              }
-              return null
-            })}
-          </div>
-        )}
-        {/* Dot thumbnail navigation - displays dots for each slide */}
-        {navigation === "dot-thumbnails" && (
-          <div className="dot-thumbnails">
-            {children.map((child, index) => {
-              return (
-                <div
-                  key={index}
-                  className={
-                    (infiniteScroll
-                      ? currentIndex === index + 1 // Adjust for infinite scroll offset
-                      : currentIndex === index)
-                      ? "dot active"
-                      : "dot"
-                  }
-                  onClick={() => {
-                    setIsTransitioning(true);
-                    setIsPaused(true)
-                    setCurrentIndex(infiniteScroll ? index + 1 : index);
-                  }}
-                ></div>
-              )
-            })}
-          </div>
-        )}
+      {/* Carousel slide status */}
+      {slideStatus && (
+        <div className="carousel-slide-status">
+          <h6 className="status">
+            {infiniteScroll
+              ? (currentIndex === 0 ? totalSlides : currentIndex > totalSlides ? 1 : currentIndex)
+              : currentIndex + 1
+            }/{totalSlides}
+          </h6>
+        </div>
+      )}
 
-        {/* Button navigation - displays prev/next buttons */}
-        {navigation === "buttons" && (
-          <div className="buttons">
-            <button
-              className="button prev"
-              onClick={prevSlide}
-              disabled={!infiniteScroll && currentIndex === 0}
-            >
-              <span className="arrow prev"></span>
-            </button>
-            <h6 className="carousel-items-status">
-              {infiniteScroll
-                ? (currentIndex === 0 ? totalSlides : currentIndex > totalSlides ? 1 : currentIndex)
-                : currentIndex + 1
-              }/{totalSlides}
-            </h6>
-            <button
-              className="button next"
-              onClick={nextSlide}
-              disabled={!infiniteScroll && currentIndex === totalSlides - 1}
-            >
-              <span className="arrow next"></span>
-            </button>
+      {/* Carousel Slide Navigations */}
+      {navigation !== "none" && (
+        <div className="carousel-thumbnail-navigations">
+          {/* Thumbnail navigation - displays image thumbnails */}
+          <div className="thumbnails">
+            {(navigation === "thumbnails" || navigation === "dot-thumbnails") && (
+              <div className="thumbnails-wrapper">
+                {children.map((child, index) => {
+                  let ReactChild = child as React.ReactElement
+                  if (ReactChild.type === "img" && navigation !== "dot-thumbnails") {
+                    return (
+                      <img
+                        key={index}
+                        src={(child as React.ReactElement).props.src}
+                        alt={`Thumbnail ${index}`}
+                        className={
+                          (infiniteScroll
+                            ? currentIndex === index + 1 // Adjust for infinite scroll offset
+                            : currentIndex === index)
+                            ? "active"
+                            : ""
+                        }
+                        onClick={() => {
+                          setIsTransitioning(true);
+                          setIsPaused(true)
+                          setCurrentIndex(infiniteScroll ? index + 1 : index);
+                        }}
+                      />
+                    )
+                  }
+                  {/* Dot thumbnail navigation - displays dots for each slide is child is not img tag */ }
+                  return (
+                    <div
+                      key={index}
+                      className={
+                        (infiniteScroll
+                          ? currentIndex === index + 1 // Adjust for infinite scroll offset
+                          : currentIndex === index)
+                          ? "dot active"
+                          : "dot"
+                      }
+                      onClick={() => {
+                        setIsTransitioning(true);
+                        setIsPaused(true)
+                        setCurrentIndex(infiniteScroll ? index + 1 : index);
+                      }}
+                    ></div>
+                  )
+                })}
+              </div>
+            )}
+            {/* Button navigation - displays prev/next buttons */}
+            {navigation === "buttons" && (
+              <div className="buttons-wrapper">
+                <div className="buttons">
+                  <button
+                    className="button prev"
+                    onClick={prevSlide}
+                    disabled={!infiniteScroll && currentIndex === 0}
+                  >
+                    <span className="arrow prev"></span>
+                  </button>
+                  <button
+                    className="button next"
+                    onClick={nextSlide}
+                    disabled={!infiniteScroll && currentIndex === totalSlides - 1}
+                  >
+                    <span className="arrow next"></span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
