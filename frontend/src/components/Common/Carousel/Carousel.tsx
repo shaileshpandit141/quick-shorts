@@ -3,7 +3,7 @@ import "./Carousel.css";
 
 interface CarouselProps {
   children: ReactNode[];
-  navigation: "thumbnails" | "buttons" | "dot-thumbnails";
+  navigation: "buttons" | "thumbnails" | "dot-thumbnails";
   infiniteScroll?: boolean;
   autoplay?: boolean;
   autoplaySpeed?: number;
@@ -18,27 +18,18 @@ const Carousel: React.FC<CarouselProps> = ({
   autoplay = false,
   autoplaySpeed = 3000,
   className = "",
-  style = {}
+  style = {},
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const totalSlides = children.length;
+  const extendedSlides = infiniteScroll
+    ? [children[totalSlides - 1], ...children, children[0]] // Add extra first & last slide
+    : children;
+
+  const [currentIndex, setCurrentIndex] = useState(infiniteScroll ? 1 : 0); // Start at 1 for smooth looping
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
-  const totalSlides = children.length;
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => {
-      if (infiniteScroll) return (prev + 1) % totalSlides;
-      return prev < totalSlides - 1 ? prev + 1 : prev;
-    });
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => {
-      if (infiniteScroll) return (prev - 1 + totalSlides) % totalSlides;
-      return prev > 0 ? prev - 1 : prev;
-    });
-  };
 
   useEffect(() => {
     if (!autoplay || isPaused) return;
@@ -46,14 +37,38 @@ const Carousel: React.FC<CarouselProps> = ({
     return () => clearInterval(interval);
   }, [autoplay, autoplaySpeed, isPaused]);
 
+  const nextSlide = () => {
+    if (!isTransitioning) {
+      setIsTransitioning(true);
+      setCurrentIndex((prev) => prev + 1);
+    }
+  };
+
+  const prevSlide = () => {
+    if (!isTransitioning) {
+      setIsTransitioning(true);
+      setCurrentIndex((prev) => prev - 1);
+    }
+  };
+
+  // Handle Infinite Scroll Reset
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") nextSlide();
-      if (e.key === "ArrowLeft") prevSlide();
+    if (!infiniteScroll) return;
+    const transitionEnd = () => {
+      setIsTransitioning(false);
+      if (currentIndex === 0) {
+        setCurrentIndex(totalSlides);
+      } else if (currentIndex === totalSlides + 1) {
+        setCurrentIndex(1);
+      }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+
+    const track = trackRef.current;
+    if (track) track.addEventListener("transitionend", transitionEnd);
+    return () => {
+      if (track) track.removeEventListener("transitionend", transitionEnd);
+    };
+  }, [currentIndex, infiniteScroll, totalSlides]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -82,9 +97,12 @@ const Carousel: React.FC<CarouselProps> = ({
       <div
         className="carousel-track"
         ref={trackRef}
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        style={{
+          transform: `translateX(-${currentIndex * 100}%)`,
+          transition: isTransitioning ? "transform 0.4s ease" : "none",
+        }}
       >
-        {children.map((child, index) => (
+        {extendedSlides.map((child, index) => (
           <div key={index} className="carousel-slide">
             {child}
           </div>
@@ -136,7 +154,12 @@ const Carousel: React.FC<CarouselProps> = ({
             >
               <span className="arrow prev"></span>
             </button>
-            <h6 className="carousel-items-status">{currentIndex + 1}/{children.length}</h6>
+            <h6 className="carousel-items-status">
+              {infiniteScroll
+                ? (currentIndex === 0 ? totalSlides : currentIndex > totalSlides ? 1 : currentIndex)
+                : currentIndex + 1
+              }/{totalSlides}
+            </h6>
             <button
               className="button next"
               onClick={nextSlide}
