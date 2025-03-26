@@ -15,7 +15,7 @@ h6 {
   line-height: 1.2;
   letter-spacing: 0.04em;
   color: var(--text-primary);
-  transition: color 0.3s ease-in;
+  transition: var(--ts-primary);
 
   &::first-letter {
     text-transform: capitalize;
@@ -155,5 +155,5 @@ button::first-letter {
 }
 
 p {
-  transition: color 0.3s ease-in;
+  transition: var(--ts-primary);
 }
