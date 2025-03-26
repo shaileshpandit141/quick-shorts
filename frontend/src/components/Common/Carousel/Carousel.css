@@ -9,7 +9,7 @@
   width: 100%;
   max-width: 480px;
   overflow: hidden;
-  margin: auto;
+  margin-inline: auto;
   background-color: var(--bg-secondary);
   border-radius: 0;
 
