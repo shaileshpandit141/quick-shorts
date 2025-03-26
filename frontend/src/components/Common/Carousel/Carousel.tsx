@@ -147,6 +147,7 @@ const Carousel: React.FC<CarouselProps> = ({
                   />
                 )
               }
+              return null
             })}
           </div>
         )}
