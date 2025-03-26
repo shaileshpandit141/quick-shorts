@@ -24,7 +24,7 @@ const Carousel: React.FC<CarouselProps> = ({
   const totalSlides = children.length;
   // Add clone slides at start/end if infinite scroll enabled
   const extendedSlides = infiniteScroll
-    ? [children[totalSlides - 1], ...children, children[0]] 
+    ? [children[totalSlides - 1], ...children, children[0]]
     : children;
 
   // State management for carousel
@@ -65,7 +65,7 @@ const Carousel: React.FC<CarouselProps> = ({
       // Jump to end when reaching start
       if (currentIndex === 0) {
         setCurrentIndex(totalSlides);
-      } 
+      }
       // Jump to start when reaching end
       else if (currentIndex === totalSlides + 1) {
         setCurrentIndex(1);
@@ -110,7 +110,7 @@ const Carousel: React.FC<CarouselProps> = ({
         ref={trackRef}
         style={{
           transform: `translateX(-${currentIndex * 100}%)`,
-          transition: isTransitioning ? "transform 0.4s ease" : "none",
+          transition: isTransitioning ? "transform 0.4s ease-in-out" : "none",
         }}
       >
         {extendedSlides.map((child, index) => (
@@ -132,8 +132,18 @@ const Carousel: React.FC<CarouselProps> = ({
                     key={index}
                     src={(child as React.ReactElement).props.src}
                     alt={`Thumbnail ${index}`}
-                    className={currentIndex === index ? "active" : ""}
-                    onClick={() => setCurrentIndex(index)}
+                    className={
+                      (infiniteScroll
+                        ? currentIndex === index + 1 // Adjust for infinite scroll offset
+                        : currentIndex === index)
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() => {
+                      setIsTransitioning(true);
+                      setIsPaused(true)
+                      setCurrentIndex(infiniteScroll ? index + 1 : index);
+                    }}
                   />
                 )
               }
@@ -147,8 +157,18 @@ const Carousel: React.FC<CarouselProps> = ({
               return (
                 <div
                   key={index}
-                  className={currentIndex === index ? "dot active" : "dot"}
-                  onClick={() => setCurrentIndex(index)}
+                  className={
+                    (infiniteScroll
+                      ? currentIndex === index + 1 // Adjust for infinite scroll offset
+                      : currentIndex === index)
+                      ? "dot active"
+                      : "dot"
+                  }
+                  onClick={() => {
+                    setIsTransitioning(true);
+                    setIsPaused(true)
+                    setCurrentIndex(infiniteScroll ? index + 1 : index);
+                  }}
                 ></div>
               )
             })}
