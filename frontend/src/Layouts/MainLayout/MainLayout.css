@@ -28,11 +28,13 @@
 
       .main-layout-content {
         width: 100%;
-        min-height: var(--screen-height);
+        height: fit-content;
+        min-height: fit-content;
       }
 
       .main-layout-footer {
         width: 100%;
+        height: fit-content;
         min-height: fit-content;
         background-color: var(--bg-footer);
         transition: var(--ts-secondary);
