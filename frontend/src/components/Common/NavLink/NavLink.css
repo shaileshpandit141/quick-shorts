@@ -95,7 +95,7 @@ a,
 
   &.active {
     color: var(--link-hover) !important;
-    background-color: var(--btn-primary-hover) !important;
+    background-color: var(--btn-primary) !important;
   }
 
   &:hover {
