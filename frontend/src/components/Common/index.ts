@@ -1,5 +1,6 @@
 export { default as AppLogo } from "./AppLogo/AppLogo";
 export { default as Button } from "./Button/Button";
+export { default as Carousel } from "./Carousel/Carousel";
 export { default as Drawer } from "./Drawer/Drawer";
 export { default as GoogleSigninButton } from "./GoogleSigninButton/GoogleSigninButton";
 export { default as Input } from "./Input/Input";

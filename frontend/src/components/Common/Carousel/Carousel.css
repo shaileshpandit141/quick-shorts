@@ -71,7 +71,7 @@
 
   .carousel-slide-status {
     position: absolute;
-    top: 2px;
+    top: 0;
     right: 0;
     backdrop-filter: blur(10px);
     padding-inline: 6px;

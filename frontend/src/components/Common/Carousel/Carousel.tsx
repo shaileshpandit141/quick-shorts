@@ -142,7 +142,13 @@ const Carousel: React.FC<CarouselProps> = ({
 
       {/* Carousel Slide Navigations */}
       {navigation !== "none" && (
-        <div className="carousel-thumbnail-navigations">
+        <div
+          className="carousel-thumbnail-navigations"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           {/* Thumbnail navigation - displays image thumbnails */}
           <div className="thumbnails">
             {(navigation === "thumbnails" || navigation === "dot-thumbnails") && (
@@ -198,6 +204,10 @@ const Carousel: React.FC<CarouselProps> = ({
                 <div className="prev-slide-button-container">
                   <button
                     className="prev-slide-button"
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => setIsPaused(false)}
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
                     onClick={() => {
                       setIsPaused(true)
                       prevSlide()
@@ -210,6 +220,10 @@ const Carousel: React.FC<CarouselProps> = ({
                 <div className="next-slide-button-container">
                   <button
                     className="next-slide-button"
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => setIsPaused(false)}
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
                     onClick={() => {
                       setIsPaused(true)
                       nextSlide()
