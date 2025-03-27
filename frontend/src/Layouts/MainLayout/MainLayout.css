@@ -22,14 +22,12 @@
     .main-layout-content-container {
       max-height: var(--screen-height);
       width: 100%;
-      display: flex;
-      flex-direction: column;
       overflow-y: auto;
 
       .main-layout-content {
         width: 100%;
         height: fit-content;
-        min-height: fit-content;
+        min-height: 100%;
       }
 
       .main-layout-footer {
