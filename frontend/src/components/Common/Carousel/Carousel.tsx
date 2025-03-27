@@ -5,7 +5,7 @@ import "./Carousel.css";
 interface CarouselProps {
   children: ReactNode[]; // Array of child elements to display as slides
   navigation: "none" | "buttons" | "thumbnails" | "dot-thumbnails"; // Navigation style
-  slideStatus?: boolean;  // Display carousel slide status or not
+  slideStatus?: boolean; // Display carousel slide status or not
   infiniteScroll?: boolean; // Enable infinite scrolling
   autoplay?: boolean; // Enable autoplay
   autoplaySpeed?: number; // Autoplay interval in ms
@@ -107,7 +107,13 @@ const Carousel: React.FC<CarouselProps> = ({
   return (
     <div
       className="carousel"
-      style={{ height: height, maxHeight: maxHeight, width: width, maxWidth: maxWidth, borderRadius: borderRadius }}
+      style={{
+        height: height,
+        maxHeight: maxHeight,
+        width: width,
+        maxWidth: maxWidth,
+        borderRadius: borderRadius,
+      }}
     >
       <div
         className="carousel-track"
@@ -133,9 +139,13 @@ const Carousel: React.FC<CarouselProps> = ({
         <div className="carousel-slide-status">
           <h6 className="status">
             {infiniteScroll
-              ? (currentIndex === 0 ? totalSlides : currentIndex > totalSlides ? 1 : currentIndex)
-              : currentIndex + 1
-            }/{totalSlides}
+              ? currentIndex === 0
+                ? totalSlides
+                : currentIndex > totalSlides
+                  ? 1
+                  : currentIndex
+              : currentIndex + 1}
+            /{totalSlides}
           </h6>
         </div>
       )}
@@ -151,49 +161,59 @@ const Carousel: React.FC<CarouselProps> = ({
         >
           {/* Thumbnail navigation - displays image thumbnails */}
           <div className="thumbnails">
-            {(navigation === "thumbnails" || navigation === "dot-thumbnails") && (
+            {(navigation === "thumbnails" ||
+              navigation === "dot-thumbnails") && (
               <div className="thumbnails-wrapper">
                 {children.map((child, index) => {
-                  let ReactChild = child as React.ReactElement
-                  if (ReactChild.type === "img" && navigation !== "dot-thumbnails") {
+                  let ReactChild = child as React.ReactElement;
+                  if (
+                    ReactChild.type === "img" &&
+                    navigation !== "dot-thumbnails"
+                  ) {
                     return (
                       <img
                         key={index}
                         src={(child as React.ReactElement).props.src}
                         alt={`Thumbnail ${index}`}
                         className={
-                          (infiniteScroll
-                            ? currentIndex === index + 1 // Adjust for infinite scroll offset
-                            : currentIndex === index)
+                          (
+                            infiniteScroll
+                              ? currentIndex === index + 1 // Adjust for infinite scroll offset
+                              : currentIndex === index
+                          )
                             ? "active"
                             : ""
                         }
                         onClick={() => {
                           setIsTransitioning(true);
-                          setIsPaused(true)
+                          setIsPaused(true);
                           setCurrentIndex(infiniteScroll ? index + 1 : index);
                         }}
                       />
-                    )
+                    );
                   }
-                  {/* Dot thumbnail navigation - displays dots for each slide is child is not img tag */ }
+                  {
+                    /* Dot thumbnail navigation - displays dots for each slide is child is not img tag */
+                  }
                   return (
                     <div
                       key={index}
                       className={
-                        (infiniteScroll
-                          ? currentIndex === index + 1 // Adjust for infinite scroll offset
-                          : currentIndex === index)
+                        (
+                          infiniteScroll
+                            ? currentIndex === index + 1 // Adjust for infinite scroll offset
+                            : currentIndex === index
+                        )
                           ? "dot active"
                           : "dot"
                       }
                       onClick={() => {
                         setIsTransitioning(true);
-                        setIsPaused(true)
+                        setIsPaused(true);
                         setCurrentIndex(infiniteScroll ? index + 1 : index);
                       }}
                     ></div>
-                  )
+                  );
                 })}
               </div>
             )}
@@ -209,8 +229,8 @@ const Carousel: React.FC<CarouselProps> = ({
                     onTouchStart={handleTouchStart}
                     onTouchEnd={handleTouchEnd}
                     onClick={() => {
-                      setIsPaused(true)
-                      prevSlide()
+                      setIsPaused(true);
+                      prevSlide();
                     }}
                     disabled={!infiniteScroll && currentIndex === 0}
                   >
@@ -225,10 +245,12 @@ const Carousel: React.FC<CarouselProps> = ({
                     onTouchStart={handleTouchStart}
                     onTouchEnd={handleTouchEnd}
                     onClick={() => {
-                      setIsPaused(true)
-                      nextSlide()
+                      setIsPaused(true);
+                      nextSlide();
                     }}
-                    disabled={!infiniteScroll && currentIndex === totalSlides - 1}
+                    disabled={
+                      !infiniteScroll && currentIndex === totalSlides - 1
+                    }
                   >
                     <span className="arrow next"></span>
                   </button>
