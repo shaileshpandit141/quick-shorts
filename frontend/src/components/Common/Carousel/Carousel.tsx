@@ -9,8 +9,11 @@ interface CarouselProps {
   infiniteScroll?: boolean; // Enable infinite scrolling
   autoplay?: boolean; // Enable autoplay
   autoplaySpeed?: number; // Autoplay interval in ms
-  className?: string; // Optional CSS class
-  style?: React.CSSProperties; // Optional inline styles
+  height?: string;
+  maxHeight?: string;
+  width?: string;
+  maxWidth?: string;
+  borderRadius?: number;
 }
 
 const Carousel: React.FC<CarouselProps> = ({
@@ -20,8 +23,11 @@ const Carousel: React.FC<CarouselProps> = ({
   infiniteScroll = false,
   autoplay = false,
   autoplaySpeed = 3000,
-  className = "",
-  style = {},
+  height = "fit-content",
+  maxHeight = "240px",
+  width = "100%",
+  maxWidth = "480px",
+  borderRadius = 0,
 }) => {
   const totalSlides = children.length;
   // Add clone slides at start/end if infinite scroll enabled
@@ -100,8 +106,8 @@ const Carousel: React.FC<CarouselProps> = ({
 
   return (
     <div
-      className={`carousel ${className}`}
-      style={style}
+      className="carousel"
+      style={{ height: height, maxHeight: maxHeight, width: width, maxWidth: maxWidth, borderRadius: borderRadius }}
     >
       <div
         className="carousel-track"
@@ -185,26 +191,35 @@ const Carousel: React.FC<CarouselProps> = ({
                 })}
               </div>
             )}
+
             {/* Button navigation - displays prev/next buttons */}
             {navigation === "buttons" && (
-              <div className="buttons-wrapper">
-                <div className="buttons">
+              <>
+                <div className="prev-slide-button-container">
                   <button
-                    className="button prev"
-                    onClick={prevSlide}
+                    className="prev-slide-button"
+                    onClick={() => {
+                      setIsPaused(true)
+                      prevSlide()
+                    }}
                     disabled={!infiniteScroll && currentIndex === 0}
                   >
                     <span className="arrow prev"></span>
                   </button>
+                </div>
+                <div className="next-slide-button-container">
                   <button
-                    className="button next"
-                    onClick={nextSlide}
+                    className="next-slide-button"
+                    onClick={() => {
+                      setIsPaused(true)
+                      nextSlide()
+                    }}
                     disabled={!infiniteScroll && currentIndex === totalSlides - 1}
                   >
                     <span className="arrow next"></span>
                   </button>
                 </div>
-              </div>
+              </>
             )}
           </div>
         </div>

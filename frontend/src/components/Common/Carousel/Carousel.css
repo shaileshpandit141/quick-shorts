@@ -1,11 +1,12 @@
 .carousel {
   --padding: 4px;
-  --border-radius: 12px;
+  --thumbnails-border-radius: 12px;
   --image-size: 32px;
   --img-border-radius: 8px;
 
   position: relative;
-  height: 275px;
+  height: fit-content;
+  max-height: 240px;
   width: 100%;
   max-width: 480px;
   overflow: hidden;
@@ -20,27 +21,30 @@
     min-height: 0;
     width: 100%;
     min-width: 100%;
+    max-width: 100%;
     display: flex;
     transition:
-      transform 0.4s ease-in-out,
-      background-color 0.4s ease-in-out;
+      transform var(--ts-duration) var(--ts-timing-function),
+      background-color var(--ts-duration) var(--ts-timing-function);
 
     .carousel-slide {
       height: 100%;
       width: 100%;
       min-width: 100%;
+      max-width: 100%;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       background-color: var(--bg-secondary);
-      transition: background-color 0.4s ease-in-out;
+      transition: background-color var(--ts-duration) var(--ts-timing-function);
 
       img {
         height: 100%;
         min-height: 100%;
         width: 100%;
+        min-width: 100%;
         max-width: 100%;
         object-fit: cover;
         object-position: center;
@@ -54,6 +58,7 @@
         height: 100%;
         min-height: 100%;
         width: 100%;
+        min-width: 100%;
         max-width: 100%;
         display: flex;
         flex-direction: column;
@@ -69,7 +74,6 @@
     top: 2px;
     right: 0;
     backdrop-filter: blur(10px);
-    /* background-color: #ffffff3d; */
     padding-inline: 6px;
     border-radius: 999rem;
 
@@ -96,13 +100,12 @@
       height: 100%;
       width: 100%;
       display: flex;
-      margin: var(--padding);
       flex-direction: column;
       align-items: center;
       justify-content: center;
 
-      .thumbnails-wrapper,
-      .buttons-wrapper {
+      .thumbnails-wrapper {
+        margin: var(--padding);
         height: 100%;
         width: fit-content;
         max-width: 100%;
@@ -112,7 +115,7 @@
         align-items: center;
         gap: var(--padding);
         padding: var(--padding);
-        border-radius: var(--border-radius);
+        border-radius: var(--thumbnails-border-radius);
         box-shadow: var(--box-shadow);
         overflow: hidden;
         overflow-x: auto;
@@ -160,43 +163,56 @@
             outline-color: #ffffff8d;
           }
         }
+      }
 
-        .buttons {
-          overflow: hidden;
-          overflow-x: auto;
-          scrollbar-width: none;
-          width: 100%;
-          height: 14px;
+      .prev-slide-button-container,
+      .next-slide-button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        background-color: transparent;
+        opacity: 0;
+        transition: opacity var(--ts-duration) var(--ts-timing-function);
+
+        &.prev-slide-button-container {
+          left: 0;
+        }
+
+        &.next-slide-button-container {
+          right: 0;
+        }
+
+        .carousel:hover & {
+          opacity: 1;
+        }
+
+        .prev-slide-button,
+        .next-slide-button {
+          aspect-ratio: 1/1;
+          height: 32px;
           display: flex;
           align-items: center;
           justify-content: center;
+          border-radius: 12px;
+          margin-inline: 6px;
 
-          .button {
-            aspect-ratio: 1/1;
-            height: 24px;
-            background-color: transparent;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 999rem;
-            overflow: hidden;
+          &:hover {
+            background-color: transparent !important;
+          }
 
-            &:hover {
-              background-color: transparent !important;
-            }
-
-            &:disabled {
-              .arrow {
-                background-color: #a5b1bf;
-              }
+          &:disabled {
+            .arrow {
+              background-color: #a5b1bf;
             }
           }
 
           .arrow {
             position: relative;
             aspect-ratio: 1/1;
-            height: 10px;
+            height: 14px;
             background-color: var(--text-primary);
             display: flex;
             align-items: center;
@@ -212,16 +228,6 @@
             clip-path: polygon(25% 0, 25% 100%, 100% 50%);
           }
         }
-
-        &:has(.buttons) ~ & {
-          background-color: transparent;
-          box-shadow: none;
-        }
-      }
-
-      .buttons-wrapper {
-        background-color: transparent;
-        box-shadow: none;
       }
     }
   }
