@@ -1,9 +1,17 @@
-from typing import Any, TypedDict
+from typing import Any, TypedDict, NotRequired
 
 TypeData = dict[str, Any] | list[dict[str, Any]]
 
 
-TypeErrors = dict[str, Any]
+class TypeDefaultErrorFields(TypedDict):
+    detail: NotRequired[str]
+    non_field_errors: NotRequired[list[str]]
+
+
+TypeModelErrorFields = dict[str, list[str]]
+
+
+TypeErrors = TypeModelErrorFields | TypeDefaultErrorFields
 
 
 class TypeResponsePayload(TypedDict):
