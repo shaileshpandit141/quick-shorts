@@ -6,7 +6,7 @@ from uuid import uuid4
 from django.db.models import Model, QuerySet
 from django.http.response import HttpResponseBase
 from rest_framework import status
-from rest_framework.exceptions import APIException, MethodNotAllowed, NotFound
+from rest_framework.exceptions import APIException, NotFound
 from rest_framework.permissions import AllowAny, BasePermission
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
@@ -36,19 +36,40 @@ class BaseAPIView(APIView, BaseAPIResponseHandler):
         super().__init__(*args, **kwargs)
 
     def get(self, request, *args, **kwargs) -> Response:
-        raise MethodNotAllowed("GET")
+        return self.handle_error(
+            "This action is not supported",
+            {"detail": "Sorry, GET requests are not supported on this endpoint."},
+        )
 
     def post(self, request, *args, **kwargs) -> Response:
-        raise MethodNotAllowed("POST")
+        return self.handle_error(
+            "This action is not supported",
+            {"detail": "Sorry, POST requests are not supported on this endpoint."},
+        )
 
     def put(self, request, *args, **kwargs) -> Response:
-        raise MethodNotAllowed("PUT")
+        return self.handle_error(
+            "This action is not supported",
+            {"detail": "Sorry, PUT requests are not supported on this endpoint."},
+        )
 
     def patch(self, request, *args, **kwargs) -> Response:
-        raise MethodNotAllowed("PATCH")
+        return self.handle_error(
+            "This action is not supported",
+            {"detail": "Sorry, PATCH requests are not supported on this endpoint."},
+        )
 
     def delete(self, request, *args, **kwargs) -> Response:
-        raise MethodNotAllowed("DELETE")
+        return self.handle_error(
+            "This action is not supported",
+            {"detail": "Sorry, DELETE requests are not supported on this endpoint."},
+        )
+
+    def options(self, request, *args, **kwargs) -> Response:
+        return self.handle_error(
+            "This action is not supported",
+            {"detail": "Sorry, OPTIONS requests are not supported on this endpoint."},
+        )
 
     def get_serializer(self, *args, **kwargs) -> ModelSerializer:
         """Return the class to use for the serializer."""
