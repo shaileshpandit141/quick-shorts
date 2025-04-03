@@ -2,17 +2,13 @@ from django.contrib.auth import get_user_model
 from limited_time_token_handler import LimitedTimeTokenDecoder, TokenError
 
 from core.views import BaseAPIView, Response
-from permissions import AllowAny
-from throttling import AuthRateThrottle
+from apps.user_auth.mixins import AuthUserRateThrottleMinin
 
 User = get_user_model()
 
 
-class VerifyAccountConfirmView(BaseAPIView):
+class VerifyAccountConfirmView(AuthUserRateThrottleMinin, BaseAPIView):
     """API View for verifying user accounts via email confirmation."""
-
-    permission_classes = [AllowAny]
-    throttle_classes = [AuthRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Handle POST request for email verification"""

@@ -8,17 +8,13 @@ from user_auth.serializers import UserSerializer
 
 from core.send_email import SendEmail
 from core.views import BaseAPIView, Response
-from permissions import AllowAny
-from throttling import AuthRateThrottle
+from apps.user_auth.mixins import AuthUserRateThrottleMinin
 
 User = get_user_model()
 
 
-class SignupView(BaseAPIView):
+class SignupView(AuthUserRateThrottleMinin, BaseAPIView):
     """API view for handling user signup functionality"""
-
-    permission_classes = [AllowAny]
-    throttle_classes = [AuthRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Handle user registration"""

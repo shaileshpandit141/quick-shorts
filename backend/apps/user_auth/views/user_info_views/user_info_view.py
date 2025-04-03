@@ -1,19 +1,15 @@
 from django.contrib.auth import get_user_model
-from rest_framework.permissions import IsAuthenticated
 from user_auth.serializers import UserSerializer
 
 from core.views import BaseAPIView, Response
-from permissions import IsVerified
-from throttling import UserRateThrottle
+from apps.user_auth.mixins import IsUserAccountVerifiedPermissionsMixin
 
 User = get_user_model()
 
 
-class UserInfoView(BaseAPIView):
+class UserInfoView(IsUserAccountVerifiedPermissionsMixin, BaseAPIView):
     """API View for managing authenticated user information."""
-
-    permission_classes = [IsAuthenticated, IsVerified]
-    throttle_classes = [UserRateThrottle]
+    
     serializer_class = UserSerializer
 
     def get(self, request, *args, **kwargs) -> Response:

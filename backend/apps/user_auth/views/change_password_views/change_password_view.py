@@ -3,17 +3,13 @@ from django.contrib.auth.password_validation import validate_password
 
 from core.send_email import SendEmail
 from core.views import BaseAPIView, Response
-from permissions import IsAuthenticated
-from throttling import AuthRateThrottle
+from apps.user_auth.mixins import IsUserAuthenticatedPermissionsMixin
 
 User = get_user_model()
 
 
-class ChangePasswordView(BaseAPIView):
+class ChangePasswordView(IsUserAuthenticatedPermissionsMixin, BaseAPIView):
     """Changes authenticated user's password."""
-
-    permission_classes = [IsAuthenticated]
-    throttle_classes = [AuthRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Changes user password after validation."""

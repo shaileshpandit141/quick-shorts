@@ -1,14 +1,10 @@
 from core.send_email import SendEmail
 from core.views import BaseAPIView, Response
-from permissions import IsAuthenticated
-from throttling import UserRateThrottle
+from apps.user_auth.mixins import IsUserAuthenticatedPermissionsMixin
 
 
-class DeactivateAccountView(BaseAPIView):
+class DeactivateAccountView(IsUserAuthenticatedPermissionsMixin, BaseAPIView):
     """API view for deactivating user accounts."""
-
-    permission_classes = [IsAuthenticated]
-    throttle_classes = [UserRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Deactivate the authenticated user's account."""

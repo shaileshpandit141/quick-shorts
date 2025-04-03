@@ -3,17 +3,13 @@ from django.contrib.auth.password_validation import validate_password
 from limited_time_token_handler import LimitedTimeTokenDecoder
 
 from core.views import BaseAPIView, Response
-from permissions import AllowAny
-from throttling import AuthRateThrottle
+from apps.user_auth.mixins import AuthUserRateThrottleMinin
 
 User = get_user_model()
 
 
-class ForgotPasswordConfirmView(BaseAPIView):
+class ForgotPasswordConfirmView(AuthUserRateThrottleMinin, BaseAPIView):
     """API view for confirming and resetting a forgotten password."""
-
-    permission_classes = [AllowAny]
-    throttle_classes = [AuthRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Handle POST request to confirm and reset password."""

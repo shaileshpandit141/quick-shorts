@@ -2,15 +2,10 @@ from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from core.views import BaseAPIView, Response
-from permissions import AllowAny
-from throttling import AnonRateThrottle
 
 
 class SigninTokenRefreshView(BaseAPIView):
     """Custom token refresh view for handling JWT token refresh operations."""
-
-    permission_classes = [AllowAny]
-    throttle_classes = [AnonRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Handle token refresh POST requests."""

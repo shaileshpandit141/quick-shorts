@@ -2,15 +2,14 @@ import logging
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Type, TypeVar
 from uuid import uuid4
-
 from django.db.models import Model, QuerySet
 from django.http.response import HttpResponseBase
 from rest_framework import status
 from rest_framework.exceptions import APIException, NotFound
-from rest_framework.permissions import AllowAny, BasePermission
+from rest_framework.permissions import BasePermission, AllowAny
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
-from rest_framework.throttling import BaseThrottle
+from rest_framework.throttling import BaseThrottle, AnonRateThrottle
 from rest_framework.views import APIView
 
 from ..page_number_pagination import PageNumberPagination
@@ -25,7 +24,7 @@ TypeModel = TypeVar("TypeModel", bound=Model)
 
 class BaseAPIView(APIView, BaseAPIResponseHandler):
     permission_classes: List[Type[BasePermission]] = [AllowAny]
-    throttle_classes: List[Type[BaseThrottle]] = []
+    throttle_classes: List[Type[BaseThrottle]] = [AnonRateThrottle]
     pagination_class: Type[PageNumberPagination] = PageNumberPagination
     serializer_class: Optional[Type[ModelSerializer]] = None
     queryset: Optional[QuerySet] = None

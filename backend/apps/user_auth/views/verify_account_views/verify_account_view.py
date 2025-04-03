@@ -3,17 +3,13 @@ from limited_time_token_handler import LimitedTimeTokenGenerator
 
 from core.send_email import SendEmail
 from core.views import BaseAPIView, Response
-from permissions import AllowAny
-from throttling import AuthRateThrottle
+from apps.user_auth.mixins import AuthUserRateThrottleMinin
 
 User = get_user_model()
 
 
-class VerifyAccountView(BaseAPIView):
+class VerifyAccountView(AuthUserRateThrottleMinin, BaseAPIView):
     """API View for handling account verification."""
-
-    permission_classes = [AllowAny]
-    throttle_classes = [AuthRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Process a request to resend an account verification email."""

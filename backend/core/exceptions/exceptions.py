@@ -11,11 +11,12 @@ from rest_framework.exceptions import (
     NotFound,
     Throttled,
     ValidationError,
+    PermissionDenied,
 )
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 
 from core.response import Response
-from throttling import AnonRateThrottle
+from rest_framework.throttling import AnonRateThrottle
 
 from .create_error_response import create_error_response
 
@@ -68,6 +69,10 @@ def exception_handler(exc, context) -> Response | views.Response | None:
         ),
         APIException: lambda error: create_error_response(
             message="An unexpected error occurred. Our team has been notified.",
+            errors=error,
+        ),
+        PermissionDenied: lambda error: create_error_response(
+            message="Access denied - insufficient privileges.",
             errors=error,
         ),
     }

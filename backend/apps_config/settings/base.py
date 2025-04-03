@@ -155,16 +155,16 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ],
-    "DEFAULT_PERMISSION_CLASSES": ["permissions.IsAuthenticated"],
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
     "EXCEPTION_HANDLER": "core.exceptions.exception_handler",
     "DEFAULT_THROTTLE_CLASSES": [
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
-        "throttling.AuthRateThrottle",
+        "apps.user_auth.throttles.AuthUserRateThrottle",
     ],
     "DEFAULT_THROTTLE_RATES": {
         "anon": "100/day",
-        "auth": "8/hour",
+        "auth_user": "8/hour",
         "user": "1000/day",
     },
     "DEFAULT_RENDERER_CLASSES": [

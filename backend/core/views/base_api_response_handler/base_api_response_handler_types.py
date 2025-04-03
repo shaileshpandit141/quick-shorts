@@ -5,6 +5,7 @@ TypeData = dict[str, Any] | list[dict[str, Any]]
 
 class TypeDefaultErrorFields(TypedDict):
     detail: NotRequired[str]
+    code: NotRequired[str]
     non_field_errors: NotRequired[list[str]]
 
 

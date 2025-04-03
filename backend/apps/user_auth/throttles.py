@@ -5,7 +5,7 @@ from django.conf import settings
 from rest_framework.throttling import SimpleRateThrottle
 
 
-class AuthRateThrottle(SimpleRateThrottle):
+class AuthUserRateThrottle(SimpleRateThrottle):
     scope = "custom"
 
     def get_cache_key(self, request, view) -> str:

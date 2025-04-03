@@ -4,17 +4,13 @@ from limited_time_token_handler import LimitedTimeTokenGenerator
 
 from core.send_email import SendEmail
 from core.views import BaseAPIView, Response
-from permissions import AllowAny
-from throttling import AuthRateThrottle
+from apps.user_auth.mixins import AuthUserRateThrottleMinin
 
 User = get_user_model()
 
 
-class ForgotPasswordView(BaseAPIView):
+class ForgotPasswordView(AuthUserRateThrottleMinin, BaseAPIView):
     """API endpoint for handling forgot password functionality."""
-
-    permission_classes = [AllowAny]
-    throttle_classes = [AuthRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Process forgot password request and send reset email."""
