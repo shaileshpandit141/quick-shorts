@@ -120,34 +120,40 @@ class BaseAPIResponseHandler:
         return self.handle_error(
             "This action is not supported",
             {"detail": "Sorry, GET requests are not supported on this endpoint."},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED,
         )
 
     def post(self, request, *args, **kwargs) -> Response:
         return self.handle_error(
             "This action is not supported",
             {"detail": "Sorry, POST requests are not supported on this endpoint."},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED,
         )
 
     def put(self, request, *args, **kwargs) -> Response:
         return self.handle_error(
             "This action is not supported",
             {"detail": "Sorry, PUT requests are not supported on this endpoint."},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED,
         )
 
     def patch(self, request, *args, **kwargs) -> Response:
         return self.handle_error(
             "This action is not supported",
             {"detail": "Sorry, PATCH requests are not supported on this endpoint."},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED,
         )
 
     def delete(self, request, *args, **kwargs) -> Response:
         return self.handle_error(
             "This action is not supported",
             {"detail": "Sorry, DELETE requests are not supported on this endpoint."},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED,
         )
 
     def options(self, request, *args, **kwargs) -> Response:
         return self.handle_error(
             "This action is not supported",
             {"detail": "Sorry, OPTIONS requests are not supported on this endpoint."},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED,
         )
