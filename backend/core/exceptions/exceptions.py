@@ -9,14 +9,14 @@ from rest_framework.exceptions import (
     MethodNotAllowed,
     NotAuthenticated,
     NotFound,
+    PermissionDenied,
     Throttled,
     ValidationError,
-    PermissionDenied,
 )
+from rest_framework.throttling import AnonRateThrottle
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 
 from core.response import Response
-from rest_framework.throttling import AnonRateThrottle
 
 from .create_error_response import create_error_response
 

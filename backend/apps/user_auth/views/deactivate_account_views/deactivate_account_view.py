@@ -1,6 +1,6 @@
+from apps.user_auth.mixins import IsUserAuthenticatedPermissionsMixin
 from core.send_email import SendEmail
 from core.views import BaseAPIView, Response
-from apps.user_auth.mixins import IsUserAuthenticatedPermissionsMixin
 
 
 class DeactivateAccountView(IsUserAuthenticatedPermissionsMixin, BaseAPIView):

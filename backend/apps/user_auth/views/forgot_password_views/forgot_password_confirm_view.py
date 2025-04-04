@@ -2,8 +2,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from limited_time_token_handler import LimitedTimeTokenDecoder
 
-from core.views import BaseAPIView, Response
 from apps.user_auth.mixins import AuthUserRateThrottleMinin
+from core.views import BaseAPIView, Response
 
 User = get_user_model()
 

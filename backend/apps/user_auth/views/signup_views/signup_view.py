@@ -6,9 +6,9 @@ from dns_smtp_email_validator import DNSSMTPEmailValidator
 from limited_time_token_handler import LimitedTimeTokenGenerator
 from user_auth.serializers import UserSerializer
 
+from apps.user_auth.mixins import AuthUserRateThrottleMinin
 from core.send_email import SendEmail
 from core.views import BaseAPIView, Response
-from apps.user_auth.mixins import AuthUserRateThrottleMinin
 
 User = get_user_model()
 

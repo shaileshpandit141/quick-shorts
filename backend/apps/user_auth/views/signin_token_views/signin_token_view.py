@@ -1,13 +1,12 @@
 from django.utils import timezone
 from user_auth.models import User
 
+from apps.user_auth.mixins import AuthUserRateThrottleMinin
 from core.get_jwt_tokens_for_user import get_jwt_tokens_for_user
 from core.views import BaseAPIView, Response
-from apps.user_auth.mixins import AuthUserRateThrottleMinin
 
 
 class SigninTokenView(AuthUserRateThrottleMinin, BaseAPIView):
-
     def post(self, request, *args, **kwargs) -> Response:
         data = request.data
 

@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 
+from apps.user_auth.mixins import IsUserAuthenticatedPermissionsMixin
 from core.send_email import SendEmail
 from core.views import BaseAPIView, Response
-from apps.user_auth.mixins import IsUserAuthenticatedPermissionsMixin
 
 User = get_user_model()
 
