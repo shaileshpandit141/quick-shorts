@@ -28,42 +28,6 @@ class BaseAPIView(BaseAPIResponseHandler, APIView):
     serializer_class: Optional[Type[ModelSerializer]] = None
     queryset: Optional[QuerySet] = None
 
-    def get(self, request, *args, **kwargs) -> Response:
-        return self.handle_error(
-            "This action is not supported",
-            {"detail": "Sorry, GET requests are not supported on this endpoint."},
-        )
-
-    def post(self, request, *args, **kwargs) -> Response:
-        return self.handle_error(
-            "This action is not supported",
-            {"detail": "Sorry, POST requests are not supported on this endpoint."},
-        )
-
-    def put(self, request, *args, **kwargs) -> Response:
-        return self.handle_error(
-            "This action is not supported",
-            {"detail": "Sorry, PUT requests are not supported on this endpoint."},
-        )
-
-    def patch(self, request, *args, **kwargs) -> Response:
-        return self.handle_error(
-            "This action is not supported",
-            {"detail": "Sorry, PATCH requests are not supported on this endpoint."},
-        )
-
-    def delete(self, request, *args, **kwargs) -> Response:
-        return self.handle_error(
-            "This action is not supported",
-            {"detail": "Sorry, DELETE requests are not supported on this endpoint."},
-        )
-
-    def options(self, request, *args, **kwargs) -> Response:
-        return self.handle_error(
-            "This action is not supported",
-            {"detail": "Sorry, OPTIONS requests are not supported on this endpoint."},
-        )
-
     def get_serializer(self, *args, **kwargs) -> ModelSerializer:
         """Return the class to use for the serializer."""
         serializer = self.get_serializer_class()
