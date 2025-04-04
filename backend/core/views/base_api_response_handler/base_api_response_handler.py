@@ -99,3 +99,16 @@ class BaseAPIResponseHandler:
             f"Handling error with message: {message}, errors: {errors}, status: {status}"
         )
         return self.error({"message": message, "errors": errors}, status=status)
+
+    def handle_delete(self) -> Response:
+        logger.info("Handling DELETE request")
+        response = Response({}, status=status.HTTP_204_NO_CONTENT)
+        setattr(
+            response,
+            "headers",
+            {
+                **response.headers,
+                "Content-Length": "0",
+            },
+        )
+        return response
