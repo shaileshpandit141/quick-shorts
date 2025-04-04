@@ -31,6 +31,9 @@ class BaseAPIResponseHandler:
         Generates an error API response with the given payload and status.
     """
 
+    """Initialize status attribute"""
+    status = status
+
     def response(
         self: Self,
         payload: TypeResponsePayload,

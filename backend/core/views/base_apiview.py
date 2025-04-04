@@ -4,7 +4,6 @@ from typing import Any, Dict, List, Optional, Type, TypeVar
 from uuid import uuid4
 from django.db.models import Model, QuerySet
 from django.http.response import HttpResponseBase
-from rest_framework import status
 from rest_framework.exceptions import APIException, NotFound
 from rest_framework.permissions import BasePermission, AllowAny
 from rest_framework.response import Response
@@ -22,17 +21,12 @@ logger = logging.getLogger(__name__)
 TypeModel = TypeVar("TypeModel", bound=Model)
 
 
-class BaseAPIView(APIView, BaseAPIResponseHandler):
+class BaseAPIView(BaseAPIResponseHandler, APIView):
     permission_classes: List[Type[BasePermission]] = [AllowAny]
     throttle_classes: List[Type[BaseThrottle]] = [AnonRateThrottle]
     pagination_class: Type[PageNumberPagination] = PageNumberPagination
     serializer_class: Optional[Type[ModelSerializer]] = None
     queryset: Optional[QuerySet] = None
-
-    def __init__(self, *args, **kwargs) -> None:
-        """Initialize view with status attribute"""
-        self.status = status
-        super().__init__(*args, **kwargs)
 
     def get(self, request, *args, **kwargs) -> Response:
         return self.handle_error(
