@@ -6,15 +6,15 @@ from .throttles import AuthUserRateThrottle
 
 
 class IsUserAuthenticatedPermissionsMixin:
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
 
 
 class IsUserAccountVerifiedPermissionsMixin:
-    permissions_classes = [IsAuthenticated, IsUserAccountVerified]
+    permission_classes = [IsAuthenticated, IsUserAccountVerified]
     throttle_classes = [UserRateThrottle]
 
 
 class AuthUserRateThrottleMinin:
-    throttle_classes = [AllowAny]
+    permission_classes = [AllowAny]
     throttle_classes = [AuthUserRateThrottle]
