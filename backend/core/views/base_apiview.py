@@ -102,7 +102,9 @@ class BaseAPIView(BaseAPIResponseHandler, APIView):
     def get_object(self, model: Type[TypeModel], *args, **kwargs) -> TypeModel | None:
         """Get single model instance or None if not found"""
         try:
-            return model.objects.get(*args, **kwargs)
+            obj = model.objects.get(*args, **kwargs)
+            self.check_object_permissions(self.request, obj)
+            return obj
         except model.DoesNotExist:
             logger.info(
                 f"Object not found for model {model.__name__} with args: {args}, kwargs: {kwargs}"
