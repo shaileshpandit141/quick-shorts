@@ -111,7 +111,9 @@ class BaseAPIView(BaseAPIResponseHandler, APIView):
             )
             return None
 
-    def get_paginated_data(self) -> Dict[str, Any]:
+    def get_paginated_data(
+        self, filter_kwargs: dict[str, Any] | None = None
+    ) -> Dict[str, Any]:
         """
         Returns pagination data for the given queryset.
         Uses page and items-per-page query params if not explicitly provided.
@@ -119,6 +121,11 @@ class BaseAPIView(BaseAPIResponseHandler, APIView):
         """
         logger.debug("Starting pagination process using pagination_class.")
         paginator = self.pagination_class()
+
+        # Check if user want to filter queryset
+        if filter_kwargs is not None:
+            if self.queryset is not None:
+                self.queryset = self.queryset.filter(**filter_kwargs)
 
         # Paginate the queryset
         page = paginator.paginate_queryset(self.queryset, self.request)
