@@ -10,7 +10,7 @@ def create_error_response(
     message: str, errors: Any, status: int | None = None
 ) -> Response:
     """Helper function to create error response"""
-    error_details = {
+    error_details: dict[str, Any] = {
         "detail": "Something went wrong. Please try again later or contact support if the issue persists."
     }
 
