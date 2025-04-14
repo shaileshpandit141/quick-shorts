@@ -2,6 +2,7 @@ from datetime import datetime
 
 import pytz
 from django.core.cache import cache
+from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework import status, views
 from rest_framework.exceptions import (
     APIException,
@@ -30,6 +31,11 @@ def exception_handler(exc, context) -> Response | views.Response | None:
         ValidationError: lambda error: create_error_response(
             message="Validation error occurred. Please check your input.",
             errors=error,
+            status=status.HTTP_400_BAD_REQUEST,
+        ),
+        DjangoValidationError: lambda error: create_error_response(
+            message="Validation error occurred. Please check your input.",
+            errors={"detail": error.messages},
             status=status.HTTP_400_BAD_REQUEST,
         ),
         MethodNotAllowed: lambda error: create_error_response(
