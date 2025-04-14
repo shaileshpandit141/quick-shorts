@@ -1,7 +1,6 @@
+from core.views import BaseAPIView, Response
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
-
-from core.views import BaseAPIView, Response
 
 
 class SigninTokenRefreshView(BaseAPIView):

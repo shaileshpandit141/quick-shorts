@@ -1,14 +1,13 @@
 from urllib.parse import urlencode
 
+from core.get_jwt_tokens_for_user import get_jwt_tokens_for_user
+from core.save_image import save_image
+from core.views import BaseAPIView, Response
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from google.auth.transport import requests
 from google.oauth2 import id_token
 from requests import get, post
-
-from core.get_jwt_tokens_for_user import get_jwt_tokens_for_user
-from core.save_image import save_image
-from core.views import BaseAPIView, Response
 
 User = get_user_model()
 

@@ -1,8 +1,7 @@
-from django.contrib.auth import get_user_model
-from limited_time_token_handler import LimitedTimeTokenDecoder, TokenError
-
 from apps.user_auth.mixins import AuthUserRateThrottleMinin
 from core.views import BaseAPIView, Response
+from django.contrib.auth import get_user_model
+from limited_time_token_handler import LimitedTimeTokenDecoder, TokenError
 
 User = get_user_model()
 
