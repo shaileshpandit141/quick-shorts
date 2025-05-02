@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./SigninPage.css";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useSearchParams } from "react-router-dom";
 import { AddSEO } from "SEO";
 import { useFormDataChange, useResetOnRouteChange } from "hooks";
 import { isUserAuthenticated } from "utils/isUserAuthenticated";
@@ -20,6 +20,7 @@ import { SigninCredentials } from "services/authServices";
 import { triggerToast } from "features/toast";
 
 const SigninPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const { status, message, errors } = useSigninUserSelector();
   const [formData, handleFormDataChange] = useFormDataChange<SigninCredentials>(
     {
@@ -27,6 +28,8 @@ const SigninPage: React.FC = () => {
       password: "",
     },
   );
+
+  const redirectTo = searchParams.get('redirect_to');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,11 +49,11 @@ const SigninPage: React.FC = () => {
   });
 
   if (isUserAuthenticated()) {
-    return <Navigate to="/home" replace />;
+    return <Navigate to={redirectTo || "/home"} replace />;
   }
 
   if (status === "succeeded") {
-    return <Navigate to="/home" replace />;
+    return <Navigate to={redirectTo || "/home"} replace />;
   }
 
   return (
