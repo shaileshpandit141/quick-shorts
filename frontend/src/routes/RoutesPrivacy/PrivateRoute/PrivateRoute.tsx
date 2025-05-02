@@ -18,7 +18,11 @@ const PrivateRoute = (): JSX.Element => {
     }
   }, [data]);
 
-  return isAuthenticated ? <Outlet /> : <Navigate to={`/sign-in?redirect_to=${location.pathname}`} replace />;
+  return isAuthenticated ? (
+    <Outlet />
+  ) : (
+    <Navigate to={`/sign-in?redirect_to=${location.pathname}`} replace />
+  );
 };
 
 export default PrivateRoute;

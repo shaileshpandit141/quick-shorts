@@ -29,7 +29,7 @@ const SigninPage: React.FC = () => {
     },
   );
 
-  const redirectTo = searchParams.get('redirect_to');
+  const redirectTo = searchParams.get("redirect_to");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
