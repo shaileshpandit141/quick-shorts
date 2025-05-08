@@ -5,7 +5,7 @@
   background-color: transparent;
   transition: var(--ts-secondary);
 
-  .user-profile-action-button {
+  .profile-action-button {
     height: var(--hw);
     width: var(--hw);
     padding: 0;
@@ -18,7 +18,7 @@
     }
   }
 
-  .user-profile-card-container {
+  .card-container {
     --height: 225px;
     --width: 225px;
 
@@ -37,7 +37,7 @@
     transform-origin: top right;
     transition: var(--ts-secondary);
 
-    .user-profile-header-card {
+    .card-header {
       height: fit-content;
       width: var(--width);
       display: flex;
@@ -46,7 +46,7 @@
       justify-content: center;
       background-color: transparent;
 
-      .user-profile-container {
+      .dashboard-link {
         width: 100%;
         padding-inline: 8px;
         display: grid;

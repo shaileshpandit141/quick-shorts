@@ -35,9 +35,9 @@ const UserProfile: React.FC = (): JSX.Element | null => {
           <img src={data.picture} alt="user-picture-image" />
         )}
       </button>
-      <div className="user-profile-card-container" ref={contentRef}>
-        <div className="user-profile-header-card">
-          <Link to="/dashboard" className="user-profile-container">
+      <div className="card-container" ref={contentRef}>
+        <div className="card-header">
+          <Link to="/dashboard" className="dashboard-link">
             <section className="user-profile-image">
               {"picture" in data && (
                 <img src={data.picture} alt="user-picture-image" />
