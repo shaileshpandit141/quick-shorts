@@ -1,0 +1,71 @@
+from django.db import models
+from django.contrib.auth import get_user_model
+from .short_video import ShortVideo
+
+User = get_user_model()
+
+
+class Comment(models.Model):
+    """Comments on videos"""
+
+    class Meta:
+        db_table = "comment"
+        verbose_name = "comment"
+        verbose_name_plural = "comments"
+        ordering = ["-id"]
+
+    objects = models.Manager()
+
+    # Model fields for Comment
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        primary_key=False,
+        related_name="comments",
+        related_query_name=None,
+        limit_choices_to={},
+        parent_link=False,
+        blank=False,
+        null=False,
+        db_index=True,
+        db_constraint=True,
+        error_messages={
+            "invalid": "Invalid value",
+            "invalid_choice": "Select a valid choice",
+            "null": "This field cannot be null",
+            "blank": "This field cannot be blank",
+            "does_not_exist": "Object does not exist"
+        }
+    )
+    video = models.ForeignKey(
+        ShortVideo,
+        on_delete=models.CASCADE,
+        primary_key=False,
+        related_name="comments",
+        related_query_name=None,
+        limit_choices_to={},
+        parent_link=False,
+        blank=False,
+        null=False,
+        db_index=True,
+        db_constraint=True,
+        error_messages={
+            "invalid": "Invalid value",
+            "invalid_choice": "Select a valid choice",
+            "null": "This field cannot be null",
+            "blank": "This field cannot be blank",
+            "does_not_exist": "Object does not exist"
+        }
+    )
+    content = models.TextField(
+        blank=False,
+        null=False,
+        db_index=True,
+        error_messages={
+            "invalid": "Invalid value",
+            "null": "This field cannot be null",
+            "blank": "This field cannot be blank",
+        }
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
