@@ -1,6 +1,7 @@
-from django.db import models
-from .short_video import ShortVideo
 from django.contrib.auth import get_user_model
+from django.db import models
+
+from .short_video import ShortVideo
 
 User = get_user_model()
 
@@ -59,4 +60,4 @@ class View(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return f"{getattr(self.user, "email", "Unknown")} viewed {self.video.title}"
+        return f"{getattr(self.user, 'email', 'Unknown')} viewed {self.video.title}"

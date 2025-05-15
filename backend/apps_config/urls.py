@@ -6,8 +6,8 @@ It maps URLs to their corresponding views and configures static file serving and
 """
 
 from apps.google_auth import urls as google_auth_urls
-from apps.user_auth import urls as users_auth_urls
 from apps.short_video import urls as short_video_urls
+from apps.user_auth import urls as users_auth_urls
 from django.conf import settings
 from django.conf.urls import handler404
 from django.conf.urls.static import static

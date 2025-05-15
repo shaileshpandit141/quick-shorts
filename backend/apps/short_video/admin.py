@@ -1,11 +1,12 @@
 from django.contrib import admin
-from .models.tag import Tag
-from .models.short_video import ShortVideo
-from .models.view import View
-from .models.like import Like
+
 from .models.comment import Comment
 from .models.follow import Follow
+from .models.like import Like
 from .models.report import Report
+from .models.short_video import ShortVideo
+from .models.tag import Tag
+from .models.view import View
 
 
 @admin.register(Tag)

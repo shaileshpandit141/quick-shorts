@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
+
 from .short_video import ShortVideo
 
 User = get_user_model()
@@ -64,7 +65,7 @@ class Report(models.Model):
     )
     status = models.CharField(
         max_length=20,
-        choices= REPORT_STATUS_CHOICES,
+        choices=REPORT_STATUS_CHOICES,
         default="pending",
         error_messages={
             "invalid": "Invalid value",

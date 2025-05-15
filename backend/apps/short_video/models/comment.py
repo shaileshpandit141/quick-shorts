@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
+
 from .short_video import ShortVideo
 
 User = get_user_model()
@@ -34,8 +35,8 @@ class Comment(models.Model):
             "invalid_choice": "Select a valid choice",
             "null": "This field cannot be null",
             "blank": "This field cannot be blank",
-            "does_not_exist": "Object does not exist"
-        }
+            "does_not_exist": "Object does not exist",
+        },
     )
     video = models.ForeignKey(
         ShortVideo,
@@ -54,8 +55,8 @@ class Comment(models.Model):
             "invalid_choice": "Select a valid choice",
             "null": "This field cannot be null",
             "blank": "This field cannot be blank",
-            "does_not_exist": "Object does not exist"
-        }
+            "does_not_exist": "Object does not exist",
+        },
     )
     content = models.TextField(
         blank=False,
@@ -65,7 +66,7 @@ class Comment(models.Model):
             "invalid": "Invalid value",
             "null": "This field cannot be null",
             "blank": "This field cannot be blank",
-        }
+        },
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

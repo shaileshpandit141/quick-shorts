@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
+
 from .tag import Tag
 
 User = get_user_model()
@@ -39,8 +40,8 @@ class ShortVideo(models.Model):
             "invalid_choice": "Select a valid choice",
             "null": "This field cannot be null",
             "blank": "This field cannot be blank",
-            "does_not_exist": "Object does not exist"
-        }
+            "does_not_exist": "Object does not exist",
+        },
     )
     title = models.CharField(
         max_length=120,
@@ -53,7 +54,7 @@ class ShortVideo(models.Model):
             "null": "This field cannot be null",
             "blank": "This field cannot be blank",
             "max_length": "Ensure this value has at most 120 characters",
-        }
+        },
     )
     description = models.TextField(
         blank=True,
@@ -62,7 +63,7 @@ class ShortVideo(models.Model):
         default="",
         error_messages={
             "invalid": "Enter a valid value",
-        }
+        },
     )
     video = models.FileField(
         upload_to="/shorts/videos/",
@@ -78,8 +79,8 @@ class ShortVideo(models.Model):
             "empty": "The submitted file is empty",
             "max_length": "Ensure this filename has at most 100 characters",
             "null": "This field cannot be null",
-            "blank": "This field cannot be blank"
-        }
+            "blank": "This field cannot be blank",
+        },
     )
     thumbnail = models.ImageField(
         upload_to="shorts/thumbnails/",
@@ -96,8 +97,8 @@ class ShortVideo(models.Model):
             "empty": "The submitted file is empty",
             "max_length": "Ensure this filename has at most 100 characters",
             "null": "This field cannot be null",
-            "blank": "This field cannot be blank"
-        }
+            "blank": "This field cannot be blank",
+        },
     )
     tags = models.ManyToManyField(
         Tag,
@@ -110,8 +111,8 @@ class ShortVideo(models.Model):
             "invalid_choice": "Select a valid tags.",
             "invalid_pk_value": "Invalid primary key value",
             "null": "This field cannot be null",
-            "blank": "This field cannot be blank"
-        }
+            "blank": "This field cannot be blank",
+        },
     )
     privacy = models.CharField(
         max_length=10,

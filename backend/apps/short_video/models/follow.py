@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
 User = get_user_model()
 
@@ -50,4 +50,3 @@ class Follow(models.Model):
 
     def __str__(self) -> str:
         return f"{self.follower.email} follows {self.following.email}"
-        
