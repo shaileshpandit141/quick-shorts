@@ -1,0 +1,76 @@
+from django.db import models
+from django.contrib.auth import get_user_model
+from .short_video import ShortVideo
+
+User = get_user_model()
+
+
+class Report(models.Model):
+    """Report inappropriate videos"""
+
+    class Meta:
+        db_table = "report"
+        verbose_name = "report"
+        verbose_name_plural = "reports"
+        ordering = ["-id"]
+        unique_together = ("video", "user")
+
+    objects = models.Manager()
+
+    # Report status choices
+    REPORT_STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("resolved", "Resolved"),
+        ("rejected", "Rejected"),
+    ]
+
+    # Model fields for Report
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="reports",
+        blank=False,
+        null=False,
+        db_index=True,
+        error_messages={
+            "invalid": "Invalid value",
+            "null": "This field cannot be null",
+            "blank": "This field cannot be blank",
+            "does_not_exist": "Object does not exist",
+        },
+    )
+    video = models.ForeignKey(
+        ShortVideo,
+        on_delete=models.CASCADE,
+        related_name="reports",
+        blank=False,
+        null=False,
+        db_index=True,
+        error_messages={
+            "invalid": "Invalid value",
+            "null": "This field cannot be null",
+            "blank": "This field cannot be blank",
+            "does_not_exist": "Object does not exist",
+        },
+    )
+    reason = models.TextField(
+        blank=False,
+        null=False,
+        error_messages={
+            "invalid": "Invalid value",
+            "null": "This field cannot be null",
+            "blank": "This field cannot be blank",
+        },
+    )
+    status = models.CharField(
+        max_length=20,
+        choices= REPORT_STATUS_CHOICES,
+        default="pending",
+        error_messages={
+            "invalid": "Invalid value",
+            "null": "This field cannot be null",
+            "blank": "This field cannot be blank",
+        },
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
