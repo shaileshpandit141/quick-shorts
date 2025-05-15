@@ -7,6 +7,7 @@ It maps URLs to their corresponding views and configures static file serving and
 
 from apps.google_auth import urls as google_auth_urls
 from apps.user_auth import urls as users_auth_urls
+from apps.short_video import urls as short_video_urls
 from django.conf import settings
 from django.conf.urls import handler404
 from django.conf.urls.static import static
@@ -29,6 +30,7 @@ urlpatterns = [
     # User authentication URLs under /api/v1/auth
     path("api/v1/auth/", include((users_auth_urls, "user_auth"))),
     path("api/v1/auth/", include((google_auth_urls, "google_auth"))),
+    path("api/v1/shorts/", include((short_video_urls, "short_video"))),
 ]
 
 # Configure custom error handling
