@@ -66,7 +66,7 @@ class ShortVideo(models.Model):
         },
     )
     video = models.FileField(
-        upload_to="/shorts/videos/",
+        upload_to="shorts/videos/",
         max_length=100,
         blank=False,
         null=False,
