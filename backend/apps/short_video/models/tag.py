@@ -8,7 +8,7 @@ class Tag(models.Model):
         db_table = "tag"
         verbose_name = "tag"
         verbose_name_plural = "tags"
-        ordering = ["-id"]
+        ordering = ["-updated_at"]
 
     objects = models.Manager()
 
@@ -25,7 +25,10 @@ class Tag(models.Model):
             "null": "This field cannot be null",
             "blank": "This field cannot be blank",
             "max_length": "Ensure this value has at most 50 characters",
-        }
+        },
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name

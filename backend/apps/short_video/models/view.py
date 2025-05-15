@@ -57,3 +57,6 @@ class View(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f"{getattr(self.user, "email", "Unknown")} viewed {self.video.title}"
