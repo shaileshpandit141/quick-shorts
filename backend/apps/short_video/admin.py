@@ -46,7 +46,7 @@ class ViewAdmin(admin.ModelAdmin):
     ]
     list_display_links = list_display
     ordering = ("-updated_at",)
-    list_filter = ["created_at", "updated_at"]
+    list_filter = ["timestamp", "updated_at"]
     search_fields = []
     list_per_page = 20
 
@@ -60,7 +60,7 @@ class LikeAdmin(admin.ModelAdmin):
     ]
     list_display_links = list_display
     ordering = ("-updated_at",)
-    list_filter = ["created_at", "updated_at"]
+    list_filter = ["liked_at", "updated_at"]
     search_fields = []
     list_per_page = 20
 
@@ -88,7 +88,7 @@ class FollowAdmin(admin.ModelAdmin):
     ]
     list_display_links = list_display
     ordering = ("-updated_at",)
-    list_filter = ["created_at", "updated_at"]
+    list_filter = ["followed_at", "updated_at"]
     search_fields = []
     list_per_page = 20
 

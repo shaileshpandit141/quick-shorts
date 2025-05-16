@@ -1,0 +1,82 @@
+[
+  {
+    "id": 2,
+    "email": "anthony49@fletcher.net",
+    "username": "qmartinez",
+    "first_name": "Nicole",
+    "last_name": "Brown",
+    "is_verified": true
+  },
+  {
+    "id": 3,
+    "email": "wbrandt@griffin-lopez.info",
+    "username": "kevin30",
+    "first_name": "Mark",
+    "last_name": "Simpson",
+    "is_verified": true
+  },
+  {
+    "id": 4,
+    "email": "xalexander@hotmail.com",
+    "username": "rbrooks",
+    "first_name": "Kenneth",
+    "last_name": "Salazar",
+    "is_verified": true
+  },
+  {
+    "id": 5,
+    "email": "margaret15@cook.com",
+    "username": "jacksonnicholas",
+    "first_name": "Derek",
+    "last_name": "Nelson",
+    "is_verified": true
+  },
+  {
+    "id": 6,
+    "email": "hurleyshelly@fitzgerald.com",
+    "username": "mirandabates",
+    "first_name": "Carrie",
+    "last_name": "Watkins",
+    "is_verified": true
+  },
+  {
+    "id": 7,
+    "email": "melanie01@thompson.com",
+    "username": "karencastillo",
+    "first_name": "Angela",
+    "last_name": "Brown",
+    "is_verified": true
+  },
+  {
+    "id": 8,
+    "email": "brandonmejia@blankenship.com",
+    "username": "caitlinrichardson",
+    "first_name": "Corey",
+    "last_name": "Guerrero",
+    "is_verified": true
+  },
+  {
+    "id": 9,
+    "email": "navarropatrick@hotmail.com",
+    "username": "charles23",
+    "first_name": "Gregory",
+    "last_name": "Holland",
+    "is_verified": true
+  },
+  {
+    "id": 10,
+    "email": "megan24@hall-fox.com",
+    "username": "ugarcia",
+    "first_name": "Adrienne",
+    "last_name": "Lucas",
+    "is_verified": true
+  },
+  {
+    "id": 11,
+    "email": "alyssa28@morton-cook.com",
+    "username": "jarmstrong",
+    "first_name": "John",
+    "last_name": "Silva",
+    "is_verified": true
+  }
+]

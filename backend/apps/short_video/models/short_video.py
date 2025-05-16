@@ -23,7 +23,7 @@ class ShortVideo(models.Model):
     ]
 
     # Model fields for ShortVideo
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         primary_key=False,

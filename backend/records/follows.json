@@ -1,0 +1,102 @@
+[
+  {
+    "follower": 1,
+    "following": 7,
+    "followed_at": "2025-04-10 16:40:07"
+  },
+  {
+    "follower": 9,
+    "following": 7,
+    "followed_at": "2025-01-06 15:52:00"
+  },
+  {
+    "follower": 4,
+    "following": 2,
+    "followed_at": "2025-01-20 05:02:53"
+  },
+  {
+    "follower": 10,
+    "following": 1,
+    "followed_at": "2025-04-27 12:34:16"
+  },
+  {
+    "follower": 4,
+    "following": 8,
+    "followed_at": "2025-04-18 01:48:14"
+  },
+  {
+    "follower": 10,
+    "following": 2,
+    "followed_at": "2025-01-06 05:49:25"
+  },
+  {
+    "follower": 8,
+    "following": 10,
+    "followed_at": "2025-05-03 21:36:04"
+  },
+  {
+    "follower": 10,
+    "following": 8,
+    "followed_at": "2025-01-24 00:55:03"
+  },
+  {
+    "follower": 7,
+    "following": 1,
+    "followed_at": "2025-01-16 19:44:39"
+  },
+  {
+    "follower": 9,
+    "following": 2,
+    "followed_at": "2025-04-03 22:07:28"
+  },
+  {
+    "follower": 2,
+    "following": 6,
+    "followed_at": "2025-03-13 15:01:47"
+  },
+  {
+    "follower": 8,
+    "following": 4,
+    "followed_at": "2025-02-09 05:02:38"
+  },
+  {
+    "follower": 2,
+    "following": 1,
+    "followed_at": "2025-01-07 14:58:09"
+  },
+  {
+    "follower": 3,
+    "following": 7,
+    "followed_at": "2025-01-15 17:16:54"
+  },
+  {
+    "follower": 5,
+    "following": 1,
+    "followed_at": "2025-01-02 18:58:02"
+  },
+  {
+    "follower": 2,
+    "following": 7,
+    "followed_at": "2025-01-09 16:09:56"
+  },
+  {
+    "follower": 4,
+    "following": 1,
+    "followed_at": "2025-03-01 20:02:01"
+  },
+  {
+    "follower": 6,
+    "following": 5,
+    "followed_at": "2025-03-20 14:39:23"
+  },
+  {
+    "follower": 7,
+    "following": 3,
+    "followed_at": "2025-05-13 00:32:55"
+  },
+  {
+    "follower": 8,
+    "following": 3,
+    "followed_at": "2025-01-31 03:22:36"
+  }
+]

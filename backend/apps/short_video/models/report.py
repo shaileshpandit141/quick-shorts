@@ -14,7 +14,7 @@ class Report(models.Model):
         verbose_name = "report"
         verbose_name_plural = "reports"
         ordering = ["-id"]
-        unique_together = ("video", "user")
+        unique_together = ("reported_by", "video")
 
     objects = models.Manager()
 
@@ -26,7 +26,7 @@ class Report(models.Model):
     ]
 
     # Model fields for Report
-    user = models.ForeignKey(
+    reported_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="reports",
@@ -77,4 +77,4 @@ class Report(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return f"Report by {self.user.email} on video {self.video.pk}"
+        return f"Report by {self.reported_by.email} on video {self.video.pk}"
