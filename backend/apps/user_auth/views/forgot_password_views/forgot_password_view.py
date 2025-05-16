@@ -1,9 +1,10 @@
-from apps.user_auth.mixins import AuthUserRateThrottleMinin
-from core.send_email import SendEmail
-from core.views import BaseAPIView, Response
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from limited_time_token_handler import LimitedTimeTokenGenerator
+
+from apps.user_auth.mixins import AuthUserRateThrottleMinin
+from core.send_email import SendEmail
+from core.views import BaseAPIView, Response
 
 User = get_user_model()
 

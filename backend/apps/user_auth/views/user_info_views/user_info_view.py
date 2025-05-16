@@ -1,7 +1,8 @@
-from apps.user_auth.mixins import IsUserAccountVerifiedPermissionsMixin
-from core.views import BaseAPIView, Response
 from django.contrib.auth import get_user_model
 from user_auth.serializers import UserSerializer
+
+from apps.user_auth.mixins import IsUserAccountVerifiedPermissionsMixin
+from core.views import BaseAPIView, Response
 
 User = get_user_model()
 

@@ -1,6 +1,7 @@
-from core.serializers import BaseModelSerializer
 from django.contrib.postgres.forms.hstore import ValidationError
 from user_auth.models import User
+
+from core.serializers import BaseModelSerializer
 
 
 class UserSerializer(BaseModelSerializer):
