@@ -116,7 +116,7 @@ class ShortVideo(models.Model):
     )
     privacy = models.CharField(
         max_length=10,
-        unique=True,
+        unique=False,
         blank=True,
         null=True,
         db_index=True,
