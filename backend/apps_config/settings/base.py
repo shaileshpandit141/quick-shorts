@@ -158,6 +158,10 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
     "EXCEPTION_HANDLER": "rest_core.exceptions.base_exception_handler",
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_core.renderers.StructuredJSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ],
     "DEFAULT_THROTTLE_CLASSES": [
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
@@ -168,10 +172,6 @@ REST_FRAMEWORK = {
         "auth_user": "8/hour",
         "user": "1000/day",
     },
-    "DEFAULT_RENDERER_CLASSES": [
-        "rest_core.renderers.StructuredJSONRenderer",
-        "rest_framework.renderers.BrowsableAPIRenderer",
-    ],
     "DEFAULT_PAGINATION_CLASS": "rest_core.pagination.PageNumberPagination",
     "PAGE_SIZE": 4,
     "MAX_PAGE_SIZE": 8,

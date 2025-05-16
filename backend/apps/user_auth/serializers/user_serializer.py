@@ -1,10 +1,10 @@
 from django.contrib.postgres.forms.hstore import ValidationError
+from rest_core.serializers.mixins import FileFieldUrlMixin
+from rest_framework.serializers import ModelSerializer
 from user_auth.models import User
 
-from core.serializers import BaseModelSerializer
 
-
-class UserSerializer(BaseModelSerializer):
+class UserSerializer(FileFieldUrlMixin, ModelSerializer):
     """Serializer for User model that handles serialization and
     deserialization of User objects.
     """
