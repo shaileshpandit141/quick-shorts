@@ -49,6 +49,7 @@ INSTALLED_APPS += [
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
+    "rest_core",
 ]
 
 # User Define applications Settings
@@ -70,7 +71,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "core.middlewares.ResponseTimeMiddleware",
+    "rest_core.middlewares.ResponseTimeMiddleware",
 ]
 
 # Root urls file Configuration Settings
@@ -156,7 +157,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ],
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
-    "EXCEPTION_HANDLER": "core.exceptions.exception_handler",
+    "EXCEPTION_HANDLER": "rest_core.exceptions.base_exception_handler",
     "DEFAULT_THROTTLE_CLASSES": [
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
@@ -168,10 +169,10 @@ REST_FRAMEWORK = {
         "user": "1000/day",
     },
     "DEFAULT_RENDERER_CLASSES": [
-        "rest_framework.renderers.JSONRenderer",
+        "rest_core.renderers.StructuredJSONRenderer",
         "rest_framework.renderers.BrowsableAPIRenderer",
     ],
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_PAGINATION_CLASS": "rest_core.pagination.PageNumberPagination",
     "PAGE_SIZE": 4,
     "MAX_PAGE_SIZE": 8,
 }
