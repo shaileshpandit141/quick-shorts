@@ -5,13 +5,15 @@ from rest_core.response import failure_response, success_response
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.user_auth.mixins import AuthUserRateThrottleMinin
+from apps.user_auth.throttles import AuthUserRateThrottle
 
 User = get_user_model()
 
 
-class ForgotPasswordConfirmView(AuthUserRateThrottleMinin, APIView):
+class ForgotPasswordConfirmView(APIView):
     """API view for confirming and resetting a forgotten password."""
+
+    throttle_classes = [AuthUserRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Handle POST request to confirm and reset password."""

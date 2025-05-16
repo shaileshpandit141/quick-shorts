@@ -6,14 +6,15 @@ from rest_core.views.mixins import ModelObjectMixin
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.user_auth.mixins import AuthUserRateThrottleMinin
+from apps.user_auth.throttles import AuthUserRateThrottle
 
 User = get_user_model()
 
 
-class VerifyAccountView(ModelObjectMixin[User], AuthUserRateThrottleMinin, APIView):
+class VerifyAccountView(ModelObjectMixin[User], APIView):
     """API View for handling account verification."""
 
+    throttle_classes = [AuthUserRateThrottle]
     queryset = User.objects.all()
 
     def post(self, request, *args, **kwargs) -> Response:

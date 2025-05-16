@@ -1,16 +1,21 @@
 from django.contrib.auth import get_user_model
 from rest_core.response import failure_response, success_response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 from user_auth.serializers import UserSerializer
 
-from apps.user_auth.mixins import IsUserAccountVerifiedPermissionsMixin
+from apps.user_auth.permissions import IsUserAccountVerified
 
 User = get_user_model()
 
 
-class UserInfoView(IsUserAccountVerifiedPermissionsMixin, APIView):
+class UserInfoView(APIView):
     """API View for managing authenticated user information."""
+
+    permission_classes = [IsAuthenticated, IsUserAccountVerified]
+    throttle_classes = [UserRateThrottle]
 
     def get(self, request, *args, **kwargs) -> Response:
         """Retrieve current user"s profile information."""

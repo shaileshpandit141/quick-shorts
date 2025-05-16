@@ -2,16 +2,19 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from rest_core.email_service import Emails, EmailService, Templates
 from rest_core.response import failure_response, success_response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
-
-from apps.user_auth.mixins import IsUserAuthenticatedPermissionsMixin
 
 User = get_user_model()
 
 
-class ChangePasswordView(IsUserAuthenticatedPermissionsMixin, APIView):
+class ChangePasswordView(APIView):
     """Changes authenticated user's password."""
+
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Changes user password after validation."""

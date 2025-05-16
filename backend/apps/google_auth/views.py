@@ -9,6 +9,7 @@ from rest_core.response import failure_response, success_response
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.user_auth.throttles import AuthUserRateThrottle
 from core.get_jwt_tokens_for_user import get_jwt_tokens_for_user
 from core.save_image import save_image
 
@@ -16,6 +17,10 @@ User = get_user_model()
 
 
 class GoogleLoginView(APIView):
+    """API endpoint for generating Google sign-in URL."""
+
+    throttle_classes = [AuthUserRateThrottle]
+
     def get(self, request) -> Response:
         # Define google auth URL
         google_auth_url = "https://accounts.google.com/o/oauth2/v2/auth"
@@ -42,6 +47,10 @@ class GoogleLoginView(APIView):
 
 
 class GoogleTokenExchangeView(APIView):
+    """API endpoint for exchanging Google authorization code for an access token."""
+
+    throttle_classes = [AuthUserRateThrottle]
+
     def get(self, request) -> Response:
         """Exchange authorization code for an access token."""
 
@@ -86,6 +95,10 @@ class GoogleTokenExchangeView(APIView):
 
 
 class GoogleCallbackView(APIView):
+    """API endpoint for handling Google sign-in callback."""
+
+    throttle_classes = [AuthUserRateThrottle]
+
     def post(self, request) -> Response:
         """Verify Google token (ID token or access token)."""
 

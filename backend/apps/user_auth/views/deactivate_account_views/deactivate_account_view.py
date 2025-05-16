@@ -1,13 +1,16 @@
 from rest_core.email_service import Emails, EmailService, Templates
 from rest_core.response import failure_response, success_response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 
-from apps.user_auth.mixins import IsUserAuthenticatedPermissionsMixin
 
-
-class DeactivateAccountView(IsUserAuthenticatedPermissionsMixin, APIView):
+class DeactivateAccountView(APIView):
     """API view for deactivating user accounts."""
+
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
 
     def post(self, request, *args, **kwargs) -> Response:
         """Deactivate the authenticated user's account."""
