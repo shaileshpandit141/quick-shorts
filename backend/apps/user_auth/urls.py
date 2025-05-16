@@ -17,7 +17,6 @@ from .views.signup_views import SignupView
 from .views.user_info_views import UserInfoView
 from .views.verify_account_views import VerifyAccountConfirmView, VerifyAccountView
 
-
 urlpatterns = [
     path("signup/", SignupView.as_view(), name="signup"),
     path("signin/token/", SigninTokenView.as_view(), name="signin_token"),
