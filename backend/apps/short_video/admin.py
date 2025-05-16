@@ -20,7 +20,7 @@ class TagAdmin(admin.ModelAdmin):
     ordering = ("-updated_at",)
     list_filter = ["created_at", "updated_at"]
     search_fields = ["name"]
-    list_per_page = 10
+    list_per_page = 16
 
 
 @admin.register(ShortVideo)
@@ -34,7 +34,7 @@ class ShortVideoAdmin(admin.ModelAdmin):
     ordering = ("-updated_at",)
     list_filter = ["privacy", "created_at", "updated_at"]
     search_fields = ["title"]
-    list_per_page = 10
+    list_per_page = 16
 
 
 @admin.register(View)
@@ -48,7 +48,7 @@ class ViewAdmin(admin.ModelAdmin):
     ordering = ("-updated_at",)
     list_filter = ["timestamp", "updated_at"]
     search_fields = []
-    list_per_page = 10
+    list_per_page = 16
 
 
 @admin.register(Like)
@@ -62,7 +62,7 @@ class LikeAdmin(admin.ModelAdmin):
     ordering = ("-updated_at",)
     list_filter = ["liked_at", "updated_at"]
     search_fields = []
-    list_per_page = 10
+    list_per_page = 16
 
 
 @admin.register(Comment)
@@ -76,7 +76,7 @@ class CommentAdmin(admin.ModelAdmin):
     ordering = ("-updated_at",)
     list_filter = ["created_at", "updated_at"]
     search_fields = ["content"]
-    list_per_page = 10
+    list_per_page = 16
 
 
 @admin.register(Follow)
@@ -90,7 +90,7 @@ class FollowAdmin(admin.ModelAdmin):
     ordering = ("-updated_at",)
     list_filter = ["followed_at", "updated_at"]
     search_fields = []
-    list_per_page = 10
+    list_per_page = 16
 
 
 @admin.register(Report)
@@ -104,4 +104,4 @@ class ReportAdmin(admin.ModelAdmin):
     ordering = ("-updated_at",)
     list_filter = ["status", "created_at", "updated_at"]
     search_fields = ["reason"]
-    list_per_page = 10
+    list_per_page = 16
