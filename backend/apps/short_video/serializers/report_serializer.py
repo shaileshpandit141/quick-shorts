@@ -1,10 +1,15 @@
 from rest_framework.serializers import ModelSerializer
 from ..models.report import Report
 from rest_core.serializers.mixins import RecordsCreationMixin
-
+from apps.user_auth.serializers.user_serializer import UserPublicSerializer
+from.short_video_serializer import ShortVideoSerializer
 
 class ReportSerializer(RecordsCreationMixin, ModelSerializer):
     """Serializer class for Report"""
+
+    # Call nested serializers
+    reported_by = UserPublicSerializer(read_only=True)
+    video = ShortVideoSerializer(read_only=True)
 
     class Meta:
         model = Report

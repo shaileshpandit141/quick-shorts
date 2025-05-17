@@ -1,10 +1,16 @@
 from rest_framework.serializers import ModelSerializer
 from ..models.like import Like
 from rest_core.serializers.mixins import RecordsCreationMixin
+from apps.user_auth.serializers.user_serializer import UserPublicSerializer
+from .short_video_serializer import ShortVideoSerializer
 
 
 class LikeSerializer(RecordsCreationMixin, ModelSerializer):
     """Serializer class for Like"""
+
+    # Call nested serializers
+    user = UserPublicSerializer(read_only=True)
+    video = ShortVideoSerializer(read_only=True)
 
     class Meta:
         model = Like
