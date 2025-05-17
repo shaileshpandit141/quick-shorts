@@ -1,8 +1,10 @@
-from rest_framework.serializers import ModelSerializer
-from ..models.comment import Comment
-from rest_core.serializers.mixins import RecordsCreationMixin
 from apps.user_auth.serializers.user_serializer import UserPublicSerializer
+from rest_core.serializers.mixins import RecordsCreationMixin
+from rest_framework.serializers import ModelSerializer
+
+from ..models.comment import Comment
 from .short_video_serializer import ShortVideoSerializer
+
 
 class CommentSerializer(RecordsCreationMixin, ModelSerializer):
     """Serializer class for Comment"""

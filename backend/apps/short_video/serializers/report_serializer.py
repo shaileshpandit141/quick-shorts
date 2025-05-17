@@ -1,8 +1,11 @@
-from rest_framework.serializers import ModelSerializer
-from ..models.report import Report
-from rest_core.serializers.mixins import RecordsCreationMixin
 from apps.user_auth.serializers.user_serializer import UserPublicSerializer
-from.short_video_serializer import ShortVideoSerializer
+from rest_core.serializers.mixins import RecordsCreationMixin
+from rest_framework.serializers import ModelSerializer
+
+from ..models.report import Report
+
+from .short_video_serializer import ShortVideoSerializer
+
 
 class ReportSerializer(RecordsCreationMixin, ModelSerializer):
     """Serializer class for Report"""

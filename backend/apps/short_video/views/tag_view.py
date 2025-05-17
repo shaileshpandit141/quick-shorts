@@ -1,10 +1,10 @@
-from rest_framework.views import APIView
+from rest_core.pagination import paginate_and_serialize_data
+from rest_core.response import destroy_response, failure_response, success_response
+from rest_core.views.mixins import ModelObjectMixin
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
-from rest_framework.permissions import IsAuthenticated
-from rest_core.response import success_response, failure_response, destroy_response
-from rest_core.views.mixins import ModelObjectMixin
-from rest_core.pagination import paginate_and_serialize_data
+from rest_framework.views import APIView
 from short_video.models.tag import Tag
 from short_video.serializers.tag_serializer import TagSerializer
 

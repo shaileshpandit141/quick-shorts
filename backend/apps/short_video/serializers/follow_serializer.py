@@ -1,7 +1,9 @@
-from rest_framework.serializers import ModelSerializer
-from ..models.follow import Follow
-from rest_core.serializers.mixins import RecordsCreationMixin
 from apps.user_auth.serializers.user_serializer import UserPublicSerializer
+from rest_core.serializers.mixins import RecordsCreationMixin
+from rest_framework.serializers import ModelSerializer
+
+from ..models.follow import Follow
+
 
 class FollowSerializer(RecordsCreationMixin, ModelSerializer):
     """Serializer class for Follow"""

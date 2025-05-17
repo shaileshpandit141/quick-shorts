@@ -1,7 +1,8 @@
-from rest_framework.serializers import ModelSerializer
-from ..models.short_video import ShortVideo
-from rest_core.serializers.mixins import RecordsCreationMixin, FileFieldUrlMixin
 from apps.user_auth.serializers.user_serializer import UserPublicSerializer
+from rest_core.serializers.mixins import FileFieldUrlMixin, RecordsCreationMixin
+from rest_framework.serializers import ModelSerializer
+
+from ..models.short_video import ShortVideo
 from .tag_serializer import TagSerializer
 
 
