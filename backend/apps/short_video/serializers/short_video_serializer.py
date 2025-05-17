@@ -1,9 +1,9 @@
 from rest_framework.serializers import ModelSerializer
 from ..models.short_video import ShortVideo
-from rest_core.serializers.mixins import RecordsCreationMixin
+from rest_core.serializers.mixins import RecordsCreationMixin, FileFieldUrlMixin
 
 
-class ShortVideoSerializer(RecordsCreationMixin, ModelSerializer):
+class ShortVideoSerializer(RecordsCreationMixin, FileFieldUrlMixin, ModelSerializer):
     """Serializer class for ShortVideo"""
 
     class Meta:
