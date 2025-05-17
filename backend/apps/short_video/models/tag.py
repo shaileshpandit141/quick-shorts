@@ -19,7 +19,6 @@ class Tag(models.Model):
         blank=False,
         null=False,
         db_index=True,
-        default="",
         error_messages={
             "invalid": "Invalid value",
             "null": "This field cannot be null",
