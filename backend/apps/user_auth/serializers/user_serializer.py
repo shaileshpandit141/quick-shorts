@@ -39,7 +39,7 @@ class UserSerializer(RecordsCreationMixin, FileFieldUrlMixin, ModelSerializer):
         )
 
 
-class UserPublicReadOnlySerializer(FileFieldUrlMixin, ModelSerializer):
+class UserPublicSerializer(FileFieldUrlMixin, ModelSerializer):
     """Serializer for User model that handles serialization and
     deserialization of User objects.
     """
@@ -54,4 +54,4 @@ class UserPublicReadOnlySerializer(FileFieldUrlMixin, ModelSerializer):
             "last_name",
             "picture",
         ]
-        read_only_fields = fields
+        read_only_fields = ["id", "email", "username"]
