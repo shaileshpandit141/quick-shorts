@@ -1,10 +1,10 @@
 from django.contrib.postgres.forms.hstore import ValidationError
-from rest_core.serializers.mixins import FileFieldUrlMixin
+from rest_core.serializers.mixins import FileFieldUrlMixin, RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer
 from user_auth.models import User
 
 
-class UserSerializer(FileFieldUrlMixin, ModelSerializer):
+class UserSerializer(RecordsCreationMixin, FileFieldUrlMixin, ModelSerializer):
     """Serializer for User model that handles serialization and
     deserialization of User objects.
     """
@@ -37,3 +37,21 @@ class UserSerializer(FileFieldUrlMixin, ModelSerializer):
         return User.objects.create(
             password=hashed_password, username=username, **validated_data
         )
+
+
+class UserPublicReadOnlySerializer(FileFieldUrlMixin, ModelSerializer):
+    """Serializer for User model that handles serialization and
+    deserialization of User objects.
+    """
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "username",
+            "first_name",
+            "last_name",
+            "picture",
+        ]
+        read_only_fields = fields
