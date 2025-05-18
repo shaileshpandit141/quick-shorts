@@ -1,22 +1,18 @@
-from django.urls import re_path
-
+from django.urls import path
+from rest_framework.routers import DefaultRouter
 from .views.tag_view import TagDetailView, TagListView
-from .views.short_video_view import (
-    ShortVideoListCreateView,
-    ShortVideoChoiceFieldsAPIView,
-)
+from .views.short_video_view import ShortVideoModelViewSet
 
 urlpatterns = [
-    re_path(r"^tags/?$", TagListView.as_view(), name="tag-list"),
-    re_path(r"^tags/<int:tag_id>/?$", TagDetailView.as_view(), name="tag-detail"),
-    re_path(
-        r"^short-videos/?$",
-        ShortVideoListCreateView.as_view(),
-        name="short-video-list-create",
-    ),
-    re_path(
-        r"^short-videos/choice-fields/?$",
-        ShortVideoChoiceFieldsAPIView.as_view(),
-        name="short-video-choice-fields",
-    ),
+    path("tags/", TagListView.as_view(), name="tag-list"),
+    path("tags/<int:tag_id>/", TagDetailView.as_view(), name="tag-detail"),
 ]
+
+# Create a default Drf router
+router = DefaultRouter()
+
+# Register the ShortVideoModelViewSet with the router
+router.register(r"short-videos", ShortVideoModelViewSet, basename="short-video")
+
+# Include the router's URLs in the urlpatterns
+urlpatterns += router.urls
