@@ -22,7 +22,6 @@ class ReportSerializer(RecordsCreationMixin, ModelSerializer):
             "video",
             "reason",
             "status",
-            "created_at",
             "updated_at",
         ]
-        read_only_fields = ["id", "reported_by", "status", "created_at", "updated_at"]
+        read_only_fields = ["id", "reported_by", "status", "updated_at"]

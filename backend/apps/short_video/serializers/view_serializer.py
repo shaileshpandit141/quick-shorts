@@ -9,11 +9,5 @@ class ViewSerializer(RecordsCreationMixin, ModelSerializer):
 
     class Meta:
         model = View
-        fields = [
-            "id",
-            "user",
-            "video",
-            "timestamp",
-            "updated_at",
-        ]
-        read_only_fields = ["id", "user", "timestamp", "updated_at"]
+        fields = ["id", "user", "video", "timestamp"]
+        read_only_fields = ["id", "user", "timestamp"]

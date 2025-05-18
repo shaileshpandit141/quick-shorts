@@ -13,7 +13,7 @@ class Comment(models.Model):
         db_table = "comment"
         verbose_name = "comment"
         verbose_name_plural = "comments"
-        ordering = ["-id"]
+        ordering = ["-updated_at"]
 
     objects = models.Manager()
 
@@ -68,7 +68,7 @@ class Comment(models.Model):
             "blank": "This field cannot be blank",
         },
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    comment_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:

@@ -17,8 +17,8 @@ class TagAdmin(admin.ModelAdmin):
         if not (field.many_to_many or field.one_to_many)
     ]
     list_display_links = list_display
-    ordering = ("-updated_at",)
-    list_filter = ["created_at", "updated_at"]
+    ordering = ("-id",)
+    list_filter = []
     search_fields = ["name"]
     list_per_page = 16
 
@@ -45,8 +45,8 @@ class ViewAdmin(admin.ModelAdmin):
         if not (field.many_to_many or field.one_to_many)
     ]
     list_display_links = list_display
-    ordering = ("-updated_at",)
-    list_filter = ["timestamp", "updated_at"]
+    ordering = ("-timestamp",)
+    list_filter = ["timestamp"]
     search_fields = []
     list_per_page = 16
 
@@ -59,8 +59,8 @@ class LikeAdmin(admin.ModelAdmin):
         if not (field.many_to_many or field.one_to_many)
     ]
     list_display_links = list_display
-    ordering = ("-updated_at",)
-    list_filter = ["liked_at", "updated_at"]
+    ordering = ("-liked_at",)
+    list_filter = ["liked_at"]
     search_fields = []
     list_per_page = 16
 
@@ -74,7 +74,7 @@ class CommentAdmin(admin.ModelAdmin):
     ]
     list_display_links = list_display
     ordering = ("-updated_at",)
-    list_filter = ["created_at", "updated_at"]
+    list_filter = ["comment_at", "updated_at"]
     search_fields = ["content"]
     list_per_page = 16
 
@@ -87,8 +87,8 @@ class FollowAdmin(admin.ModelAdmin):
         if not (field.many_to_many or field.one_to_many)
     ]
     list_display_links = list_display
-    ordering = ("-updated_at",)
-    list_filter = ["followed_at", "updated_at"]
+    ordering = ("-followed_at",)
+    list_filter = ["followed_at", "followed_at"]
     search_fields = []
     list_per_page = 16
 

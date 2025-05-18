@@ -13,7 +13,7 @@ class Report(models.Model):
         db_table = "report"
         verbose_name = "report"
         verbose_name_plural = "reports"
-        ordering = ["-id"]
+        ordering = ["-updated_at"]
         unique_together = ("reported_by", "video")
 
     objects = models.Manager()

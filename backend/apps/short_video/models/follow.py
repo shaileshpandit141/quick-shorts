@@ -11,7 +11,7 @@ class Follow(models.Model):
         db_table = "follow"
         verbose_name = "follow"
         verbose_name_plural = "follows"
-        ordering = ["-id"]
+        ordering = ["-followed_at"]
         unique_together = ("follower", "following")
 
     objects = models.Manager()
@@ -46,7 +46,6 @@ class Follow(models.Model):
         },
     )
     followed_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return f"{self.follower.email} follows {self.following.email}"

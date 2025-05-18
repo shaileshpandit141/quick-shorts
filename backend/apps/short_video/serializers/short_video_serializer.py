@@ -25,7 +25,6 @@ class ShortVideoSerializer(RecordsCreationMixin, FileFieldUrlMixin, ModelSeriali
             "thumbnail",
             "tags",
             "privacy",
-            "created_at",
             "updated_at",
         ]
-        read_only_fields = ["id", "owner", "created_at", "updated_at"]
+        read_only_fields = ["id", "owner", "updated_at"]

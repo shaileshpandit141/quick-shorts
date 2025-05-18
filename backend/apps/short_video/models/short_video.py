@@ -13,7 +13,7 @@ class ShortVideo(models.Model):
         db_table = "short_video"
         verbose_name = "short video"
         verbose_name_plural = "short videos"
-        ordering = ["-id"]
+        ordering = ["-updated_at"]
 
     objects = models.Manager()
 

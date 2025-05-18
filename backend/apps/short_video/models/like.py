@@ -13,7 +13,7 @@ class Like(models.Model):
         db_table = "like"
         verbose_name = "like"
         verbose_name_plural = "likes"
-        ordering = ["-id"]
+        ordering = ["-liked_at"]
         unique_together = ("video", "user")
 
     objects = models.Manager()
@@ -58,7 +58,6 @@ class Like(models.Model):
         },
     )
     liked_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return f"{self.user.email} liked {self.video.title}"

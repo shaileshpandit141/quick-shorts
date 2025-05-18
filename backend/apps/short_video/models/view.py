@@ -13,7 +13,7 @@ class View(models.Model):
         db_table = "view"
         verbose_name = "view"
         verbose_name_plural = "views"
-        ordering = ["-id"]
+        ordering = ["-timestamp"]
 
     objects = models.Manager()
 
@@ -57,7 +57,6 @@ class View(models.Model):
         },
     )
     timestamp = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return f"{getattr(self.user, 'email', 'Unknown')} viewed {self.video.title}"
