@@ -10,4 +10,4 @@ class FollowSerializer(RecordsCreationMixin, ModelSerializer):
     class Meta:
         model = Follow
         fields = ["id", "follower", "following"]
-        read_only_fields = ["id"]
+        read_only_fields = ["id", "follower"]

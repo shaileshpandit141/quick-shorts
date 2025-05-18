@@ -1,5 +1,6 @@
 from rest_framework.routers import DefaultRouter
 
+from .views.follow_view import FollowViewModelViewSet
 from .views.like_view import LikeViewModelViewSet
 from .views.short_video_view import ShortVideoModelViewSet
 from .views.short_video_view_view import ShortVideoViewModelViewSet
@@ -22,6 +23,9 @@ router.register(r"views", ShortVideoViewModelViewSet, basename="view")
 
 # Register the LikeViewModelViewSet with the router
 router.register(r"likes", LikeViewModelViewSet, basename="like")
+
+# Register the FollowViewModelViewSet with the router
+router.register(r"followers", FollowViewModelViewSet, basename="follower")
 
 # Include the router's URLs in the urlpatterns
 urlpatterns += router.urls
