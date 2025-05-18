@@ -1,4 +1,4 @@
-from rest_core.viewsets.mixins import ActionMessageMixin, ChoiceFieldViewSetMixin
+from rest_core.viewsets.mixins import ChoiceFieldViewSetMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
@@ -7,7 +7,6 @@ from short_video.serializers.short_video_serializer import ShortVideoSerializer
 
 
 class ShortVideoModelViewSet(
-    ActionMessageMixin,
     ChoiceFieldViewSetMixin,
     ModelViewSet,
 ):
