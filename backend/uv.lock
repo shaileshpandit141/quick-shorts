@@ -202,7 +202,7 @@ requires-dist = [
     { name = "redis", specifier = ">=5.2.1" },
     { name = "requests", specifier = ">=2.32.3" },
     { name = "requests-oauthlib", specifier = ">=2.0.0" },
-    { name = "rest-core", specifier = ">=0.1.32" },
+    { name = "rest-core", specifier = ">=0.1.36" },
     { name = "rest-framework-simplejwt", specifier = ">=0.0.2" },
     { name = "rsa", specifier = ">=4.9" },
     { name = "service-identity", specifier = ">=24.2.0" },
@@ -768,7 +768,7 @@ wheels = [
 
 [[package]]
 name = "rest-core"
-version = "0.1.35"
+version = "0.1.36"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
@@ -776,9 +776,9 @@ dependencies = [
     { name = "pydantic" },
     { name = "pytz" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d1/20/f27df1db7cf0030e018f781e8c9fe5ddfc8646ddb55e0e4ed004f83bd4d5/rest_core-0.1.35.tar.gz", hash = "sha256:7ed21d27bdcfe25128ae362f3cd4c7c324dcea2c3b9229a8acffed9a5d4662cb", size = 35124, upload-time = "2025-05-18T08:00:04.665Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e0/dc/efb13be7ab5f0851c3ba349f949eab3d85ecdb43b5c80ad1595159cce6b8/rest_core-0.1.36.tar.gz", hash = "sha256:f099f6a0ab361866152ca5f373aa40a06b2e0c1e7960e183afddaf5699472c18", size = 35149, upload-time = "2025-05-18T10:34:40.259Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e5/a1/1bfa8eb6b9f6bcb03df616b85aa18b0327ec85b86afe80635cda08101bd3/rest_core-0.1.35-py3-none-any.whl", hash = "sha256:becccaf074e2651f6fc1d532aade342b78a520a156c4d20b883caa9e02dabcd1", size = 50207, upload-time = "2025-05-18T08:00:02.821Z" },
+    { url = "https://files.pythonhosted.org/packages/e3/cc/02a4248b5bd8a14e45dbcac290a006a7ab540b93e929ce305d093febe95b/rest_core-0.1.36-py3-none-any.whl", hash = "sha256:cdc83add20fbc55a0647460a503e60cc01bee36c489bfab88ac1f10938ada519", size = 50227, upload-time = "2025-05-18T10:34:38.14Z" },
 ]
 
 [[package]]
