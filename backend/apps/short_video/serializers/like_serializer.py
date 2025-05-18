@@ -1,6 +1,7 @@
-from apps.user_auth.serializers.user_serializer import UserPublicSerializer
 from rest_core.serializers.mixins import RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer
+
+from apps.user_auth.serializers.user_serializer import UserPublicSerializer
 
 from ..models.like import Like
 from .short_video_serializer import ShortVideoSerializer
