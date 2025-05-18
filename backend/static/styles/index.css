@@ -6,8 +6,9 @@
 *,
 *::after,
 *::before {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 /*
@@ -18,15 +19,15 @@
  * Also configures colors, fonts and scrolling behavior
  */
 body {
-    height: fit-content;
-    width: 100%;
-    display: grid;
-    background-color: #181818;
-    color: #fff;
-    grid-template-columns: 40px repeat(12, 1fr) 40px;
-    font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
-    overflow-y: auto;
+  height: fit-content;
+  width: 100%;
+  display: grid;
+  background-color: #181818;
+  color: #fff;
+  grid-template-columns: 40px repeat(12, 1fr) 40px;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 /*
@@ -36,14 +37,14 @@ body {
  * Uses flexbox for internal layout
  */
 main {
-    grid-column: 2/-2;
-    width: 100%;
-    height: fit-content;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  grid-column: 2/-2;
+  width: 100%;
+  height: fit-content;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /*
@@ -52,10 +53,10 @@ main {
  * Limited to 350px maximum width
  */
 .logo-container {
-    aspect-ratio: 1/1;
-    width: 100%;
-    max-width: 350px;
-    overflow: hidden;
+  aspect-ratio: 1/1;
+  width: 100%;
+  max-width: 350px;
+  overflow: hidden;
 }
 
 /*
@@ -64,11 +65,11 @@ main {
  * Includes perpetual rocking animation
  */
 .logo-container img {
-    width: inherit;
-    height: inherit;
-    background-size: contain;
-    background-position: center;
-    animation: rotateInfinitely 2s infinite;
+  width: inherit;
+  height: inherit;
+  background-size: contain;
+  background-position: center;
+  animation: rotateInfinitely 2s infinite;
 }
 
 /*
@@ -77,17 +78,17 @@ main {
  * Complete cycle takes 2 seconds
  */
 @keyframes rotateInfinitely {
-    0% {
-        transform: rotate(22.5deg);
-    }
+  0% {
+    transform: rotate(22.5deg);
+  }
 
-    50% {
-        transform: rotate(-22.5deg);
-    }
+  50% {
+    transform: rotate(-22.5deg);
+  }
 
-    100% {
-        transform: rotate(22.5deg);
-    }
+  100% {
+    transform: rotate(22.5deg);
+  }
 }
 
 /*
@@ -96,10 +97,10 @@ main {
  * Maximum width of 550px
  */
 h1 {
-    padding-block: 16px;
-    letter-spacing: 0.04em;
-    text-align: center;
-    max-width: 550px;
+  padding-block: 16px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  max-width: 550px;
 }
 
 /*
@@ -108,12 +109,22 @@ h1 {
  * Maximum width of 450px for optimal line length
  */
 p {
-    letter-spacing: 0.04em;
-    line-height: 1.5;
-    text-align: center;
-    width: 100%;
-    max-width: 450px;
-    margin-bottom: 8px;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  text-align: center;
+  width: 100%;
+  max-width: 450px;
+  margin-bottom: 8px;
+}
+
+.action-btns {
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 /*
@@ -123,25 +134,27 @@ p {
  * Uses flex layout for centered content
  */
 .admin-link {
-    text-decoration: none;
-    background-color: #003120;
-    color: #fff;
-    font-size: 16px;
-    letter-spacing: 0.04em;
-    font-weight: 600;
-    text-transform: capitalize;
-    height: 40px;
-    width: 100%;
-    max-width: 250px;
-    padding-inline: 16px;
-    border-radius: 999rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    cursor: default;
-    margin-block: 16px;
-    transition: background-color 0.3s ease-in-out;
+  flex: 1;
+  text-decoration: none;
+  background-color: #003120;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  text-transform: capitalize;
+  white-space: nowrap;
+  height: 40px;
+  width: 100%;
+  min-width: fit-content;
+  max-width: 250px;
+  padding-inline: 16px;
+  border-radius: 999rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: default;
+  transition: background-color 0.3s ease-in-out;
 }
 
 /*
@@ -149,7 +162,7 @@ p {
  * Darkens background color on hover
  */
 .admin-link:hover {
-    background-color: #002719;
+  background-color: #002719;
 }
 
 /*
@@ -158,7 +171,7 @@ p {
  * (e.g., mouse or stylus, not touch screens)
  */
 @media (pointer: fine) {
-    .admin-link {
-        cursor: pointer;
-    }
+  .admin-link {
+    cursor: pointer;
+  }
 }
