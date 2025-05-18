@@ -5,6 +5,7 @@ from .views.like_view import LikeViewModelViewSet
 from .views.short_video_view import ShortVideoModelViewSet
 from .views.short_video_view_view import ShortVideoViewModelViewSet
 from .views.tag_view import TagModelViewSet
+from .views.comment_view import CommentModelViewSet
 
 # Define empty urlpatterns
 urlpatterns = []
@@ -26,6 +27,9 @@ router.register(r"likes", LikeViewModelViewSet, basename="like")
 
 # Register the FollowViewModelViewSet with the router
 router.register(r"followers", FollowViewModelViewSet, basename="follower")
+
+# Register the CommentModelViewSet with the router
+router.register(r"comments", CommentModelViewSet, basename="comment")
 
 # Include the router's URLs in the urlpatterns
 urlpatterns += router.urls
