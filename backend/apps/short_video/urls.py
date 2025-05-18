@@ -1,12 +1,12 @@
 from rest_framework.routers import DefaultRouter
 
 from .views.comment_view import CommentModelViewSet
-from .views.follow_view import FollowViewModelViewSet
-from .views.like_view import LikeViewModelViewSet
+from .views.follow_view import FollowModelViewSet
+from .views.like_view import LikeModelViewSet
 from .views.report_view import ReportModelViewSet
 from .views.short_video_view import ShortVideoModelViewSet
-from .views.short_video_view_view import ShortVideoViewModelViewSet
 from .views.tag_view import TagModelViewSet
+from .views.view_view import ViewModelViewSet
 
 # Define empty urlpatterns
 urlpatterns = []
@@ -20,14 +20,14 @@ router.register(r"short-videos", ShortVideoModelViewSet, basename="short-video")
 # Register the TagModelViewSet with the router
 router.register(r"tags", TagModelViewSet, basename="tag")
 
-# Register the ShortVideoViewModelViewSet with the router
-router.register(r"views", ShortVideoViewModelViewSet, basename="view")
+# Register the ViewModelViewSet with the router
+router.register(r"views", ViewModelViewSet, basename="view")
 
-# Register the LikeViewModelViewSet with the router
-router.register(r"likes", LikeViewModelViewSet, basename="like")
+# Register the LikeModelViewSet with the router
+router.register(r"likes", LikeModelViewSet, basename="like")
 
-# Register the FollowViewModelViewSet with the router
-router.register(r"followers", FollowViewModelViewSet, basename="follower")
+# Register the FollowModelViewSet with the router
+router.register(r"followers", FollowModelViewSet, basename="follower")
 
 # Register the CommentModelViewSet with the router
 router.register(r"comments", CommentModelViewSet, basename="comment")

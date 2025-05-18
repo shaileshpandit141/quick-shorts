@@ -6,7 +6,7 @@ from short_video.models.view import View
 from short_video.serializers.view_serializer import ViewSerializer
 
 
-class ShortVideoViewModelViewSet(
+class ViewModelViewSet(
     ChoiceFieldViewSetMixin,
     ModelViewSet,
 ):

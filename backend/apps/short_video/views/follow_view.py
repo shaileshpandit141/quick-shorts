@@ -6,7 +6,7 @@ from short_video.models.follow import Follow
 from short_video.serializers.follow_serializer import FollowSerializer
 
 
-class FollowViewModelViewSet(
+class FollowModelViewSet(
     ChoiceFieldViewSetMixin,
     ModelViewSet,
 ):
