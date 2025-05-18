@@ -1,8 +1,8 @@
 from rest_framework.routers import DefaultRouter
 
 from .views.short_video_view import ShortVideoModelViewSet
-from .views.tag_view import TagModelViewSet
 from .views.short_video_view_view import ShortVideoViewModelViewSet
+from .views.tag_view import TagModelViewSet
 
 # Define empty urlpatterns
 urlpatterns = []
