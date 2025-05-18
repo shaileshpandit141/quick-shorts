@@ -1,7 +1,8 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
-from .views.tag_view import TagDetailView, TagListView
+
 from .views.short_video_view import ShortVideoModelViewSet
+from .views.tag_view import TagDetailView, TagListView
 
 urlpatterns = [
     path("tags/", TagListView.as_view(), name="tag-list"),

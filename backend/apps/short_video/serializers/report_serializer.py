@@ -3,7 +3,6 @@ from rest_core.serializers.mixins import RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer
 
 from ..models.report import Report
-
 from .short_video_serializer import ShortVideoSerializer
 
 
