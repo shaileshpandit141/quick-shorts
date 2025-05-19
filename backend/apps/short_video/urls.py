@@ -7,15 +7,24 @@ from .views.report_view import ReportModelViewSet
 from .views.short_video_view import ShortVideoModelViewSet
 from .views.tag_view import TagModelViewSet
 from .views.view_view import ViewModelViewSet
+from .views.short_video_stream_view import ShortVideoStreamAPIView
+from django.urls import path
 
 # Define empty urlpatterns
-urlpatterns = []
+urlpatterns = [
+    # Add short videos streams endpoint
+    path(
+        "videos/streams/<int:video_id>/",
+        ShortVideoStreamAPIView.as_view(),
+        name="videos-stream",
+    )
+]
 
 # Create a default Drf router
 router = DefaultRouter()
 
 # Register the ShortVideoModelViewSet with the router
-router.register(r"short-videos", ShortVideoModelViewSet, basename="short-video")
+router.register(r"videos", ShortVideoModelViewSet, basename="video")
 
 # Register the TagModelViewSet with the router
 router.register(r"tags", TagModelViewSet, basename="tag")
