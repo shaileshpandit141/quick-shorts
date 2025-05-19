@@ -1,14 +1,14 @@
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from .views.comment_view import CommentModelViewSet
 from .views.follow_view import FollowModelViewSet
 from .views.like_view import LikeModelViewSet
 from .views.report_view import ReportModelViewSet
+from .views.short_video_stream_view import ShortVideoStreamAPIView
 from .views.short_video_view import ShortVideoModelViewSet
 from .views.tag_view import TagModelViewSet
 from .views.view_view import ViewModelViewSet
-from .views.short_video_stream_view import ShortVideoStreamAPIView
-from django.urls import path
 
 # Define empty urlpatterns
 urlpatterns = [
