@@ -12,7 +12,7 @@ class DeactivateAccountView(APIView):
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
 
-    def post(self, request, *args, **kwargs) -> Response:
+    def post(self, request) -> Response:
         """Deactivate the authenticated user's account."""
 
         # Get user and password from request
@@ -45,7 +45,7 @@ class DeactivateAccountView(APIView):
         user.is_active = False
         user.save()
 
-        # Handel email send
+        # Creating the Email Service instance
         email = EmailService(
             subject="Account Deactivation Confirmation",
             emails=Emails(

@@ -1,58 +1,12 @@
-from typing import Any
-
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    BaseUserManager,
-    PermissionsMixin,
-)
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.core.validators import MinLengthValidator
 from django.db import models
+from user_auth.managers.user_manager import UserManager
+from user_auth.mixins import UniqueUsernameMixin
 
 
-class UserManager(BaseUserManager):
-    """Custom user manager that extends Django's BaseUserManager
-    to handle email-based authentication. Provides methods for
-    creating regular users and superusers.
-    """
-
-    def create_user(self, email, password=None, **extra_fields) -> Any:
-        """Creates and saves a User with the given email and password."""
-
-        if not email:
-            raise ValueError("The Email field must be set")
-
-        # Normalize and validate email
-        email = self.normalize_email(email)
-        if "@" not in email:
-            raise ValueError("Invalid email address")
-
-        # Set username from email
-        extra_fields["username"] = email.split("@")[0]
-
-        # Create and save user
-        user = self.model(email=email, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email, password=None, **extra_fields) -> Any:
-        """Creates and saves a superuser with the given email and password.
-        Sets is_staff, is_superuser and is_active to True by default.
-        """
-
-        extra_fields.setdefault("is_active", True)
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_superuser", True)
-        extra_fields.setdefault("is_verified", True)
-
-        if extra_fields.get("is_staff") is not True:
-            raise ValueError("Superuser must have is_staff=True.")
-        if extra_fields.get("is_superuser") is not True:
-            raise ValueError("Superuser must have is_superuser=True.")
-
-        return self.create_user(email, password, **extra_fields)
-
-
-class User(AbstractBaseUser, PermissionsMixin):
+class User(UniqueUsernameMixin, AbstractBaseUser, PermissionsMixin):
     """Custom user model that uses email as the username field
     instead of a username. Extends Django's AbstractBaseUser
     and PermissionsMixin.
@@ -60,9 +14,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta(AbstractBaseUser.Meta, PermissionsMixin.Meta):  # type: ignore
         db_table = "users"
-        verbose_name = "User"
-        verbose_name_plural = "Users"
-        ordering = ["-date_joined"]
+        verbose_name = "user"
+        verbose_name_plural = "users"
+        ordering = ["-last_login"]
 
     objects = UserManager()
 
@@ -75,7 +29,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=False,
         blank=False,
         db_index=True,
-        default="",
         error_messages={
             "invalid": "Please enter a valid email address",
             "null": "Email address is required",
@@ -85,15 +38,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         max_length=30,
         unique=True,
-        null=False,
-        blank=False,
         db_index=False,
         default="",
+        validators=[
+            UnicodeUsernameValidator(),
+            MinLengthValidator(5),
+        ],
         error_messages={
             "invalid": "Please enter a valid last name",
-            "null": "Last name is required",
-            "blank": "Last name cannot be empty",
             "max_length": "Last name cannot be longer than 30 characters",
+            "min_length": "Username must be at least 3 characters long.",
+            "unique": "A user with that username already exists.",
         },
     )
     first_name = models.CharField(
@@ -127,43 +82,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     picture = models.ImageField(
         upload_to="users/pictures/",
         max_length=100,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         storage=None,
         db_index=False,
-        default="users/pictures/default.png",
+        default=None,
         error_messages={
             "invalid": "Please provide a valid image file",
             "invalid_image": "The uploaded file must be a valid image format like JPG, PNG or GIF",
             "missing": "Please select an image file to upload",
             "empty": "The uploaded file is empty. Please select a valid image file",
             "max_length": "The filename is too long. 100 characters allowed",
-            "null": "An picture image is required",
-            "blank": "An picture image is required",
-        },
-    )
-    date_joined = models.DateTimeField(
-        auto_now=False,
-        auto_now_add=True,
-        null=False,
-        blank=False,
-        db_index=False,
-        error_messages={
-            "invalid": "Please enter a valid date and time",
-            "null": "Date joined is required",
-            "blank": "Date joined cannot be empty",
-        },
-    )
-    last_login = models.DateTimeField(
-        auto_now=True,
-        auto_now_add=False,
-        null=False,
-        blank=False,
-        db_index=False,
-        error_messages={
-            "invalid": "Please enter a valid date and time",
-            "null": "Last login date is required",
-            "blank": "Last login date cannot be empty",
         },
     )
     is_active = models.BooleanField(
@@ -206,6 +135,30 @@ class User(AbstractBaseUser, PermissionsMixin):
             "blank": "Account verification status cannot be empty",
         },
     )
+    date_joined = models.DateTimeField(
+        auto_now=False,
+        auto_now_add=True,
+        null=False,
+        blank=False,
+        db_index=False,
+        error_messages={
+            "invalid": "Please enter a valid date and time",
+            "null": "Date joined is required",
+            "blank": "Date joined cannot be empty",
+        },
+    )
+    last_login = models.DateTimeField(
+        auto_now=True,
+        auto_now_add=False,
+        null=False,
+        blank=False,
+        db_index=False,
+        error_messages={
+            "invalid": "Please enter a valid date and time",
+            "null": "Last login date is required",
+            "blank": "Last login date cannot be empty",
+        },
+    )
 
     def __str__(self) -> str:
         """Returns the string representation of the user (email)"""
@@ -222,3 +175,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         if self.first_name is None or self.last_name is None:
             return None
         return f"{self.first_name} {self.last_name}".strip()
+
+    def save(self, *args, **kwargs) -> None:
+        """Override the save method to generate a unique username"""
+
+        # Generate a unique username if not provided
+        if not self.username and self.email:
+            self.username = self.generate_username(self.email, 30)
+
+        # Call the parent class's save method
+        super().save(*args, **kwargs)

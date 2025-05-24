@@ -1,10 +1,9 @@
 from rest_core.serializers.mixins import RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 
-from apps.user_auth.serializers.user_serializer import UserPublicSerializer
-
-from ..models.report import Report
-from ..models.short_video import ShortVideo
+from user_auth.serializers.user_serializer import UserSerializer
+from short_video.models.report import Report
+from short_video.models.short_video import ShortVideo
 from .short_video_serializer import ShortVideoSerializer
 
 
@@ -12,7 +11,7 @@ class ReportSerializer(RecordsCreationMixin, ModelSerializer):
     """Serializer class for Report"""
 
     # Call nested serializers
-    reported_by = UserPublicSerializer(read_only=True)
+    reported_by = UserSerializer(read_only=True)
     video = ShortVideoSerializer(read_only=True)
     video_id = PrimaryKeyRelatedField(
         queryset=ShortVideo.objects.all(),

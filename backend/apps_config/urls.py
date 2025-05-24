@@ -11,31 +11,38 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic.base import RedirectView
+from rest_core.django.views import url_404_apiview
 
-from apps.google_auth import urls as google_auth_urls
-from apps.short_video import urls as short_video_urls
-from apps.user_auth import urls as users_auth_urls
+from .views import IndexTemplateView
 
-from .views import IndexTemplateView, custom_404_apiview
-
-# Main URL patterns defining route-to-view mappings
+# Built-in URL Configurations
 urlpatterns = [
-    # Served the index page
     path("", IndexTemplateView.as_view(), name="index"),
-    # Django admin interface accessible at /admin
-    path("admin/", admin.site.urls, name="admin"),
-    # # Redirect /favicon.ico requests to the static file location of the favicon
     path(
-        "favicon.ico", RedirectView.as_view(url="/static/favicon.ico", permanent=True)
+        "favicon.ico",
+        RedirectView.as_view(
+            url="/static/favicon.ico",
+            permanent=True,
+        ),
     ),
-    # User authentication URLs under /api/v1/auth
-    path("api/v1/auth/", include((users_auth_urls, "user_auth"))),
-    path("api/v1/auth/", include((google_auth_urls, "google_auth"))),
-    path("api/v1/shorts/", include((short_video_urls, "short_video"))),
+    path("admin/", admin.site.urls, name="admin"),
+]
+
+# User-Defined URL Configurations
+# ===============================
+# Auth related URLs Configurations
+urlpatterns += [
+    path("api/v1/auth/", include(("apps.user_auth.urls", "user_auth"))),
+    path("api/v1/auth/", include(("apps.google_auth.urls", "google_auth"))),
+]
+
+# API related URLs Configurations
+urlpatterns += [
+    path("api/v1/shorts/", include(("apps.short_video.urls", "short_video"))),
 ]
 
 # Configure custom error handling
-handler404 = custom_404_apiview  # noqa: F811
+handler404 = url_404_apiview  # noqa: F811
 
 # Enable serving of user-uploaded media files
 if settings.DEBUG:

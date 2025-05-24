@@ -21,13 +21,17 @@ class CustomUserAdmin(UserAdmin):
     list_display = [
         field.name
         for field in User._meta.get_fields()
-        if not (field.many_to_many or field.one_to_many or field.name == "password")
+        if not (
+            field.many_to_many
+            or field.one_to_many
+            or field.name in ["password", "picture"]
+        )
     ]
     list_display_links = list_display
     list_filter = ["is_staff", "is_superuser", "is_active", "is_verified", "last_login"]
     search_fields = ["email", "username", "first_name", "last_name"]
     readonly_fields = ["date_joined", "last_login"]
-    ordering = ("-updated_at",)
+    ordering = ("-last_login",)
     list_per_page = 16
 
     def full_name(self, obj) -> str:

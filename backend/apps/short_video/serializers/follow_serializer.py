@@ -1,7 +1,6 @@
 from rest_core.serializers.mixins import RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer
-
-from ..models.follow import Follow
+from short_video.models.follow import Follow
 
 
 class FollowSerializer(RecordsCreationMixin, ModelSerializer):
