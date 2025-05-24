@@ -24,6 +24,13 @@ const UserProfile: React.FC = (): JSX.Element | null => {
     return null;
   }
 
+  function renderImage() {
+    if (data && data.picture) {
+      return <img src={data.picture} alt="user-picture-image" />;
+    }
+    return <p className="no-user-image">{data && data.email.slice(0, 1)}</p>;
+  }
+
   return (
     <div className="user-profile">
       <button
@@ -31,38 +38,29 @@ const UserProfile: React.FC = (): JSX.Element | null => {
         ref={buttonRef}
         onClick={toggleDropdownMenu}
       >
-        {"picture" in data && (
-          <img src={data.picture} alt="user-picture-image" />
-        )}
+        {renderImage()}
       </button>
       <div className="card-container" ref={contentRef}>
         <div className="card-header">
           <Link to="/dashboard" className="dashboard-link">
-            <section className="user-profile-image">
-              {"picture" in data && (
-                <img src={data.picture} alt="user-picture-image" />
-              )}
-            </section>
+            <section className="user-profile-image">{renderImage()}</section>
             <section className="user-profile-info">
-              <p className="email">{"email" in data && data.email}</p>
+              <p className="email">{data && data.email}</p>
               <p className="view-settings">view dashboard</p>
             </section>
           </Link>
           <div className="line-break"></div>
-          {"is_superuser" in data &&
-            data.is_superuser &&
-            "is_staff" in data &&
-            data.is_staff && (
-              <NavLink
-                to={`${getEnv("BASE_API_URL")}/admin/`}
-                type="link"
-                className="edit-profile"
-                target="_blank"
-                icon="supervisorAccountIcon"
-              >
-                Django Admin
-              </NavLink>
-            )}
+          {data && (
+            <NavLink
+              to={`${getEnv("BASE_API_URL")}/admin/`}
+              type="link"
+              className="edit-profile"
+              target="_blank"
+              icon="supervisorAccountIcon"
+            >
+              Django Admin
+            </NavLink>
+          )}
           <SignoutButton />
         </div>
       </div>
