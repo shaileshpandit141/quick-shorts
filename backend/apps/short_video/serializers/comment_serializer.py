@@ -1,8 +1,7 @@
 from rest_core.serializers.mixins import RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer
-
-from user_auth.serializers.user_serializer import UserSerializer
 from short_video.models.comment import Comment
+from user_auth.serializers.user_serializer import UserSerializer
 
 
 class CommentSerializer(RecordsCreationMixin, ModelSerializer):

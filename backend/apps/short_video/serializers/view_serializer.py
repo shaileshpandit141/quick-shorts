@@ -2,6 +2,7 @@ from rest_core.serializers.mixins import RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer
 from short_video.models.view import View
 
+
 class ViewSerializer(RecordsCreationMixin, ModelSerializer):
     """Serializer class for View"""
 

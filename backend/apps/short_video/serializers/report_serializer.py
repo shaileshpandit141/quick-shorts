@@ -1,9 +1,9 @@
 from rest_core.serializers.mixins import RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
-
-from user_auth.serializers.user_serializer import UserSerializer
 from short_video.models.report import Report
 from short_video.models.short_video import ShortVideo
+from user_auth.serializers.user_serializer import UserSerializer
+
 from .short_video_serializer import ShortVideoSerializer
 
 
