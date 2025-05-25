@@ -17,6 +17,7 @@ class ReportModelViewSet(
     queryset = Report.objects.all()
     serializer_class = ReportSerializer
     lookup_field = "id"
+    http_method_names = ["post"]
 
     def perform_create(self, serializer) -> None:
         """Create a new report view with the user."""
