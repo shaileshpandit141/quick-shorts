@@ -1,4 +1,5 @@
 from typing import Any, Literal
+
 from rest_framework.permissions import BasePermission
 from short_video.models.short_video import ShortVideo
 

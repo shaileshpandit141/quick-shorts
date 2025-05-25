@@ -1,10 +1,11 @@
 from typing import NoReturn
+
+from rest_framework.exceptions import MethodNotAllowed
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 from short_video.models.view import View
 from short_video.serializers.view_serializer import ViewSerializer
-from rest_framework.exceptions import MethodNotAllowed
 
 
 class ViewModelViewSet(ModelViewSet):
