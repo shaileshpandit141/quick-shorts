@@ -1,24 +1,10 @@
 from rest_core.serializers.mixins import RecordsCreationMixin
-from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
+from rest_framework.serializers import ModelSerializer, ValidationError
 from short_video.models.report import Report
-from short_video.models.short_video import ShortVideo
-from user_auth.serializers.user_serializer import UserSerializer
-
-from .short_video_serializer import ShortVideoSerializer
 
 
 class ReportSerializer(RecordsCreationMixin, ModelSerializer):
     """Serializer class for Report"""
-
-    # Call nested serializers
-    reported_by = UserSerializer(read_only=True)
-    video = ShortVideoSerializer(read_only=True)
-    video_id = PrimaryKeyRelatedField(
-        queryset=ShortVideo.objects.all(),
-        write_only=True,
-        source="video",
-        required=True,
-    )
 
     class Meta:
         model = Report
@@ -32,3 +18,17 @@ class ReportSerializer(RecordsCreationMixin, ModelSerializer):
             "updated_at",
         ]
         read_only_fields = ["id", "reported_by", "status", "updated_at"]
+
+    def validate(self, attrs: dict[str, str]) -> dict[str, str]:
+        """Validating unique reports on a video"""
+
+        # Get required fields.
+        user = self.context["request"].user
+        video = attrs.get("video")
+
+        # Check if already reported this video or not.
+        if Report.objects.filter(reported_by=user, video=video).exists():
+            raise ValidationError("You have already reported this video.")
+
+        # Return validated data
+        return attrs
