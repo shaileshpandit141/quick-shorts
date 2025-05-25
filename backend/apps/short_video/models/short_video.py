@@ -72,7 +72,6 @@ class ShortVideo(models.Model):
         null=False,
         storage=None,
         db_index=False,
-        default=None,
         error_messages={
             "invalid": "No file was submitted",
             "missing": "No file was submitted",
