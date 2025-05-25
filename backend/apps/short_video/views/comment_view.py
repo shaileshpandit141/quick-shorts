@@ -17,4 +17,4 @@ class CommentModelViewSet(ModelViewSet):
 
     def perform_create(self, serializer) -> None:
         """Create a new comment view with the user."""
-        serializer.save(user=self.request.user)
+        serializer.save(owner=self.request.user)
