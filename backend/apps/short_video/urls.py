@@ -36,7 +36,7 @@ router.register(r"views", ViewModelViewSet, basename="view")
 router.register(r"likes", LikeModelViewSet, basename="like")
 
 # Register the FollowModelViewSet with the router
-router.register(r"followers", FollowModelViewSet, basename="follower")
+router.register(r"follows", FollowModelViewSet, basename="follow")
 
 # Register the CommentModelViewSet with the router
 router.register(r"comments", CommentModelViewSet, basename="comment")
