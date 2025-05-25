@@ -18,7 +18,7 @@ class Comment(models.Model):
     objects = models.Manager()
 
     # Model fields for Comment
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         primary_key=False,
@@ -72,4 +72,4 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return f"{self.user.email} Comment {self.video.title}"
+        return f"{self.owner.email} Comment {self.video.title}"
