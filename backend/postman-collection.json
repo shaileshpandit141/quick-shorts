@@ -141,6 +141,13 @@
 										"type": "text/javascript",
 										"packages": {}
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [],
+										"type": "text/javascript"
+									}
 								}
 							],
 							"request": {
@@ -798,7 +805,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{base_url}}/shorts/videos/?page=2&page-size=1",
+											"raw": "{{base_url}}/shorts/videos/",
 											"host": [
 												"{{base_url}}"
 											],
@@ -810,11 +817,34 @@
 											"query": [
 												{
 													"key": "page",
-													"value": "2"
+													"value": "2",
+													"disabled": true
 												},
 												{
 													"key": "page-size",
-													"value": "1"
+													"value": "1",
+													"disabled": true
+												},
+												{
+													"key": "owner",
+													"value": "2",
+													"disabled": true
+												},
+												{
+													"key": "tags",
+													"value": "10",
+													"disabled": true
+												},
+												{
+													"key": "search",
+													"value": "shorts",
+													"disabled": true
+												},
+												{
+													"key": "ordering",
+													"value": "-updated_at",
+													"description": "The ordering key support those values id, -id, updated_at, and -updated_at(default)",
+													"disabled": true
 												}
 											]
 										}
@@ -1373,7 +1403,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{base_url}}/shorts/comments/?page=2&page-size=2",
+											"raw": "{{base_url}}/shorts/comments/?video=2",
 											"host": [
 												"{{base_url}}"
 											],
@@ -1385,10 +1415,16 @@
 											"query": [
 												{
 													"key": "page",
-													"value": "2"
+													"value": "2",
+													"disabled": true
 												},
 												{
 													"key": "page-size",
+													"value": "2",
+													"disabled": true
+												},
+												{
+													"key": "video",
 													"value": "2"
 												}
 											]
@@ -1416,12 +1452,12 @@
 											"formdata": [
 												{
 													"key": "video",
-													"value": "7",
+													"value": "2",
 													"type": "text"
 												},
 												{
 													"key": "content",
-													"value": "test comment to video 7",
+													"value": "New test comment to video 2",
 													"type": "text"
 												}
 											]
