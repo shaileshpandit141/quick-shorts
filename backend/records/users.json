@@ -1,92 +1,92 @@
 [
   {
     "id": 2,
-    "email": "anthony49@fletcher.net",
-    "username": "qmartinez",
+    "email": "useremail2@gmail.com",
+    "username": "username2",
     "first_name": "Nicole",
     "last_name": "Brown",
     "is_verified": true,
-    "password": "testuserpassword@1234"
+    "password": "userpassword@1234"
   },
   {
     "id": 3,
-    "email": "wbrandt@griffin-lopez.info",
-    "username": "kevin30",
+    "email": "useremail3@gmail.com",
+    "username": "username3",
     "first_name": "Mark",
     "last_name": "Simpson",
     "is_verified": true,
-    "password": "testuserpassword@1234"
+    "password": "userpassword@1234"
   },
   {
     "id": 4,
-    "email": "xalexander@hotmail.com",
-    "username": "rbrooks",
+    "email": "useremail4@gmail.com",
+    "username": "username4",
     "first_name": "Kenneth",
     "last_name": "Salazar",
     "is_verified": true,
-    "password": "testuserpassword@1234"
+    "password": "userpassword@1234"
   },
   {
     "id": 5,
-    "email": "margaret15@cook.com",
-    "username": "jacksonnicholas",
+    "email": "useremail5@gmail.com",
+    "username": "username5",
     "first_name": "Derek",
     "last_name": "Nelson",
     "is_verified": true,
-    "password": "testuserpassword@1234"
+    "password": "userpassword@1234"
   },
   {
     "id": 6,
-    "email": "hurleyshelly@fitzgerald.com",
-    "username": "mirandabates",
+    "email": "useremail6@gmail.com",
+    "username": "username6",
     "first_name": "Carrie",
     "last_name": "Watkins",
     "is_verified": true,
-    "password": "testuserpassword@1234"
+    "password": "userpassword@1234"
   },
   {
     "id": 7,
-    "email": "melanie01@thompson.com",
-    "username": "karencastillo",
+    "email": "useremail7@gmail.com",
+    "username": "username7",
     "first_name": "Angela",
     "last_name": "Brown",
     "is_verified": true,
-    "password": "testuserpassword@1234"
+    "password": "userpassword@1234"
   },
   {
     "id": 8,
-    "email": "brandonmejia@blankenship.com",
-    "username": "caitlinrichardson",
+    "email": "useremail8@gmail.com",
+    "username": "username8",
     "first_name": "Corey",
     "last_name": "Guerrero",
     "is_verified": true,
-    "password": "testuserpassword@1234"
+    "password": "userpassword@1234"
   },
   {
     "id": 9,
-    "email": "navarropatrick@hotmail.com",
-    "username": "charles23",
+    "email": "useremail9@gmail.com",
+    "username": "username9",
     "first_name": "Gregory",
     "last_name": "Holland",
     "is_verified": true,
-    "password": "testuserpassword@1234"
+    "password": "userpassword@1234"
   },
   {
     "id": 10,
-    "email": "megan24@hall-fox.com",
-    "username": "ugarcia",
+    "email": "useremail10@gmail.com",
+    "username": "username10",
     "first_name": "Adrienne",
     "last_name": "Lucas",
     "is_verified": true,
-    "password": "testuserpassword@1234"
+    "password": "userpassword@1234"
   },
   {
     "id": 11,
-    "email": "alyssa28@morton-cook.com",
-    "username": "jarmstrong",
+    "email": "useremail11@gmail.com",
+    "username": "username11",
     "first_name": "John",
     "last_name": "Silva",
     "is_verified": true,
-    "password": "testuserpassword@1234"
+    "password": "userpassword@1234"
   }
 ]
