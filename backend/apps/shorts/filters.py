@@ -1,8 +1,8 @@
 from django_filters import FilterSet, CharFilter
-from shorts.models.video import ShortVideo
+from shorts.models.video import Video
 
 
-class ShortVideoFilterSet(FilterSet):
+class VideoFilterSet(FilterSet):
     username = CharFilter(
         field_name="owner__username", lookup_expr="iexact"
     )
@@ -11,5 +11,5 @@ class ShortVideoFilterSet(FilterSet):
     )
 
     class Meta:
-        model = ShortVideo
+        model = Video
         fields = ["username", "tag"]

@@ -4,7 +4,7 @@ from .models.comment import Comment
 from .models.follow import Follow
 from .models.like import Like
 from .models.report import Report
-from .models.video import ShortVideo
+from .models.video import Video
 from .models.tag import Tag
 from .models.view import View
 
@@ -23,11 +23,11 @@ class TagAdmin(admin.ModelAdmin):
     list_per_page = 16
 
 
-@admin.register(ShortVideo)
-class ShortVideoAdmin(admin.ModelAdmin):
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
     list_display = [
         field.name
-        for field in ShortVideo._meta.get_fields()
+        for field in Video._meta.get_fields()
         if not (field.many_to_many or field.one_to_many)
     ]
     list_display_links = list_display

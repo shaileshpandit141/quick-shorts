@@ -1,20 +1,20 @@
 from rest_core.serializers.mixins import FileFieldUrlMixin, RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer
-from shorts.models.video import ShortVideo
+from shorts.models.video import Video
 from user_auth.serializers.user_serializers import UserPublicSerializer
 
 from .tag import TagSerializer
 
 
 class VideoSerializer(RecordsCreationMixin, FileFieldUrlMixin, ModelSerializer):
-    """Serializer class for ShortVideo"""
+    """Serializer class for Video"""
 
     # Call nested serializers
     owner = UserPublicSerializer(read_only=True)
     tags = TagSerializer(many=True, read_only=True)
 
     class Meta:
-        model = ShortVideo
+        model = Video
         fields = [
             "id",
             "owner",

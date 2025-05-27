@@ -6,13 +6,13 @@ from .tag import Tag
 User = get_user_model()
 
 
-class ShortVideo(models.Model):
-    """ShortVideo model class"""
+class Video(models.Model):
+    """Video model class"""
 
     class Meta:
-        db_table = "short_video"
-        verbose_name = "short video"
-        verbose_name_plural = "short videos"
+        db_table = "video"
+        verbose_name = "video"
+        verbose_name_plural = "videos"
         ordering = ["-updated_at"]
 
     objects = models.Manager()
@@ -22,7 +22,7 @@ class ShortVideo(models.Model):
         ("private", "Private"),
     ]
 
-    # Model fields for ShortVideo
+    # Model fields for Video
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

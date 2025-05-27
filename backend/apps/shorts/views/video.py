@@ -4,10 +4,10 @@ from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
-from shorts.models.video import ShortVideo
+from shorts.models.video import Video
 from shorts.permissions import CanUpdateAndDelete
 from shorts.serializers.video import VideoSerializer
-from shorts.filters import ShortVideoFilterSet
+from shorts.filters import VideoFilterSet
 
 class VideoModelViewSet(
     ChoiceFieldViewSetMixin,
@@ -17,7 +17,7 @@ class VideoModelViewSet(
 
     permission_classes = [IsAuthenticated, CanUpdateAndDelete]
     throttle_classes = [UserRateThrottle]
-    queryset = ShortVideo.objects.all()
+    queryset = Video.objects.all()
     serializer_class = VideoSerializer
     lookup_field = "id"
     choice_fields = ["privacy"]
@@ -26,7 +26,7 @@ class VideoModelViewSet(
         filters.SearchFilter,
         filters.OrderingFilter,
     ]
-    filterset_class = ShortVideoFilterSet
+    filterset_class = VideoFilterSet
     # filterset_fields = ["owner", "tags"]
     search_fields = ["title", "description"]
     ordering_fields = ["id", "updated_at"]

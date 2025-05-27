@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from .video import ShortVideo
+from .video import Video
 
 User = get_user_model()
 
@@ -39,7 +39,7 @@ class Comment(models.Model):
         },
     )
     video = models.ForeignKey(
-        ShortVideo,
+        Video,
         on_delete=models.CASCADE,
         primary_key=False,
         related_name="comments",
