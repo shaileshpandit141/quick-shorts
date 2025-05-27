@@ -1,0 +1,278 @@
+{
+  "page": {
+    "current": 1,
+    "total": 2,
+    "size": 10,
+    "total_items": 20,
+    "next": "http://localhost:8000/api/v1/shorts/videos/?page=2&page-size=10",
+    "previous": null
+  },
+  "results": [
+    {
+      "id": 20,
+      "owner": {
+        "id": 10,
+        "email": "useremail10@gmail.com",
+        "username": "username10",
+        "first_name": "Adrienne",
+        "last_name": "Lucas",
+        "full_name": "Adrienne Lucas",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_2.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_3.jpeg",
+      "caption": "Economic either training city.",
+      "tags": [
+        {
+          "id": 6,
+          "name": "or"
+        }
+      ],
+      "privacy": "public",
+      "updated_at": "2025-05-27T14:50:19.772614Z"
+    },
+    {
+      "id": 19,
+      "owner": {
+        "id": 10,
+        "email": "useremail10@gmail.com",
+        "username": "username10",
+        "first_name": "Adrienne",
+        "last_name": "Lucas",
+        "full_name": "Adrienne Lucas",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_3.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_2.jpeg",
+      "caption": "On price federal customer rather power. Hair surface spend leader.",
+      "tags": [
+        {
+          "id": 10,
+          "name": "amount"
+        },
+        {
+          "id": 5,
+          "name": "industry"
+        },
+        {
+          "id": 1,
+          "name": "speech"
+        }
+      ],
+      "privacy": "public",
+      "updated_at": "2025-05-27T14:50:19.754366Z"
+    },
+    {
+      "id": 18,
+      "owner": {
+        "id": 10,
+        "email": "useremail10@gmail.com",
+        "username": "username10",
+        "first_name": "Adrienne",
+        "last_name": "Lucas",
+        "full_name": "Adrienne Lucas",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_1.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_3.jpeg",
+      "caption": "Art group play property everybody in.",
+      "tags": [
+        {
+          "id": 3,
+          "name": "blue"
+        }
+      ],
+      "privacy": "public",
+      "updated_at": "2025-05-27T14:50:19.735331Z"
+    },
+    {
+      "id": 17,
+      "owner": {
+        "id": 5,
+        "email": "useremail5@gmail.com",
+        "username": "username5",
+        "first_name": "Derek",
+        "last_name": "Nelson",
+        "full_name": "Derek Nelson",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_2.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_1.jpeg",
+      "caption": "Past bank behavior student read.",
+      "tags": [
+        {
+          "id": 10,
+          "name": "amount"
+        },
+        {
+          "id": 9,
+          "name": "different"
+        },
+        {
+          "id": 8,
+          "name": "glass"
+        }
+      ],
+      "privacy": "private",
+      "updated_at": "2025-05-27T14:50:19.715632Z"
+    },
+    {
+      "id": 16,
+      "owner": {
+        "id": 3,
+        "email": "useremail3@gmail.com",
+        "username": "username3",
+        "first_name": "Mark",
+        "last_name": "Simpson",
+        "full_name": "Mark Simpson",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_3.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_3.jpeg",
+      "caption": "Serve baby receive think carry thousand. Science here their amount involve serve.",
+      "tags": [
+        {
+          "id": 10,
+          "name": "amount"
+        },
+        {
+          "id": 6,
+          "name": "or"
+        }
+      ],
+      "privacy": "private",
+      "updated_at": "2025-05-27T14:50:19.696258Z"
+    },
+    {
+      "id": 15,
+      "owner": {
+        "id": 5,
+        "email": "useremail5@gmail.com",
+        "username": "username5",
+        "first_name": "Derek",
+        "last_name": "Nelson",
+        "full_name": "Derek Nelson",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_1.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_2.jpeg",
+      "caption": "Shoulder accept charge she. Always later city policy conference case.",
+      "tags": [
+        {
+          "id": 6,
+          "name": "or"
+        }
+      ],
+      "privacy": "private",
+      "updated_at": "2025-05-27T14:50:19.678576Z"
+    },
+    {
+      "id": 14,
+      "owner": {
+        "id": 2,
+        "email": "useremail2@gmail.com",
+        "username": "username2",
+        "first_name": "Nicole",
+        "last_name": "Brown",
+        "full_name": "Nicole Brown",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_2.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_2.jpeg",
+      "caption": "Report cost gun person blood drive over. Skill stand part into speak team need.",
+      "tags": [
+        {
+          "id": 8,
+          "name": "glass"
+        },
+        {
+          "id": 3,
+          "name": "blue"
+        },
+        {
+          "id": 1,
+          "name": "speech"
+        }
+      ],
+      "privacy": "private",
+      "updated_at": "2025-05-27T14:50:19.662139Z"
+    },
+    {
+      "id": 13,
+      "owner": {
+        "id": 5,
+        "email": "useremail5@gmail.com",
+        "username": "username5",
+        "first_name": "Derek",
+        "last_name": "Nelson",
+        "full_name": "Derek Nelson",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_3.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_1.jpeg",
+      "caption": "Pretty raise learn popular certainly whatever response.",
+      "tags": [
+        {
+          "id": 9,
+          "name": "different"
+        },
+        {
+          "id": 3,
+          "name": "blue"
+        },
+        {
+          "id": 2,
+          "name": "wide"
+        }
+      ],
+      "privacy": "private",
+      "updated_at": "2025-05-27T14:50:19.638971Z"
+    },
+    {
+      "id": 12,
+      "owner": {
+        "id": 1,
+        "email": "shailesh@gmail.com",
+        "username": "shailesh-35737890",
+        "first_name": "",
+        "last_name": "",
+        "full_name": "",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_2.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_1.jpeg",
+      "caption": "Themselves soldier message base list suffer.",
+      "tags": [
+        {
+          "id": 9,
+          "name": "different"
+        }
+      ],
+      "privacy": "private",
+      "updated_at": "2025-05-27T14:50:19.621681Z"
+    },
+    {
+      "id": 11,
+      "owner": {
+        "id": 3,
+        "email": "useremail3@gmail.com",
+        "username": "username3",
+        "first_name": "Mark",
+        "last_name": "Simpson",
+        "full_name": "Mark Simpson",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_1.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_1.jpeg",
+      "caption": "Media half sure change.",
+      "tags": [
+        {
+          "id": 8,
+          "name": "glass"
+        }
+      ],
+      "privacy": "private",
+      "updated_at": "2025-05-27T14:50:19.605366Z"
+    }
+  ]
+}
