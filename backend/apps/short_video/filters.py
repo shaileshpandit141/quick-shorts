@@ -4,10 +4,10 @@ from short_video.models.short_video import ShortVideo
 
 class ShortVideoFilterSet(FilterSet):
     username = CharFilter(
-        field_name="owner__username", lookup_expr="exact"
+        field_name="owner__username", lookup_expr="iexact"
     )
     tag = CharFilter(
-        field_name="tags__name", lookup_expr="exact"
+        field_name="tags__name", lookup_expr="iexact"
     )
 
     class Meta:
