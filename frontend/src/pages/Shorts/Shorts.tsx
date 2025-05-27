@@ -3,7 +3,7 @@ import "./Shorts.css";
 import { AddSEO } from "SEO";
 import { VideoPlayer } from "components";
 
-interface ShortsProps { }
+interface ShortsProps {}
 
 const Shorts: FC<ShortsProps> = (props): JSX.Element => {
   return (
@@ -11,7 +11,7 @@ const Shorts: FC<ShortsProps> = (props): JSX.Element => {
       <AddSEO title="Shorts" description="This page containe short videos." />
       <VideoPlayer />
     </div>
-  )
-}
+  );
+};
 
 export default Shorts;

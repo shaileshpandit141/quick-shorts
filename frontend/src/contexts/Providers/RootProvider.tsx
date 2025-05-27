@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { SidebarProvider } from "../features/SidebarProvider";
-import { VideoProvider } from "contexts/features/VideoContext"
+import { VideoProvider } from "contexts/features/VideoContext";
 interface Props {
   children: ReactNode;
 }
@@ -8,9 +8,7 @@ interface Props {
 const RootProvider = ({ children }: Props) => {
   return (
     <SidebarProvider>
-      <VideoProvider>
-        {children}
-      </VideoProvider>
+      <VideoProvider>{children}</VideoProvider>
     </SidebarProvider>
   );
 };

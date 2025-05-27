@@ -5,9 +5,7 @@ interface VideoContextValue {
   toggleMute: () => void;
 }
 
-const VideoContext = createContext<VideoContextValue | undefined>(
-  undefined,
-);
+const VideoContext = createContext<VideoContextValue | undefined>(undefined);
 
 interface Props {
   children: ReactNode;
@@ -17,13 +15,11 @@ export const VideoProvider = ({ children }: Props) => {
   const [isMuted, setIsMuted] = useState<boolean>(true);
 
   const toggleMute = () => {
-    setIsMuted(prev => !prev);
+    setIsMuted((prev) => !prev);
   };
 
   return (
-    <VideoContext.Provider
-      value={{ isMuted, toggleMute }}
-    >
+    <VideoContext.Provider value={{ isMuted, toggleMute }}>
       {children}
     </VideoContext.Provider>
   );
