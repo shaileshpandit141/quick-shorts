@@ -22,7 +22,7 @@ class Comment(models.Model):
         User,
         on_delete=models.CASCADE,
         primary_key=False,
-        related_name="comments",
+        related_name="comments_as_owner",
         related_query_name=None,
         limit_choices_to={},
         parent_link=False,
@@ -42,7 +42,7 @@ class Comment(models.Model):
         Video,
         on_delete=models.CASCADE,
         primary_key=False,
-        related_name="comments",
+        related_name="comments_as_video",
         related_query_name=None,
         limit_choices_to={},
         parent_link=False,
@@ -72,4 +72,4 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return f"{self.owner.email} Comment {self.video.title}"
+        return f"{self.owner.email} Comment {self.video.caption}"

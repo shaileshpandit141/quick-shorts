@@ -20,7 +20,7 @@ class Follow(models.Model):
     follower = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="following",
+        related_name="follows_as_follower",
         blank=False,
         null=False,
         db_index=True,
@@ -34,7 +34,7 @@ class Follow(models.Model):
     following = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="followers",
+        related_name="follows_as_following",
         blank=False,
         null=False,
         db_index=True,

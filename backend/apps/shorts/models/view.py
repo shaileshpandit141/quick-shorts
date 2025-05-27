@@ -22,7 +22,7 @@ class View(models.Model):
         User,
         on_delete=models.SET_NULL,
         primary_key=False,
-        related_name="views",
+        related_name="views_as_user",
         related_query_name=None,
         limit_choices_to={},
         parent_link=False,
@@ -40,7 +40,7 @@ class View(models.Model):
         Video,
         on_delete=models.CASCADE,
         primary_key=False,
-        related_name="views",
+        related_name="views_as_video",
         related_query_name=None,
         limit_choices_to={},
         parent_link=False,
@@ -59,4 +59,5 @@ class View(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f"{getattr(self.user, 'email', 'Unknown')} viewed {self.video.title}"
+        user = getattr(self.user, "username", "Unknown")
+        return f"{user} viewed {self.video.caption}"

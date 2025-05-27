@@ -27,7 +27,7 @@ class Video(models.Model):
         User,
         on_delete=models.CASCADE,
         primary_key=False,
-        related_name="shorts",
+        related_name="videos_as_owner",
         related_query_name=None,
         limit_choices_to={},
         parent_link=False,
@@ -41,28 +41,6 @@ class Video(models.Model):
             "null": "This field cannot be null",
             "blank": "This field cannot be blank",
             "does_not_exist": "Object does not exist",
-        },
-    )
-    title = models.CharField(
-        max_length=120,
-        unique=True,
-        blank=False,
-        null=False,
-        db_index=True,
-        error_messages={
-            "invalid": "Invalid value",
-            "null": "This field cannot be null",
-            "blank": "This field cannot be blank",
-            "max_length": "Ensure this value has at most 120 characters",
-        },
-    )
-    description = models.TextField(
-        blank=True,
-        null=True,
-        db_index=False,
-        default="",
-        error_messages={
-            "invalid": "Enter a valid value",
         },
     )
     video = models.FileField(
@@ -99,9 +77,15 @@ class Video(models.Model):
             "blank": "This field cannot be blank",
         },
     )
+    caption = models.TextField(
+        blank=False,
+        null=False,
+        db_index=False,
+        default="",
+    )
     tags = models.ManyToManyField(
         Tag,
-        related_name="short_videos",
+        related_name="videos_as_tags",
         related_query_name=None,
         db_constraint=True,
         blank=False,
@@ -130,4 +114,4 @@ class Video(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.title
+        return self.caption

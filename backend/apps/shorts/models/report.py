@@ -29,7 +29,7 @@ class Report(models.Model):
     reported_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="reports",
+        related_name="reports_made",
         blank=False,
         null=False,
         db_index=True,
@@ -43,7 +43,7 @@ class Report(models.Model):
     video = models.ForeignKey(
         Video,
         on_delete=models.CASCADE,
-        related_name="reports",
+        related_name="reports_received",
         blank=False,
         null=False,
         db_index=True,
