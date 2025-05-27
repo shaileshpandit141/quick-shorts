@@ -1,21 +1,21 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from .views.comment_view import CommentModelViewSet
-from .views.follow_view import FollowModelViewSet
-from .views.like_view import LikeModelViewSet
-from .views.report_view import ReportModelViewSet
-from .views.short_video_stream_view import ShortVideoStreamAPIView
-from .views.short_video_view import ShortVideoModelViewSet
-from .views.tag_view import TagModelViewSet
-from .views.view_view import ViewModelViewSet
+from .views.comment import CommentModelViewSet
+from .views.follow import FollowModelViewSet
+from .views.like import LikeModelViewSet
+from .views.report import ReportModelViewSet
+from .views.video_stream import VideoStreamAPIView
+from .views.video import VideoModelViewSet
+from .views.tag import TagModelViewSet
+from .views.view import ViewModelViewSet
 
 # Define empty urlpatterns
 urlpatterns = [
     # Add short videos streams endpoint
     path(
         "videos/streams/<int:video_id>/",
-        ShortVideoStreamAPIView.as_view(),
+        VideoStreamAPIView.as_view(),
         name="videos-stream",
     )
 ]
@@ -24,7 +24,7 @@ urlpatterns = [
 router = DefaultRouter()
 
 # Register the ShortVideoModelViewSet with the router
-router.register(r"videos", ShortVideoModelViewSet, basename="video")
+router.register(r"videos", VideoModelViewSet, basename="video")
 
 # Register the TagModelViewSet with the router
 router.register(r"tags", TagModelViewSet, basename="tag")

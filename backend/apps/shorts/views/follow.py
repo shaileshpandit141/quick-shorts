@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 from shorts.models.follow import Follow
-from shorts.serializers.follow_serializer import FollowSerializer
+from shorts.serializers.follow import FollowSerializer
 
 
 class FollowModelViewSet(ModelViewSet):

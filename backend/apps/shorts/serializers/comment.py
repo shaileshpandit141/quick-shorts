@@ -7,7 +7,7 @@ from user_auth.serializers.user_serializers import UserPublicSerializer
 class CommentSerializer(RecordsCreationMixin, ModelSerializer):
     """Serializer class for Comment"""
 
-    # Call nested serializers
+    # Calling nested serializers
     user = UserPublicSerializer(read_only=True)
 
     class Meta:

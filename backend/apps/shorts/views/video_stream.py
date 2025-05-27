@@ -5,10 +5,10 @@ from django.http import HttpResponseNotFound, StreamingHttpResponse
 from rest_core.views.mixins import ModelObjectMixin
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
-from shorts.models.short_video import ShortVideo
+from shorts.models.video import ShortVideo
 
 
-class ShortVideoStreamAPIView(ModelObjectMixin[ShortVideo], APIView):
+class VideoStreamAPIView(ModelObjectMixin[ShortVideo], APIView):
     """View to handle short videos stream"""
 
     throttle_classes = [UserRateThrottle]

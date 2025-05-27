@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from .short_video import ShortVideo
+from .video import ShortVideo
 
 User = get_user_model()
 

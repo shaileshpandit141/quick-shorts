@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 from shorts.models.report import Report
-from shorts.serializers.report_serializer import ReportSerializer
+from shorts.serializers.report import ReportSerializer
 
 
 class ReportModelViewSet(

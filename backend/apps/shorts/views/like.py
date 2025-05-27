@@ -2,7 +2,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 from shorts.models.like import Like
-from shorts.serializers.like_serializer import LikeSerializer
+from shorts.serializers.like import LikeSerializer
 
 
 class LikeModelViewSet(ModelViewSet):

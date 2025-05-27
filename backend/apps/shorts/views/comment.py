@@ -4,7 +4,7 @@ from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 from shorts.models.comment import Comment
 from shorts.permissions import CanUpdateAndDelete
-from shorts.serializers.comment_serializer import CommentSerializer
+from shorts.serializers.comment import CommentSerializer
 
 
 class CommentModelViewSet(ModelViewSet):
