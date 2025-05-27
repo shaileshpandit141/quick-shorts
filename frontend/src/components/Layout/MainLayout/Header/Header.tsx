@@ -8,7 +8,7 @@ import {
   InstallAppButton,
 } from "components";
 import HeaderLinks from "../HeaderLinks/HeaderLinks";
-import { useSidebar } from "context/features/SidebarProvider";
+import { useSidebar } from "contexts/features/SidebarProvider";
 
 const Header: React.FC = () => {
   // Used sidebar hook to handle the sidebar action

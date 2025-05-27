@@ -2,7 +2,7 @@ import React, { JSX, useEffect } from "react";
 import "./DashboardSmallScreenSidebar.css";
 import { useLocation } from "react-router-dom";
 import { Drawer, DashboardSidebar } from "components";
-import { useDashboardSmaillSidebar } from "context/features/DashboardSmaillSidebarProvider";
+import { useDashboardSmaillSidebar } from "contexts/features/DashboardSmaillSidebarProvider";
 
 const DashboardSmallScreenSidebar: React.FC = (): JSX.Element => {
   const location = useLocation();

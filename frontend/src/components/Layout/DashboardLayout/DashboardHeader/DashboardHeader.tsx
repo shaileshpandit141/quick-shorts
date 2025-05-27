@@ -1,7 +1,7 @@
 import React, { JSX } from "react";
 import "./DashboardHeader.css";
 import { ToggleThemeButton, UserProfile, Button, AppLogo } from "components";
-import { useDashboardSmaillSidebar } from "context/features/DashboardSmaillSidebarProvider";
+import { useDashboardSmaillSidebar } from "contexts/features/DashboardSmaillSidebarProvider";
 
 const DashboardHeader: React.FC = (): JSX.Element => {
   // Used dashboard small sidebar hook to handle the sidebar action

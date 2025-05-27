@@ -3,7 +3,7 @@ import "./Sidebar.css";
 import { useLocation } from "react-router-dom";
 import { Drawer, Button, AppLogo, SigninLink, SignupLink } from "components";
 import HeaderLinks from "../HeaderLinks/HeaderLinks";
-import { useSidebar } from "context/features/SidebarProvider";
+import { useSidebar } from "contexts/features/SidebarProvider";
 
 const Sidebar: React.FC = (): JSX.Element => {
   const location = useLocation();

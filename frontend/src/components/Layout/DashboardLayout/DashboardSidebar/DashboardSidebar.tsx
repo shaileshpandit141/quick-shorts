@@ -1,7 +1,7 @@
 import React, { JSX } from "react";
 import "./DashboardSidebar.css";
 import { AppLogo, NavLink, Button } from "components";
-import { useDashboardSmaillSidebar } from "context/features/DashboardSmaillSidebarProvider";
+import { useDashboardSmaillSidebar } from "contexts/features/DashboardSmaillSidebarProvider";
 
 const DashboardSidebar: React.FC = (): JSX.Element => {
   // Used dashboard small sidebar hook to handle the sidebar action
