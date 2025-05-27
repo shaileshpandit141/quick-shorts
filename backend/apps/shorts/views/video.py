@@ -9,6 +9,7 @@ from shorts.permissions import CanUpdateAndDelete
 from shorts.serializers.video import VideoSerializer
 from shorts.filters import VideoFilterSet
 
+
 class VideoModelViewSet(
     ChoiceFieldViewSetMixin,
     ModelViewSet,
@@ -28,7 +29,7 @@ class VideoModelViewSet(
     ]
     filterset_class = VideoFilterSet
     # filterset_fields = ["owner", "tags"]
-    search_fields = ["title", "description"]
+    search_fields = ["caption"]
     ordering_fields = ["id", "updated_at"]
 
     def perform_create(self, serializer) -> None:

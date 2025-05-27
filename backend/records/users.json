@@ -6,87 +6,87 @@
     "first_name": "Nicole",
     "last_name": "Brown",
     "is_verified": true,
-    "password": "pbkdf2_sha256$260000$c2FsdDEyMzQ1$K0pF8Pj5YMd6ZQ3rE1G7wZ9La3FqP0sR"
-    },
-    {
+    "password": "testuserpassword@1234"
+  },
+  {
     "id": 3,
     "email": "wbrandt@griffin-lopez.info",
     "username": "kevin30",
     "first_name": "Mark",
     "last_name": "Simpson",
     "is_verified": true,
-    "password": "pbkdf2_sha256$260000$d3F1uS7gR9pL0qN4$G5jL8yM1sD2fR4kT7wP9eV6zX0bC3nQ"
-    },
-    {
+    "password": "testuserpassword@1234"
+  },
+  {
     "id": 4,
     "email": "xalexander@hotmail.com",
     "username": "rbrooks",
     "first_name": "Kenneth",
     "last_name": "Salazar",
     "is_verified": true,
-    "password": "pbkdf2_sha256$260000$X9zA8qW7eR6tY5uI2$S3dF6gH9jK2lM5nP8qR1tV4bC7xZ0vW"
-    },
-    {
+    "password": "testuserpassword@1234"
+  },
+  {
     "id": 5,
     "email": "margaret15@cook.com",
     "username": "jacksonnicholas",
     "first_name": "Derek",
     "last_name": "Nelson",
     "is_verified": true,
-    "password": "pbkdf2_sha256$260000$L2mN3bV4cX5zQ6sR7$T8yU9iO1pA2sD3fG4hJ5kL6mN7qW8eR"
-    },
-    {
+    "password": "testuserpassword@1234"
+  },
+  {
     "id": 6,
     "email": "hurleyshelly@fitzgerald.com",
     "username": "mirandabates",
     "first_name": "Carrie",
     "last_name": "Watkins",
     "is_verified": true,
-    "password": "pbkdf2_sha256$260000$P0oI9uY8tR7eW6qA5$Z4xC3vB2nM1sD0fG9hJ8kL7mN6pQ5rS"
-    },
-    {
+    "password": "testuserpassword@1234"
+  },
+  {
     "id": 7,
     "email": "melanie01@thompson.com",
     "username": "karencastillo",
     "first_name": "Angela",
     "last_name": "Brown",
     "is_verified": true,
-    "password": "pbkdf2_sha256$260000$S9dF8gH7jK6lM5nP4$qW2eR3tY4uI5oP6aS7dF8gH9jK0lM1n"
-    },
-    {
+    "password": "testuserpassword@1234"
+  },
+  {
     "id": 8,
     "email": "brandonmejia@blankenship.com",
     "username": "caitlinrichardson",
     "first_name": "Corey",
     "last_name": "Guerrero",
     "is_verified": true,
-    "password": "pbkdf2_sha256$260000$N8bV7cX6zQ5sR4tP3$L2kJ1hG0fD9sA8pQ7rT6yU5iO4mN3bV"
-    },
-    {
+    "password": "testuserpassword@1234"
+  },
+  {
     "id": 9,
     "email": "navarropatrick@hotmail.com",
     "username": "charles23",
     "first_name": "Gregory",
     "last_name": "Holland",
     "is_verified": true,
-    "password": "pbkdf2_sha256$260000$F3gH4jK5lM6nP7qR8$W9eR8tY7uI6oP5aS4dF3gH2jK1lM0nB"
-    },
-    {
+    "password": "testuserpassword@1234"
+  },
+  {
     "id": 10,
     "email": "megan24@hall-fox.com",
     "username": "ugarcia",
     "first_name": "Adrienne",
     "last_name": "Lucas",
     "is_verified": true,
-    "password": "pbkdf2_sha256$260000$Q1wE2rT3yU4iO5pA6$S7dF8gH9jK0lM1nB2cX3zQ4sR5tP6oI"
-    },
-    {
+    "password": "testuserpassword@1234"
+  },
+  {
     "id": 11,
     "email": "alyssa28@morton-cook.com",
     "username": "jarmstrong",
     "first_name": "John",
     "last_name": "Silva",
     "is_verified": true,
-    "password": "pbkdf2_sha256$260000$Z9xC8vB7nM6sD5fG4$H3jK2lM1nB0cX9zQ8sR7tP6oI5uY4wE"
+    "password": "testuserpassword@1234"
   }
 ]
