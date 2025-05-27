@@ -1,0 +1,12 @@
+.short-video-player {
+  aspect-ratio: 9/16;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  -webkit-scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
