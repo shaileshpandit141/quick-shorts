@@ -18,10 +18,9 @@ class VideoSerializer(RecordsCreationMixin, FileFieldUrlMixin, ModelSerializer):
         fields = [
             "id",
             "owner",
-            "title",
-            "description",
             "video",
             "thumbnail",
+            "caption",
             "tags",
             "privacy",
             "updated_at",
