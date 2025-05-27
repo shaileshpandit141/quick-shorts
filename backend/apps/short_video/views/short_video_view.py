@@ -7,7 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 from short_video.models.short_video import ShortVideo
 from short_video.permissions import CanUpdateAndDelete
 from short_video.serializers.short_video_serializer import ShortVideoSerializer
-
+from short_video.filters import ShortVideoFilterSet
 
 class ShortVideoModelViewSet(
     ChoiceFieldViewSetMixin,
@@ -26,7 +26,8 @@ class ShortVideoModelViewSet(
         filters.SearchFilter,
         filters.OrderingFilter,
     ]
-    filterset_fields = ["owner", "tags"]
+    filterset_class = ShortVideoFilterSet
+    # filterset_fields = ["owner", "tags"]
     search_fields = ["title", "description"]
     ordering_fields = ["id", "updated_at"]
 
