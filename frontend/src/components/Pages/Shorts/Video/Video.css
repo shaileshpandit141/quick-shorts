@@ -17,41 +17,83 @@
     padding-block: var(--padding-block);
   }
 
-  .video-owner-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: var(--bg);
-    padding: var(--padding-block) var(--padding-inline);
+  .video-player-container {
+    position: relative;
+    flex: 1;
+    background-color: #00000033;
     display: flex;
-    flex-direction: column;
-    row-gap: 8px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    border: 1.5px solid #00000033;
+    overflow: hidden;
 
-    .video-owner-info-header {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 8px;
+    .video-owner-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--bg);
+      padding: var(--padding-block) var(--padding-inline);
+      display: flex;
+      flex-direction: column;
+      row-gap: 8px;
 
-      .figure {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: var(--user-profile-size);
-        height: var(--user-profile-size);
-        border-radius: var(--user-profile-border-radius);
-        overflow: hidden;
-        background-color: gainsboro;
+      .video-owner-info-header {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 8px;
 
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center;
+        .figure {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: var(--user-profile-size);
+          height: var(--user-profile-size);
+          border-radius: var(--user-profile-border-radius);
+          overflow: hidden;
+          background-color: gainsboro;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+          }
+        }
+
+        .user-info {
+          display: flex;
+          flex-direction: column;
+
+          .shorts-info {
+            display: flex;
+            align-items: center;
+            column-gap: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+
+            .dot {
+              width: 4px;
+              height: 4px;
+              background-color: #9b9b9b;
+              border-radius: 50%;
+              display: inline-block;
+            }
+          }
+        }
+
+        .action-buttons {
+          .follow-button {
+            border-radius: 40px;
+            background-color: gainsboro;
+            color: #000;
+          }
         }
       }
 
-      .user-info {
+      .video-owner-info-body {
         display: flex;
         flex-direction: column;
 
@@ -59,10 +101,10 @@
           display: flex;
           align-items: center;
           column-gap: 6px;
-          font-size: 12px;
+          font-size: 14px;
           font-weight: 500;
           letter-spacing: 0.03em;
-  
+
           .dot {
             width: 4px;
             height: 4px;
@@ -72,48 +114,7 @@
           }
         }
       }
-
-      .action-buttons {
-        .follow-button {
-          border-radius: 40px;
-          background-color: gainsboro;
-          color: #000;
-        }
-      }
     }
-
-    .video-owner-info-body {
-      display: flex;
-      flex-direction: column;
-      
-      .shorts-info {
-        display: flex;
-        align-items: center;
-        column-gap: 6px;
-        font-size: 14px;
-        font-weight: 500;
-        letter-spacing: 0.03em;
-
-        .dot {
-          width: 4px;
-          height: 4px;
-          background-color: #9b9b9b;
-          border-radius: 50%;
-          display: inline-block;
-        }
-      }
-    }
-  }
-
-  .video-player-container {
-    flex: 1;
-    background-color: #00000033;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 16px;
-    border: 1.5px solid #00000033;
-    overflow: hidden;
 
     video {
       flex: 1;

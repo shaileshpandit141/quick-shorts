@@ -50,35 +50,35 @@ const Video: FC<VideoProps> = (props): JSX.Element => {
 
   return (
     <div className="video-container">
-      <div className="video-owner-info">
-        <section className="video-owner-info-header">
-          <div className="user-profile-container">
-            <figure className="figure">
-              i
-            </figure>
-          </div>
-          <div className="user-info">
-            <label className="username">Username</label>
-            <div className="shorts-info">
-              <span className="views">50K Views</span>
-              <span className="dot"></span>
-              <span className="date">8 Days ago</span>
-            </div>
-          </div>
-          <div className="action-buttons">
-            <Button type="button" className="follow-button">Follow</Button>
-          </div>
-        </section>
-        <section className="video-owner-info-body">
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Explicabo dicta distinctio id quas fuga assumenda?
-          </p>
-        </section>
-      </div>
       <div
         className="video-player-container"
       >
+        <div className="video-owner-info">
+          <section className="video-owner-info-header">
+            <div className="user-profile-container">
+              <figure className="figure">
+                i
+              </figure>
+            </div>
+            <div className="user-info">
+              <label className="username">Username</label>
+              <div className="shorts-info">
+                <span className="views">50K Views</span>
+                <span className="dot"></span>
+                <span className="date">8 Days ago</span>
+              </div>
+            </div>
+            <div className="action-buttons">
+              <Button type="button" className="follow-button">Follow</Button>
+            </div>
+          </section>
+          <section className="video-owner-info-body">
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Explicabo dicta distinctio id quas fuga assumenda?
+            </p>
+          </section>
+        </div>
         <video
           src="http://localhost:8000/api/v1/shorts/videos/streams/3/"
           ref={videoRef}
