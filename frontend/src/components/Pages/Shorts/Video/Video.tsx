@@ -1,19 +1,19 @@
 import React, { FC, JSX, useEffect, useRef } from "react";
 import "./Video.css";
 import { Button } from "components";
-import { useMuteContext } from "contexts/features/MuteContext";
+import { useVideo } from "contexts/features/VideoContext";
 
 interface VideoProps { }
 
 const Video: FC<VideoProps> = (props): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const { isMuted, toggleMute } = useMuteContext();
+  const { isMuted, toggleMute } = useVideo();
 
   useEffect(() => {
     const currentVideoRef = videoRef.current;
 
     if (currentVideoRef) {
-      currentVideoRef.muted = isMuted; // Set mute state from context
+      currentVideoRef.muted = isMuted;
     }
 
     const observer = new IntersectionObserver((entries) => {
@@ -45,9 +45,8 @@ const Video: FC<VideoProps> = (props): JSX.Element => {
 
   const handleMute = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    toggleMute(); // Toggle mute state in context
+    toggleMute();
   };
-
 
   return (
     <div className="video-container">

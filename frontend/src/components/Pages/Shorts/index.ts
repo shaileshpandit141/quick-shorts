@@ -1,1 +1,1 @@
-export { default as ShortVideoPlayer } from "./ShortVideoPlayer/ShortVideoPlayer";
+export { default as VideoPlayer } from "./VideoPlayer/VideoPlayer";

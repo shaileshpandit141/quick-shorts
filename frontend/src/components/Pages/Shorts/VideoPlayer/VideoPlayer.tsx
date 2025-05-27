@@ -1,10 +1,10 @@
 import React, { FC, JSX } from "react";
-import "./ShortVideoPlayer.css";
+import "./VideoPlayer.css";
 import Video from "../Video/Video"
 
-interface ShortVideoPlayerProps { }
+interface VideoPlayerProps { }
 
-const ShortVideoPlayer: FC<ShortVideoPlayerProps> = (props): JSX.Element => {
+const VideoPlayer: FC<VideoPlayerProps> = (props): JSX.Element => {
   return (
     <div className="short-video-player">
       <Video />
@@ -14,4 +14,4 @@ const ShortVideoPlayer: FC<ShortVideoPlayerProps> = (props): JSX.Element => {
   )
 }
 
-export default ShortVideoPlayer;
+export default VideoPlayer;

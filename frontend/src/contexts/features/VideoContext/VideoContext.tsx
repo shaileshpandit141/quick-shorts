@@ -1,11 +1,11 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
-interface MuteContextValue {
+interface VideoContextValue {
   isMuted: boolean;
   toggleMute: () => void;
 }
 
-const MuteContext = createContext<MuteContextValue | undefined>(
+const VideoContext = createContext<VideoContextValue | undefined>(
   undefined,
 );
 
@@ -13,7 +13,7 @@ interface Props {
   children: ReactNode;
 }
 
-export const MuteContextProvider = ({ children }: Props) => {
+export const VideoProvider = ({ children }: Props) => {
   const [isMuted, setIsMuted] = useState<boolean>(true);
 
   const toggleMute = () => {
@@ -21,18 +21,18 @@ export const MuteContextProvider = ({ children }: Props) => {
   };
 
   return (
-    <MuteContext.Provider
+    <VideoContext.Provider
       value={{ isMuted, toggleMute }}
     >
       {children}
-    </MuteContext.Provider>
+    </VideoContext.Provider>
   );
 };
 
-export const useMuteContext = () => {
-  const context = useContext(MuteContext);
+export const useVideo = () => {
+  const context = useContext(VideoContext);
   if (!context) {
-    throw new Error("useMuteContext must be used within a MuteContextProvider");
+    throw new Error("useVideo must be used within a VideoContextProvider");
   }
   return context;
 };
