@@ -631,7 +631,7 @@
 												},
 												{
 													"key": "search",
-													"value": "shorts",
+													"value": "power",
 													"disabled": true
 												},
 												{
@@ -664,7 +664,7 @@
 											"mode": "formdata",
 											"formdata": [
 												{
-													"key": "title",
+													"key": "caption",
 													"value": "This is new short vidoe post",
 													"type": "text",
 													"disabled": true
