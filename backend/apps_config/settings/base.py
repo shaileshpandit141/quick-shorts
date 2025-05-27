@@ -62,7 +62,7 @@ INSTALLED_APPS += [
 INSTALLED_APPS += [
     "apps.user_auth",
     "apps.google_auth",
-    "apps.short_video",
+    "apps.shorts",
 ]
 
 # Middleware Configuration Settings

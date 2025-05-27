@@ -1,6 +1,6 @@
 from rest_core.serializers.mixins import RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer
-from short_video.models.tag import Tag
+from shorts.models.tag import Tag
 
 
 class TagSerializer(RecordsCreationMixin, ModelSerializer):

@@ -38,7 +38,7 @@ urlpatterns += [
 
 # API related URLs Configurations
 urlpatterns += [
-    path("api/v1/shorts/", include(("apps.short_video.urls", "short_video"))),
+    path("api/v1/shorts/", include(("apps.shorts.urls", "shorts"))),
 ]
 
 # Configure custom error handling

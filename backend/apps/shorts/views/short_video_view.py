@@ -4,10 +4,10 @@ from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
-from short_video.models.short_video import ShortVideo
-from short_video.permissions import CanUpdateAndDelete
-from short_video.serializers.short_video_serializer import ShortVideoSerializer
-from short_video.filters import ShortVideoFilterSet
+from shorts.models.short_video import ShortVideo
+from shorts.permissions import CanUpdateAndDelete
+from shorts.serializers.short_video_serializer import ShortVideoSerializer
+from shorts.filters import ShortVideoFilterSet
 
 class ShortVideoModelViewSet(
     ChoiceFieldViewSetMixin,

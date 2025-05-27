@@ -1,6 +1,6 @@
 from rest_core.serializers.mixins import RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer
-from short_video.models.comment import Comment
+from shorts.models.comment import Comment
 from user_auth.serializers.user_serializers import UserPublicSerializer
 
 

@@ -1,6 +1,6 @@
 from rest_core.serializers.mixins import RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer, ValidationError
-from short_video.models.report import Report
+from shorts.models.report import Report
 
 
 class ReportSerializer(RecordsCreationMixin, ModelSerializer):

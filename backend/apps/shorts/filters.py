@@ -1,5 +1,5 @@
 from django_filters import FilterSet, CharFilter
-from short_video.models.short_video import ShortVideo
+from shorts.models.short_video import ShortVideo
 
 
 class ShortVideoFilterSet(FilterSet):

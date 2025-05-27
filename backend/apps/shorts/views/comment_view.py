@@ -2,9 +2,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
-from short_video.models.comment import Comment
-from short_video.permissions import CanUpdateAndDelete
-from short_video.serializers.comment_serializer import CommentSerializer
+from shorts.models.comment import Comment
+from shorts.permissions import CanUpdateAndDelete
+from shorts.serializers.comment_serializer import CommentSerializer
 
 
 class CommentModelViewSet(ModelViewSet):

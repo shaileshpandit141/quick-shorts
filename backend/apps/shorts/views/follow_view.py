@@ -2,8 +2,8 @@ from django.db.models.manager import BaseManager
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
-from short_video.models.follow import Follow
-from short_video.serializers.follow_serializer import FollowSerializer
+from shorts.models.follow import Follow
+from shorts.serializers.follow_serializer import FollowSerializer
 
 
 class FollowModelViewSet(ModelViewSet):
