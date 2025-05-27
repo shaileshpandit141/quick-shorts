@@ -50,14 +50,21 @@ const Video: FC<VideoProps> = (props): JSX.Element => {
 
   return (
     <div className="video-container">
-      <div
-        className="video-player-container"
-      >
+      <div className="video-player-container">
+        <div className="video-header-container">
+          <Button
+            type="icon"
+            icon={
+              isMuted ? "volumeOff" : "volumeOn"
+            }
+            onClick={toggleMute}
+          />
+        </div>
         <div className="video-owner-info">
           <section className="video-owner-info-header">
             <div className="user-profile-container">
               <figure className="figure">
-                i
+
               </figure>
             </div>
             <div className="user-info">

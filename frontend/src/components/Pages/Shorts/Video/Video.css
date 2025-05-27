@@ -1,7 +1,8 @@
 .video-container {
-  --padding-inline: 16px;
-  --padding-block: 8px;
+  --padding-inline: 12px;
+  --padding-block: 12px;
   --bg: #00000000;
+  --btn-bg: #00000033;
   --user-profile-size: 40px;
   --user-profile-border-radius: 50%;
 
@@ -14,7 +15,8 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    padding-block: var(--padding-block);
+    /* padding-block: var(--padding-block); */
+    z-index: 1;
   }
 
   .video-player-container {
@@ -27,7 +29,28 @@
     border-radius: 16px;
     border: 1.5px solid #00000033;
     overflow: hidden;
-    z-index: 1;
+
+    .video-header-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--bg);
+      padding: var(--padding-block) var(--padding-inline);
+      display: flex;
+      flex-direction: column;
+      row-gap: 8px;
+      z-index: 2;
+
+      button {
+        border: none;
+        background-color: var(--btn-bg);
+
+        &:hover {
+          background-color: var(--btn-bg) !important;
+        }
+      }
+    }
 
     .video-owner-info {
       position: absolute;
