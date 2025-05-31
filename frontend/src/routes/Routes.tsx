@@ -5,6 +5,7 @@ import { importLazyModule, RenderLazyModule } from "lazyUtils";
 // Default Imports (user-defined layout and pages).
 import { PrivateRoute, PublicRoute } from "./RoutesPrivacy";
 import { RootLayout, MainLayout, AuthLayout } from "Layouts";
+import ShortsLayout from "Layouts/ShortsLayout";
 
 // Default Page loader Imports
 import { PageLoader } from "components";
@@ -77,15 +78,19 @@ const AppRoutes: React.FC = () => {
 
             {/* Public Routes without header and Footer */}
             <Route element={<PublicRoute />}>
-              <Route
-                path="shorts"
-                element={
-                  <RenderLazyModule
-                    element={<Shorts />}
-                    fallback={<PageLoader />}
-                  />
-                }
-              />
+
+              <Route path="/shorts" element={<ShortsLayout />}>
+                <Route
+                  index
+                  element={
+                    <RenderLazyModule
+                      element={<Shorts />}
+                      fallback={<PageLoader />}
+                    />
+                  }
+                />
+              </Route>
+
               <Route element={<AuthLayout />}>
                 <Route
                   path="sign-in"

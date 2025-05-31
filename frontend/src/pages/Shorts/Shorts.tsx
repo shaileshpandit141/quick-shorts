@@ -10,6 +10,7 @@ const Shorts: FC<ShortsProps> = (props): JSX.Element => {
     <div className="shorts">
       <AddSEO title="Shorts" description="This page containe short videos." />
       <VideoPlayer />
+      {/* <h1>Shorts</h1> */}
     </div>
   );
 };

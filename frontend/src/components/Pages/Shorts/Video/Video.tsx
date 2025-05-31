@@ -3,7 +3,7 @@ import "./Video.css";
 import { Button } from "components";
 import { useVideo } from "contexts/features/VideoContext";
 
-interface VideoProps {}
+interface VideoProps { }
 
 const Video: FC<VideoProps> = (props): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
