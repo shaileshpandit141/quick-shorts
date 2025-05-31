@@ -78,7 +78,6 @@ const AppRoutes: React.FC = () => {
 
             {/* Public Routes without header and Footer */}
             <Route element={<PublicRoute />}>
-
               <Route path="/shorts" element={<ShortsLayout />}>
                 <Route
                   index

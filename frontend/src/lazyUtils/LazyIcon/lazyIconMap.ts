@@ -32,4 +32,7 @@ export const lazyIconMap = {
   dashboardIcon: lazy(() => import("@mui/icons-material/DashboardRounded")),
   volumeOff: lazy(() => import("@mui/icons-material/VolumeOffRounded")),
   volumeOn: lazy(() => import("@mui/icons-material/VolumeUpRounded")),
+  thumbUp: lazy(() => import("@mui/icons-material/ThumbUpAltRounded")),
+  thumbDown: lazy(() => import("@mui/icons-material/ThumbDownRounded")),
+  comment: lazy(() => import("@mui/icons-material/CommentRounded")),
 };

@@ -2,8 +2,9 @@ import React, { FC, JSX, useEffect, useRef } from "react";
 import "./Video.css";
 import { Button } from "components";
 import { useVideo } from "contexts/features/VideoContext";
+import ActionButtons from "../ActionButtons";
 
-interface VideoProps { }
+interface VideoProps {}
 
 const Video: FC<VideoProps> = (props): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -85,6 +86,10 @@ const Video: FC<VideoProps> = (props): JSX.Element => {
               Explicabo dicta distinctio id quas fuga assumenda?
             </p>
           </section>
+        </div>
+        <div className="action-btns">
+          {/* Action btns goes here. */}
+          <ActionButtons />
         </div>
         <video
           src="http://localhost:8000/api/v1/shorts/videos/streams/3/"
