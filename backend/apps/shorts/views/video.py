@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_core.viewsets.mixins import ChoiceFieldViewSetMixin
+from rest_core.viewsets.mixins import ModelChoiceFieldActionMixin
 from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
@@ -11,7 +11,7 @@ from shorts.filters import VideoFilterSet
 
 
 class VideoModelViewSet(
-    ChoiceFieldViewSetMixin,
+    ModelChoiceFieldActionMixin,
     ModelViewSet,
 ):
     """Short video CRUD API view"""

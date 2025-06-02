@@ -1,4 +1,3 @@
-from rest_core.viewsets.mixins import ChoiceFieldViewSetMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
@@ -6,10 +5,7 @@ from shorts.models.report import Report
 from shorts.serializers.report import ReportSerializer
 
 
-class ReportModelViewSet(
-    ChoiceFieldViewSetMixin,
-    ModelViewSet,
-):
+class ReportModelViewSet(ModelViewSet):
     """Report view CRUD API view"""
 
     permission_classes = [IsAuthenticated]
