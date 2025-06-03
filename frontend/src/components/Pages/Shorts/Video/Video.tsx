@@ -2,9 +2,8 @@ import React, { FC, JSX, useEffect, useRef } from "react";
 import "./Video.css";
 import { Button } from "components";
 import { useVideo } from "contexts/features/VideoContext";
-import ActionButtons from "../ActionButtons";
 
-interface VideoProps {}
+interface VideoProps { }
 
 const Video: FC<VideoProps> = (props): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -81,15 +80,27 @@ const Video: FC<VideoProps> = (props): JSX.Element => {
             </div>
           </section>
           <section className="video-owner-info-body">
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Explicabo dicta distinctio id quas fuga assumenda?
-            </p>
+            <div className="scroll-body">
+              <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                Explicabo dicta distinctio id quas fuga assumenda?
+              </p>
+            </div>
           </section>
-        </div>
-        <div className="action-btns">
-          {/* Action btns goes here. */}
-          <ActionButtons />
+          <section className="video-action-btns-container">
+            <div className="btn-container">
+              <Button type="icon" icon="thumbUp" />
+              <label htmlFor="">23K</label>
+            </div>
+            <div className="btn-container">
+              <Button type="icon" icon="thumbDown" />
+              <label htmlFor="">5K</label>
+            </div>
+            <div className="btn-container">
+              <Button type="icon" icon="comment" />
+              <label htmlFor="">1M</label>
+            </div>
+          </section>
         </div>
         <video
           src="http://localhost:8000/api/v1/shorts/videos/streams/3/"

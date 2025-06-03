@@ -2,7 +2,6 @@ import React, { FC, JSX } from "react";
 import "./ShortsLayout.css";
 import { Outlet } from "react-router-dom";
 import { NavLink } from "components";
-import ActionButtons from "components/Pages/Shorts/ActionButtons";
 
 interface ShortsLayoutProps {}
 
@@ -23,11 +22,6 @@ const ShortsLayout: FC<ShortsLayoutProps> = (props): JSX.Element => {
           <NavLink to="/create" type="link">
             Create
           </NavLink>
-        </div>
-      </div>
-      <div className="action-btns-container">
-        <div>
-          <ActionButtons />
         </div>
       </div>
     </div>

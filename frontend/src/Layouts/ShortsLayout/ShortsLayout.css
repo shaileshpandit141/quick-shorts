@@ -31,19 +31,4 @@
       justify-content: center;
     }
   }
-
-  .action-btns-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    padding-bottom: var(--header-height);
-    padding-inline: 5px;
-
-    @media (width < 480px) {
-      & {
-        display: none;
-      }
-    }
-  }
 }
