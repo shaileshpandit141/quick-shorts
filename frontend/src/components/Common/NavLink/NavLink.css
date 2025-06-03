@@ -96,10 +96,11 @@ a,
 
   &.active {
     color: var(--link-hover) !important;
-    background-color: var(--btn-primary) !important;
+    background-color: var(--btn-primary-hover) !important;
   }
 
   &:hover {
+    color: var(--link-hover) !important;
     background-color: var(--btn-primary-hover) !important;
   }
 }
