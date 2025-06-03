@@ -2,8 +2,9 @@ import React, { FC, JSX, useEffect, useRef } from "react";
 import "./Video.css";
 import { Button } from "components";
 import { useVideo } from "contexts/features/VideoContext";
+import VideoOwnerCard from "../VideoOwnerCard";
 
-interface VideoProps { }
+interface VideoProps {}
 
 const Video: FC<VideoProps> = (props): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -60,53 +61,7 @@ const Video: FC<VideoProps> = (props): JSX.Element => {
             onClick={toggleMute}
           />
         </div>
-        <div className="video-owner-info">
-          <section className="video-owner-info-header">
-            <div className="user-profile-container">
-              <figure className="figure"></figure>
-            </div>
-            <div className="user-info">
-              <label className="username">Username</label>
-              <div className="shorts-info">
-                <span className="views">50K Views</span>
-                <span className="dot"></span>
-                <span className="date">8 Days ago</span>
-              </div>
-            </div>
-            <div className="action-buttons">
-              <Button type="button" className="follow-button">
-                Follow
-              </Button>
-            </div>
-          </section>
-          <section className="video-owner-info-body">
-            <div className="scroll-body">
-              <p className="caption">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Explicabo dicta distinctio id quas fuga assumenda?
-              </p>
-              <section className="tag-container">
-                <span>#dev</span>
-                <span>#python</span>
-                <span>#learning</span>
-              </section>
-            </div>
-          </section>
-          <section className="video-action-btns-container">
-            <div className="btn-container">
-              <Button type="icon" icon="thumbUp" />
-              <label htmlFor="">23K</label>
-            </div>
-            <div className="btn-container">
-              <Button type="icon" icon="thumbDown" />
-              <label htmlFor="">5K</label>
-            </div>
-            <div className="btn-container">
-              <Button type="icon" icon="comment" />
-              <label htmlFor="">1M</label>
-            </div>
-          </section>
-        </div>
+        <VideoOwnerCard />
         <video
           src="http://localhost:8000/api/v1/shorts/videos/streams/3/"
           ref={videoRef}

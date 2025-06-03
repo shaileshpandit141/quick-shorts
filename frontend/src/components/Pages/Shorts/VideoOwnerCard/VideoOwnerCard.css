@@ -1,0 +1,144 @@
+.video-owner-card {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--bg);
+  padding-block: var(--padding-block);
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  z-index: 2;
+  user-select: none;
+
+  .video-owner-card-header {
+    padding-inline: var(--padding-inline);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 8px;
+
+    .figure {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--user-profile-size);
+      height: var(--user-profile-size);
+      border-radius: var(--user-profile-border-radius);
+      overflow: hidden;
+      background-color: gainsboro;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+
+      .shorts-info {
+        display: flex;
+        align-items: center;
+        column-gap: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.03em;
+
+        .dot {
+          width: 4px;
+          height: 4px;
+          background-color: #9b9b9b;
+          border-radius: 50%;
+          display: inline-block;
+        }
+      }
+    }
+
+    .action-buttons {
+      .follow-button {
+        border: none;
+        border-radius: 40px;
+        background-color: var(--btn-bg);
+        color: #fff;
+      }
+    }
+  }
+
+  .video-owner-card-body {
+    max-height: 240px;
+    overflow-y: auto;
+
+    .scroll-body {
+      padding-inline: var(--padding-inline);
+      height: auto;
+      display: -webkit-box;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+
+      &.active {
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+      }
+
+      .caption {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+      }
+
+      .tag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+
+        span {
+          font-size: 14px;
+          letter-spacing: 0.05em;
+          background-color: var(--btn-bg);
+          padding: 0 6px;
+          border-radius: 16px;
+        }
+      }
+    }
+  }
+
+  .video-action-btns-container {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    padding: var(--padding-block) var(--padding-inline);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    z-index: 2;
+    user-select: none;
+
+    .btn-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      button {
+        background-color: #00000033;
+        border: none;
+
+        &:hover {
+          background-color: #00000033 !important;
+        }
+      }
+
+      label {
+        font-size: 14px;
+      }
+    }
+  }
+}
