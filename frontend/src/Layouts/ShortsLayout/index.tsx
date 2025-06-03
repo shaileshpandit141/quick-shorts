@@ -12,7 +12,7 @@ const ShortsLayout: FC<ShortsLayoutProps> = (props): JSX.Element => {
         <div className="outlet-container">
           <Outlet />
         </div>
-        <div className="shorts-header">
+        <div className="tab-navigation-container">
           <NavLink to="/user" type="link">
             Username
           </NavLink>
