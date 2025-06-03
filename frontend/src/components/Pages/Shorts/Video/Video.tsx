@@ -5,7 +5,7 @@ import { useVideo } from "contexts/features/VideoContext";
 import VideoOwnerCard from "../VideoOwnerCard";
 import Comments from "../Comments";
 
-interface VideoProps { }
+interface VideoProps {}
 
 const Video: FC<VideoProps> = (props): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement | null>(null);

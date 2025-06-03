@@ -11,9 +11,7 @@ const RootProvider = ({ children }: Props) => {
   return (
     <SidebarProvider>
       <VideoProvider>
-        <IsCommentsOpenProvider >
-          {children}
-        </IsCommentsOpenProvider>
+        <IsCommentsOpenProvider>{children}</IsCommentsOpenProvider>
       </VideoProvider>
     </SidebarProvider>
   );

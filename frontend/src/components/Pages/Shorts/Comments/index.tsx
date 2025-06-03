@@ -3,10 +3,10 @@ import "./Comments.css";
 import { Drawer, Button, Input } from "components";
 import { useIsCommentsOpen } from "contexts/features/IsCommentsOpen";
 
-interface CommentsProps { }
+interface CommentsProps {}
 
 const Comments: FC<CommentsProps> = (props): JSX.Element => {
-  const { isCommentsOpen, toggleIsCommentsOpen } = useIsCommentsOpen()
+  const { isCommentsOpen, toggleIsCommentsOpen } = useIsCommentsOpen();
 
   return (
     <Drawer
@@ -17,12 +17,16 @@ const Comments: FC<CommentsProps> = (props): JSX.Element => {
     >
       <div className={`comments-wrapper ${isCommentsOpen && "active"}`}>
         <section className="comments-header">
-          <h4 className="comment-title">Comments <span>1M</span></h4>
+          <h4 className="comment-title">
+            Comments <span>1M</span>
+          </h4>
           <Button
             type="button"
             className="close-btn"
             onClick={toggleIsCommentsOpen}
-          >Close</Button>
+          >
+            Close
+          </Button>
         </section>
         <section className="comments-container">
           <div className="comments-scroll-wrapper">
@@ -32,16 +36,14 @@ const Comments: FC<CommentsProps> = (props): JSX.Element => {
           </div>
         </section>
         <form className="comment-form">
-          <Input type="text" name="comment" value={""} onChange={() => { }} />
-          <Button
-            type="icon"
-            icon="send"
-            className="submit-btn"
-          >Submit</Button>
+          <Input type="text" name="comment" value={""} onChange={() => {}} />
+          <Button type="icon" icon="send" className="submit-btn">
+            Submit
+          </Button>
         </form>
       </div>
     </Drawer>
-  )
-}
+  );
+};
 
 export default Comments;
