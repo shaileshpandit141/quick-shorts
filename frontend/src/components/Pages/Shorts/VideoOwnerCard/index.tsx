@@ -1,10 +1,16 @@
-import React, { FC, JSX } from "react";
+import React, { FC, JSX, useState } from "react";
 import "./VideoOwnerCard.css";
 import { Button } from "components/Common";
 
-interface VideoOwnerCardProps {}
+interface VideoOwnerCardProps { }
 
 const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
+  const [isCaptionOpen, setIsCaptionOpen] = useState(false);
+
+  const toggleIsCaptionOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setIsCaptionOpen(prevState => !prevState)
+  };
+
   return (
     <div className="video-owner-card">
       <section className="video-owner-card-header">
@@ -26,7 +32,10 @@ const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
         </div>
       </section>
       <section className="video-owner-card-body">
-        <div className="scroll-body">
+        <div
+          className={`scroll-body ${isCaptionOpen && "active"}`}
+          onClick={toggleIsCaptionOpen}
+        >
           <p className="caption">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo
             dicta distinctio id quas fuga assumenda?
