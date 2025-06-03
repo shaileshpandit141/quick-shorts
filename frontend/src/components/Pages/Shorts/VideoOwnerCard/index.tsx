@@ -1,11 +1,14 @@
 import React, { FC, JSX, useState } from "react";
 import "./VideoOwnerCard.css";
 import { Button } from "components/Common";
+import { useIsCommentsOpen } from "contexts/features/IsCommentsOpen";
 
 interface VideoOwnerCardProps { }
 
 const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
   const [isCaptionOpen, setIsCaptionOpen] = useState(false);
+  const { toggleIsCommentsOpen } = useIsCommentsOpen()
+
 
   const toggleIsCaptionOpen = (event: React.MouseEvent<HTMLElement>) => {
     setIsCaptionOpen(prevState => !prevState)
@@ -56,7 +59,10 @@ const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
           <Button type="icon" icon="thumbDown" />
           <label htmlFor="">5K</label>
         </div>
-        <div className="btn-container">
+        <div
+          className="btn-container"
+          onClick={toggleIsCommentsOpen}
+        >
           <Button type="icon" icon="comment" />
           <label htmlFor="">1M</label>
         </div>
