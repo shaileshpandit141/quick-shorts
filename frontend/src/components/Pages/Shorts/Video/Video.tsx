@@ -81,10 +81,15 @@ const Video: FC<VideoProps> = (props): JSX.Element => {
           </section>
           <section className="video-owner-info-body">
             <div className="scroll-body">
-              <p>
+              <p className="caption">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                 Explicabo dicta distinctio id quas fuga assumenda?
               </p>
+              <section className="tag-container">
+                <span>#dev</span>
+                <span>#python</span>
+                <span>#learning</span>
+              </section>
             </div>
           </section>
           <section className="video-action-btns-container">
