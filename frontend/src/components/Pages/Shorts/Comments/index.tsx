@@ -30,9 +30,31 @@ const Comments: FC<CommentsProps> = (props): JSX.Element => {
         </section>
         <section className="comments-container">
           <div className="comments-scroll-wrapper">
-            <p>Lorem ipsum dolor sit amet.</p>
-            <p>Lorem ipsum dolor sit amet.</p>
-            <p>Lorem ipsum dolor sit amet.</p>
+            {/* This is a actual comment card TSX */}
+            <div className="comment-container">
+              <section className="comment-header">
+                <figure className="figure">f</figure>
+                <div className="comment-info">
+                  <span className="username">Username</span>
+                  <span className="time">8 Days ago</span>
+                </div>
+              </section>
+              <section className="comment-contnet">
+                <div className="curve-line">
+                  <span className="span-1"></span>
+                  <span className="span-2"></span>
+                </div>
+                <div className="content-box">
+                  <p className="content">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Doloremque vel error, consequuntur sed consectetur rem.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Provident odit voluptate beatae perferendis culpa,
+                    architecto dicta quis illum possimus sit!
+                  </p>
+                </div>
+              </section>
+            </div>
           </div>
         </section>
         <form className="comment-form">

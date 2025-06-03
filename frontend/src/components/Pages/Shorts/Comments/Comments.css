@@ -51,6 +51,69 @@
 
       .comments-scroll-wrapper {
         padding-inline: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .comment-container {
+        display: flex;
+        flex-direction: column;
+
+        .comment-header {
+          flex: 1;
+          display: flex;
+          gap: 8px;
+
+          .figure {
+            aspect-ratio: 1/1;
+            height: 28px;
+            background-color: beige;
+            border-radius: 100%;
+          }
+
+          .comment-info {
+            display: flex;
+            flex-direction: column;
+
+            .username {
+              font-size: 16px;
+            }
+
+            .time {
+              font-size: 12px;
+            }
+          }
+        }
+
+        .comment-contnet {
+          display: flex;
+          gap: 8px;
+
+          .curve-line {
+            aspect-ratio: 1/1;
+            height: 28px;
+            display: flex;
+
+            span {
+              flex: 1;
+              height: 75%;
+            }
+
+            .span-2 {
+              border-left: 2px solid beige;
+              border-bottom: 2px solid beige;
+              border-bottom-left-radius: 10px;
+            }
+          }
+
+          .content-box {
+            .content {
+              font-size: 12px;
+              margin-top: 10px;
+            }
+          }
+        }
       }
     }
 
