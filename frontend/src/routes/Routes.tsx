@@ -22,6 +22,7 @@ const VerifyUserAccountPage = importLazyModule(
 
 // Shorts page import
 const Shorts = importLazyModule(() => import("pages/Shorts/Shorts"));
+const UserPage = importLazyModule(() => import("pages/UserPage"));
 
 // Lazy-loaded 404 Not Found Page
 const NotFoundPage = importLazyModule(() => import("pages/NotFoundPage"));
@@ -78,12 +79,21 @@ const AppRoutes: React.FC = () => {
 
             {/* Public Routes without header and Footer */}
             <Route element={<PublicRoute />}>
-              <Route path="/shorts" element={<ShortsLayout />}>
+              <Route element={<ShortsLayout />}>
                 <Route
-                  index
+                  path="/shorts"
                   element={
                     <RenderLazyModule
                       element={<Shorts />}
+                      fallback={<PageLoader />}
+                    />
+                  }
+                />
+                <Route
+                  path="/user"
+                  element={
+                    <RenderLazyModule
+                      element={<UserPage />}
                       fallback={<PageLoader />}
                     />
                   }
