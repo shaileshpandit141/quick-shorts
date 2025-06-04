@@ -4,7 +4,6 @@
   & {
     display: flex;
     flex-direction: row;
-    /* align-items: center; */
     justify-content: center;
     height: 100dvh;
     max-height: 100dvh;
@@ -31,8 +30,10 @@
     .outlet-container {
       height: 100%;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid #00000033;
     }
   }
 }

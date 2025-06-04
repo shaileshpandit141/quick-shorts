@@ -27,7 +27,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 16px;
-    border: 1.5px solid var(--btn-bg);
+    /* border: 1.5px solid var(--btn-bg); */
     overflow: hidden;
 
     .video-header-container {
