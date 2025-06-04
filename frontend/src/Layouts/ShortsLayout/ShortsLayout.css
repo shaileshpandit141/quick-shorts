@@ -1,19 +1,25 @@
 .shorts-layout {
-  --header-height: 50px;
-
-  & {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    height: 100dvh;
-    max-height: 100dvh;
-    width: 100%;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 100dvh;
+  max-height: 100dvh;
+  width: 100%;
 
   .shorts-layout-wrapper {
     aspect-ratio: 9/16;
-    height: calc(100dvh - var(--header-height));
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+
+    .outlet-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid #00000033;
+    }
 
     .tab-navigation-container {
       height: fit-content;
@@ -26,15 +32,6 @@
       a {
         border-radius: 12px;
       }
-    }
-
-    .outlet-container {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 2px solid #00000033;
     }
   }
 }
