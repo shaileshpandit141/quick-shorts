@@ -1,18 +1,17 @@
 import React, { FC, JSX } from "react";
-import "./Shorts.css";
+import "./ShortsPage.css";
 import { AddSEO } from "SEO";
 import { VideoPlayer } from "components";
 
-interface ShortsProps {}
+interface ShortsPageProps {}
 
-const Shorts: FC<ShortsProps> = (props): JSX.Element => {
+const ShortsPage: FC<ShortsPageProps> = (props): JSX.Element => {
   return (
     <div className="shorts">
       <AddSEO title="Shorts" description="This page containe short videos." />
       <VideoPlayer />
-      {/* <h1>Shorts</h1> */}
     </div>
   );
 };
 
-export default Shorts;
+export default ShortsPage;

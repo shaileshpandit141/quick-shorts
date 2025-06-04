@@ -4,26 +4,24 @@ import { importLazyModule, RenderLazyModule } from "lazyUtils";
 
 // Default Imports (user-defined layout and pages).
 import { PrivateRoute, PublicRoute } from "./RoutesPrivacy";
-import { RootLayout, MainLayout, AuthLayout } from "Layouts";
+import RootLayout from "Layouts/RootLayout";
+import AuthLayout from "Layouts/AuthLayout";
 import ShortsLayout from "Layouts/ShortsLayout";
 
 // Default Page loader Imports
 import { PageLoader } from "components";
-import IndexPageSkeleton from "pages/IndexPage";
 
 // Lazy-loaded Page Imports
-const IndexPage = importLazyModule(() => import("pages/IndexPage"));
-const HomePage = importLazyModule(() => import("pages/HomePage"));
 const SigninPage = importLazyModule(() => import("pages/SigninPage"));
 const SignupPage = importLazyModule(() => import("pages/SignupPage"));
 const VerifyUserAccountPage = importLazyModule(
   () => import("pages/VerifyUserAccountPage"),
 );
-
-// Shorts page import
-const Shorts = importLazyModule(() => import("pages/Shorts/Shorts"));
+const ShortsPage = importLazyModule(() => import("pages/ShortsPage"));
 const UserPage = importLazyModule(() => import("pages/UserPage"));
-const ShortsCreatePage = importLazyModule(() => import("pages/ShortsCreatePage"));
+const ShortsCreatePage = importLazyModule(
+  () => import("pages/ShortsCreatePage"),
+);
 
 // Lazy-loaded 404 Not Found Page
 const NotFoundPage = importLazyModule(() => import("pages/NotFoundPage"));
@@ -33,47 +31,6 @@ const AppRoutes: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<RootLayout />}>
-          {/* Routes with header and Footer */}
-          {/* ----------------------------- */}
-          <Route element={<MainLayout />}>
-            {/* Private Routes with header and Footer */}
-            <Route element={<PrivateRoute />}>
-              <Route
-                path="/home"
-                element={
-                  <RenderLazyModule
-                    element={<HomePage />}
-                    fallback={<PageLoader />}
-                  />
-                }
-              />
-            </Route>
-
-            {/* Public Routes with header and Footer */}
-            <Route element={<PublicRoute />}>
-              <Route
-                index
-                element={
-                  <RenderLazyModule
-                    element={<IndexPage />}
-                    fallback={<IndexPageSkeleton />}
-                  />
-                }
-              />
-              {/* <Route
-                path="shorts"
-                element={
-                  <RenderLazyModule
-                    element={<Shorts />}
-                    fallback={<PageLoader />}
-                  />
-                }
-              /> */}
-            </Route>
-          </Route>
-
-          {/* Routes without header and Footer */}
-          {/* -------------------------------- */}
           <Route>
             {/* Private Routes without header and Footer */}
             <Route element={<PrivateRoute />}></Route>
@@ -82,10 +39,10 @@ const AppRoutes: React.FC = () => {
             <Route element={<PublicRoute />}>
               <Route element={<ShortsLayout />}>
                 <Route
-                  path="/shorts"
+                  index
                   element={
                     <RenderLazyModule
-                      element={<Shorts />}
+                      element={<ShortsPage />}
                       fallback={<PageLoader />}
                     />
                   }
