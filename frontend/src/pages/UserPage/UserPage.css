@@ -1,3 +1,93 @@
 .user-page {
   flex: 1;
+  max-height: 100%;
+  display: grid;
+  grid-template-rows: 25% 75%;
+  overflow: hidden;
+
+  .header-section {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+
+    .figure-container {
+      aspect-ratio: 1/1;
+      width: 85px;
+      background-color: aliceblue;
+      border-radius: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+  }
+
+  .shorts-posted-section {
+    display: grid;
+    grid-template-rows: auto 1fr;
+
+    .filters-section {
+      padding-inline: 12px;
+      padding-bottom: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+
+      button {
+        border-radius: 12px;
+
+        &:last-child {
+          background-color: transparent;
+        }
+      }
+    }
+
+    .shorts-posted-container {
+      padding-inline: 12px;
+      overflow: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+
+      .scroll-container {
+        padding-bottom: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+
+        .video-crad {
+          flex: 1;
+          min-width: 120px;
+          width: 100%;
+          aspect-ratio: 9/16;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border-radius: 12px;
+          border: 2px solid #00000033;
+          overflow: hidden;
+
+          video {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+          }
+        }
+      }
+    }
+  }
 }
