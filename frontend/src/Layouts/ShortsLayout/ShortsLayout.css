@@ -13,6 +13,7 @@
   .shorts-layout-wrapper {
     aspect-ratio: 9/16;
     height: calc(100dvh - var(--header-height));
+    min-width: 0;
 
     .tab-navigation-container {
       height: fit-content;
