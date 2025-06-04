@@ -19,7 +19,7 @@ const ShortsLayout: FC<ShortsLayoutProps> = (props): JSX.Element => {
           <NavLink to="/shorts" type="link">
             Shorts
           </NavLink>
-          <NavLink to="/create" type="link">
+          <NavLink to="/shorts-create" type="link">
             Create
           </NavLink>
         </div>
