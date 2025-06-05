@@ -2,12 +2,18 @@ import React, { FC, JSX, useState } from "react";
 import "./VideoOwnerCard.css";
 import { Button } from "components/Common";
 import { useIsCommentsOpen } from "contexts/features/IsCommentsOpen";
+import data from "data.json";
+import { useTimeAgo } from "hooks/useTimeAgo";
 
-interface VideoOwnerCardProps {}
+interface VideoOwnerCardProps {
+  shorts_id: number;
+}
 
 const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
   const [isCaptionOpen, setIsCaptionOpen] = useState(false);
   const { toggleIsCommentsOpen } = useIsCommentsOpen();
+  const shorts = data.results[props.shorts_id]
+  const timeAgo = useTimeAgo(shorts.updated_at);
 
   const toggleIsCaptionOpen = (event: React.MouseEvent<HTMLElement>) => {
     setIsCaptionOpen((prevState) => !prevState);
@@ -20,11 +26,11 @@ const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
           <figure className="figure"></figure>
         </div>
         <div className="user-info">
-          <label className="username">Username</label>
+          <label className="username">{shorts.owner.username}</label>
           <div className="shorts-info">
             <span className="views">50K Views</span>
             <span className="dot"></span>
-            <span className="date">8 Days ago</span>
+            <span className="date">{timeAgo}</span>
           </div>
         </div>
         <div className="action-buttons">
@@ -39,13 +45,12 @@ const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
           onClick={toggleIsCaptionOpen}
         >
           <p className="caption">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo
-            dicta distinctio id quas fuga assumenda?
+            {shorts.caption}
           </p>
           <section className="tag-container">
-            <span>#dev</span>
-            <span>#python</span>
-            <span>#learning</span>
+            {shorts.tags.map((tag) => (
+              <span key={tag.id}>#{tag.name}</span>
+            ))}
           </section>
         </div>
       </section>
