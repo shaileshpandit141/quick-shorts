@@ -5,9 +5,10 @@ from rest_framework.viewsets import ModelViewSet
 from shorts.models.comment import Comment
 from shorts.permissions import CanUpdateAndDelete
 from shorts.serializers.comment import CommentSerializer
+from rest_core.cache.mixins import CacheMixin
 
 
-class CommentModelViewSet(ModelViewSet):
+class CommentModelViewSet(CacheMixin, ModelViewSet):
     """Comment view CRUD API view"""
 
     permission_classes = [IsAuthenticated, CanUpdateAndDelete]

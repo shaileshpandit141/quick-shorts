@@ -8,9 +8,11 @@ from shorts.filters import VideoFilterSet
 from shorts.models.video import Video
 from shorts.permissions import CanUpdateAndDelete
 from shorts.serializers.video import VideoSerializer
+from rest_core.cache.mixins import CacheMixin
 
 
 class VideoModelViewSet(
+    CacheMixin,
     ModelChoiceFieldActionMixin,
     ModelViewSet,
 ):

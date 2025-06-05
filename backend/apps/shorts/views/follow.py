@@ -4,9 +4,10 @@ from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 from shorts.models.follow import Follow
 from shorts.serializers.follow import FollowSerializer
+from rest_core.cache.mixins import CacheMixin
 
 
-class FollowModelViewSet(ModelViewSet):
+class FollowModelViewSet(CacheMixin, ModelViewSet):
     """Follow view CRUD API view"""
 
     permission_classes = [IsAuthenticated]

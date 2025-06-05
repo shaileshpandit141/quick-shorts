@@ -3,9 +3,10 @@ from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 from shorts.models.report import Report
 from shorts.serializers.report import ReportSerializer
+from rest_core.cache.mixins import CacheMixin
 
 
-class ReportModelViewSet(ModelViewSet):
+class ReportModelViewSet(CacheMixin, ModelViewSet):
     """Report view CRUD API view"""
 
     permission_classes = [IsAuthenticated]

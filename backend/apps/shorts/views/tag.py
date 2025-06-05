@@ -6,9 +6,10 @@ from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 from shorts.models.tag import Tag
 from shorts.serializers.tag import TagSerializer
+from rest_core.cache.mixins import CacheMixin
 
 
-class TagModelViewSet(ModelViewSet):
+class TagModelViewSet(CacheMixin, ModelViewSet):
     """Tag CRUD API view"""
 
     permission_classes = [IsAuthenticated]

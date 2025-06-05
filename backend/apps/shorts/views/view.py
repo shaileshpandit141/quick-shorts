@@ -6,9 +6,10 @@ from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 from shorts.models.view import View
 from shorts.serializers.view import ViewSerializer
+from rest_core.cache.mixins import CacheMixin
 
 
-class ViewModelViewSet(ModelViewSet):
+class ViewModelViewSet(CacheMixin, ModelViewSet):
     """Short video view CRUD API view"""
 
     permission_classes = [IsAuthenticated]
