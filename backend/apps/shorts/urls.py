@@ -5,9 +5,9 @@ from .views.comment import CommentModelViewSet
 from .views.follow import FollowModelViewSet
 from .views.like import LikeModelViewSet
 from .views.report import ReportModelViewSet
-from .views.video_stream import VideoStreamAPIView
-from .views.video import VideoModelViewSet
 from .views.tag import TagModelViewSet
+from .views.video import VideoModelViewSet
+from .views.video_stream import VideoStreamAPIView
 from .views.view import ViewModelViewSet
 
 # Define empty urlpatterns

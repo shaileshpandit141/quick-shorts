@@ -1,10 +1,10 @@
 from rest_core.serializers.mixins import FileFieldUrlMixin, RecordsCreationMixin
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
-from shorts.models.video import Video
-from user_auth.serializers.user_serializers import UserPublicSerializer
 from shorts.models.comment import Comment
-from shorts.models.view import View
 from shorts.models.like import Like
+from shorts.models.video import Video
+from shorts.models.view import View
+from user_auth.serializers.user_serializers import UserPublicSerializer
 
 from .tag import TagSerializer
 

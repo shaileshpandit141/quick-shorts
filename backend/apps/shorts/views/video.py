@@ -4,10 +4,10 @@ from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
+from shorts.filters import VideoFilterSet
 from shorts.models.video import Video
 from shorts.permissions import CanUpdateAndDelete
 from shorts.serializers.video import VideoSerializer
-from shorts.filters import VideoFilterSet
 
 
 class VideoModelViewSet(
