@@ -1,8 +1,20 @@
-.shorts {
-  /* background-color: #ff000028; */
+.shorts-page {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .shorts-video-player {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    -webkit-scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
 }
