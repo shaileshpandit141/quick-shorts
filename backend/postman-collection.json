@@ -154,23 +154,24 @@
 									"formdata": [
 										{
 											"key": "email",
-											"value": "testuser1@gmail.com",
+											"value": "shailesh@gmail.com",
 											"type": "text"
 										},
 										{
 											"key": "password",
-											"value": "abc12345@",
+											"value": "shailesh",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{base_url}}/auth/token/",
+									"raw": "{{base_url}}/auth/signin/token/",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"auth",
+										"signin",
 										"token",
 										""
 									]
@@ -222,12 +223,13 @@
 									]
 								},
 								"url": {
-									"raw": "{{base_url}}/auth/token/refresh/",
+									"raw": "{{base_url}}/auth/signin/token/refresh/",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"auth",
+										"signin",
 										"token",
 										"refresh",
 										""
@@ -344,15 +346,13 @@
 										},
 										{
 											"key": "first_name",
-											"value": "",
-											"type": "text",
-											"disabled": true
+											"value": "shailesh",
+											"type": "text"
 										},
 										{
 											"key": "last_name",
-											"value": "",
-											"type": "text",
-											"disabled": true
+											"value": "pandit",
+											"type": "text"
 										}
 									]
 								},
