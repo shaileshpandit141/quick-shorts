@@ -11,8 +11,8 @@ interface CommentsProps {
 
 const Comments: FC<CommentsProps> = (props): JSX.Element => {
   const { isCommentsOpen, toggleIsCommentsOpen } = useIsCommentsOpen();
-  const shorts = data.results[props.shorts_id]
-  const numberFormatter = useNumberFormatter()
+  const shorts = data.results[props.shorts_id];
+  const numberFormatter = useNumberFormatter();
 
   return (
     <Drawer
@@ -64,7 +64,7 @@ const Comments: FC<CommentsProps> = (props): JSX.Element => {
           </div>
         </section>
         <form className="comment-form">
-          <Input type="text" name="comment" value={""} onChange={() => { }} />
+          <Input type="text" name="comment" value={""} onChange={() => {}} />
           <Button type="icon" icon="send" className="submit-btn">
             Submit
           </Button>

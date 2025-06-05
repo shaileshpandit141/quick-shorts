@@ -13,9 +13,9 @@ interface VideoOwnerCardProps {
 const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
   const [isCaptionOpen, setIsCaptionOpen] = useState(false);
   const { toggleIsCommentsOpen } = useIsCommentsOpen();
-  const shorts = data.results[props.shorts_id]
+  const shorts = data.results[props.shorts_id];
   const timeAgo = useTimeAgo(shorts.updated_at);
-  const numberFormatter = useNumberFormatter()
+  const numberFormatter = useNumberFormatter();
 
   const toggleIsCaptionOpen = (event: React.MouseEvent<HTMLElement>) => {
     setIsCaptionOpen((prevState) => !prevState);
@@ -30,7 +30,9 @@ const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
         <div className="user-info">
           <label className="username">{shorts.owner.username}</label>
           <div className="shorts-info">
-            <span className="views">{numberFormatter(shorts.total_views)} Views</span>
+            <span className="views">
+              {numberFormatter(shorts.total_views)} Views
+            </span>
             <span className="dot"></span>
             <span className="date">{timeAgo}</span>
           </div>
@@ -46,9 +48,7 @@ const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
           className={`scroll-body ${isCaptionOpen && "active"}`}
           onClick={toggleIsCaptionOpen}
         >
-          <p className="caption">
-            {shorts.caption}
-          </p>
+          <p className="caption">{shorts.caption}</p>
           <section className="tag-container">
             {shorts.tags.map((tag) => (
               <span key={tag.id}>#{tag.name}</span>

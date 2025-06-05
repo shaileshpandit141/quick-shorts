@@ -10,10 +10,7 @@ const ShortsPage: FC<{}> = (): JSX.Element => {
       <AddSEO title="Shorts" description="This page containe short videos." />
       <div className="shorts-video-player">
         {data.results.map((shorts, index) => (
-          <Video
-            key={index}
-            shorts_id={index}
-          />
+          <Video key={index} shorts_id={index} />
         ))}
       </div>
     </div>

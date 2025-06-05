@@ -22,7 +22,7 @@ export const useNumberFormatter = () => {
 
       return `${parseFloat(reducedNum.toFixed(decimals))}${units[unitIndex]}`;
     },
-    []
+    [],
   );
 
   return formatNumber;

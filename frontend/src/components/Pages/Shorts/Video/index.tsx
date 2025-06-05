@@ -13,7 +13,7 @@ interface VideoProps {
 const Video: FC<VideoProps> = (props): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { isMuted, toggleMute } = useVideo();
-  const shorts = data.results[props.shorts_id]
+  const shorts = data.results[props.shorts_id];
 
   useEffect(() => {
     const currentVideoRef = videoRef.current;
@@ -76,12 +76,8 @@ const Video: FC<VideoProps> = (props): JSX.Element => {
         >
           Your Browser is not supported the video tag
         </video>
-        <VideoOwnerCard
-          shorts_id={props.shorts_id}
-        />
-        <Comments
-          shorts_id={props.shorts_id}
-        />
+        <VideoOwnerCard shorts_id={props.shorts_id} />
+        <Comments shorts_id={props.shorts_id} />
       </div>
     </div>
   );
