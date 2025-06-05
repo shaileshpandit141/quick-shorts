@@ -4,7 +4,7 @@ type FormatOptions = {
   decimals?: number;
 };
 
-const useNumberFormatter = () => {
+export const useNumberFormatter = () => {
   const formatNumber = useCallback(
     (num: number, options: FormatOptions = {}) => {
       const { decimals = 1 } = options;
@@ -27,5 +27,3 @@ const useNumberFormatter = () => {
 
   return formatNumber;
 };
-
-export default useNumberFormatter;

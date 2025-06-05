@@ -4,6 +4,7 @@ import { Button } from "components/Common";
 import { useIsCommentsOpen } from "contexts/features/IsCommentsOpen";
 import data from "data.json";
 import { useTimeAgo } from "hooks/useTimeAgo";
+import { useNumberFormatter } from "hooks/useNumberFormatter";
 
 interface VideoOwnerCardProps {
   shorts_id: number;
@@ -14,6 +15,7 @@ const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
   const { toggleIsCommentsOpen } = useIsCommentsOpen();
   const shorts = data.results[props.shorts_id]
   const timeAgo = useTimeAgo(shorts.updated_at);
+  const numberFormatter = useNumberFormatter()
 
   const toggleIsCaptionOpen = (event: React.MouseEvent<HTMLElement>) => {
     setIsCaptionOpen((prevState) => !prevState);
@@ -28,7 +30,7 @@ const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
         <div className="user-info">
           <label className="username">{shorts.owner.username}</label>
           <div className="shorts-info">
-            <span className="views">50K Views</span>
+            <span className="views">{numberFormatter(shorts.total_views)} Views</span>
             <span className="dot"></span>
             <span className="date">{timeAgo}</span>
           </div>
@@ -57,15 +59,15 @@ const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
       <section className="video-action-btns-container">
         <div className="btn-container">
           <Button type="icon" icon="thumbUp" />
-          <label htmlFor="">23K</label>
+          <label htmlFor="">{numberFormatter(shorts.total_likes)}</label>
         </div>
-        <div className="btn-container">
+        {/* <div className="btn-container">
           <Button type="icon" icon="thumbDown" />
           <label htmlFor="">5K</label>
-        </div>
+        </div> */}
         <div className="btn-container" onClick={toggleIsCommentsOpen}>
           <Button type="icon" icon="comment" />
-          <label htmlFor="">1M</label>
+          <label htmlFor="">{numberFormatter(shorts.total_comments)}</label>
         </div>
       </section>
     </div>

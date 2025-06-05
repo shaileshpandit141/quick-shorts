@@ -2,11 +2,17 @@ import React, { FC, JSX } from "react";
 import "./Comments.css";
 import { Drawer, Button, Input } from "components";
 import { useIsCommentsOpen } from "contexts/features/IsCommentsOpen";
+import data from "data.json";
+import { useNumberFormatter } from "hooks/useNumberFormatter";
 
-interface CommentsProps {}
+interface CommentsProps {
+  shorts_id: number;
+}
 
 const Comments: FC<CommentsProps> = (props): JSX.Element => {
   const { isCommentsOpen, toggleIsCommentsOpen } = useIsCommentsOpen();
+  const shorts = data.results[props.shorts_id]
+  const numberFormatter = useNumberFormatter()
 
   return (
     <Drawer
@@ -18,7 +24,7 @@ const Comments: FC<CommentsProps> = (props): JSX.Element => {
       <div className={`comments-wrapper ${isCommentsOpen && "active"}`}>
         <section className="comments-header">
           <h4 className="comment-title">
-            Comments <span>1M</span>
+            Comments <span>{numberFormatter(shorts.total_comments)}</span>
           </h4>
           <Button
             type="button"
@@ -58,7 +64,7 @@ const Comments: FC<CommentsProps> = (props): JSX.Element => {
           </div>
         </section>
         <form className="comment-form">
-          <Input type="text" name="comment" value={""} onChange={() => {}} />
+          <Input type="text" name="comment" value={""} onChange={() => { }} />
           <Button type="icon" icon="send" className="submit-btn">
             Submit
           </Button>

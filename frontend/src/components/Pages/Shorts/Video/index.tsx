@@ -7,7 +7,7 @@ import Comments from "../Comments";
 import data from "data.json";
 
 interface VideoProps {
-  shorts_id: number
+  shorts_id: number;
 }
 
 const Video: FC<VideoProps> = (props): JSX.Element => {
@@ -79,7 +79,9 @@ const Video: FC<VideoProps> = (props): JSX.Element => {
         <VideoOwnerCard
           shorts_id={props.shorts_id}
         />
-        <Comments />
+        <Comments
+          shorts_id={props.shorts_id}
+        />
       </div>
     </div>
   );

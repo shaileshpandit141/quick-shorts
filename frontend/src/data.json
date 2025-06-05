@@ -1,10 +1,10 @@
 {
   "page": {
     "current": 1,
-    "total": 2,
-    "size": 10,
+    "total": 1,
+    "size": 20,
     "total_items": 20,
-    "next": "http://localhost:8000/api/v1/shorts/videos/?page=2&page-size=10",
+    "next": null,
     "previous": null
   },
   "results": [
@@ -28,6 +28,9 @@
           "name": "or"
         }
       ],
+      "total_views": 3,
+      "total_likes": 0,
+      "total_comments": 3,
       "privacy": "public",
       "updated_at": "2025-05-27T14:50:19.772614Z"
     },
@@ -59,6 +62,9 @@
           "name": "speech"
         }
       ],
+      "total_views": 1,
+      "total_likes": 1,
+      "total_comments": 0,
       "privacy": "public",
       "updated_at": "2025-05-27T14:50:19.754366Z"
     },
@@ -82,6 +88,9 @@
           "name": "blue"
         }
       ],
+      "total_views": 1,
+      "total_likes": 2,
+      "total_comments": 0,
       "privacy": "public",
       "updated_at": "2025-05-27T14:50:19.735331Z"
     },
@@ -113,6 +122,9 @@
           "name": "glass"
         }
       ],
+      "total_views": 0,
+      "total_likes": 1,
+      "total_comments": 1,
       "privacy": "private",
       "updated_at": "2025-05-27T14:50:19.715632Z"
     },
@@ -140,6 +152,9 @@
           "name": "or"
         }
       ],
+      "total_views": 0,
+      "total_likes": 0,
+      "total_comments": 1,
       "privacy": "private",
       "updated_at": "2025-05-27T14:50:19.696258Z"
     },
@@ -163,6 +178,9 @@
           "name": "or"
         }
       ],
+      "total_views": 1,
+      "total_likes": 1,
+      "total_comments": 0,
       "privacy": "private",
       "updated_at": "2025-05-27T14:50:19.678576Z"
     },
@@ -194,6 +212,9 @@
           "name": "speech"
         }
       ],
+      "total_views": 0,
+      "total_likes": 1,
+      "total_comments": 1,
       "privacy": "private",
       "updated_at": "2025-05-27T14:50:19.662139Z"
     },
@@ -225,6 +246,9 @@
           "name": "wide"
         }
       ],
+      "total_views": 1,
+      "total_likes": 1,
+      "total_comments": 2,
       "privacy": "private",
       "updated_at": "2025-05-27T14:50:19.638971Z"
     },
@@ -248,6 +272,9 @@
           "name": "different"
         }
       ],
+      "total_views": 1,
+      "total_likes": 1,
+      "total_comments": 1,
       "privacy": "private",
       "updated_at": "2025-05-27T14:50:19.621681Z"
     },
@@ -271,8 +298,315 @@
           "name": "glass"
         }
       ],
+      "total_views": 0,
+      "total_likes": 1,
+      "total_comments": 0,
       "privacy": "private",
       "updated_at": "2025-05-27T14:50:19.605366Z"
+    },
+    {
+      "id": 10,
+      "owner": {
+        "id": 6,
+        "email": "useremail6@gmail.com",
+        "username": "username6",
+        "first_name": "Carrie",
+        "last_name": "Watkins",
+        "full_name": "Carrie Watkins",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_3.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_3.jpeg",
+      "caption": "Little save last personal also measure.",
+      "tags": [
+        {
+          "id": 9,
+          "name": "different"
+        },
+        {
+          "id": 7,
+          "name": "hear"
+        },
+        {
+          "id": 4,
+          "name": "day"
+        }
+      ],
+      "total_views": 1,
+      "total_likes": 1,
+      "total_comments": 0,
+      "privacy": "private",
+      "updated_at": "2025-05-27T14:50:19.590823Z"
+    },
+    {
+      "id": 9,
+      "owner": {
+        "id": 7,
+        "email": "useremail7@gmail.com",
+        "username": "username7",
+        "first_name": "Angela",
+        "last_name": "Brown",
+        "full_name": "Angela Brown",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_2.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_3.jpeg",
+      "caption": "Later foreign learn simple.",
+      "tags": [
+        {
+          "id": 5,
+          "name": "industry"
+        },
+        {
+          "id": 2,
+          "name": "wide"
+        },
+        {
+          "id": 1,
+          "name": "speech"
+        }
+      ],
+      "total_views": 2,
+      "total_likes": 2,
+      "total_comments": 1,
+      "privacy": "private",
+      "updated_at": "2025-05-27T14:50:19.575254Z"
+    },
+    {
+      "id": 8,
+      "owner": {
+        "id": 6,
+        "email": "useremail6@gmail.com",
+        "username": "username6",
+        "first_name": "Carrie",
+        "last_name": "Watkins",
+        "full_name": "Carrie Watkins",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_2.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_2.jpeg",
+      "caption": "Purpose successful work author ask pull.",
+      "tags": [
+        {
+          "id": 3,
+          "name": "blue"
+        }
+      ],
+      "total_views": 3,
+      "total_likes": 1,
+      "total_comments": 1,
+      "privacy": "private",
+      "updated_at": "2025-05-27T14:50:19.557250Z"
+    },
+    {
+      "id": 7,
+      "owner": {
+        "id": 3,
+        "email": "useremail3@gmail.com",
+        "username": "username3",
+        "first_name": "Mark",
+        "last_name": "Simpson",
+        "full_name": "Mark Simpson",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_1.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_2.jpeg",
+      "caption": "Pm cup cultural. Reveal PM relationship moment never international child mean.",
+      "tags": [
+        {
+          "id": 7,
+          "name": "hear"
+        },
+        {
+          "id": 1,
+          "name": "speech"
+        }
+      ],
+      "total_views": 3,
+      "total_likes": 2,
+      "total_comments": 2,
+      "privacy": "public",
+      "updated_at": "2025-05-27T14:50:19.537018Z"
+    },
+    {
+      "id": 6,
+      "owner": {
+        "id": 5,
+        "email": "useremail5@gmail.com",
+        "username": "username5",
+        "first_name": "Derek",
+        "last_name": "Nelson",
+        "full_name": "Derek Nelson",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_3.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_1.jpeg",
+      "caption": "Civil development director also receive television. Push particular book.",
+      "tags": [
+        {
+          "id": 10,
+          "name": "amount"
+        },
+        {
+          "id": 1,
+          "name": "speech"
+        }
+      ],
+      "total_views": 1,
+      "total_likes": 1,
+      "total_comments": 1,
+      "privacy": "private",
+      "updated_at": "2025-05-27T14:50:19.521910Z"
+    },
+    {
+      "id": 5,
+      "owner": {
+        "id": 4,
+        "email": "useremail4@gmail.com",
+        "username": "username4",
+        "first_name": "Kenneth",
+        "last_name": "Salazar",
+        "full_name": "Kenneth Salazar",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_2.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_3.jpeg",
+      "caption": "Next memory staff word west. Fall decide house.",
+      "tags": [
+        {
+          "id": 6,
+          "name": "or"
+        },
+        {
+          "id": 3,
+          "name": "blue"
+        }
+      ],
+      "total_views": 1,
+      "total_likes": 1,
+      "total_comments": 3,
+      "privacy": "private",
+      "updated_at": "2025-05-27T14:50:19.504349Z"
+    },
+    {
+      "id": 4,
+      "owner": {
+        "id": 1,
+        "email": "shailesh@gmail.com",
+        "username": "shailesh-35737890",
+        "first_name": "",
+        "last_name": "",
+        "full_name": "",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_1.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_1.jpeg",
+      "caption": "This raise back care office. Area long single majority.",
+      "tags": [
+        {
+          "id": 6,
+          "name": "or"
+        },
+        {
+          "id": 4,
+          "name": "day"
+        },
+        {
+          "id": 2,
+          "name": "wide"
+        }
+      ],
+      "total_views": 0,
+      "total_likes": 0,
+      "total_comments": 1,
+      "privacy": "public",
+      "updated_at": "2025-05-27T14:50:19.489771Z"
+    },
+    {
+      "id": 3,
+      "owner": {
+        "id": 1,
+        "email": "shailesh@gmail.com",
+        "username": "shailesh-35737890",
+        "first_name": "",
+        "last_name": "",
+        "full_name": "",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_1.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_3.jpeg",
+      "caption": "Deal base into end point plan. Though these high green not significant.",
+      "tags": [
+        {
+          "id": 2,
+          "name": "wide"
+        }
+      ],
+      "total_views": 0,
+      "total_likes": 1,
+      "total_comments": 1,
+      "privacy": "public",
+      "updated_at": "2025-05-27T14:50:19.476408Z"
+    },
+    {
+      "id": 2,
+      "owner": {
+        "id": 1,
+        "email": "shailesh@gmail.com",
+        "username": "shailesh-35737890",
+        "first_name": "",
+        "last_name": "",
+        "full_name": "",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_3.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_2.jpeg",
+      "caption": "Open language book simply commercial bank on. Power brother beyond set if forward.",
+      "tags": [
+        {
+          "id": 6,
+          "name": "or"
+        },
+        {
+          "id": 3,
+          "name": "blue"
+        }
+      ],
+      "total_views": 0,
+      "total_likes": 0,
+      "total_comments": 1,
+      "privacy": "public",
+      "updated_at": "2025-05-27T14:50:19.457216Z"
+    },
+    {
+      "id": 1,
+      "owner": {
+        "id": 10,
+        "email": "useremail10@gmail.com",
+        "username": "username10",
+        "first_name": "Adrienne",
+        "last_name": "Lucas",
+        "full_name": "Adrienne Lucas",
+        "picture": null
+      },
+      "video": "http://localhost:8000/media/shorts/videos/video_2.mp4",
+      "thumbnail": "http://localhost:8000/media/shorts/thumbnails/thumb_1.jpeg",
+      "caption": "Design recently range live fear answer.",
+      "tags": [
+        {
+          "id": 9,
+          "name": "different"
+        },
+        {
+          "id": 7,
+          "name": "hear"
+        }
+      ],
+      "total_views": 1,
+      "total_likes": 2,
+      "total_comments": 0,
+      "privacy": "public",
+      "updated_at": "2025-05-27T14:50:19.436912Z"
     }
   ]
 }
