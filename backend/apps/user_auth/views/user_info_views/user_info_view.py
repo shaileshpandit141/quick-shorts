@@ -10,7 +10,7 @@ from user_auth.permissions import IsUserAccountVerified
 from user_auth.serializers.user_serializers import UserSerializer
 
 
-class UserProfileView(APIView):
+class UserInfoView(APIView):
     """API View for managing authenticated user information."""
 
     permission_classes = [IsAuthenticated, IsUserAccountVerified]
