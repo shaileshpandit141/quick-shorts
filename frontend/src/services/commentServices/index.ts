@@ -19,7 +19,10 @@ export const commentsServices = {
       `${baseAPIURL}/api/v1//shorts/comments/?${queryString}`
     );
   },
-  createVideos: (comment: CommentCredentials) => {
-    return axiosInstance.post(`${baseAPIURL}/api/v1//shorts/videos/`, comment);
+  createComments: (credentials: CommentCredentials) => {
+    return axiosInstance.post(
+      `${baseAPIURL}/api/v1//shorts/comments/`,
+      credentials
+    );
   },
 };
