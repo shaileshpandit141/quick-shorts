@@ -37,34 +37,39 @@ const Comments: FC<CommentsProps> = (props): JSX.Element => {
         <section className="comments-container">
           <div className="comments-scroll-wrapper">
             {/* This is a actual comment card TSX */}
-            <div className="comment-container">
-              <section className="comment-header">
-                <figure className="figure">f</figure>
-                <div className="comment-info">
-                  <span className="username">Username</span>
-                  <span className="time">8 Days ago</span>
-                </div>
-              </section>
-              <section className="comment-contnet">
-                <div className="curve-line">
-                  <span className="span-1"></span>
-                  <span className="span-2"></span>
-                </div>
-                <div className="content-box">
-                  <p className="content">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Doloremque vel error, consequuntur sed consectetur rem.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Provident odit voluptate beatae perferendis culpa,
-                    architecto dicta quis illum possimus sit!
-                  </p>
-                </div>
-              </section>
-            </div>
+            {Array(5).fill(0).map((_, index) => (
+              <div
+                className="comment-container"
+                key={index}
+              >
+                <section className="comment-header">
+                  <figure className="figure">f</figure>
+                  <div className="comment-info">
+                    <span className="username">Username-{index+1}</span>
+                    <span className="time">{shorts.id * index+1} Days ago</span>
+                  </div>
+                </section>
+                <section className="comment-contnet">
+                  <div className="curve-line">
+                    <span className="span-1"></span>
+                    <span className="span-2"></span>
+                  </div>
+                  <div className="content-box">
+                    <p className="content">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Doloremque vel error, consequuntur sed consectetur rem.
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Provident odit voluptate beatae perferendis culpa,
+                      architecto dicta quis illum possimus sit!
+                    </p>
+                  </div>
+                </section>
+              </div>
+            ))}
           </div>
         </section>
         <form className="comment-form">
-          <Input type="text" name="comment" value={""} onChange={() => {}} />
+          <Input type="text" name="comment" value={""} onChange={() => { }} />
           <Button type="icon" icon="send" className="submit-btn">
             Submit
           </Button>
