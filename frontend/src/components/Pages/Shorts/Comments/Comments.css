@@ -5,7 +5,7 @@
 
   .comments-wrapper {
     background-color: #1d1d1dc9;
-    max-height: 40%;
+    max-height: 50%;
     padding-block: 12px;
     border-radius: 12px;
     overflow: hidden;
@@ -15,7 +15,7 @@
     flex-direction: column;
 
     &.active {
-      max-height: 40%;
+      max-height: 50%;
       transform: translateY(0%);
     }
 
