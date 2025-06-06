@@ -58,13 +58,9 @@ const VideoOwnerCard: FC<VideoOwnerCardProps> = (props): JSX.Element => {
       </section>
       <section className="video-action-btns-container">
         <div className="btn-container">
-          <Button type="icon" icon="thumbUp" />
+          <Button type="icon" icon="favoriteBorder" />
           <label htmlFor="">{numberFormatter(shorts.total_likes)}</label>
         </div>
-        {/* <div className="btn-container">
-          <Button type="icon" icon="thumbDown" />
-          <label htmlFor="">5K</label>
-        </div> */}
         <div className="btn-container" onClick={toggleIsCommentsOpen}>
           <Button type="icon" icon="comment" />
           <label htmlFor="">{numberFormatter(shorts.total_comments)}</label>

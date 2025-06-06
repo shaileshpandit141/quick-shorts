@@ -16,7 +16,7 @@ export const lazyIconMap = {
   reTry: lazy(() => import("@mui/icons-material/ReplayRounded")),
   search: lazy(() => import("@mui/icons-material/SearchRounded")),
   installDesktop: lazy(
-    () => import("@mui/icons-material/InstallDesktopRounded"),
+    () => import("@mui/icons-material/InstallDesktopRounded")
   ),
   close: lazy(() => import("@mui/icons-material/CloseRounded")),
   success: lazy(() => import("@mui/icons-material/DoneAllRounded")),
@@ -27,13 +27,17 @@ export const lazyIconMap = {
   checkCircle: lazy(() => import("@mui/icons-material/CheckCircleRounded")),
   click: lazy(() => import("@mui/icons-material/AdsClickRounded")),
   supervisorAccountIcon: lazy(
-    () => import("@mui/icons-material/SupervisorAccount"),
+    () => import("@mui/icons-material/SupervisorAccount")
   ),
   dashboardIcon: lazy(() => import("@mui/icons-material/DashboardRounded")),
   volumeOff: lazy(() => import("@mui/icons-material/VolumeOffRounded")),
   volumeOn: lazy(() => import("@mui/icons-material/VolumeUpRounded")),
   thumbUp: lazy(() => import("@mui/icons-material/ThumbUpAltRounded")),
   thumbDown: lazy(() => import("@mui/icons-material/ThumbDownRounded")),
+  favoriteBorder: lazy(
+    () => import("@mui/icons-material/FavoriteBorderRounded")
+  ),
+  favorite: lazy(() => import("@mui/icons-material/FavoriteRounded")),
   comment: lazy(() => import("@mui/icons-material/CommentRounded")),
   send: lazy(() => import("@mui/icons-material/SendRounded")),
 };
